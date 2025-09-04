@@ -1,37 +1,12 @@
 import { resolve } from "node:path";
 import chokidar from "chokidar";
 import { config } from "@/config";
+import { regexMap } from "@/consts";
 import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
 
 export const LogManager = {
-	regexMap: new Map<string, RegExp>([
-		["timestamp", /^(\d+\.\d+)/],
-		["duration", /^\d+\.\d+\s+(\d+)/],
-		["clientIP", /^\d+\.\d+\s+\d+\s+(\d+\.\d+\.\d+\.\d+)/],
-		["resultCode", /^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+([A-Z_]+\/\d+)/],
-		["bytes", /^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+(\d+)/],
-		[
-			"method",
-			/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+(\w+)/,
-		],
-		[
-			"url",
-			/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+(\S+)/,
-		],
-		[
-			"user",
-			/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+(\S+)/,
-		],
-		[
-			"hierarchy",
-			/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+\S+\s+([A-Z_]+\/[\d\.-]+)/,
-		],
-		[
-			"contentType",
-			/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+\S+\s+[A-Z_]+\/[\d\.-]+\s+(.+)$/,
-		],
-	]),
+	regexMap,
 
 	logs: [resolve(config.ACCESS_LOG), resolve(config.CACHE_LOG)],
 	watcher: chokidar.watch([

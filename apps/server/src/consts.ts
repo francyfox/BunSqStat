@@ -1,0 +1,32 @@
+export const regexMap = new Map<string, RegExp>([
+	["timestamp", /^(\d+\.\d+)/],
+	["duration", /^\d+\.\d+\s+(\d+)/],
+	["clientIP", /^\d+\.\d+\s+\d+\s+(\d+\.\d+\.\d+\.\d+)/],
+	["resultType", /^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+([A-Z_]+)\/\d+/],
+	["resultStatus", /^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/(\d+)/],
+	["bytes", /^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+(\d+)/],
+	[
+		"method",
+		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+(\w+)/,
+	],
+	[
+		"url",
+		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+(\S+)/,
+	],
+	[
+		"user",
+		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+(\S+)/,
+	],
+	[
+		"hierarchyType",
+		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+\S+\s+([A-Z_]+)\/[\d\.-]+/,
+	],
+	[
+		"hierarchyHost",
+		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+\S+\s+[A-Z_]+\/([\d\.-]+)/,
+	],
+	[
+		"contentType",
+		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+\S+\s+[A-Z_]+\/[\d\.-]+\s+(.+)$/,
+	],
+]);
