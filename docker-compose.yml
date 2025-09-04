@@ -1,0 +1,39 @@
+services:
+#  squid:
+#    image: mpreu/squid:5.7 # Or another suitable Squid 5.7 image
+#    container_name: squid-proxy
+#    ports:
+#      - "3128:3128" # Map host port 3128 to container port 3128 (Squid's default)
+#    volumes:
+#      - ./docker/passwd:/etc/squid/squid_passwd
+#      - ./docker/squid_new.conf:/etc/squid/squid.conf
+#      - /tmp/squid/cache:/var/spool/squid # Persistent cache directory
+#      - /tmp/squid/log:/var/log/squid # Optional: Mount custom Squid configuration
+#    environment:
+#      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
+#    restart: always
+
+  redis:
+    container_name: redis-bunsqstat
+    image: redis/redis-stack:7.2.0-v18
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=false
+      - REDIS_AOF_ENABLED=no
+      - REDIS_PASSWORD=123
+    command: redis-server ./redis-stack.conf --requirepass 123
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+    volumes:
+      - ./docker/redis/redis.conf:/redis-stack.conf
+      - predis_data:/data
+    networks:
+      local:
+
+volumes:
+  predis_data:
+
+networks:
+  local:

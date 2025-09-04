@@ -1,0 +1,1833 @@
+2025/09/04 00:00:35 kid1| storeDirWriteCleanLogs: Starting...
+2025/09/04 00:00:35 kid1|   Finished.  Wrote 23 entries.
+2025/09/04 00:00:35 kid1|   Took 0.00 seconds (83032.49 entries/sec).
+2025/09/04 00:00:35 kid1| logfileRotate: daemon:/var/log/squid/access.log
+2025/09/04 00:00:35 kid1| logfileRotate: daemon:/var/log/squid/access.log
+2025/09/04 00:00:35 kid1| Pinger socket opened on FD 27
+2025/09/04 00:00:35 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+2025/09/04 00:00:35 kid1| helperOpenServers: Starting 1/30 'basic_ldap_auth' processes
+2025/09/04 00:00:35 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 00:00:35 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 00:00:35 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 00:00:35| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 00:00:35| pinger: Initialising ICMP pinger ...
+2025/09/04 00:00:35| pinger: ICMP socket opened.
+2025/09/04 00:00:35| pinger: ICMPv6 socket opened
+2025/09/04 00:00:35 kid1| helperOpenServers: Starting 1/5 'ext_ldap_group_acl' processes
+2025/09/04 01:04:00 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 01:04:00 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 01:04:00 kid1| NETDB state saved; 28 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 01:06:58 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master2226
+2025/09/04 01:06:58 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master2226
+2025/09/04 01:55:52 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 01:55:52 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 01:55:52 kid1| NETDB state saved; 29 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 02:36:04 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 02:36:04 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 02:36:04 kid1| NETDB state saved; 31 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 03:41:39 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 03:41:39 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 03:41:39 kid1| NETDB state saved; 32 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 04:41:48 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 04:41:48 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 04:41:48 kid1| NETDB state saved; 32 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 05:36:15 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 05:36:15 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 05:36:15 kid1| NETDB state saved; 32 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 06:43:30 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 06:43:30 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 06:43:30 kid1| NETDB state saved; 33 entries, 0 msec
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 07:53:08 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 07:53:08 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 07:53:08 kid1| NETDB state saved; 33 entries, 0 msec
+2025/09/04 07:58:49 kid1| ERROR: failure while accepting a TLS connection on conn9471 local=192.168.10.11:8080 remote=192.168.10.6:43996 FD 85 flags=1: 0x55b58e00b170*1
+    current master transaction: master54
+basic_ldap_auth: WARNING, could not bind to binddn 'Can't contact LDAP server'
+2025/09/04 08:09:09 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master4896
+2025/09/04 08:09:09 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master4896
+2025/09/04 08:14:26 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 08:14:26 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:14:26 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:14:26 kid1| Closing Pinger socket on FD 27
+2025/09/04 08:14:26 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:14:26 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:14:26 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 08:14:26 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 08:14:26 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 08:14:26 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 08:14:26 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 08:14:26 kid1| Startup: Initialized Authentication.
+2025/09/04 08:14:26 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 08:14:26 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 08:14:26 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 08:14:26 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 08:14:26 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 08:14:26 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 08:14:26 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 08:14:26 kid1| Initializing https:// proxy context
+2025/09/04 08:14:26 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 08:14:26 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 08:14:26 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 08:14:26 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:14:26 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:14:26 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:14:26 kid1| Adaptation support is off.
+2025/09/04 08:14:26 kid1| Store logging disabled
+2025/09/04 08:14:26 kid1| DNS Socket created at 0.0.0.0, FD 21
+2025/09/04 08:14:26 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:14:26 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:14:26 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:14:26 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:14:26 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:14:26 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:14:26 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:14:26 kid1| HTCP Disabled.
+2025/09/04 08:14:26 kid1| Pinger socket opened on FD 38
+2025/09/04 08:14:26 kid1| Finished loading MIME types and icons.
+2025/09/04 08:14:26 kid1| Accepting HTTP Socket connections at conn10655 local=0.0.0.0:8443 remote=[::] FD 34 flags=9
+2025/09/04 08:14:26 kid1| Accepting SSL bumped HTTP Socket connections at conn10657 local=0.0.0.0:8080 remote=[::] FD 36 flags=9
+2025/09/04 08:14:26| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:14:26| pinger: Initialising ICMP pinger ...
+2025/09/04 08:14:26| pinger: ICMP socket opened.
+2025/09/04 08:14:26| pinger: ICMPv6 socket opened
+2025/09/04 08:14:26 kid1| Starting new external_acl_type helpers...
+    current master transaction: master5074
+2025/09/04 08:14:26 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master5074
+2025/09/04 08:14:27 kid1| Starting new external_acl_type helpers...
+    current master transaction: master5073
+2025/09/04 08:14:27 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master5073
+2025/09/04 08:14:36| Pinger exiting.
+2025/09/04 08:15:37 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 08:15:37 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:15:37 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:15:37 kid1| Closing Pinger socket on FD 38
+2025/09/04 08:15:37 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:15:37 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:15:37 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 08:15:37 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 08:15:37 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 08:15:37 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 08:15:37 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 08:15:37 kid1| Startup: Initialized Authentication.
+2025/09/04 08:15:37 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 08:15:37 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 08:15:37 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 08:15:37 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 08:15:37 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 08:15:37 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 08:15:37 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 08:15:37 kid1| Initializing https:// proxy context
+2025/09/04 08:15:37 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 08:15:37 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 08:15:37 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 08:15:37 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:15:37 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:15:37 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:15:37 kid1| Adaptation support is off.
+2025/09/04 08:15:37 kid1| Store logging disabled
+2025/09/04 08:15:37 kid1| DNS Socket created at 0.0.0.0, FD 14
+2025/09/04 08:15:37 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:15:37 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:15:37 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:15:37 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:15:37 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:15:37 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:15:37 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:15:37 kid1| HTCP Disabled.
+2025/09/04 08:15:37 kid1| Pinger socket opened on FD 55
+2025/09/04 08:15:37 kid1| Finished loading MIME types and icons.
+2025/09/04 08:15:37 kid1| Accepting HTTP Socket connections at conn11141 local=0.0.0.0:8443 remote=[::] FD 48 flags=9
+2025/09/04 08:15:37 kid1| Accepting SSL bumped HTTP Socket connections at conn11143 local=0.0.0.0:8080 remote=[::] FD 53 flags=9
+2025/09/04 08:15:37| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:15:37| pinger: Initialising ICMP pinger ...
+2025/09/04 08:15:37| pinger: ICMP socket opened.
+2025/09/04 08:15:37| pinger: ICMPv6 socket opened
+2025/09/04 08:15:37 kid1| Starting new external_acl_type helpers...
+    current master transaction: master5291
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master5291
+2025/09/04 08:15:37 kid1| Starting new external_acl_type helpers...
+    current master transaction: master5291
+2025/09/04 08:15:37 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master5291
+2025/09/04 08:15:47| Pinger exiting.
+2025/09/04 08:16:14 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master5331
+2025/09/04 08:16:14 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master5331
+2025/09/04 08:22:25 kid1| Preparing for shutdown after 3697 requests
+2025/09/04 08:22:25 kid1| Waiting 30 seconds for active connections to finish
+2025/09/04 08:22:25 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:22:25 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:22:25 kid1| Closing Pinger socket on FD 55
+2025/09/04 08:22:42| Pinger exiting.
+2025/09/04 08:22:56 kid1| Shutdown: NTLM authentication.
+2025/09/04 08:22:56 kid1| Shutdown: Negotiate authentication.
+2025/09/04 08:22:56 kid1| Shutdown: Digest authentication.
+2025/09/04 08:22:56 kid1| Shutdown: Basic authentication.
+2025/09/04 08:22:56 kid1| Shutting down...
+2025/09/04 08:22:56 kid1| Closing unlinkd pipe on FD 25
+2025/09/04 08:22:56 kid1| storeDirWriteCleanLogs: Starting...
+2025/09/04 08:22:56 kid1|   Finished.  Wrote 440 entries.
+2025/09/04 08:22:56 kid1|   Took 0.00 seconds (604395.60 entries/sec).
+CPU Usage: 28.080 seconds = 23.369 user + 4.711 sys
+Maximum Resident Size: 197936 KB
+Page faults with physical i/o: 21
+2025/09/04 08:22:56 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:22:56 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:22:56 kid1| Open FD UNSTARTED     5 IPC UNIX STREAM Parent
+2025/09/04 08:22:56 kid1| Open FD READ/WRITE   21 security_file_certgen #1
+2025/09/04 08:22:56 kid1| Open FD READ/WRITE   23 ext_kerberos_ldap_group_acl #1
+2025/09/04 08:22:56 kid1| Open FD READ/WRITE   26 ext_kerberos_ldap_group_acl #1
+2025/09/04 08:22:56 kid1| Open FD READ/WRITE   29 negotiate_kerberos_auth #1
+2025/09/04 08:22:56 kid1| Open FD UNSTARTED    36 security_file_certgen #2
+2025/09/04 08:22:56 kid1| Open FD UNSTARTED    39 security_file_certgen #3
+2025/09/04 08:22:56 kid1| Open FD UNSTARTED    43 security_file_certgen #4
+2025/09/04 08:22:56 kid1| Open FD UNSTARTED    45 security_file_certgen #5
+2025/09/04 08:22:56 kid1| Squid Cache (Version 5.7): Exiting normally.
+2025/09/04 08:23:00 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:23:00 kid1| Creating missing swap directories
+2025/09/04 08:23:00 kid1| /var/spool/squid exists
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/00
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/01
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/02
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/03
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/04
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/05
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/06
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/07
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/08
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/09
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/0A
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/0B
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/0C
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/0D
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/0E
+2025/09/04 08:23:00 kid1| Making directories in /var/spool/squid/0F
+2025/09/04 08:23:00| Removing PID file (/run/squid.pid)
+2025/09/04 08:23:01 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:23:01 kid1| Starting Squid Cache version 5.7 for x86_64-pc-linux-gnu...
+2025/09/04 08:23:01 kid1| Service Name: squid
+2025/09/04 08:23:01 kid1| Process ID 344239
+2025/09/04 08:23:01 kid1| Process Roles: worker
+2025/09/04 08:23:01 kid1| With 1024 file descriptors available
+2025/09/04 08:23:01 kid1| Initializing IP Cache...
+2025/09/04 08:23:01 kid1| DNS Socket created at 0.0.0.0, FD 9
+2025/09/04 08:23:01 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:23:01 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:23:01 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:23:01 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:23:01 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:23:01 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:23:01 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:23:01 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:23:01 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:23:01 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:23:01 kid1| Unlinkd pipe opened on FD 25
+2025/09/04 08:23:01 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2025/09/04 08:23:01 kid1| Store logging disabled
+2025/09/04 08:23:01 kid1| Swap maxSize 8388608 + 1048576 KB, estimated 725937 objects
+2025/09/04 08:23:01 kid1| Target number of buckets: 36296
+2025/09/04 08:23:01 kid1| Using 65536 Store buckets
+2025/09/04 08:23:01 kid1| Max Mem  size: 1048576 KB
+2025/09/04 08:23:01 kid1| Max Swap size: 8388608 KB
+2025/09/04 08:23:01 kid1| Rebuilding storage in /var/spool/squid (no log)
+2025/09/04 08:23:01 kid1| Using Least Load store dir selection
+2025/09/04 08:23:01 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:23:01 kid1| Finished loading MIME types and icons.
+2025/09/04 08:23:01 kid1| HTCP Disabled.
+2025/09/04 08:23:01 kid1| Pinger socket opened on FD 30
+2025/09/04 08:23:01 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:23:01 kid1| Adaptation support is off.
+2025/09/04 08:23:01 kid1| Accepting HTTP Socket connections at conn12 local=0.0.0.0:8443 remote=[::] FD 27 flags=9
+2025/09/04 08:23:01 kid1| Accepting SSL bumped HTTP Socket connections at conn14 local=0.0.0.0:8080 remote=[::] FD 28 flags=9
+2025/09/04 08:23:01| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:23:01| pinger: Initialising ICMP pinger ...
+2025/09/04 08:23:01| pinger: ICMP socket opened.
+2025/09/04 08:23:01| pinger: ICMPv6 socket opened
+2025/09/04 08:23:01 kid1| Done scanning /var/spool/squid dir (0 entries)
+2025/09/04 08:23:01 kid1| Finished rebuilding storage from disk.
+2025/09/04 08:23:01 kid1|         0 Entries scanned
+2025/09/04 08:23:01 kid1|         0 Invalid entries.
+2025/09/04 08:23:01 kid1|         0 With invalid flags.
+2025/09/04 08:23:01 kid1|         0 Objects loaded.
+2025/09/04 08:23:01 kid1|         0 Objects expired.
+2025/09/04 08:23:01 kid1|         0 Objects cancelled.
+2025/09/04 08:23:01 kid1|         0 Duplicate URLs purged.
+2025/09/04 08:23:01 kid1|         0 Swapfile clashes avoided.
+2025/09/04 08:23:01 kid1|   Took 0.12 seconds (  0.00 objects/sec).
+2025/09/04 08:23:01 kid1| Beginning Validation Procedure
+2025/09/04 08:23:01 kid1|   Completed Validation Procedure
+2025/09/04 08:23:01 kid1|   Validated 0 Entries
+2025/09/04 08:23:01 kid1|   store_swap_size = 0.00 KB
+2025/09/04 08:23:02 kid1| storeLateRelease: released 0 objects
+2025/09/04 08:23:03 kid1| Starting new basicauthenticator helpers...
+    current master transaction: master54
+2025/09/04 08:23:03 kid1| helperOpenServers: Starting 1/30 'basic_ldap_auth' processes
+    current master transaction: master54
+2025/09/04 08:23:03 kid1| Starting new external_acl_type helpers...
+    current master transaction: master54
+2025/09/04 08:23:03 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master54
+2025/09/04 08:23:03 kid1| Starting new external_acl_type helpers...
+    current master transaction: master54
+2025/09/04 08:23:03 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master54
+2025/09/04 08:23:03 kid1| Preparing for shutdown after 1 requests
+2025/09/04 08:23:03 kid1| Waiting 30 seconds for active connections to finish
+2025/09/04 08:23:03 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:23:03 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:23:03 kid1| Closing Pinger socket on FD 30
+2025/09/04 08:23:13| Pinger exiting.
+2025/09/04 08:23:34 kid1| Shutdown: NTLM authentication.
+2025/09/04 08:23:34 kid1| Shutdown: Negotiate authentication.
+2025/09/04 08:23:34 kid1| Shutdown: Digest authentication.
+2025/09/04 08:23:34 kid1| Shutdown: Basic authentication.
+2025/09/04 08:23:34 kid1| Shutting down...
+2025/09/04 08:23:34 kid1| Closing unlinkd pipe on FD 25
+2025/09/04 08:23:34 kid1| storeDirWriteCleanLogs: Starting...
+2025/09/04 08:23:34 kid1|   Finished.  Wrote 0 entries.
+2025/09/04 08:23:34 kid1|   Took 0.00 seconds (  0.00 entries/sec).
+CPU Usage: 0.214 seconds = 0.090 user + 0.124 sys
+Maximum Resident Size: 103536 KB
+Page faults with physical i/o: 0
+2025/09/04 08:23:34 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:23:34 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:23:34 kid1| Open FD UNSTARTED    10 security_file_certgen #1
+2025/09/04 08:23:34 kid1| Open FD UNSTARTED    12 security_file_certgen #2
+2025/09/04 08:23:34 kid1| Open FD UNSTARTED    14 security_file_certgen #3
+2025/09/04 08:23:34 kid1| Open FD READ/WRITE   15 basic_ldap_auth #1
+2025/09/04 08:23:34 kid1| Open FD UNSTARTED    16 security_file_certgen #4
+2025/09/04 08:23:34 kid1| Open FD UNSTARTED    18 security_file_certgen #5
+2025/09/04 08:23:34 kid1| Open FD READ/WRITE   19 ext_kerberos_ldap_group_acl #1
+2025/09/04 08:23:34 kid1| Open FD UNSTARTED    20 IPC UNIX STREAM Parent
+2025/09/04 08:23:34 kid1| Open FD READ/WRITE   21 ext_kerberos_ldap_group_acl #1
+2025/09/04 08:23:34 kid1| Squid Cache (Version 5.7): Exiting normally.
+2025/09/04 08:23:34| Removing PID file (/run/squid.pid)
+2025/09/04 08:24:34 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:24:34 kid1| Creating missing swap directories
+2025/09/04 08:24:34 kid1| /var/spool/squid exists
+2025/09/04 08:24:34 kid1| /var/spool/squid/00 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/00
+2025/09/04 08:24:34 kid1| /var/spool/squid/01 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/01
+2025/09/04 08:24:34 kid1| /var/spool/squid/02 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/02
+2025/09/04 08:24:34 kid1| /var/spool/squid/03 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/03
+2025/09/04 08:24:34 kid1| /var/spool/squid/04 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/04
+2025/09/04 08:24:34 kid1| /var/spool/squid/05 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/05
+2025/09/04 08:24:34 kid1| /var/spool/squid/06 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/06
+2025/09/04 08:24:34 kid1| /var/spool/squid/07 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/07
+2025/09/04 08:24:34 kid1| /var/spool/squid/08 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/08
+2025/09/04 08:24:34 kid1| /var/spool/squid/09 exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/09
+2025/09/04 08:24:34 kid1| /var/spool/squid/0A exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/0A
+2025/09/04 08:24:34 kid1| /var/spool/squid/0B exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/0B
+2025/09/04 08:24:34 kid1| /var/spool/squid/0C exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/0C
+2025/09/04 08:24:34 kid1| /var/spool/squid/0D exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/0D
+2025/09/04 08:24:34 kid1| /var/spool/squid/0E exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/0E
+2025/09/04 08:24:34 kid1| /var/spool/squid/0F exists
+2025/09/04 08:24:34 kid1| Making directories in /var/spool/squid/0F
+2025/09/04 08:24:34| Removing PID file (/run/squid.pid)
+2025/09/04 08:24:34 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:24:34 kid1| Starting Squid Cache version 5.7 for x86_64-pc-linux-gnu...
+2025/09/04 08:24:34 kid1| Service Name: squid
+2025/09/04 08:24:34 kid1| Process ID 344966
+2025/09/04 08:24:34 kid1| Process Roles: worker
+2025/09/04 08:24:34 kid1| With 1024 file descriptors available
+2025/09/04 08:24:34 kid1| Initializing IP Cache...
+2025/09/04 08:24:34 kid1| DNS Socket created at 0.0.0.0, FD 9
+2025/09/04 08:24:34 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:24:34 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:24:34 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:24:34 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:24:34 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:24:34 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:24:34 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:24:34 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:24:34 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:24:34 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:24:35 kid1| Unlinkd pipe opened on FD 25
+2025/09/04 08:24:35 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2025/09/04 08:24:35 kid1| Store logging disabled
+2025/09/04 08:24:35 kid1| Swap maxSize 8388608 + 1048576 KB, estimated 725937 objects
+2025/09/04 08:24:35 kid1| Target number of buckets: 36296
+2025/09/04 08:24:35 kid1| Using 65536 Store buckets
+2025/09/04 08:24:35 kid1| Max Mem  size: 1048576 KB
+2025/09/04 08:24:35 kid1| Max Swap size: 8388608 KB
+2025/09/04 08:24:35 kid1| Rebuilding storage in /var/spool/squid (clean log)
+2025/09/04 08:24:35 kid1| Using Least Load store dir selection
+2025/09/04 08:24:35 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:24:35 kid1| Finished loading MIME types and icons.
+2025/09/04 08:24:35 kid1| HTCP Disabled.
+2025/09/04 08:24:35 kid1| Pinger socket opened on FD 31
+2025/09/04 08:24:35 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:24:35 kid1| Adaptation support is off.
+2025/09/04 08:24:35 kid1| Accepting HTTP Socket connections at conn12 local=0.0.0.0:8443 remote=[::] FD 28 flags=9
+2025/09/04 08:24:35 kid1| Accepting SSL bumped HTTP Socket connections at conn14 local=0.0.0.0:8080 remote=[::] FD 29 flags=9
+2025/09/04 08:24:35 kid1| Done reading /var/spool/squid swaplog (0 entries)
+2025/09/04 08:24:35 kid1| Store rebuilding is 0.00% complete
+2025/09/04 08:24:35 kid1| Finished rebuilding storage from disk.
+2025/09/04 08:24:35 kid1|         0 Entries scanned
+2025/09/04 08:24:35 kid1|         0 Invalid entries.
+2025/09/04 08:24:35 kid1|         0 With invalid flags.
+2025/09/04 08:24:35 kid1|         0 Objects loaded.
+2025/09/04 08:24:35 kid1|         0 Objects expired.
+2025/09/04 08:24:35 kid1|         0 Objects cancelled.
+2025/09/04 08:24:35 kid1|         0 Duplicate URLs purged.
+2025/09/04 08:24:35 kid1|         0 Swapfile clashes avoided.
+2025/09/04 08:24:35 kid1|   Took 0.02 seconds (  0.00 objects/sec).
+2025/09/04 08:24:35 kid1| Beginning Validation Procedure
+2025/09/04 08:24:35 kid1|   Completed Validation Procedure
+2025/09/04 08:24:35 kid1|   Validated 0 Entries
+2025/09/04 08:24:35 kid1|   store_swap_size = 0.00 KB
+2025/09/04 08:24:35| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:24:35| pinger: Initialising ICMP pinger ...
+2025/09/04 08:24:35| pinger: ICMP socket opened.
+2025/09/04 08:24:35| pinger: ICMPv6 socket opened
+2025/09/04 08:24:36 kid1| storeLateRelease: released 0 objects
+2025/09/04 08:27:55 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 08:27:55 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:27:55 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:27:55 kid1| Closing Pinger socket on FD 31
+2025/09/04 08:27:55 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:27:55 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:27:55 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 08:27:55 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 08:27:55 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 08:27:55 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 08:27:55 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 08:27:55 kid1| Startup: Initialized Authentication.
+2025/09/04 08:27:55 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 08:27:55 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 08:27:55 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 08:27:55 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 08:27:55 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 08:27:55 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 08:27:55 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 08:27:55 kid1| Initializing https:// proxy context
+2025/09/04 08:27:55 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 08:27:55 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 08:27:55 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 08:27:55 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:27:55 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:27:55 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:27:55 kid1| Adaptation support is off.
+2025/09/04 08:27:55 kid1| Store logging disabled
+2025/09/04 08:27:55 kid1| DNS Socket created at 0.0.0.0, FD 13
+2025/09/04 08:27:55 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:27:55 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:27:55 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:27:55 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:27:55 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:27:55 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:27:55 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:27:55 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:27:55 kid1| HTCP Disabled.
+2025/09/04 08:27:55 kid1| Pinger socket opened on FD 32
+2025/09/04 08:27:55 kid1| Finished loading MIME types and icons.
+2025/09/04 08:27:55 kid1| Accepting HTTP Socket connections at conn34 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 08:27:55 kid1| Accepting SSL bumped HTTP Socket connections at conn36 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 08:27:55| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:27:55| pinger: Initialising ICMP pinger ...
+2025/09/04 08:27:55| pinger: ICMP socket opened.
+2025/09/04 08:27:55| pinger: ICMPv6 socket opened
+2025/09/04 08:28:15| Pinger exiting.
+2025/09/04 08:28:22 kid1| Preparing for shutdown after 7 requests
+2025/09/04 08:28:22 kid1| Waiting 30 seconds for active connections to finish
+2025/09/04 08:28:22 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:28:22 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:28:22 kid1| Closing Pinger socket on FD 32
+2025/09/04 08:28:35| Pinger exiting.
+2025/09/04 08:28:53 kid1| Shutdown: NTLM authentication.
+2025/09/04 08:28:53 kid1| Shutdown: Negotiate authentication.
+2025/09/04 08:28:53 kid1| Shutdown: Digest authentication.
+2025/09/04 08:28:53 kid1| Shutdown: Basic authentication.
+2025/09/04 08:28:53 kid1| Shutting down...
+2025/09/04 08:28:53 kid1| Closing unlinkd pipe on FD 25
+2025/09/04 08:28:53 kid1| storeDirWriteCleanLogs: Starting...
+2025/09/04 08:28:53 kid1|   Finished.  Wrote 0 entries.
+2025/09/04 08:28:53 kid1|   Took 0.00 seconds (  0.00 entries/sec).
+CPU Usage: 0.262 seconds = 0.203 user + 0.059 sys
+Maximum Resident Size: 106208 KB
+Page faults with physical i/o: 0
+2025/09/04 08:28:53 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:28:53 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:28:53 kid1| Open FD UNSTARTED     5 IPC UNIX STREAM Parent
+2025/09/04 08:28:53 kid1| Open FD UNSTARTED    15 security_file_certgen #1
+2025/09/04 08:28:53 kid1| Open FD UNSTARTED    19 security_file_certgen #2
+2025/09/04 08:28:53 kid1| Open FD UNSTARTED    21 security_file_certgen #3
+2025/09/04 08:28:53 kid1| Open FD UNSTARTED    24 security_file_certgen #4
+2025/09/04 08:28:53 kid1| Open FD UNSTARTED    27 security_file_certgen #5
+2025/09/04 08:28:53 kid1| Squid Cache (Version 5.7): Exiting normally.
+2025/09/04 08:28:53| Removing PID file (/run/squid.pid)
+2025/09/04 08:28:54 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:28:54 kid1| Creating missing swap directories
+2025/09/04 08:28:54 kid1| /var/spool/squid exists
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/00
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/01
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/02
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/03
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/04
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/05
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/06
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/07
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/08
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/09
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/0A
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/0B
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/0C
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/0D
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/0E
+2025/09/04 08:28:54 kid1| Making directories in /var/spool/squid/0F
+2025/09/04 08:28:54| Removing PID file (/run/squid.pid)
+2025/09/04 08:28:55 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:28:55 kid1| Starting Squid Cache version 5.7 for x86_64-pc-linux-gnu...
+2025/09/04 08:28:55 kid1| Service Name: squid
+2025/09/04 08:28:55 kid1| Process ID 347557
+2025/09/04 08:28:55 kid1| Process Roles: worker
+2025/09/04 08:28:55 kid1| With 1024 file descriptors available
+2025/09/04 08:28:55 kid1| Initializing IP Cache...
+2025/09/04 08:28:55 kid1| DNS Socket created at 0.0.0.0, FD 9
+2025/09/04 08:28:55 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:28:55 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:28:55 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:28:55 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:28:55 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:28:55 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:28:55 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:28:55 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:28:55 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:28:55 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:28:55 kid1| Unlinkd pipe opened on FD 25
+2025/09/04 08:28:55 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2025/09/04 08:28:55 kid1| Store logging disabled
+2025/09/04 08:28:55 kid1| Swap maxSize 8388608 + 1048576 KB, estimated 725937 objects
+2025/09/04 08:28:55 kid1| Target number of buckets: 36296
+2025/09/04 08:28:55 kid1| Using 65536 Store buckets
+2025/09/04 08:28:55 kid1| Max Mem  size: 1048576 KB
+2025/09/04 08:28:55 kid1| Max Swap size: 8388608 KB
+2025/09/04 08:28:55 kid1| Rebuilding storage in /var/spool/squid (no log)
+2025/09/04 08:28:55 kid1| Using Least Load store dir selection
+2025/09/04 08:28:55 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:28:55 kid1| Finished loading MIME types and icons.
+2025/09/04 08:28:55 kid1| HTCP Disabled.
+2025/09/04 08:28:55 kid1| Pinger socket opened on FD 30
+2025/09/04 08:28:55 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:28:55 kid1| Adaptation support is off.
+2025/09/04 08:28:55 kid1| Accepting HTTP Socket connections at conn12 local=0.0.0.0:8443 remote=[::] FD 27 flags=9
+2025/09/04 08:28:55 kid1| Accepting SSL bumped HTTP Socket connections at conn14 local=0.0.0.0:8080 remote=[::] FD 28 flags=9
+2025/09/04 08:28:55| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:28:55| pinger: Initialising ICMP pinger ...
+2025/09/04 08:28:55| pinger: ICMP socket opened.
+2025/09/04 08:28:55| pinger: ICMPv6 socket opened
+2025/09/04 08:28:55 kid1| Done scanning /var/spool/squid dir (0 entries)
+2025/09/04 08:28:55 kid1| Finished rebuilding storage from disk.
+2025/09/04 08:28:55 kid1|         0 Entries scanned
+2025/09/04 08:28:55 kid1|         0 Invalid entries.
+2025/09/04 08:28:55 kid1|         0 With invalid flags.
+2025/09/04 08:28:55 kid1|         0 Objects loaded.
+2025/09/04 08:28:55 kid1|         0 Objects expired.
+2025/09/04 08:28:55 kid1|         0 Objects cancelled.
+2025/09/04 08:28:55 kid1|         0 Duplicate URLs purged.
+2025/09/04 08:28:55 kid1|         0 Swapfile clashes avoided.
+2025/09/04 08:28:55 kid1|   Took 0.10 seconds (  0.00 objects/sec).
+2025/09/04 08:28:55 kid1| Beginning Validation Procedure
+2025/09/04 08:28:55 kid1|   Completed Validation Procedure
+2025/09/04 08:28:55 kid1|   Validated 0 Entries
+2025/09/04 08:28:55 kid1|   store_swap_size = 0.00 KB
+2025/09/04 08:28:56 kid1| storeLateRelease: released 0 objects
+2025/09/04 08:28:57 kid1| Preparing for shutdown after 0 requests
+2025/09/04 08:28:57 kid1| Waiting 30 seconds for active connections to finish
+2025/09/04 08:28:57 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 08:28:57 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 08:28:57 kid1| Closing Pinger socket on FD 30
+2025/09/04 08:29:15| Pinger exiting.
+2025/09/04 08:29:28 kid1| Shutdown: NTLM authentication.
+2025/09/04 08:29:28 kid1| Shutdown: Negotiate authentication.
+2025/09/04 08:29:28 kid1| Shutdown: Digest authentication.
+2025/09/04 08:29:28 kid1| Shutdown: Basic authentication.
+2025/09/04 08:29:29 kid1| Shutting down...
+2025/09/04 08:29:29 kid1| Closing unlinkd pipe on FD 25
+2025/09/04 08:29:29 kid1| storeDirWriteCleanLogs: Starting...
+2025/09/04 08:29:29 kid1|   Finished.  Wrote 0 entries.
+2025/09/04 08:29:29 kid1|   Took 0.00 seconds (  0.00 entries/sec).
+CPU Usage: 0.191 seconds = 0.112 user + 0.080 sys
+Maximum Resident Size: 102800 KB
+Page faults with physical i/o: 0
+2025/09/04 08:29:29 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:29:29 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 08:29:29 kid1| Open FD UNSTARTED    10 security_file_certgen #1
+2025/09/04 08:29:29 kid1| Open FD UNSTARTED    12 security_file_certgen #2
+2025/09/04 08:29:29 kid1| Open FD UNSTARTED    14 security_file_certgen #3
+2025/09/04 08:29:29 kid1| Open FD UNSTARTED    16 security_file_certgen #4
+2025/09/04 08:29:29 kid1| Open FD UNSTARTED    18 security_file_certgen #5
+2025/09/04 08:29:29 kid1| Open FD UNSTARTED    20 IPC UNIX STREAM Parent
+2025/09/04 08:29:29 kid1| Squid Cache (Version 5.7): Exiting normally.
+2025/09/04 08:29:29| Removing PID file (/run/squid.pid)
+2025/09/04 08:30:31 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:30:31 kid1| Creating missing swap directories
+2025/09/04 08:30:31 kid1| /var/spool/squid exists
+2025/09/04 08:30:31 kid1| /var/spool/squid/00 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/00
+2025/09/04 08:30:31 kid1| /var/spool/squid/01 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/01
+2025/09/04 08:30:31 kid1| /var/spool/squid/02 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/02
+2025/09/04 08:30:31 kid1| /var/spool/squid/03 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/03
+2025/09/04 08:30:31 kid1| /var/spool/squid/04 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/04
+2025/09/04 08:30:31 kid1| /var/spool/squid/05 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/05
+2025/09/04 08:30:31 kid1| /var/spool/squid/06 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/06
+2025/09/04 08:30:31 kid1| /var/spool/squid/07 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/07
+2025/09/04 08:30:31 kid1| /var/spool/squid/08 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/08
+2025/09/04 08:30:31 kid1| /var/spool/squid/09 exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/09
+2025/09/04 08:30:31 kid1| /var/spool/squid/0A exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/0A
+2025/09/04 08:30:31 kid1| /var/spool/squid/0B exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/0B
+2025/09/04 08:30:31 kid1| /var/spool/squid/0C exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/0C
+2025/09/04 08:30:31 kid1| /var/spool/squid/0D exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/0D
+2025/09/04 08:30:31 kid1| /var/spool/squid/0E exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/0E
+2025/09/04 08:30:31 kid1| /var/spool/squid/0F exists
+2025/09/04 08:30:31 kid1| Making directories in /var/spool/squid/0F
+2025/09/04 08:30:31| Removing PID file (/run/squid.pid)
+2025/09/04 08:30:31 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:30:31 kid1| Starting Squid Cache version 5.7 for x86_64-pc-linux-gnu...
+2025/09/04 08:30:31 kid1| Service Name: squid
+2025/09/04 08:30:31 kid1| Process ID 348291
+2025/09/04 08:30:31 kid1| Process Roles: worker
+2025/09/04 08:30:31 kid1| With 1024 file descriptors available
+2025/09/04 08:30:31 kid1| Initializing IP Cache...
+2025/09/04 08:30:31 kid1| DNS Socket created at 0.0.0.0, FD 9
+2025/09/04 08:30:31 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 08:30:31 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 08:30:31 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:30:31 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:30:31 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 08:30:31 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 08:30:31 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 08:30:31 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 08:30:31 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 08:30:31 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 08:30:31 kid1| Unlinkd pipe opened on FD 25
+2025/09/04 08:30:31 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2025/09/04 08:30:31 kid1| Store logging disabled
+2025/09/04 08:30:31 kid1| Swap maxSize 8388608 + 1048576 KB, estimated 725937 objects
+2025/09/04 08:30:31 kid1| Target number of buckets: 36296
+2025/09/04 08:30:31 kid1| Using 65536 Store buckets
+2025/09/04 08:30:31 kid1| Max Mem  size: 1048576 KB
+2025/09/04 08:30:31 kid1| Max Swap size: 8388608 KB
+2025/09/04 08:30:31 kid1| Rebuilding storage in /var/spool/squid (clean log)
+2025/09/04 08:30:31 kid1| Using Least Load store dir selection
+2025/09/04 08:30:31 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 08:30:31 kid1| Finished loading MIME types and icons.
+2025/09/04 08:30:31 kid1| HTCP Disabled.
+2025/09/04 08:30:31 kid1| Pinger socket opened on FD 31
+2025/09/04 08:30:31 kid1| Squid plugin modules loaded: 0
+2025/09/04 08:30:31 kid1| Adaptation support is off.
+2025/09/04 08:30:31 kid1| Accepting HTTP Socket connections at conn12 local=0.0.0.0:8443 remote=[::] FD 28 flags=9
+2025/09/04 08:30:31 kid1| Accepting SSL bumped HTTP Socket connections at conn14 local=0.0.0.0:8080 remote=[::] FD 29 flags=9
+2025/09/04 08:30:31 kid1| Done reading /var/spool/squid swaplog (0 entries)
+2025/09/04 08:30:31 kid1| Store rebuilding is 0.00% complete
+2025/09/04 08:30:31 kid1| Finished rebuilding storage from disk.
+2025/09/04 08:30:31 kid1|         0 Entries scanned
+2025/09/04 08:30:31 kid1|         0 Invalid entries.
+2025/09/04 08:30:31 kid1|         0 With invalid flags.
+2025/09/04 08:30:31 kid1|         0 Objects loaded.
+2025/09/04 08:30:31 kid1|         0 Objects expired.
+2025/09/04 08:30:31 kid1|         0 Objects cancelled.
+2025/09/04 08:30:31 kid1|         0 Duplicate URLs purged.
+2025/09/04 08:30:31 kid1|         0 Swapfile clashes avoided.
+2025/09/04 08:30:31 kid1|   Took 0.02 seconds (  0.00 objects/sec).
+2025/09/04 08:30:31 kid1| Beginning Validation Procedure
+2025/09/04 08:30:31 kid1|   Completed Validation Procedure
+2025/09/04 08:30:31 kid1|   Validated 0 Entries
+2025/09/04 08:30:31 kid1|   store_swap_size = 0.00 KB
+2025/09/04 08:30:31| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 08:30:31| pinger: Initialising ICMP pinger ...
+2025/09/04 08:30:31| pinger: ICMP socket opened.
+2025/09/04 08:30:31| pinger: ICMPv6 socket opened
+2025/09/04 08:30:32 kid1| storeLateRelease: released 0 objects
+2025/09/04 08:30:42 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master69
+2025/09/04 08:30:42 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master69
+2025/09/04 08:30:42 kid1| Starting new external_acl_type helpers...
+    current master transaction: master69
+2025/09/04 08:30:42 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master69
+2025/09/04 08:30:42 kid1| Starting new external_acl_type helpers...
+    current master transaction: master69
+2025/09/04 08:30:42 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master69
+2025/09/04 08:30:44 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master98
+2025/09/04 08:30:44 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master98
+2025/09/04 08:52:26 kid1| Starting new external_acl_type helpers...
+    current master transaction: master69
+2025/09/04 08:52:26 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master69
+2025/09/04 09:15:57 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 09:15:57 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 09:15:57 kid1| NETDB state saved; 5 entries, 0 msec
+2025/09/04 09:55:02 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 09:55:02 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 09:55:02 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 09:55:02 kid1| Closing Pinger socket on FD 31
+2025/09/04 09:55:02 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 09:55:02 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 09:55:02 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 09:55:02 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 09:55:02 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 09:55:02 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 09:55:02 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 09:55:02 kid1| Startup: Initialized Authentication.
+2025/09/04 09:55:02 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 09:55:02 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 09:55:02 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 09:55:02 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 09:55:02 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 09:55:02 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 09:55:02 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 09:55:02 kid1| Initializing https:// proxy context
+2025/09/04 09:55:02 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 09:55:02 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 09:55:02 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 09:55:02 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 09:55:02 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 09:55:02 kid1| Squid plugin modules loaded: 0
+2025/09/04 09:55:02 kid1| Adaptation support is off.
+2025/09/04 09:55:02 kid1| Store logging disabled
+2025/09/04 09:55:02 kid1| DNS Socket created at 0.0.0.0, FD 13
+2025/09/04 09:55:02 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 09:55:02 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 09:55:02 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 09:55:02 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 09:55:02 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 09:55:02 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 09:55:02 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 09:55:02 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 09:55:02 kid1| HTCP Disabled.
+2025/09/04 09:55:02 kid1| Pinger socket opened on FD 32
+2025/09/04 09:55:02 kid1| Finished loading MIME types and icons.
+2025/09/04 09:55:02 kid1| Accepting HTTP Socket connections at conn803 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 09:55:02 kid1| Accepting SSL bumped HTTP Socket connections at conn805 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 09:55:02| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 09:55:02| pinger: Initialising ICMP pinger ...
+2025/09/04 09:55:02| pinger: ICMP socket opened.
+2025/09/04 09:55:02| pinger: ICMPv6 socket opened
+2025/09/04 09:55:12| Pinger exiting.
+2025/09/04 09:56:07 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master607
+2025/09/04 09:56:07 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master607
+2025/09/04 09:56:07 kid1| Starting new external_acl_type helpers...
+    current master transaction: master607
+2025/09/04 09:56:07 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master607
+2025/09/04 09:56:07 kid1| Starting new external_acl_type helpers...
+    current master transaction: master607
+2025/09/04 09:56:07 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master607
+2025/09/04 09:56:58 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 09:56:58 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 09:56:58 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 09:56:58 kid1| Closing Pinger socket on FD 32
+2025/09/04 09:56:58 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 09:56:58 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 09:56:58 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 09:56:58 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 09:56:58 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 09:56:58 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 09:56:58 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 09:56:58 kid1| Startup: Initialized Authentication.
+2025/09/04 09:56:58 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 09:56:58 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 09:56:58 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 09:56:58 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 09:56:58 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 09:56:58 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 09:56:58 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 09:56:58 kid1| Initializing https:// proxy context
+2025/09/04 09:56:58 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 09:56:58 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 09:56:58 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 09:56:58 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 09:56:58 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 09:56:58 kid1| Squid plugin modules loaded: 0
+2025/09/04 09:56:58 kid1| Adaptation support is off.
+2025/09/04 09:56:58 kid1| Store logging disabled
+2025/09/04 09:56:58 kid1| DNS Socket created at 0.0.0.0, FD 13
+2025/09/04 09:56:58 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 09:56:58 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 09:56:58 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 09:56:58 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 09:56:58 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 09:56:58 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 09:56:58 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 09:56:58 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 09:56:58 kid1| HTCP Disabled.
+2025/09/04 09:56:58 kid1| Pinger socket opened on FD 34
+2025/09/04 09:56:58 kid1| Finished loading MIME types and icons.
+2025/09/04 09:56:58 kid1| Accepting HTTP Socket connections at conn838 local=0.0.0.0:8443 remote=[::] FD 31 flags=9
+2025/09/04 09:56:58 kid1| Accepting SSL bumped HTTP Socket connections at conn840 local=0.0.0.0:8080 remote=[::] FD 32 flags=9
+2025/09/04 09:56:58| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 09:56:58| pinger: Initialising ICMP pinger ...
+2025/09/04 09:56:58| pinger: ICMP socket opened.
+2025/09/04 09:56:58| pinger: ICMPv6 socket opened
+2025/09/04 09:56:58| Pinger exiting.
+2025/09/04 09:57:20 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master611
+2025/09/04 09:57:20 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master611
+2025/09/04 09:57:20 kid1| Starting new external_acl_type helpers...
+    current master transaction: master611
+2025/09/04 09:57:20 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master611
+2025/09/04 09:57:20 kid1| Starting new external_acl_type helpers...
+    current master transaction: master611
+2025/09/04 09:57:20 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master611
+2025/09/04 10:20:25 kid1| CacheManager: unknown@conn882 local=127.0.0.1:8080 remote=127.0.0.1:52280 FD 10 flags=1: password needed for 'menu'
+    current master transaction: master648
+2025/09/04 10:20:57 kid1| CacheManager: unknown@conn883 local=127.0.0.1:8080 remote=127.0.0.1:60290 FD 10 flags=1: password needed for 'menu'
+    current master transaction: master650
+2025/09/04 10:29:03 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 10:29:03 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 10:29:03 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 10:29:03 kid1| Closing Pinger socket on FD 34
+2025/09/04 10:29:03 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:29:03 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:29:03 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 10:29:03 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 10:29:03 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 10:29:03 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 10:29:03 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 10:29:03 kid1| Startup: Initialized Authentication.
+2025/09/04 10:29:03 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:29:03 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:29:03 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 10:29:03 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 10:29:03 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 10:29:03 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 10:29:03 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 10:29:03 kid1| Initializing https:// proxy context
+2025/09/04 10:29:03 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 10:29:03 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 10:29:03 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 10:29:03 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 10:29:03 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 10:29:03 kid1| Squid plugin modules loaded: 0
+2025/09/04 10:29:03 kid1| Adaptation support is off.
+2025/09/04 10:29:03 kid1| Store logging disabled
+2025/09/04 10:29:03 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 10:29:03 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 10:29:03 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 10:29:03 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:29:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:29:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:29:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:29:03 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 10:29:03 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 10:29:03 kid1| HTCP Disabled.
+2025/09/04 10:29:03 kid1| Pinger socket opened on FD 32
+2025/09/04 10:29:03 kid1| Finished loading MIME types and icons.
+2025/09/04 10:29:04 kid1| Accepting HTTP Socket connections at conn897 local=0.0.0.0:8443 remote=[::] FD 28 flags=9
+2025/09/04 10:29:04 kid1| Accepting SSL bumped HTTP Socket connections at conn899 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 10:29:04| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 10:29:04| pinger: Initialising ICMP pinger ...
+2025/09/04 10:29:04| pinger: ICMP socket opened.
+2025/09/04 10:29:04| pinger: ICMPv6 socket opened
+2025/09/04 10:29:04| Pinger exiting.
+2025/09/04 10:29:44 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 10:29:44 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 10:29:44 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 10:29:44 kid1| Closing Pinger socket on FD 32
+2025/09/04 10:29:44 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:29:44 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:29:44 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 10:29:44 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 10:29:44 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 10:29:44 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 10:29:44 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 10:29:44 kid1| Startup: Initialized Authentication.
+2025/09/04 10:29:44 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:29:44 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:29:44 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 10:29:44 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 10:29:44 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 10:29:44 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 10:29:44 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 10:29:44 kid1| Initializing https:// proxy context
+2025/09/04 10:29:44 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 10:29:44 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 10:29:44 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 10:29:44 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 10:29:44 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 10:29:44 kid1| Squid plugin modules loaded: 0
+2025/09/04 10:29:44 kid1| Adaptation support is off.
+2025/09/04 10:29:44 kid1| Store logging disabled
+2025/09/04 10:29:44 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 10:29:44 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 10:29:44 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 10:29:44 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:29:44 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:29:44 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:29:44 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:29:44 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 10:29:44 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 10:29:44 kid1| HTCP Disabled.
+2025/09/04 10:29:44 kid1| Pinger socket opened on FD 32
+2025/09/04 10:29:44 kid1| Finished loading MIME types and icons.
+2025/09/04 10:29:44 kid1| Accepting HTTP Socket connections at conn923 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 10:29:44 kid1| Accepting SSL bumped HTTP Socket connections at conn925 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 10:29:44| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 10:29:44| pinger: Initialising ICMP pinger ...
+2025/09/04 10:29:44| pinger: ICMP socket opened.
+2025/09/04 10:29:44| pinger: ICMPv6 socket opened
+2025/09/04 10:30:04| Pinger exiting.
+2025/09/04 10:34:42 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 10:34:42 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 10:34:42 kid1| NETDB state saved; 15 entries, 0 msec
+2025/09/04 10:34:57 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| Starting new external_acl_type helpers...
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| Starting new external_acl_type helpers...
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| Starting new external_acl_type helpers...
+    current master transaction: master677
+2025/09/04 10:34:57 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master677
+2025/09/04 10:36:02 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 10:36:02 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 10:36:02 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 10:36:02 kid1| Closing Pinger socket on FD 32
+2025/09/04 10:36:02 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:36:02 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:36:02 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 10:36:02 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 10:36:02 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 10:36:02 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 10:36:02 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 10:36:02 kid1| Startup: Initialized Authentication.
+2025/09/04 10:36:02 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:36:02 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:36:02 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 10:36:02 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 10:36:02 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 10:36:02 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 10:36:02 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 10:36:02 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 10:36:02 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 10:36:02 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 10:36:02 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 10:36:02 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 10:36:02 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 10:36:02 kid1| Initializing https:// proxy context
+2025/09/04 10:36:02 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 10:36:02 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 10:36:02 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 10:36:02 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 10:36:02 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 10:36:02 kid1| Squid plugin modules loaded: 0
+2025/09/04 10:36:02 kid1| Adaptation support is off.
+2025/09/04 10:36:02 kid1| Store logging disabled
+2025/09/04 10:36:02 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 10:36:02 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 10:36:02 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 10:36:02 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:36:02 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:36:02 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:36:02 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:36:02 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 10:36:02 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 10:36:02 kid1| HTCP Disabled.
+2025/09/04 10:36:02 kid1| Pinger socket opened on FD 32
+2025/09/04 10:36:02 kid1| Finished loading MIME types and icons.
+2025/09/04 10:36:02 kid1| Accepting HTTP Socket connections at conn956 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 10:36:02 kid1| Accepting SSL bumped HTTP Socket connections at conn958 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 10:36:02| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 10:36:02| pinger: Initialising ICMP pinger ...
+2025/09/04 10:36:02| pinger: ICMP socket opened.
+2025/09/04 10:36:02| pinger: ICMPv6 socket opened
+2025/09/04 10:36:12| Pinger exiting.
+2025/09/04 10:43:50 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| Starting new external_acl_type helpers...
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| Starting new external_acl_type helpers...
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| Starting new external_acl_type helpers...
+    current master transaction: master708
+2025/09/04 10:43:50 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master708
+2025/09/04 10:45:26 kid1| ALE missing HttpRequest object
+    current from-client connection: conn998 local=192.168.10.11:8080 remote=192.168.10.6:43254 FD 10 flags=1
+2025/09/04 10:45:26 kid1| ALE missing HttpRequest object
+    current from-client connection: conn999 local=192.168.10.11:8080 remote=192.168.10.6:43268 FD 10 flags=1
+2025/09/04 10:49:34 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 10:49:34 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 10:49:34 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 10:49:34 kid1| Closing Pinger socket on FD 32
+2025/09/04 10:49:34 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:49:34 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 10:49:34 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 10:49:34 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 10:49:34 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 10:49:34 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 10:49:34 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 10:49:34 kid1| Startup: Initialized Authentication.
+2025/09/04 10:49:34 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:49:34 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 10:49:34 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 10:49:34 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 10:49:34 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 10:49:34 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 10:49:34 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 10:49:34 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 10:49:34 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 10:49:34 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 10:49:34 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 10:49:34 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 10:49:34 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 10:49:34 kid1| Initializing https:// proxy context
+2025/09/04 10:49:34 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 10:49:34 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 10:49:34 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 10:49:34 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 10:49:34 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 10:49:34 kid1| Squid plugin modules loaded: 0
+2025/09/04 10:49:34 kid1| Adaptation support is off.
+2025/09/04 10:49:34 kid1| Store logging disabled
+2025/09/04 10:49:34 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 10:49:34 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 10:49:34 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 10:49:34 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:49:34 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:49:34 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 10:49:34 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 10:49:34 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 10:49:34 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 10:49:34 kid1| HTCP Disabled.
+2025/09/04 10:49:34 kid1| Pinger socket opened on FD 32
+2025/09/04 10:49:34 kid1| Finished loading MIME types and icons.
+2025/09/04 10:49:34 kid1| Accepting HTTP Socket connections at conn1011 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 10:49:34 kid1| Accepting SSL bumped HTTP Socket connections at conn1013 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 10:49:34| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 10:49:34| pinger: Initialising ICMP pinger ...
+2025/09/04 10:49:34| pinger: ICMP socket opened.
+2025/09/04 10:49:34| pinger: ICMPv6 socket opened
+2025/09/04 10:49:34| Pinger exiting.
+2025/09/04 11:00:58 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:00:58 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:00:58 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:00:58 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:00:58 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:00:58 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:00:58 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:00:58 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:00:58 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:00:58 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:00:58 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:00:58 kid1| Startup: Initialized Authentication.
+2025/09/04 11:00:58 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:00:58 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:00:58 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:00:58 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:00:58 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 11:00:58 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 11:00:58 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:00:58 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:00:58 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:00:58 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:00:58 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:00:58 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:00:58 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 11:00:58 kid1| Initializing https:// proxy context
+2025/09/04 11:00:58 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:00:58 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:00:58 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:00:58 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:00:58 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:00:58 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:00:58 kid1| Adaptation support is off.
+2025/09/04 11:00:58 kid1| Store logging disabled
+2025/09/04 11:00:58 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:00:58 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:00:58 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:00:58 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:00:58 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:00:58 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:00:58 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:00:58 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:00:58 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:00:58 kid1| HTCP Disabled.
+2025/09/04 11:00:58 kid1| Pinger socket opened on FD 32
+2025/09/04 11:00:58 kid1| Finished loading MIME types and icons.
+2025/09/04 11:00:58 kid1| Accepting HTTP Socket connections at conn1034 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:00:58 kid1| Accepting SSL bumped HTTP Socket connections at conn1036 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:00:58| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:00:58| pinger: Initialising ICMP pinger ...
+2025/09/04 11:00:58| pinger: ICMP socket opened.
+2025/09/04 11:00:58| pinger: ICMPv6 socket opened
+2025/09/04 11:01:08| Pinger exiting.
+2025/09/04 11:02:10 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:02:10 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:02:10 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:02:10 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:02:10 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:02:10 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:02:10 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:02:10 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:02:10 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:02:10 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:02:10 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:02:10 kid1| Startup: Initialized Authentication.
+2025/09/04 11:02:10 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:02:10 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:02:10 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:02:10 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:02:10 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 11:02:10 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 11:02:10 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:02:10 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:02:10 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:02:10 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:02:10 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:02:10 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:02:10 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 11:02:10 kid1| Initializing https:// proxy context
+2025/09/04 11:02:11 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:02:11 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:02:11 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:02:11 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:02:11 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:02:11 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:02:11 kid1| Adaptation support is off.
+2025/09/04 11:02:11 kid1| Store logging disabled
+2025/09/04 11:02:11 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:02:11 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:02:11 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:02:11 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:02:11 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:02:11 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:02:11 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:02:11 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:02:11 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:02:11 kid1| HTCP Disabled.
+2025/09/04 11:02:11 kid1| Pinger socket opened on FD 32
+2025/09/04 11:02:11 kid1| Finished loading MIME types and icons.
+2025/09/04 11:02:11 kid1| Accepting HTTP Socket connections at conn1057 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:02:11 kid1| Accepting SSL bumped HTTP Socket connections at conn1059 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:02:11| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:02:11| pinger: Initialising ICMP pinger ...
+2025/09/04 11:02:11| pinger: ICMP socket opened.
+2025/09/04 11:02:11| pinger: ICMPv6 socket opened
+2025/09/04 11:02:11| Pinger exiting.
+2025/09/04 11:06:12 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master752
+2025/09/04 11:06:12 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master752
+2025/09/04 11:06:12 kid1| Starting new external_acl_type helpers...
+    current master transaction: master752
+2025/09/04 11:06:12 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master752
+2025/09/04 11:06:12 kid1| Starting new external_acl_type helpers...
+    current master transaction: master752
+2025/09/04 11:06:12 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master752
+2025/09/04 11:09:22 kid1| Starting new external_acl_type helpers...
+    current master transaction: master752
+2025/09/04 11:09:22 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master752
+2025/09/04 11:31:44 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:31:44 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:31:44 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:31:44 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:31:44 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:31:44 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:31:44 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:31:44 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:31:44 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:31:44 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:31:44 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:31:44 kid1| Startup: Initialized Authentication.
+2025/09/04 11:31:44 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:31:44 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:31:44 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:31:44 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:31:44 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 11:31:44 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 11:31:44 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:31:44 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:31:44 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:31:44 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:31:44 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:31:44 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:31:44 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 11:31:44 kid1| Initializing https:// proxy context
+2025/09/04 11:31:44 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:31:44 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:31:44 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:31:44 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:31:44 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:31:44 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:31:44 kid1| Adaptation support is off.
+2025/09/04 11:31:44 kid1| Store logging disabled
+2025/09/04 11:31:44 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:31:44 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:31:44 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:31:44 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:31:44 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:31:44 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:31:44 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:31:44 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:31:44 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:31:44 kid1| HTCP Disabled.
+2025/09/04 11:31:44 kid1| Pinger socket opened on FD 32
+2025/09/04 11:31:44 kid1| Finished loading MIME types and icons.
+2025/09/04 11:31:44 kid1| Accepting HTTP Socket connections at conn1097 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:31:44 kid1| Accepting SSL bumped HTTP Socket connections at conn1099 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:31:44| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:31:44| pinger: Initialising ICMP pinger ...
+2025/09/04 11:31:44| pinger: ICMP socket opened.
+2025/09/04 11:31:44| pinger: ICMPv6 socket opened
+2025/09/04 11:31:54| Pinger exiting.
+2025/09/04 11:32:46 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:32:46 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:32:46 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:32:46 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:32:46 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:32:46 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:32:46 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:32:46 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:32:46 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:32:46 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:32:46 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:32:46 kid1| Startup: Initialized Authentication.
+2025/09/04 11:32:46 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:32:46 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:32:46 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:32:46 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:32:46 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 11:32:46 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 11:32:46 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:32:46 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:32:46 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:32:46 kid1| WARNING: (B) '127.0.0.1' is a subnetwork of (A) '127.0.0.1'
+2025/09/04 11:32:46 kid1| WARNING: because of this '127.0.0.1' is ignored to keep splay tree searching predictable
+2025/09/04 11:32:46 kid1| WARNING: You should probably remove '127.0.0.1' from the ACL named 'localhost'
+2025/09/04 11:32:46 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 11:32:46 kid1| Initializing https:// proxy context
+2025/09/04 11:32:46 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:32:46 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:32:46 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:32:46 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:32:46 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:32:46 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:32:46 kid1| Adaptation support is off.
+2025/09/04 11:32:46 kid1| Store logging disabled
+2025/09/04 11:32:46 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:32:46 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:32:46 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:32:46 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:32:46 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:32:46 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:32:46 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:32:46 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:32:46 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:32:46 kid1| HTCP Disabled.
+2025/09/04 11:32:46 kid1| Pinger socket opened on FD 32
+2025/09/04 11:32:46 kid1| Finished loading MIME types and icons.
+2025/09/04 11:32:46 kid1| Accepting HTTP Socket connections at conn1123 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:32:46 kid1| Accepting SSL bumped HTTP Socket connections at conn1125 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:32:46| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:32:46| pinger: Initialising ICMP pinger ...
+2025/09/04 11:32:46| pinger: ICMP socket opened.
+2025/09/04 11:32:46| pinger: ICMPv6 socket opened
+2025/09/04 11:32:56| Pinger exiting.
+2025/09/04 11:33:28 kid1| Preparing for shutdown after 541 requests
+2025/09/04 11:33:28 kid1| Waiting 30 seconds for active connections to finish
+2025/09/04 11:33:28 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:33:28 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:33:28 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:33:46| Pinger exiting.
+2025/09/04 11:33:59 kid1| Shutdown: NTLM authentication.
+2025/09/04 11:33:59 kid1| Shutdown: Negotiate authentication.
+2025/09/04 11:33:59 kid1| Shutdown: Digest authentication.
+2025/09/04 11:33:59 kid1| Shutdown: Basic authentication.
+2025/09/04 11:33:59 kid1| Shutting down...
+2025/09/04 11:33:59 kid1| Closing unlinkd pipe on FD 25
+2025/09/04 11:33:59 kid1| storeDirWriteCleanLogs: Starting...
+2025/09/04 11:33:59 kid1|   Finished.  Wrote 262 entries.
+2025/09/04 11:33:59 kid1|   Took 0.00 seconds (457242.58 entries/sec).
+CPU Usage: 4.898 seconds = 3.686 user + 1.212 sys
+Maximum Resident Size: 179344 KB
+Page faults with physical i/o: 0
+2025/09/04 11:33:59 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:33:59 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:33:59 kid1| Open FD UNSTARTED     9 IPC UNIX STREAM Parent
+2025/09/04 11:33:59 kid1| Open FD UNSTARTED    13 security_file_certgen #1
+2025/09/04 11:33:59 kid1| Open FD UNSTARTED    16 security_file_certgen #2
+2025/09/04 11:33:59 kid1| Open FD UNSTARTED    19 security_file_certgen #3
+2025/09/04 11:33:59 kid1| Open FD UNSTARTED    23 security_file_certgen #4
+2025/09/04 11:33:59 kid1| Open FD UNSTARTED    27 security_file_certgen #5
+2025/09/04 11:33:59 kid1| Squid Cache (Version 5.7): Exiting normally.
+2025/09/04 11:33:59| Removing PID file (/run/squid.pid)
+2025/09/04 11:34:24 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 11:34:24 kid1| Creating missing swap directories
+2025/09/04 11:34:24 kid1| /var/spool/squid exists
+2025/09/04 11:34:24 kid1| /var/spool/squid/00 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/00
+2025/09/04 11:34:24 kid1| /var/spool/squid/01 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/01
+2025/09/04 11:34:24 kid1| /var/spool/squid/02 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/02
+2025/09/04 11:34:24 kid1| /var/spool/squid/03 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/03
+2025/09/04 11:34:24 kid1| /var/spool/squid/04 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/04
+2025/09/04 11:34:24 kid1| /var/spool/squid/05 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/05
+2025/09/04 11:34:24 kid1| /var/spool/squid/06 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/06
+2025/09/04 11:34:24 kid1| /var/spool/squid/07 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/07
+2025/09/04 11:34:24 kid1| /var/spool/squid/08 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/08
+2025/09/04 11:34:24 kid1| /var/spool/squid/09 exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/09
+2025/09/04 11:34:24 kid1| /var/spool/squid/0A exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/0A
+2025/09/04 11:34:24 kid1| /var/spool/squid/0B exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/0B
+2025/09/04 11:34:24 kid1| /var/spool/squid/0C exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/0C
+2025/09/04 11:34:24 kid1| /var/spool/squid/0D exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/0D
+2025/09/04 11:34:24 kid1| /var/spool/squid/0E exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/0E
+2025/09/04 11:34:24 kid1| /var/spool/squid/0F exists
+2025/09/04 11:34:24 kid1| Making directories in /var/spool/squid/0F
+2025/09/04 11:34:24| Removing PID file (/run/squid.pid)
+2025/09/04 11:34:24 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 11:34:24 kid1| Starting Squid Cache version 5.7 for x86_64-pc-linux-gnu...
+2025/09/04 11:34:24 kid1| Service Name: squid
+2025/09/04 11:34:24 kid1| Process ID 448153
+2025/09/04 11:34:24 kid1| Process Roles: worker
+2025/09/04 11:34:24 kid1| With 1024 file descriptors available
+2025/09/04 11:34:24 kid1| Initializing IP Cache...
+2025/09/04 11:34:24 kid1| DNS Socket created at 0.0.0.0, FD 9
+2025/09/04 11:34:24 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:34:24 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:34:24 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:34:24 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:34:24 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:34:24 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:34:24 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:34:24 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:34:24 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:34:24 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:34:24 kid1| Unlinkd pipe opened on FD 25
+2025/09/04 11:34:24 kid1| Local cache digest enabled; rebuild/rewrite every 3600/3600 sec
+2025/09/04 11:34:24 kid1| Store logging disabled
+2025/09/04 11:34:24 kid1| Swap maxSize 8388608 + 1048576 KB, estimated 725937 objects
+2025/09/04 11:34:24 kid1| Target number of buckets: 36296
+2025/09/04 11:34:24 kid1| Using 65536 Store buckets
+2025/09/04 11:34:24 kid1| Max Mem  size: 1048576 KB
+2025/09/04 11:34:24 kid1| Max Swap size: 8388608 KB
+2025/09/04 11:34:24 kid1| Rebuilding storage in /var/spool/squid (clean log)
+2025/09/04 11:34:24 kid1| Using Least Load store dir selection
+2025/09/04 11:34:24 kid1| Set Current Directory to /var/spool/squid
+2025/09/04 11:34:24 kid1| Finished loading MIME types and icons.
+2025/09/04 11:34:24 kid1| HTCP Disabled.
+2025/09/04 11:34:24 kid1| Pinger socket opened on FD 31
+2025/09/04 11:34:24 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:34:24 kid1| Adaptation support is off.
+2025/09/04 11:34:24 kid1| Accepting HTTP Socket connections at conn12 local=0.0.0.0:8443 remote=[::] FD 28 flags=9
+2025/09/04 11:34:24 kid1| Accepting SSL bumped HTTP Socket connections at conn14 local=0.0.0.0:8080 remote=[::] FD 29 flags=9
+2025/09/04 11:34:24 kid1| Done reading /var/spool/squid swaplog (262 entries)
+2025/09/04 11:34:24 kid1| Finished rebuilding storage from disk.
+2025/09/04 11:34:24 kid1|       262 Entries scanned
+2025/09/04 11:34:24 kid1|         0 Invalid entries.
+2025/09/04 11:34:24 kid1|         0 With invalid flags.
+2025/09/04 11:34:24 kid1|       262 Objects loaded.
+2025/09/04 11:34:24 kid1|         0 Objects expired.
+2025/09/04 11:34:24 kid1|         0 Objects cancelled.
+2025/09/04 11:34:24 kid1|         0 Duplicate URLs purged.
+2025/09/04 11:34:24 kid1|         0 Swapfile clashes avoided.
+2025/09/04 11:34:24 kid1|   Took 0.02 seconds (11111.58 objects/sec).
+2025/09/04 11:34:24 kid1| Beginning Validation Procedure
+2025/09/04 11:34:24 kid1|   Completed Validation Procedure
+2025/09/04 11:34:24 kid1|   Validated 262 Entries
+2025/09/04 11:34:24 kid1|   store_swap_size = 10012.00 KB
+2025/09/04 11:34:24| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:34:24| pinger: Initialising ICMP pinger ...
+2025/09/04 11:34:24| pinger: ICMP socket opened.
+2025/09/04 11:34:24| pinger: ICMPv6 socket opened
+2025/09/04 11:34:25 kid1| storeLateRelease: released 0 objects
+2025/09/04 11:35:57 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:35:57 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:35:57 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:35:57 kid1| Closing Pinger socket on FD 31
+2025/09/04 11:35:57 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:35:57 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:35:57 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:35:57 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:35:57 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:35:57 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:35:57 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:35:57 kid1| Startup: Initialized Authentication.
+2025/09/04 11:35:57 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:35:57 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:35:57 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:35:57 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:35:57 kid1| WARNING: 'online.stat.gov.kz' is a subdomain of '.gov.kz'
+2025/09/04 11:35:57 kid1| WARNING: You should remove 'online.stat.gov.kz' from the ACL named 'Work_Site'
+2025/09/04 11:35:57 kid1| UPGRADE: ACL 'manager' is now a built-in ACL. Remove it from your config file.
+2025/09/04 11:35:57 kid1| Initializing https:// proxy context
+2025/09/04 11:35:57 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:35:57 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:35:57 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:35:57 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:35:57 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:35:57 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:35:57 kid1| Adaptation support is off.
+2025/09/04 11:35:57 kid1| Store logging disabled
+2025/09/04 11:35:57 kid1| DNS Socket created at 0.0.0.0, FD 13
+2025/09/04 11:35:57 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:35:57 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:35:57 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:35:57 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:35:57 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:35:57 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:35:57 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:35:57 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:35:57 kid1| HTCP Disabled.
+2025/09/04 11:35:57 kid1| Pinger socket opened on FD 32
+2025/09/04 11:35:57 kid1| Finished loading MIME types and icons.
+2025/09/04 11:35:57 kid1| Accepting HTTP Socket connections at conn29 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:35:57 kid1| Accepting SSL bumped HTTP Socket connections at conn31 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:35:57| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:35:57| pinger: Initialising ICMP pinger ...
+2025/09/04 11:35:57| pinger: ICMP socket opened.
+2025/09/04 11:35:57| pinger: ICMPv6 socket opened
+2025/09/04 11:35:57| Pinger exiting.
+2025/09/04 11:42:53 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| Starting new external_acl_type helpers...
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| Starting new external_acl_type helpers...
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| Starting new external_acl_type helpers...
+    current master transaction: master56
+2025/09/04 11:42:53 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master56
+2025/09/04 11:43:02 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:43:02 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:43:02 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:43:02 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:43:02 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:43:02 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:43:02 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:43:02 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:43:02 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:43:02 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:43:02 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:43:02 kid1| Startup: Initialized Authentication.
+2025/09/04 11:43:02 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:43:02 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:43:02 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:43:02 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:43:02 kid1| Initializing https:// proxy context
+2025/09/04 11:43:02 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:43:02 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:43:02 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:43:03 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:43:03 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:43:03 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:43:03 kid1| Adaptation support is off.
+2025/09/04 11:43:03 kid1| Store logging disabled
+2025/09/04 11:43:03 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:43:03 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:43:03 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:43:03 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:43:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:43:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:43:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:43:03 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:43:03 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:43:03 kid1| HTCP Disabled.
+2025/09/04 11:43:03 kid1| Pinger socket opened on FD 32
+2025/09/04 11:43:03 kid1| Finished loading MIME types and icons.
+2025/09/04 11:43:03 kid1| Accepting HTTP Socket connections at conn62 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:43:03 kid1| Accepting SSL bumped HTTP Socket connections at conn64 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:43:03| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:43:03| pinger: Initialising ICMP pinger ...
+2025/09/04 11:43:03| pinger: ICMP socket opened.
+2025/09/04 11:43:03| pinger: ICMPv6 socket opened
+2025/09/04 11:43:13| Pinger exiting.
+2025/09/04 11:43:50 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| Starting new external_acl_type helpers...
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| Starting new external_acl_type helpers...
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| Starting new external_acl_type helpers...
+    current master transaction: master71
+2025/09/04 11:43:50 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master71
+2025/09/04 11:51:03 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:51:03 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:51:03 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:51:03 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:51:03 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:51:03 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:51:03 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:51:03 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:51:03 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:51:03 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:51:03 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:51:03 kid1| Startup: Initialized Authentication.
+2025/09/04 11:51:03 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:51:03 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:51:03 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:51:03 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:51:03 kid1| Initializing https:// proxy context
+2025/09/04 11:51:03 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:51:03 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:51:03 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:51:03 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:51:03 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:51:03 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:51:03 kid1| Adaptation support is off.
+2025/09/04 11:51:03 kid1| Store logging disabled
+2025/09/04 11:51:03 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:51:03 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:51:03 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:51:03 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:51:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:51:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:51:03 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:51:03 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:51:03 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:51:03 kid1| HTCP Disabled.
+2025/09/04 11:51:03 kid1| Pinger socket opened on FD 32
+2025/09/04 11:51:03 kid1| Finished loading MIME types and icons.
+2025/09/04 11:51:03 kid1| Accepting HTTP Socket connections at conn116 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:51:03 kid1| Accepting SSL bumped HTTP Socket connections at conn118 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:51:03| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:51:03| pinger: Initialising ICMP pinger ...
+2025/09/04 11:51:03| pinger: ICMP socket opened.
+2025/09/04 11:51:03| pinger: ICMPv6 socket opened
+2025/09/04 11:51:13| Pinger exiting.
+2025/09/04 11:57:13 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:57:13 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:57:13 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:57:13 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:57:13 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:57:13 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:57:13 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:57:13 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:57:13 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:57:13 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:57:13 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:57:13 kid1| Startup: Initialized Authentication.
+2025/09/04 11:57:13 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:57:13 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:57:13 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:57:13 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:57:13 kid1| Initializing https:// proxy context
+2025/09/04 11:57:13 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:57:13 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:57:13 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:57:13 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:57:13 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:57:13 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:57:13 kid1| Adaptation support is off.
+2025/09/04 11:57:13 kid1| Store logging disabled
+2025/09/04 11:57:13 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:57:13 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:57:13 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:57:13 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:57:13 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:57:13 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:57:13 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:57:13 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:57:13 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:57:13 kid1| HTCP Disabled.
+2025/09/04 11:57:13 kid1| Pinger socket opened on FD 32
+2025/09/04 11:57:13 kid1| Finished loading MIME types and icons.
+2025/09/04 11:57:13 kid1| Accepting HTTP Socket connections at conn141 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:57:13 kid1| Accepting SSL bumped HTTP Socket connections at conn143 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:57:13| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:57:13| pinger: Initialising ICMP pinger ...
+2025/09/04 11:57:13| pinger: ICMP socket opened.
+2025/09/04 11:57:13| pinger: ICMPv6 socket opened
+2025/09/04 11:57:23| Pinger exiting.
+2025/09/04 11:58:11 kid1| Reconfiguring Squid Cache (version 5.7)...
+2025/09/04 11:58:11 kid1| Closing HTTP(S) port 0.0.0.0:8443
+2025/09/04 11:58:11 kid1| Closing HTTP(S) port 0.0.0.0:8080
+2025/09/04 11:58:11 kid1| Closing Pinger socket on FD 32
+2025/09/04 11:58:11 kid1| Logfile: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:58:11 kid1| Logfile Daemon: closing log daemon:/var/log/squid/access.log
+2025/09/04 11:58:11 kid1| Startup: Initializing Authentication Schemes ...
+2025/09/04 11:58:11 kid1| Startup: Initialized Authentication Scheme 'basic'
+2025/09/04 11:58:11 kid1| Startup: Initialized Authentication Scheme 'digest'
+2025/09/04 11:58:11 kid1| Startup: Initialized Authentication Scheme 'negotiate'
+2025/09/04 11:58:11 kid1| Startup: Initialized Authentication Scheme 'ntlm'
+2025/09/04 11:58:11 kid1| Startup: Initialized Authentication.
+2025/09/04 11:58:11 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:58:11 kid1| aclIpParseIpData: IPv6 has not been enabled.
+2025/09/04 11:58:11 kid1| Processing Configuration File: /etc/squid/squid.conf (depth 0)
+2025/09/04 11:58:11 kid1| WARNING: Failed to decode EC parameters '/etc/squid/ssl/squid_dhparam.pem'. error:1E08010C:DECODER routines::unsupported
+2025/09/04 11:58:11 kid1| Initializing https:// proxy context
+2025/09/04 11:58:11 kid1| Initializing http_port 0.0.0.0:8080 TLS contexts
+2025/09/04 11:58:11 kid1| Using certificate in /etc/squid/ssl/squidca.crt
+2025/09/04 11:58:11 kid1| Using key in /etc/squid/ssl/squidca.key
+2025/09/04 11:58:11 kid1| Logfile: opening log daemon:/var/log/squid/access.log
+2025/09/04 11:58:11 kid1| Logfile Daemon: opening log /var/log/squid/access.log
+2025/09/04 11:58:11 kid1| Squid plugin modules loaded: 0
+2025/09/04 11:58:11 kid1| Adaptation support is off.
+2025/09/04 11:58:11 kid1| Store logging disabled
+2025/09/04 11:58:11 kid1| DNS Socket created at 0.0.0.0, FD 11
+2025/09/04 11:58:11 kid1| Adding nameserver 192.168.10.61 from squid.conf
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 5/5 'security_file_certgen' processes
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 0/30 'negotiate_kerberos_auth' processes
+2025/09/04 11:58:11 kid1| helperStatefulOpenServers: No 'negotiate_kerberos_auth' processes needed.
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 0/30 'basic_ldap_auth' processes
+2025/09/04 11:58:11 kid1| helperOpenServers: No 'basic_ldap_auth' processes needed.
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:58:11 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:58:11 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 0/5 'ext_kerberos_ldap_group_acl' processes
+2025/09/04 11:58:11 kid1| helperOpenServers: No 'ext_kerberos_ldap_group_acl' processes needed.
+2025/09/04 11:58:11 kid1| helperOpenServers: Starting 0/5 'ext_ldap_group_acl' processes
+2025/09/04 11:58:11 kid1| helperOpenServers: No 'ext_ldap_group_acl' processes needed.
+2025/09/04 11:58:11 kid1| HTCP Disabled.
+2025/09/04 11:58:11 kid1| Pinger socket opened on FD 32
+2025/09/04 11:58:11 kid1| Finished loading MIME types and icons.
+2025/09/04 11:58:11 kid1| Accepting HTTP Socket connections at conn167 local=0.0.0.0:8443 remote=[::] FD 29 flags=9
+2025/09/04 11:58:11 kid1| Accepting SSL bumped HTTP Socket connections at conn169 local=0.0.0.0:8080 remote=[::] FD 30 flags=9
+2025/09/04 11:58:11| WARNING: BCP 177 violation. Detected non-functional IPv6 loopback.
+2025/09/04 11:58:11| pinger: Initialising ICMP pinger ...
+2025/09/04 11:58:11| pinger: ICMP socket opened.
+2025/09/04 11:58:11| pinger: ICMPv6 socket opened
+2025/09/04 11:58:11| Pinger exiting.
+2025/09/04 12:06:12 kid1| Starting new negotiateauthenticator helpers...
+    current master transaction: master137
+2025/09/04 12:06:12 kid1| helperOpenServers: Starting 1/30 'negotiate_kerberos_auth' processes
+    current master transaction: master137
+2025/09/04 12:06:12 kid1| Starting new external_acl_type helpers...
+    current master transaction: master137
+2025/09/04 12:06:12 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master137
+2025/09/04 12:06:12 kid1| Starting new external_acl_type helpers...
+    current master transaction: master137
+2025/09/04 12:06:12 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master137
+2025/09/04 12:19:49 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 12:19:49 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 12:19:49 kid1| NETDB state saved; 2 entries, 0 msec
+2025/09/04 12:32:12 kid1| Starting new external_acl_type helpers...
+    current master transaction: master137
+2025/09/04 12:32:12 kid1| helperOpenServers: Starting 1/5 'ext_kerberos_ldap_group_acl' processes
+    current master transaction: master137
+2025/09/04 13:39:32 kid1| Logfile: opening log stdio:/var/spool/squid/netdb.state
+2025/09/04 13:39:32 kid1| Logfile: closing log stdio:/var/spool/squid/netdb.state
+2025/09/04 13:39:32 kid1| NETDB state saved; 5 entries, 0 msec

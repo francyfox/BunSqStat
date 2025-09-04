@@ -1,18 +1,18 @@
 {
   "name": "bunsqstat",
   "version": "1.0.0",
+  "devDependencies": {
+    "@biomejs/biome": "2.2.2",
+    "turbo": "latest"
+  },
   "description": "",
+  "packageManager": "bun@1.2.21",
+  "private": false,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint"
   },
-  "devDependencies": {
-    "@biomejs/biome": "2.2.2",
-    "turbo": "latest"
-  },
-  "packageManager": "bun@1.2.21",
-  "private": false,
   "workspaces": [
     "apps/*",
     "packages/*"
