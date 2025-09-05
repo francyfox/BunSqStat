@@ -1,12 +1,12 @@
 import { Elysia, t } from "elysia";
-import { AccessLog } from "@/modules/log-manager/access-log";
+import { AccessLog, AccessLogSchema } from "@/modules/log-manager/access-log";
 
 export const Stats = new Elysia().get(
 	"/stats",
 	async () => {
-		const accessLogs = await AccessLog.getLogs();
+		const accessLog = await AccessLog.getLogs();
 		const items = {
-			accessLogs,
+			accessLog,
 		};
 
 		return items;
@@ -17,7 +17,10 @@ export const Stats = new Elysia().get(
 		},
 		response: {
 			"200": t.Object({
-				accessLogs: t.Object({}),
+				accessLog: t.Object({
+					items: t.Array(AccessLogSchema),
+					total: t.Number(),
+				}),
 			}),
 		},
 	},

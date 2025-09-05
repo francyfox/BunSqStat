@@ -1,10 +1,33 @@
+import { type Static, t } from "elysia";
 import { config } from "@/config";
 import { regexMap } from "@/consts";
-import { getLogParams } from "@/modules/log-manager/index";
 import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
 import { readFileLines } from "@/utils/file";
 import { parseLogLine } from "@/utils/log";
+
+export interface getLogParams {
+	search?: string;
+	page?: number;
+	fields?: string[];
+}
+
+export const AccessLogSchema = t.Object({
+	timestamp: t.String(),
+	duration: t.String(),
+	clientIP: t.String(),
+	resultType: t.String(),
+	resultStatus: t.String(),
+	bytes: t.String(),
+	method: t.String(),
+	url: t.String(),
+	user: t.String(),
+	hierarchyType: t.String(),
+	hierarchyHost: t.String(),
+	contentType: t.String(),
+});
+
+export type TAccessLog = Static<typeof AccessLogSchema>;
 
 export const AccessLog = {
 	name: "accessLog",
@@ -35,15 +58,24 @@ export const AccessLog = {
 			"log_idx '*' LIMIT 0 1".split(" "),
 		);
 
-		if (results.length) {
-		} // TODO: need read?
+		const logLines = await readFileLines(config.ACCESS_LOG, 1);
 
-		const logs = await readFileLines(config.ACCESS_LOG, 1);
+		if (results.length > 0 && logLines.length > 0) {
+			const parsedFirst = parseLogLine(
+				logLines[0] || "",
+				this.regexMap,
+			) as TAccessLog;
+
+			if (parsedFirst.timestamp === results[0].extra_attributes.timestamp)
+				return;
+		}
+
+		const logs = await readFileLines(config.ACCESS_LOG, 100);
 
 		const stack = logs.map((log) => {
-			const parsed = parseLogLine(log, this.regexMap);
+			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
 			return redisClient.hmset(
-				`log:${parsed["timestamp"] || Date.now().toString()}`,
+				`log:${parsed.timestamp || Date.now().toString()}`,
 				mergeStrip(Object.keys(parsed), Object.values(parsed)),
 			);
 		});
@@ -58,9 +90,9 @@ export const AccessLog = {
 		const pageSize = 10;
 		const returnFields = fields ? `RETURN ${fields.join(" ")}` : "";
 		const args =
-			`log_idx ${search || "'*'"} LIMIT ${(page || 0) * pageSize} ${((page || 0) + 1) * pageSize} ${returnFields}`.split(
-				" ",
-			);
+			`log_idx ${search || "'*'"} LIMIT ${(page || 0) * pageSize} ${((page || 0) + 1) * pageSize} ${returnFields}`
+				.split(" ")
+				.filter(Boolean);
 
 		const { results } = await redisClient.send("FT.SEARCH", args);
 		const items = results.map((i: any) => i.extra_attributes);
