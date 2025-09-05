@@ -1,11 +1,13 @@
 import { config } from "@/config";
 import { regexMap } from "@/consts";
+import { getLogParams } from "@/modules/log-manager/index";
 import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
 import { readFileLines } from "@/utils/file";
 import { parseLogLine } from "@/utils/log";
 
 export const AccessLog = {
+	name: "accessLog",
 	regexMap,
 
 	async createIndex() {
@@ -47,5 +49,25 @@ export const AccessLog = {
 		});
 
 		await Promise.all(stack);
+	},
+
+	async getLogs({ search, page, fields }: getLogParams = {}) {
+		const keys = await redisClient.keys("log:*");
+		const total = keys.length;
+
+		const pageSize = 10;
+		const returnFields = fields ? `RETURN ${fields.join(" ")}` : "";
+		const args =
+			`log_idx ${search || "'*'"} LIMIT ${(page || 0) * pageSize} ${((page || 0) + 1) * pageSize} ${returnFields}`.split(
+				" ",
+			);
+
+		const { results } = await redisClient.send("FT.SEARCH", args);
+		const items = results.map((i: any) => i.extra_attributes);
+
+		return {
+			items,
+			total,
+		};
 	},
 };
