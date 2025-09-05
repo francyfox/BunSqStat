@@ -1,3 +1,4 @@
+import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import postcssCalc from "postcss-calc";
 import postcssFor from "postcss-for";
@@ -12,6 +13,11 @@ export default defineConfig({
 	css: {
 		postcss: {
 			plugins: [postcssSimpleVars(), postcssFor(), postcssCalc({})],
+		},
+	},
+	resolve: {
+		alias: {
+			"@": fileURLToPath(new URL("./src", import.meta.url)),
 		},
 	},
 });

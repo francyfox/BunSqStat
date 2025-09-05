@@ -1,36 +1,12 @@
-import { type Static, t } from "elysia";
 import { config } from "@/config";
 import { regexMap } from "@/consts";
+import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
 import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
 import { readFileLines } from "@/utils/file";
 import { parseLogLine } from "@/utils/log";
 
-export interface getLogParams {
-	search?: string;
-	page?: number;
-	fields?: string[];
-}
-
-export const AccessLogSchema = t.Object({
-	timestamp: t.String(),
-	duration: t.String(),
-	clientIP: t.String(),
-	resultType: t.String(),
-	resultStatus: t.String(),
-	bytes: t.String(),
-	method: t.String(),
-	url: t.String(),
-	user: t.String(),
-	hierarchyType: t.String(),
-	hierarchyHost: t.String(),
-	contentType: t.String(),
-});
-
-export type TAccessLog = Static<typeof AccessLogSchema>;
-
-export const AccessLog = {
-	name: "accessLog",
+export const AccessLogService = {
 	regexMap,
 
 	async createIndex() {

@@ -1,10 +1,11 @@
 import { Elysia, t } from "elysia";
-import { AccessLog, AccessLogSchema } from "@/modules/log-manager/access-log";
+import { AccessLogService } from "@/modules/access-logs/service";
+import { AccessLogSchema } from "@/modules/access-logs/types";
 
 export const Stats = new Elysia().get(
 	"/stats",
 	async () => {
-		const accessLog = await AccessLog.getLogs();
+		const accessLog = await AccessLogService.getLogs();
 		const items = {
 			accessLog,
 		};

@@ -1,7 +1,7 @@
 import { resolve } from "node:path";
 import chokidar from "chokidar";
 import { config } from "@/config";
-import { AccessLog } from "@/modules/log-manager/access-log";
+import { AccessLogService } from "@/modules/access-logs/service";
 
 export const LogManager = {
 	logs: [resolve(config.ACCESS_LOG), resolve(config.CACHE_LOG)],
@@ -11,8 +11,8 @@ export const LogManager = {
 	]),
 
 	async readLogs() {
-		const logs = [AccessLog];
-		const items = {};
+		const logs = [AccessLogService];
+		// const items = {};
 
 		for (const log of logs) {
 			await log.createIndex();

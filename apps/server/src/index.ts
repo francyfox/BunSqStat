@@ -1,9 +1,10 @@
+import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { LogManager } from "@/modules/log-manager";
-import { Stats } from "@/modules/stats";
 import { redisClient } from "@/redis";
+import { routes } from "@/routes";
 
 await LogManager.readLogs();
 
@@ -27,20 +28,8 @@ process.on("unhandledRejection", (error) => {
 });
 
 const app = new Elysia()
-	.get(
-		"/ping",
-		// @ts-ignore
-		() => "pong",
-		{
-			detail: {
-				description: "Use for ping",
-			},
-			response: {
-				"200": t.Literal("pong"),
-			},
-		},
-	)
-	.use(Stats)
+	.use(routes)
+	.use(cors())
 	.use(swagger())
 	.use(rateLimit());
 
