@@ -1,21 +1,31 @@
 {
-  "name": "web",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue": "^3.5.18"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.1",
-    "@vue/tsconfig": "^0.7.0",
-    "typescript": "~5.8.3",
-    "vite": "^7.1.2",
-    "vue-tsc": "^3.0.5"
-  }
+	"name": "web",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc -b && vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"vue": "^3.5.18",
+		"vue-router": "4"
+	},
+	"devDependencies": {
+		"@vicons/ionicons5": "^0.13.0",
+		"@vicons/utils": "^0.1.4",
+		"@vitejs/plugin-vue": "^6.0.1",
+		"@vue/tsconfig": "^0.7.0",
+		"naive-ui": "^2.42.0",
+		"postcss-calc": "^10.1.1",
+		"postcss-for": "^2.1.1",
+		"postcss-simple-vars": "^7.0.1",
+		"typescript": "~5.8.3",
+		"unocss": "^66.5.0",
+		"unplugin-vue-router": "^0.15.0",
+		"vfonts": "^0.0.3",
+		"vite": "^7.1.2",
+		"vue-tsc": "^3.0.5"
+	}
 }

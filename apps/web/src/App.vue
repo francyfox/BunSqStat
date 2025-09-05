@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { darkTheme, NConfigProvider } from "naive-ui";
+import BHeader from "./components/BHeader.vue";
+import BMenu from "./components/BMenu.vue";
+import Rainbow from "./components/rainbow.vue";
 </script>
 
 <template>
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <n-config-provider
+      :theme-overrides="{ common: { fontWeightStrong: '600' } }"
+      :theme="darkTheme"
+      preflight-style-disabled
+  >
+    <div class="fixed">
+      <Rainbow />
+    </div>
+
+    <BMenu>
+      <div class="app">
+        <BHeader />
+
+        <RouterView />
+      </div>
+    </BMenu>
+
+  </n-config-provider>
 </template>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
 </style>

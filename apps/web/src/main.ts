@@ -1,5 +1,18 @@
-import { createApp } from 'vue'
-import './style.css'
-import App from './App.vue'
+import { createApp } from "vue";
+import { createMemoryHistory, createRouter } from "vue-router";
+import { routes } from "vue-router/auto-routes";
+import "virtual:uno.css";
+import "@unocss/reset/tailwind-compat.css";
+import "./style.css";
+import "vfonts/Lato.css";
+import "vfonts/FiraCode.css";
+import App from "./App.vue";
 
-createApp(App).mount('#app')
+const router = createRouter({
+	history: createMemoryHistory(),
+	routes,
+});
+
+const app = createApp(App);
+
+app.use(router).mount("#app");
