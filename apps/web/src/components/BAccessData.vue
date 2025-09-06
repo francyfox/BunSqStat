@@ -4,6 +4,7 @@ import { NDataTable, NPagination, NTag } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
 import { computed, ref } from "vue";
+import { formatColumns } from "@/module/access-data/format.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { pascalToKebabCase } from "@/utils/string.ts";
 
@@ -15,11 +16,7 @@ const pageCount = computed(() => Math.ceil(total.value / 10));
 
 await statsStore.getAccessLogs();
 
-const columns = computed(() =>
-	accessKeys.map((i) => {
-		return { key: i, title: pascalToKebabCase(i).toUpperCase() };
-	}),
-);
+const columns = computed(() => formatColumns(accessKeys as any));
 
 watchDebounced(
 	page,
