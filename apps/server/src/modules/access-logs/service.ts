@@ -66,7 +66,7 @@ export const AccessLogService = {
 		const pageSize = 10;
 		const returnFields = fields ? `RETURN ${fields.join(" ")}` : "";
 		const args =
-			`log_idx ${search || "'*'"} LIMIT ${(page || 0) * pageSize} ${((page || 0) + 1) * pageSize} ${returnFields}`
+			`log_idx ${search || "'*'"} LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
 				.split(" ")
 				.filter(Boolean);
 
