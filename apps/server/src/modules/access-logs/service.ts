@@ -20,7 +20,7 @@ export const AccessLogService = {
 
 		for (const key of this.regexMap.keys()) {
 			indexes.push(key);
-			indexes.push("TEXT");
+			indexes.push("TEXT"); // TODO: check types
 		}
 
 		const args =
@@ -70,12 +70,13 @@ export const AccessLogService = {
 				.split(" ")
 				.filter(Boolean);
 
-		const { results } = await redisClient.send("FT.SEARCH", args);
-		const items = results.map((i: any) => i.extra_attributes);
+		const response = await redisClient.send("FT.SEARCH", args);
+		const items = response.results.map((i: any) => i.extra_attributes);
 
 		return {
 			items,
 			total,
+			count: response.total_results,
 		};
 	},
 };

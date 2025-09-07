@@ -21,6 +21,7 @@ export const AccessLogs = new Elysia().get(
 			"200": t.Object({
 				items: t.Array(t.Partial(AccessLogSchema)),
 				total: t.Number(),
+				count: t.Number(),
 			}),
 		},
 	},
