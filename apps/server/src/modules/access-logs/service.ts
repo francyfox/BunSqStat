@@ -8,7 +8,11 @@ import { parseLogLine } from "@/utils/log";
 
 export const AccessLogService = {
 	regexMap,
+	types: new Map<string, string>(),
 
+	/**
+	 * @description Use after readAccessLogs, because we need check field types
+	 */
 	async createIndex() {
 		try {
 			await redisClient.send("FT.DROPINDEX", ["log_idx"]);
@@ -20,7 +24,7 @@ export const AccessLogService = {
 
 		for (const key of this.regexMap.keys()) {
 			indexes.push(key);
-			indexes.push("TEXT"); // TODO: check types
+			indexes.push(this.types.get(key));
 		}
 
 		const args =
@@ -29,22 +33,31 @@ export const AccessLogService = {
 	},
 
 	async readAccessLogs() {
-		const { results } = await redisClient.send(
-			"FT.SEARCH",
-			"log_idx '*' LIMIT 0 1".split(" "),
-		);
-
 		const logLines = await readFileLines(config.ACCESS_LOG, 1);
 
-		if (results.length > 0 && logLines.length > 0) {
-			const parsedFirst = parseLogLine(
-				logLines[0] || "",
-				this.regexMap,
-			) as TAccessLog;
+		if (logLines.length === 0) return;
 
-			if (parsedFirst.timestamp === results[0].extra_attributes.timestamp)
-				return;
+		const parsedFirst = parseLogLine(
+			logLines[0] || "",
+			this.regexMap,
+		) as TAccessLog;
+
+		const [result] = await redisClient.hmget(`log:${parsedFirst?.timestamp}`, [
+			Array.from(this.regexMap.keys())[0] || "",
+		]);
+
+		for (const fieldName of Object.keys(parsedFirst)) {
+			let type: string;
+			// @ts-ignore
+			if (Number.isNaN(Number(parsedFirst[fieldName]))) {
+				type = "TEXT";
+			} else {
+				type = "NUMERIC SORTABLE";
+			}
+			this.types.set(fieldName, type);
 		}
+
+		if (parsedFirst.timestamp === result) return;
 
 		const logs = await readFileLines(config.ACCESS_LOG, 100);
 
@@ -65,10 +78,14 @@ export const AccessLogService = {
 
 		const pageSize = 10;
 		const returnFields = fields ? `RETURN ${fields.join(" ")}` : "";
-		const args =
-			`log_idx ${search || "'*'"} LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
+		let args =
+			`LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
 				.split(" ")
 				.filter(Boolean);
+
+		args = [...["log_idx", `${search || "'*'"}`], ...args];
+
+		console.log(args);
 
 		const response = await redisClient.send("FT.SEARCH", args);
 		const items = response.results.map((i: any) => i.extra_attributes);

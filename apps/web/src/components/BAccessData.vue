@@ -10,15 +10,19 @@ import {
 	NSelect,
 	NTag,
 	NTooltip,
+	useNotification,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
-import { computed, ref } from "vue";
+import { computed, ref, watch } from "vue";
 import { formatColumns } from "@/module/access-data/format.ts";
 import { useStatsStore } from "@/stores/stats.ts";
+import { buildSearchQuery } from "@/utils/redis-query.ts";
+
+const notification = useNotification();
 
 const statsStore = useStatsStore();
-const { accessLog, total, loading, count } = storeToRefs(statsStore);
+const { accessLog, total, loading, count, error } = storeToRefs(statsStore);
 
 const fieldOptions = accessKeys.map((key: string) => {
 	return {
@@ -34,13 +38,20 @@ const form = ref({
 const page = ref();
 const pageCount = computed(() => Math.ceil(count.value / 10));
 const search = computed(() =>
-	form.value.search ? `${form.value.field}${form.value.search}` : "*",
+	buildSearchQuery(form.value.field, form.value.search),
 );
 
 await statsStore.getAccessLogs();
 
 const columns = computed(() => formatColumns(accessKeys as any));
 
+watch(error, (v) => {
+	notification.error({
+		content: v,
+		closable: true,
+		duration: 5000,
+	});
+});
 watchDebounced(
 	page,
 	async (v: number) => {
@@ -85,7 +96,13 @@ watchDebounced(
               <InformationCircle />
             </Icon>
           </template>
-          This input use for <a target="_blank" rel="noopener" href="https://redis.io/docs/latest/develop/ai/search-and-query/query/" class="c-amber underline">redis query</a> like <NTag size="tiny">@user: fox</NTag>
+          This input use for <a target="_blank" rel="noopener" href="https://redis.io/docs/latest/develop/ai/search-and-query/query/" class="c-amber underline">redis query</a> like <NTag>@user: fox</NTag>
+          <br>
+          Search by IP: <NTag>192.168.1.1</NTag> (auto-escaped)
+          <br>
+          Single number: <NTag>200</NTag> → <NTag>[200 200]</NTag>
+          <br>
+          Number ranges: <NTag>[200 299]</NTag> or <NTag>[0 20]</NTag>
         </NTooltip>
       </div>
     </NForm>

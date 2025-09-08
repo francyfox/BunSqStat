@@ -1,5 +1,4 @@
-import type { DataTableColumns } from "naive-ui";
-import { NTag } from "naive-ui";
+import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
 import type { TAccessLog } from "server/schema";
 import { h } from "vue";
 import BCopy from "@/components/BCopy.vue";
@@ -77,7 +76,17 @@ export function accessColumnAttributes(
 			return {
 				width: 120,
 				render(row) {
-					return dayjs(Number(row[column]) * 1000).format("HH:mm:ss DD/MM");
+					return h(
+						NTooltip,
+						{
+							trigger: "hover",
+						},
+						{
+							default: () => row[column],
+							trigger: () =>
+								dayjs(Number(row[column]) * 1000).format("HH:mm:ss DD/MM"),
+						},
+					);
 				},
 			};
 

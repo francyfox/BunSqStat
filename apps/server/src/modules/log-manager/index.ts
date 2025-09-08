@@ -15,8 +15,8 @@ export const LogManager = {
 		// const items = {};
 
 		for (const log of logs) {
-			await log.createIndex();
 			await log.readAccessLogs();
+			await log.createIndex();
 		}
 	},
 };

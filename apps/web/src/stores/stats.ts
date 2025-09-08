@@ -8,12 +8,21 @@ export const useStatsStore = defineStore("stats", () => {
 	const total = ref();
 	const count = ref();
 	const loading = ref(true);
+	const error = ref(undefined);
 
 	async function getAccessLogs(query?: getLogParams) {
 		loading.value = true;
 		const response = await api.stats["access-logs"].get({
 			query,
 		});
+
+		if (response.error) {
+			error.value = response.error.message;
+			loading.value = false;
+
+			return response;
+		}
+
 		accessLog.value = response.data.items;
 		count.value = response.data.count;
 		total.value = response.data.total;
@@ -23,6 +32,7 @@ export const useStatsStore = defineStore("stats", () => {
 	}
 
 	return {
+		error,
 		loading,
 		count,
 		accessLog,

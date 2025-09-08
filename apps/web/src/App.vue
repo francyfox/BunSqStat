@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { darkTheme, NConfigProvider } from "naive-ui";
+import { darkTheme, NConfigProvider, NNotificationProvider } from "naive-ui";
 import BHeader from "./components/BHeader.vue";
 import BMenu from "./components/BMenu.vue";
 import Rainbow from "./components/rainbow.vue";
@@ -11,18 +11,20 @@ import Rainbow from "./components/rainbow.vue";
       :theme="darkTheme"
       preflight-style-disabled
   >
-    <div class="fixed">
-      <Rainbow />
-    </div>
-
-    <BMenu>
-      <div class="app">
-        <BHeader />
-
-        <RouterView />
+    <n-notification-provider :max="3">
+      <div class="fixed">
+        <Rainbow />
       </div>
-    </BMenu>
 
+      <BMenu>
+        <div class="app">
+          <BHeader />
+
+          <RouterView />
+        </div>
+      </BMenu>
+
+    </n-notification-provider>
   </n-config-provider>
 </template>
 
