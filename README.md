@@ -1,4 +1,4 @@
-# 🦄 BunSqStat
+# 🦄 BunSqStat [WIP]
 
 [![Bun](https://img.shields.io/badge/Bun-000?logo=bun&logoColor=fff&style=for-the-badge)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
@@ -7,6 +7,8 @@
 [![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
 
 [![License](https://img.shields.io/badge/license-MIT-blue?style=flat-square)](./LICENSE)
+
+> **In progress**
 
 > **Real-time Squid proxy log analyzer with powerful search capabilities** ⚡
 
