@@ -1,38 +1,54 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 /**
  * Генератор реалистичных строк логов Squid для тестирования
  */
 export class SquidLogGenerator {
-	private readonly resultTypes = ['TCP_MISS', 'TCP_HIT', 'TCP_DENIED', 'TCP_DENIED_REPLY', 'NONE_NONE'];
-	private readonly methods = ['GET', 'POST', 'CONNECT', 'PUT', 'DELETE', 'HEAD', 'OPTIONS'];
-	private readonly hierarchyTypes = ['HIER_DIRECT', 'HIER_NONE'];
+	private readonly resultTypes = [
+		"TCP_MISS",
+		"TCP_HIT",
+		"TCP_DENIED",
+		"TCP_DENIED_REPLY",
+		"NONE_NONE",
+	];
+	private readonly methods = [
+		"GET",
+		"POST",
+		"CONNECT",
+		"PUT",
+		"DELETE",
+		"HEAD",
+		"OPTIONS",
+	];
+	private readonly hierarchyTypes = ["HIER_DIRECT", "HIER_NONE"];
 	private readonly contentTypes = [
-		'text/html',
-		'text/javascript',
-		'text/css',
-		'application/json',
-		'application/octet-stream',
-		'application/json+protobuf',
-		'image/png',
-		'image/jpeg',
-		'image/gif',
-		'-'
+		"text/html",
+		"text/javascript",
+		"text/css",
+		"application/json",
+		"application/octet-stream",
+		"application/json+protobuf",
+		"image/png",
+		"image/jpeg",
+		"image/gif",
+		"-",
 	];
 
-	private readonly statusCodes = [200, 201, 204, 301, 302, 304, 400, 401, 403, 404, 407, 500, 502, 503];
+	private readonly statusCodes = [
+		200, 201, 204, 301, 302, 304, 400, 401, 403, 404, 407, 500, 502, 503,
+	];
 	private readonly userAgents = [
-		'sgolota@TP.OIL',
-		'vpupkin@TP.OIL', 
-		'TMP-PTO$@TP.OIL',
-		'-'
+		"sgolota@TP.OIL",
+		"vpupkin@TP.OIL",
+		"TMP-PTO$@TP.OIL",
+		"-",
 	];
 
 	private readonly clientIPs = [
-		'192.168.10.41',
-		'192.168.11.16', 
-		'192.168.11.5',
-		'127.0.0.1'
+		"192.168.10.41",
+		"192.168.11.16",
+		"192.168.11.5",
+		"127.0.0.1",
 	];
 
 	/**
@@ -41,7 +57,7 @@ export class SquidLogGenerator {
 	 * @returns строка лога в формате Squid
 	 */
 	generateLogLine(baseTimestamp?: number): string {
-		const timestamp = baseTimestamp || (Date.now() / 1000);
+		const timestamp = baseTimestamp || Date.now() / 1000;
 		const duration = faker.number.int({ min: 0, max: 2000 });
 		const clientIP = faker.helpers.arrayElement(this.clientIPs);
 		const resultType = faker.helpers.arrayElement(this.resultTypes);
@@ -68,14 +84,14 @@ export class SquidLogGenerator {
 		const lines: string[] = [];
 
 		for (let i = 0; i < count; i++) {
-			const timestamp = baseTime + faker.number.int({ min: 0, max: timeSpread });
+			const timestamp =
+				baseTime + faker.number.int({ min: 0, max: timeSpread });
 			lines.push(this.generateLogLine(timestamp));
 		}
 
-		// Сортируем по времени
 		return lines.sort((a, b) => {
-			const timeA = parseFloat(a.split(' ')[0]);
-			const timeB = parseFloat(b.split(' ')[0]);
+			const timeA = parseFloat(a.split(" ")[0] as string);
+			const timeB = parseFloat(b.split(" ")[0] as string);
 			return timeA - timeB;
 		});
 	}
@@ -85,12 +101,17 @@ export class SquidLogGenerator {
 	 */
 	private generateURL(method: string): string {
 		switch (method) {
-			case 'CONNECT':
+			case "CONNECT":
 				return `${faker.internet.domainName()}:443`;
-			case 'GET':
-				return faker.internet.url() + (faker.datatype.boolean() ? '?' + faker.internet.url().split('?')[1] || '' : '');
-			case 'POST':
-				return faker.internet.url() + '/api/' + faker.lorem.slug();
+			case "GET":
+				return (
+					faker.internet.url() +
+					(faker.datatype.boolean()
+						? "?" + faker.internet.url().split("?")[1] || ""
+						: "")
+				);
+			case "POST":
+				return faker.internet.url() + "/api/" + faker.lorem.slug();
 			default:
 				return faker.internet.url();
 		}
@@ -101,10 +122,10 @@ export class SquidLogGenerator {
 	 */
 	private generateHierarchyHost(hierarchyType: string): string {
 		switch (hierarchyType) {
-			case 'HIER_DIRECT':
+			case "HIER_DIRECT":
 				return faker.internet.ip();
-			case 'HIER_NONE':
-				return '-';
+			case "HIER_NONE":
+				return "-";
 			default:
 				return faker.internet.ip();
 		}
@@ -113,14 +134,20 @@ export class SquidLogGenerator {
 	/**
 	 * Генерирует сценарий активности (пиковая нагрузка, обычная и т.д.)
 	 */
-	generateActivityBurst(scenario: 'normal' | 'peak' | 'heavy'): string[] {
+	generateActivityBurst(scenario: "normal" | "peak" | "heavy"): string[] {
 		switch (scenario) {
-			case 'normal':
+			case "normal":
 				return this.generateLogLines(faker.number.int({ min: 5, max: 15 }), 60);
-			case 'peak':
-				return this.generateLogLines(faker.number.int({ min: 50, max: 100 }), 30);
-			case 'heavy':
-				return this.generateLogLines(faker.number.int({ min: 100, max: 200 }), 10);
+			case "peak":
+				return this.generateLogLines(
+					faker.number.int({ min: 50, max: 100 }),
+					30,
+				);
+			case "heavy":
+				return this.generateLogLines(
+					faker.number.int({ min: 100, max: 200 }),
+					10,
+				);
 			default:
 				return this.generateLogLines(10, 60);
 		}

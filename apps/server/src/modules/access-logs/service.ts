@@ -32,6 +32,20 @@ export const AccessLogService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
+	async readLastLines(count: number) {
+		const logs = await readFileLines(config.ACCESS_LOG, count);
+
+		const stack = logs.map((log) => {
+			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
+			return redisClient.hmset(
+				`log:${parsed.timestamp || Date.now().toString()}`,
+				mergeStrip(Object.keys(parsed), Object.values(parsed)),
+			);
+		});
+
+		await Promise.all(stack);
+	},
+
 	async readAccessLogs() {
 		const logLines = await readFileLines(config.ACCESS_LOG, 1);
 
@@ -59,20 +73,10 @@ export const AccessLogService = {
 
 		if (parsedFirst.timestamp === result) return;
 
-		const logs = await readFileLines(config.ACCESS_LOG, 100);
-
-		const stack = logs.map((log) => {
-			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
-			return redisClient.hmset(
-				`log:${parsed.timestamp || Date.now().toString()}`,
-				mergeStrip(Object.keys(parsed), Object.values(parsed)),
-			);
-		});
-
-		await Promise.all(stack);
+		await this.readLastLines(100);
 	},
 
-	async getLogs({ search, page, fields }: getLogParams = {}) {
+	async getLogs({ search, page, fields, last }: getLogParams = {}) {
 		const keys = await redisClient.keys("log:*");
 		const total = keys.length;
 
@@ -82,6 +86,10 @@ export const AccessLogService = {
 			`LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
 				.split(" ")
 				.filter(Boolean);
+
+		if (last) {
+			args = `LIMIT 0 1 ${returnFields}`.split(" ").filter(Boolean);
+		}
 
 		args = [...["log_idx", `${search || "'*'"}`], ...args];
 

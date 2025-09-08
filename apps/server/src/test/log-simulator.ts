@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { appendFile, writeFile } from "node:fs/promises";
 import { RedisClient } from "bun";
-import { SquidLogGenerator } from "./log-generator";
+import { SquidLogGenerator } from "@/test/log-generator";
 
 /**
  * Конфигурация для симулятора логов
@@ -212,10 +212,10 @@ export class LogSimulator {
 
 // Функция для запуска тестирования (будет вызываться пользователем)
 export async function runLogSimulatorTest(
-	checkRedisFunction: () => Promise<boolean>,
+	_checkRedisFunction: () => Promise<boolean>,
 ): Promise<void> {
 	const config: SimulatorConfig = {
-		logFilePath: process.env.ACCESS_LOG || "/tmp/access.log",
+		logFilePath: process.env["ACCESS_LOG"] || "/tmp/access.log",
 		redis: {
 			host: "localhost",
 			port: 6379,

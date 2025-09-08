@@ -13,10 +13,10 @@
 		"build": "turbo run build",
 		"dev": "turbo run dev",
 		"lint": "turbo run lint",
-		"test": "bun test apps/server/test",
-		"test:watch": "bun test --watch apps/server/test",
-		"test:generator": "bun test apps/server/test/log-generator.test.ts",
-		"test:simulator": "bun test apps/server/test/log-simulator.test.ts"
+		"test": "bun test apps/server/src/test",
+		"test:watch": "bun test --watch apps/server/src/test",
+		"test:generator": "bun test apps/server/src/test/log-generator.test.ts",
+		"test:simulator": "bun test apps/server/src/test/log-simulator.test.ts"
 	},
 	"workspaces": [
 		"apps/*",

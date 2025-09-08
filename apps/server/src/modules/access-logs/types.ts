@@ -4,6 +4,7 @@ export interface getLogParams {
 	search?: string;
 	page?: number;
 	fields?: string[];
+	last?: boolean;
 }
 
 export const AccessLogSchema = t.Object({

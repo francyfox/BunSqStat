@@ -23,7 +23,6 @@ BunSqStat is a modern, high-performance web application for analyzing Squid prox
 - 📱 **Responsive UI** - Beautiful Vue 3 interface that works on all devices
 - ⚡ **High performance** - Built on Bun runtime for maximum speed
 - 🐳 **Docker ready** - Easy deployment with Docker Compose
-- 🧪 **Well tested** - Comprehensive test suite with 40+ tests
 
 ## 🏗️ Architecture
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { InformationCircle } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
-import { watchDebounced } from "@vueuse/core";
+import { useWebSocket, watchDebounced } from "@vueuse/core";
 import {
 	NDataTable,
 	NForm,
@@ -20,7 +20,6 @@ import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
 
 const notification = useNotification();
-
 const statsStore = useStatsStore();
 const { accessLog, total, loading, count, error } = storeToRefs(statsStore);
 
@@ -73,6 +72,25 @@ watchDebounced(
 	},
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
+
+const { data } = useWebSocket("ws://localhost:3000/ws", {
+	autoReconnect: {
+		retries: 3,
+		delay: 1000,
+		onFailed() {
+			notification.error({
+				content: "Failed to connect WebSocket after 3 retries",
+			});
+		},
+	},
+});
+
+watch(data, (v) => {
+	const value = JSON.parse(v);
+	accessLog.value = value.items;
+	total.value = value.total;
+	count.value = value.count;
+});
 </script>
 
 <template>

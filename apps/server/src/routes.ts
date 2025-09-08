@@ -1,6 +1,7 @@
 import { Elysia, t } from "elysia";
 import { AccessLogs } from "@/modules/access-logs";
 import { Stats } from "@/modules/stats";
+import { WS } from "@/modules/ws";
 
 export const routes = new Elysia()
 	.get(
@@ -17,6 +18,7 @@ export const routes = new Elysia()
 		},
 	)
 	.use(Stats)
-	.use(AccessLogs);
+	.use(AccessLogs)
+	.use(WS);
 
 export type EdenApp = typeof routes;

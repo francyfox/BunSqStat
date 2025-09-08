@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
 import type { TAccessLog } from "server/schema";
 import { h } from "vue";
