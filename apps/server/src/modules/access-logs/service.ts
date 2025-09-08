@@ -85,8 +85,6 @@ export const AccessLogService = {
 
 		args = [...["log_idx", `${search || "'*'"}`], ...args];
 
-		console.log(args);
-
 		const response = await redisClient.send("FT.SEARCH", args);
 		const items = response.results.map((i: any) => i.extra_attributes);
 

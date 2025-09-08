@@ -1,23 +1,28 @@
 {
-  "name": "bunsqstat",
-  "version": "1.0.0",
-  "devDependencies": {
-    "@biomejs/biome": "2.2.2",
-    "turbo": "latest"
-  },
-  "description": "",
-  "packageManager": "bun@1.2.21",
-  "private": false,
-  "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "dependencies": {
-    "@unocss/reset": "^66.5.0"
-  }
+	"name": "bunsqstat",
+	"version": "1.0.0",
+	"devDependencies": {
+		"@biomejs/biome": "2.2.2",
+		"@faker-js/faker": "^10.0.0",
+		"turbo": "latest"
+	},
+	"description": "",
+	"packageManager": "bun@1.2.21",
+	"private": false,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"test": "bun test apps/server/test",
+		"test:watch": "bun test --watch apps/server/test",
+		"test:generator": "bun test apps/server/test/log-generator.test.ts",
+		"test:simulator": "bun test apps/server/test/log-simulator.test.ts"
+	},
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	],
+	"dependencies": {
+		"@unocss/reset": "^66.5.0"
+	}
 }

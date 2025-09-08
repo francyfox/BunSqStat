@@ -1,0 +1,14 @@
+[test]
+# Timeout for each test in milliseconds
+timeout = 30000
+
+# Files to include/exclude
+# include = ["apps/server/test/**/*.test.ts"]
+# exclude = ["node_modules/**"]
+
+# Preload files before running tests
+# preload = []
+
+# Environment variables for tests
+[test.env]
+NODE_ENV = "test"
