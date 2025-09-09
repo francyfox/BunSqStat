@@ -84,16 +84,11 @@ export class SquidLogGenerator {
 		const lines: string[] = [];
 
 		for (let i = 0; i < count; i++) {
-			const timestamp =
-				baseTime + faker.number.int({ min: 0, max: timeSpread });
+			const timestamp = baseTime + i;
 			lines.push(this.generateLogLine(timestamp));
 		}
 
-		return lines.sort((a, b) => {
-			const timeA = parseFloat(a.split(" ")[0] as string);
-			const timeB = parseFloat(b.split(" ")[0] as string);
-			return timeA - timeB;
-		});
+		return lines;
 	}
 
 	/**

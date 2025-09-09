@@ -30,3 +30,18 @@ export const regexMap = new Map<string, RegExp>([
 		/^\d+\.\d+\s+\d+\s+\d+\.\d+\.\d+\.\d+\s+[A-Z_]+\/\d+\s+\d+\s+\w+\s+\S+\s+\S+\s+[A-Z_]+\/[\d\.-]+\s+(.+)$/,
 	],
 ]);
+
+export const fieldTypes = new Map<string, string>([
+	["timestamp", "NUMERIC SORTABLE"],
+	["duration", "NUMERIC SORTABLE"],
+	["clientIP", "TAG SORTABLE"],
+	["resultType", "TAG SORTABLE"],
+	["resultStatus", "NUMERIC SORTABLE"],
+	["bytes", "NUMERIC SORTABLE"],
+	["method", "TAG SORTABLE"],
+	["url", "TEXT"],
+	["user", "TEXT"],
+	["hierarchyType", "TAG SORTABLE"],
+	["hierarchyHost", "TEXT"],
+	["contentType", "TEXT"],
+]);

@@ -6,10 +6,9 @@ export const LogManager = {
 	logs: [resolve(config.ACCESS_LOG), resolve(config.CACHE_LOG)],
 	async readLogs() {
 		const logs = [AccessLogService];
-		// const items = {};
 
 		for (const log of logs) {
-			await log.readAccessLogs();
+			await log.readLastLines(1000);
 			await log.createIndex();
 		}
 	},

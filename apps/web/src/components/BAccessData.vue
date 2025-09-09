@@ -35,7 +35,7 @@ const form = ref({
 	search: null,
 });
 const page = ref();
-const highlightCount = ref(1);
+const highlightCount = ref(0);
 const pageCount = computed(() => Math.ceil(count.value / 10));
 const search = computed(() =>
 	buildSearchQuery(form.value.field, form.value.search),
@@ -102,15 +102,21 @@ onMounted(() => {
 
 watch(data, async (v) => {
 	const value = JSON.parse(v);
-	console.log(value);
+	console.log(`Received ${value.changedLinesCount} new log entries`);
 
-	try {
-		await statsStore.getAccessLogs({
-			page: page.value,
-			search: search.value,
-		});
-	} finally {
-		highlightCount.value = value.changedLinesCount;
+	if (page.value === 1 || !page.value) {
+		try {
+			await statsStore.getAccessLogs({
+				page: page.value,
+				search: search.value,
+			});
+		} finally {
+			highlightCount.value = value.changedLinesCount;
+			
+			setTimeout(() => {
+				highlightCount.value = 0;
+			}, 1500);
+		}
 	}
 });
 </script>
