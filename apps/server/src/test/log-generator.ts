@@ -84,7 +84,7 @@ export class SquidLogGenerator {
 		const lines: string[] = [];
 
 		for (let i = 0; i < count; i++) {
-			const timestamp = baseTime + i;
+			const timestamp = baseTime + i + (i * 0.001);
 			lines.push(this.generateLogLine(timestamp));
 		}
 

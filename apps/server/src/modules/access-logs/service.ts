@@ -65,6 +65,7 @@ export const AccessLogService = {
 
 	async readAccessLogs() {
 		const logLines = await readFileLines(config.ACCESS_LOG, 500);
+		console.log(`readAccessLogs: read ${logLines.length} lines from file`);
 
 		if (logLines.length === 0) return 0;
 
@@ -75,20 +76,29 @@ export const AccessLogService = {
 
 
 	const newLogs: string[] = [];
+	let checkedCount = 0;
 	
-	for (let i = logLines.length - 1; i >= 0; i--) {
+	// Ищем все новые записи, которых еще нет в Redis
+	for (let i = 0; i < logLines.length; i+=1) {
 		const logLine = logLines[i];
 		const parsed = parseLogLine(logLine, this.regexMap) as TAccessLog;
 		const logKey = `log:${parsed.timestamp}`;
 		const exists = await redisClient.exists(logKey);
+		checkedCount++;
 		
 		if (!exists) {
-			for (let j = i; j < logLines.length; j++) {
-				newLogs.push(logLines[j]);
-			}
-			break;
+			newLogs.push(logLine);
 		}
 	}
+	
+	console.log(`readAccessLogs: found ${newLogs.length} new logs after checking ${checkedCount} entries`);
+	
+	// Сортируем новые записи по timestamp для корректного порядка добавления
+	newLogs.sort((a, b) => {
+		const timestampA = parseFloat(a.split(' ')[0]);
+		const timestampB = parseFloat(b.split(' ')[0]);
+		return timestampA - timestampB;
+	});
 
 		if (newLogs.length === 0) return 0;
 
