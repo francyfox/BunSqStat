@@ -238,9 +238,10 @@ export function accessColumnAttributes(
 }
 
 export function formatColumns(data: Array<keyof TAccessLog>): DataTableColumns {
-	return data.map((column) => {
+	return data.map((column, index) => {
 		return {
 			key: column,
+			position: index,
 			title: pascalToKebabCase(column).toUpperCase(),
 			...accessColumnAttributes(column),
 		};

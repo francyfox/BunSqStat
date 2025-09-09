@@ -10,6 +10,21 @@ export const AccessLogService = {
 	regexMap,
 	types: new Map<string, string>(),
 
+	sanitizeLogData(logData: Record<string, string>): Record<string, string> {
+		const sanitized = { ...logData };
+
+		for (const [key, value] of Object.entries(sanitized)) {
+			const fieldType = this.types.get(key);
+			if (fieldType && fieldType.includes("NUMERIC")) {
+				if (!value || value === "-" || Number.isNaN(Number(value))) {
+					sanitized[key] = "0";
+				}
+			}
+		}
+
+		return sanitized;
+	},
+
 	/**
 	 * @description Use after readAccessLogs, because we need check field types
 	 */
@@ -37,9 +52,11 @@ export const AccessLogService = {
 
 		const stack = logs.map((log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
+
+			const sanitized = this.sanitizeLogData(parsed);
 			return redisClient.hmset(
-				`log:${parsed.timestamp || Date.now().toString()}`,
-				mergeStrip(Object.keys(parsed), Object.values(parsed)),
+				`log:${sanitized["timestamp"] || Date.now().toString()}`,
+				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
 			);
 		});
 
@@ -76,25 +93,22 @@ export const AccessLogService = {
 		await this.readLastLines(100);
 	},
 
-	async getLogs({ search, page, fields, last }: getLogParams = {}) {
+	async getLogs({ search, page, fields }: getLogParams = {}) {
 		const keys = await redisClient.keys("log:*");
 		const total = keys.length;
 
 		const pageSize = 10;
 		const returnFields = fields ? `RETURN ${fields.join(" ")}` : "";
-		let args =
-			`LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
+		const sortBy = "SORTBY timestamp DESC";
+
+		const args =
+			`log_idx ${search || "'*'"} ${sortBy} LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
 				.split(" ")
 				.filter(Boolean);
 
-		if (last) {
-			args = `LIMIT 0 1 ${returnFields}`.split(" ").filter(Boolean);
-		}
-
-		args = [...["log_idx", `${search || "'*'"}`], ...args];
-
 		const response = await redisClient.send("FT.SEARCH", args);
 		const items = response.results.map((i: any) => i.extra_attributes);
+		console.log("FT.SEARCH args:", args);
 
 		return {
 			items,
