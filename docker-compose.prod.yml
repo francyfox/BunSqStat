@@ -1,0 +1,71 @@
+services:
+  redis:
+    container_name: redis-bunsqstat
+    image: redis/redis-stack:7.2.0-v18
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    environment:
+      - ALLOW_EMPTY_PASSWORD=false
+      - REDIS_AOF_ENABLED=no
+      - REDIS_PASSWORD=123
+    command: redis-server ./redis-stack.conf --requirepass 123
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - ./docker/redis/redis.conf:/redis-stack.conf
+      - predis_data:/data
+    networks:
+      - local
+
+  bunsqstat_server:
+    container_name: bunsqstat_server
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+      cache_from:
+        - server:cache
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      redis:
+        condition: service_healthy
+    networks:
+      - local
+    healthcheck:
+      test: ["CMD", "bun", "-e", "fetch('http://localhost:3000/health').then(r=>r.ok?process.exit(0):process.exit(1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  bunsqstat_client:
+    container_name: bunsqstat_client
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: frontend.Dockerfile
+      cache_from:
+        - client:cache
+    env_file:
+      - .env
+    ports:
+      - "80:80"
+    depends_on:
+      bunsqstat_server:
+        condition: service_healthy
+    networks:
+      - local
+
+volumes:
+  predis_data:
+
+networks:
+  local:

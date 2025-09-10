@@ -1,0 +1,21 @@
+:80 {
+    root * /srv
+    encode gzip
+    header remote_addr "{header.X-Forwarded-For}"
+
+    handle_path /api/* {
+        reverse_proxy bunsqstat_server:3000 {
+            health_uri /health
+            health_interval 10s
+        }
+    }
+
+    file_server {
+        hide .git
+    }
+
+    handle_errors {
+        rewrite * /index.html
+        file_server
+    }
+}

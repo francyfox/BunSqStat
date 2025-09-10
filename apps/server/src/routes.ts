@@ -17,6 +17,21 @@ export const routes = new Elysia()
 			},
 		},
 	)
+	.get(
+		"/health",
+		() => ({ status: "ok", timestamp: new Date().toISOString() }),
+		{
+			detail: {
+				description: "Health check endpoint",
+			},
+			response: {
+				"200": t.Object({
+					status: t.Literal("ok"),
+					timestamp: t.String(),
+				}),
+			},
+		},
+	)
 	.use(Stats)
 	.use(AccessLogs)
 	.use(WS);
