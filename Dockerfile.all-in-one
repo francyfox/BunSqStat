@@ -14,17 +14,20 @@ COPY apps ./apps
 RUN bun install
 RUN bun run build
 
-# Production stage
-FROM alpine:3.19
+# Final production stage - use Redis Stack base
+FROM redis/redis-stack:7.2.0-v18
 
-# Install system dependencies
-RUN apk add --no-cache \
+# Install system dependencies and Caddy
+RUN apt-get update && apt-get install -y \
     curl \
     supervisor \
-    redis \
-    caddy \
-    bash \
-    ca-certificates
+    ca-certificates \
+    gnupg \
+    unzip \
+    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg \
+    && curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list \
+    && apt-get update && apt-get install -y caddy \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
@@ -56,6 +59,11 @@ RUN sed 's|/srv|/app/frontend|g' /etc/caddy/Caddyfile.template > /etc/caddy/Cadd
 # Create volume mount points for log files
 RUN mkdir -p /app/logs
 
+# Create basic Redis Stack configuration
+RUN echo 'port 6379' > /redis-stack.conf && \
+    echo 'bind 0.0.0.0' >> /redis-stack.conf && \
+    echo 'requirepass bunsqstat123' >> /redis-stack.conf
+
 # Set default environment variables
 ENV NODE_ENV=production
 ENV SQUID_HOST=127.0.0.1
@@ -69,8 +77,8 @@ ENV REDIS_PASSWORD=bunsqstat123
 # Expose ports
 EXPOSE 80 3000 6379
 
-# Volume for log files (users can mount their squid logs here)
-VOLUME ["/app/logs"]
+# Note: Don't use VOLUME directive as it creates directories for non-existent files
+# Users can mount log files directly using docker-compose volumes
 
 # Add healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \

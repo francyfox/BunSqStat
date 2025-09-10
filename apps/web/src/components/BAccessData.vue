@@ -17,6 +17,7 @@ import {
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
 import { computed, onMounted, ref, watch } from "vue";
+import { WS_URL } from "@/consts.ts";
 import { formatColumns } from "@/module/access-data/format.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
@@ -85,7 +86,7 @@ watchDebounced(
 );
 
 const { data, status, send, ws, close, open } = useWebSocket(
-	"ws://localhost:3000/ws/access-logs",
+	`${WS_URL}/ws/access-logs`,
 	{
 		autoReconnect: {
 			retries: 3,

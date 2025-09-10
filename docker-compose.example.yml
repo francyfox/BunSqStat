@@ -1,0 +1,14 @@
+services:
+  bunsqstat:
+    image: francyfox/bunsqstat:latest
+    container_name: bunsqstat
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - REDIS_PASSWORD=123
+      - SQUID_HOST=127.0.0.1
+      - SQUID_PORT=3128
+    volumes:
+      - ./docker/access.log:/app/logs/access.log:ro
+      - ./docker/cache.log:/app/logs/cache.log:ro
