@@ -1,5 +1,5 @@
 import { resolve } from "node:path";
-import chokidar from "chokidar";
+import chokidar, { type FSWatcher } from "chokidar";
 import { config } from "@/config";
 import { AccessLogService } from "@/modules/access-logs/service";
 
@@ -12,8 +12,10 @@ export interface FileChangeEvent {
 export type FileChangeCallback = (event: FileChangeEvent) => void;
 
 class FileWatcher {
-	private watcher: chokidar.FSWatcher;
+	private watcher: FSWatcher;
 	private callbacks: Set<FileChangeCallback> = new Set();
+	private debounceTimeout: Timer | null = null;
+	private pendingPath: string | null = null;
 
 	constructor() {
 		const watchPaths = [resolve(config.ACCESS_LOG), resolve(config.CACHE_LOG)];
@@ -21,15 +23,12 @@ class FileWatcher {
 
 		this.watcher = chokidar.watch(watchPaths, {
 			usePolling: true,
-			interval: 500,
-			binaryInterval: 1000,
+			interval: 100, // More frequent polling
+			binaryInterval: 200,
 			ignoreInitial: true,
 			persistent: true,
-			atomic: true,
-			awaitWriteFinish: {
-				stabilityThreshold: 200,
-				pollInterval: 100,
-			},
+			atomic: false, // Don't wait for atomic writes
+			// Remove awaitWriteFinish to avoid delays
 		});
 
 		this.setupEventHandlers();
@@ -44,8 +43,23 @@ class FileWatcher {
 			console.error("Chokidar error:", error);
 		});
 
-		this.watcher.on("change", async (path) => {
+		this.watcher.on("change", (path) => {
 			console.log("File changed:", path);
+			this.debouncedProcessChange(path);
+		});
+	}
+
+	private debouncedProcessChange(path: string) {
+		// Clear existing timeout
+		if (this.debounceTimeout) {
+			clearTimeout(this.debounceTimeout);
+		}
+
+		this.pendingPath = path;
+
+		// Set new timeout with shorter debounce for better responsiveness
+		this.debounceTimeout = setTimeout(async () => {
+			if (!this.pendingPath) return;
 
 			try {
 				const newLogsCount = await AccessLogService.readAccessLogs();
@@ -55,25 +69,28 @@ class FileWatcher {
 					const event: FileChangeEvent = {
 						changedLinesCount: newLogsCount,
 						time: new Date().toISOString(),
-						path,
+						path: this.pendingPath,
 					};
 
 					this.notifyCallbacks(event);
 				}
 			} catch (error) {
 				console.error("Error processing file change:", error);
+			} finally {
+				this.debounceTimeout = null;
+				this.pendingPath = null;
 			}
-		});
+		}, 150); // Short debounce - 150ms
 	}
 
 	private notifyCallbacks(event: FileChangeEvent) {
-		this.callbacks.forEach((callback) => {
+		for (const callback of this.callbacks) {
 			try {
 				callback(event);
 			} catch (error) {
 				console.error("Error in file change callback:", error);
 			}
-		});
+		}
 	}
 
 	onFileChange(callback: FileChangeCallback) {
@@ -82,6 +99,10 @@ class FileWatcher {
 	}
 
 	async close() {
+		if (this.debounceTimeout) {
+			clearTimeout(this.debounceTimeout);
+			this.debounceTimeout = null;
+		}
 		await this.watcher.close();
 		this.callbacks.clear();
 	}

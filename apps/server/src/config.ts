@@ -9,6 +9,7 @@ export const configSchema = t.Object({
 	SQUID_PORT: t.String(),
 	ACCESS_LOG: t.String(),
 	CACHE_LOG: t.String(),
+	REDIS_PASSWORD: t.String(),
 });
 
 export type TConfig = Static<typeof configSchema>;

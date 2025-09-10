@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { InformationCircle } from "@vicons/ionicons5";
+import { InformationCircle, Pause, Play } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
 import { useWebSocket, watchDebounced } from "@vueuse/core";
 import {
+	NButton,
 	NDataTable,
 	NForm,
 	NInput,
+	NInputNumber,
 	NPagination,
 	NSelect,
 	NTag,
@@ -34,6 +36,9 @@ const form = ref({
 	field: "@user:",
 	search: null,
 });
+
+const interval = ref(300);
+const pause = ref(false);
 const page = ref();
 const highlightCount = ref(0);
 const pageCount = computed(() => Math.ceil(count.value / 10));
@@ -79,7 +84,7 @@ watchDebounced(
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
 
-const { data, status, ws } = useWebSocket(
+const { data, status, send, ws, close, open } = useWebSocket(
 	"ws://localhost:3000/ws/access-logs",
 	{
 		autoReconnect: {
@@ -94,36 +99,58 @@ const { data, status, ws } = useWebSocket(
 	},
 );
 
-onMounted(() => {
-	ws.value?.addEventListener("access-logs", (event) => {
-		console.log("ss");
-	});
-});
+function handlePause() {
+	pause.value = !pause.value;
 
-watch(data, async (v) => {
-	const value = JSON.parse(v);
-	console.log(`Received ${value.changedLinesCount} new log entries`);
-
-	if (page.value === 1 || !page.value) {
-		try {
-			await statsStore.getAccessLogs({
-				page: page.value,
-				search: search.value,
-			});
-		} finally {
-			highlightCount.value = value.changedLinesCount;
-			
-			setTimeout(() => {
-				highlightCount.value = 0;
-			}, 1500);
-		}
+	if (pause.value) {
+		close();
+	} else {
+		open();
 	}
-});
+}
+
+watchDebounced(
+	data,
+	async (v) => {
+		if (!v) return;
+		let value: any;
+		try {
+			value = JSON.parse(v);
+		} catch (_) {
+			// Ignore non-JSON messages
+			return;
+		}
+
+		if (
+			typeof value?.changedLinesCount !== "number" ||
+			value.changedLinesCount <= 0
+		)
+			return;
+		console.log(`Received ${value.changedLinesCount} new log entries`);
+
+		if (page.value === 1 || !page.value) {
+			try {
+				await statsStore.getAccessLogs({
+					page: page.value,
+					search: search.value,
+				});
+			} finally {
+				highlightCount.value = value.changedLinesCount;
+
+				setTimeout(() => {
+					highlightCount.value = 0;
+				}, 1500);
+			}
+		}
+	},
+	{
+		debounce: interval,
+	},
+);
 </script>
 
 <template>
   <div class="access-data flex flex-col gap-5">
-    {{ status }}
     <NForm :model="form" class="search">
       <div class="max-w-xl flex gap-2">
         <n-select
@@ -154,12 +181,39 @@ watch(data, async (v) => {
       </div>
     </NForm>
     <div class="flex gap-2">
+
       <NTag>
         Total Records: {{ total }}
       </NTag>
-
       <NTag>
         Count: {{ count }}
+      </NTag>
+      <NButton
+          size="small"
+          :type="`${!pause ? 'error' : 'success'}`"
+          @click="handlePause"
+      >
+        <template #icon>
+          <Icon>
+            <Pause v-if="!pause" />
+            <Play v-else />
+          </Icon>
+        </template>
+
+        {{ !pause ? 'Pause' : 'Start' }}
+      </NButton>
+
+      <NTag>
+        Interval:
+      </NTag>
+      <NInputNumber
+          v-model:value="interval"
+          size="small"
+          :show-button="false"
+          class="max-w-[50px]"
+      />
+      <NTag>
+        WS: {{ status }}
       </NTag>
     </div>
 

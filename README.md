@@ -14,6 +14,24 @@
 
 BunSqStat is a modern, high-performance web application for analyzing Squid proxy server logs in real-time. Built with the latest technologies including Bun, Vue 3, Redis Stack, and RediSearch for lightning-fast full-text search.
 
+## 📈 Roadmap
+
+- [X] Access log data table
+- [X] Real-time WebSocket updates
+- [ ] Access log charts
+- - [ ] Hit Ratio
+- - [ ] User speed
+- [ ] Add to env lazy mode (use watcher only has ws clients)
+- [ ] Use index for recording last line (slow parse speed)
+- [ ] Log rotate support (logfile_rotate N)
+- - [ ] {inode, offset}
+- - [ ] size < offset, reset offset
+
+### History:
+
+This web app modern analog of SqStat. Old web app used object_cache (removed in squid 6), so we cant use
+socket for grabbing realtime data. Now we can only use logs like: access_log/cache_log
+
 ## ✨ Features
 
 - 🚀 **Real-time monitoring** - Watch logs update live as requests flow through your proxy
@@ -159,10 +177,6 @@ bun run test:simulator   # Log simulator tests
 
 See our [Issues](./issues) page for current known issues and their status.
 
-## 📈 Roadmap
-
-- [ ] Real-time WebSocket updates
-- [ ] Advanced analytics dashboard
 
 ## 📄 License
 

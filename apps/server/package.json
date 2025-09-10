@@ -8,6 +8,8 @@
 	"scripts": {
 		"test": "echo \"Error: no src/test specified\" && exit 1",
 		"dev": "bun --env-file=../../.env run --watch src/index.ts",
+		"build": "bun run build.ts",
+		"preview": "bun --env-file=../../.env ./dist/index.js",
 		"test:logs": "bun run src/test/log-simulator.ts",
 		"test:logs:quick": "bun run src/test/log-simulator.ts --duration=30"
 	},
