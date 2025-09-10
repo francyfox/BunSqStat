@@ -10,12 +10,6 @@ This guide will walk you through setting up BunSqStat from scratch.
 - **Storage**: 10 GB available space
 - **OS**: Linux, macOS, or Windows with WSL2
 
-### Recommended Requirements  
-- **CPU**: 4+ cores, 2.5+ GHz
-- **RAM**: 8+ GB
-- **Storage**: 20+ GB SSD
-- **Network**: Gigabit connection (for high-volume logs)
-
 ## Prerequisites
 
 ### 1. Install Bun

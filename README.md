@@ -14,6 +14,41 @@
 
 BunSqStat is a modern, high-performance web application for analyzing Squid proxy server logs in real-time. Built with the latest technologies including Bun, Vue 3, Redis Stack, and RediSearch for lightning-fast full-text search.
 
+
+## Quick Start
+
+### Using Docker Run (Simplest)
+
+```bash
+docker run -d \
+  --name bunsqstat \
+  -p 80:80 \
+  -v /var/log/squid/access.log:/app/logs/access.log:ro \
+  -v /var/log/squid/cache.log:/app/logs/cache.log:ro \
+  -e REDIS_PASSWORD=your-secure-password \
+  francyfox/bunsqstat:latest
+```
+
+### Using Docker Compose
+
+```yaml
+version: '3.8'
+services:
+  bunsqstat:
+    image: francyfox/bunsqstat:latest
+    container_name: bunsqstat
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    environment:
+      - REDIS_PASSWORD=your-secure-password
+      - SQUID_HOST=127.0.0.1
+      - SQUID_PORT=3128
+    volumes:
+      - /var/log/squid/access.log:/app/logs/access.log:ro
+      - /var/log/squid/cache.log:/app/logs/cache.log:ro
+```
+
 ## 📈 Roadmap
 
 - [X] Access log data table
