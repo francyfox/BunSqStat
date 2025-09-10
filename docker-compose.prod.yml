@@ -30,8 +30,15 @@ services:
       dockerfile: backend.Dockerfile
       cache_from:
         - server:cache
-    env_file:
-      - .env
+    environment:
+      - NODE_ENV=production
+      - SQUID_HOST=127.0.0.1
+      - SQUID_PORT=3128
+      - ACCESS_LOG=/tmp/access.log
+      - CACHE_LOG=/var/log/cache.log
+      - REDIS_HOST=redis-bunsqstat
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=123
     ports:
       - "3000:3000"
     depends_on:
@@ -54,8 +61,8 @@ services:
       dockerfile: frontend.Dockerfile
       cache_from:
         - client:cache
-    env_file:
-      - .env
+    environment:
+      - NODE_ENV=production
     ports:
       - "80:80"
     depends_on:

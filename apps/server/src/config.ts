@@ -5,10 +5,15 @@ import Ajv from "ajv";
 const ajv = new Ajv();
 
 export const configSchema = t.Object({
+	NODE_ENV: t.Union([t.Literal("development"), t.Literal("production")], {
+		default: "development",
+	}),
 	SQUID_HOST: t.String(),
 	SQUID_PORT: t.String(),
 	ACCESS_LOG: t.String(),
 	CACHE_LOG: t.String(),
+	REDIS_HOST: t.String({ default: "localhost" }),
+	REDIS_PORT: t.String({ default: "6379" }),
 	REDIS_PASSWORD: t.String(),
 });
 
