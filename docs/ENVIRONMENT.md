@@ -63,14 +63,25 @@ services:
       - NODE_ENV=production
       - SQUID_HOST=127.0.0.1
       - SQUID_PORT=3128
-      - ACCESS_LOG=/var/log/squid/access.log
-      - CACHE_LOG=/var/log/squid/cache.log
+      - ACCESS_LOG=/app/logs/access.log
+      - CACHE_LOG=/app/logs/cache.log
       - REDIS_HOST=redis-bunsqstat
       - REDIS_PORT=6379
       - REDIS_PASSWORD=123
+    volumes:
+      # Mount Squid log files from host system
+      - /var/log/squid/access.log:/app/logs/access.log:ro
+      - /var/log/squid/cache.log:/app/logs/cache.log:ro
 ```
 
-You can modify these values directly in the docker-compose file or create a `.env.production.local` file and use `env_file` directive.
+### Volume Mounting
+
+Squid log files are mounted from the host system using Docker volumes:
+
+- **Host Path**: `/var/log/squid/access.log` → **Container Path**: `/app/logs/access.log`
+- **Host Path**: `/var/log/squid/cache.log` → **Container Path**: `/app/logs/cache.log`
+
+To customize log file locations, modify the volume mappings in `docker-compose.prod.yml`.
 
 ## Important Notes
 

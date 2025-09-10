@@ -1,0 +1,80 @@
+# All-in-One BunSqStat Docker Image (Alpine-based)
+# Contains Redis, Backend Server, and Frontend in a single container
+
+# Build stage
+FROM oven/bun:1.2.21-alpine AS builder
+
+WORKDIR /app
+
+# Copy source files
+COPY package.json bun.lock turbo.json ./
+COPY apps ./apps
+
+# Install dependencies and build
+RUN bun install
+RUN bun run build
+
+# Production stage
+FROM alpine:3.19
+
+# Install system dependencies
+RUN apk add --no-cache \
+    curl \
+    supervisor \
+    redis \
+    caddy \
+    bash \
+    ca-certificates
+
+# Install Bun
+RUN curl -fsSL https://bun.sh/install | bash
+ENV PATH="/root/.bun/bin:$PATH"
+
+# Create app directory
+WORKDIR /app
+
+# Copy built applications
+COPY --from=builder /app/apps/server/dist ./backend/
+COPY --from=builder /app/apps/server/package.json ./backend/
+COPY --from=builder /app/apps/web/dist ./frontend/
+
+# Install production dependencies for backend
+WORKDIR /app/backend
+RUN bun install --production
+
+# Copy configuration files
+WORKDIR /app
+COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile.template
+COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY docker/start.sh /app/start.sh
+
+# Create optimized Caddyfile for all-in-one setup
+RUN sed 's|/srv|/app/frontend|g' /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && \
+    sed -i 's|bunsqstat_server:3000|localhost:3000|g' /etc/caddy/Caddyfile && \
+    chmod +x /app/start.sh
+
+# Create volume mount points for log files
+RUN mkdir -p /app/logs
+
+# Set default environment variables
+ENV NODE_ENV=production
+ENV SQUID_HOST=127.0.0.1
+ENV SQUID_PORT=3128
+ENV ACCESS_LOG=/app/logs/access.log
+ENV CACHE_LOG=/app/logs/cache.log
+ENV REDIS_HOST=localhost
+ENV REDIS_PORT=6379
+ENV REDIS_PASSWORD=bunsqstat123
+
+# Expose ports
+EXPOSE 80 3000 6379
+
+# Volume for log files (users can mount their squid logs here)
+VOLUME ["/app/logs"]
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
+    CMD curl -f http://localhost/api/health || exit 1
+
+# Start all services
+CMD ["/app/start.sh"]

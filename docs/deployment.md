@@ -24,7 +24,7 @@ BunSqStat supports multiple deployment strategies:
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/BunSqStat.git
+git clone https://github.com/francyfox/BunSqStat.git
 cd BunSqStat
 
 # Copy production environment
@@ -698,7 +698,7 @@ npm install -g pm2
 
 ```bash
 # Clone and build
-git clone https://github.com/your-username/BunSqStat.git
+git clone https://github.com/francyfox/BunSqStat.git
 cd BunSqStat
 
 # Install dependencies
