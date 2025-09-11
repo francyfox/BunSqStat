@@ -41,7 +41,7 @@ yarn-error.log*
 .gitignore
 
 # Docker
-Dockerfile*
+Dockerfile
 docker-compose*.yml
 .dockerignore
 

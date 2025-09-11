@@ -45,8 +45,8 @@ prod-compose:
 .PHONY: build
 build:
 	@echo "Building all-in-one Docker image..."
-	docker build -f Dockerfile.all-in-one -t $(IMAGE_NAME):$(VERSION) .
-	docker build -f Dockerfile.all-in-one -t $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION) .
+	docker build -f Dockerfile -t $(IMAGE_NAME):$(VERSION) .
+	docker build -f Dockerfile -t $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION) .
 	@echo "Built $(IMAGE_NAME):$(VERSION)"
 
 .PHONY: run
@@ -107,13 +107,13 @@ push-multi:
 	docker buildx create --use --name multiplatform || true
 	docker buildx build \
 		--platform $(PLATFORM) \
-		-f Dockerfile.all-in-one \
+		-f Dockerfile \
 		-t $(DOCKER_USERNAME)/$(IMAGE_NAME):$(VERSION) \
 		--push .
 	@if [ "$(VERSION)" != "latest" ]; then \
 		docker buildx build \
 			--platform $(PLATFORM) \
-			-f Dockerfile.all-in-one \
+			-f Dockerfile \
 			-t $(DOCKER_USERNAME)/$(IMAGE_NAME):latest \
 			--push .; \
 	fi

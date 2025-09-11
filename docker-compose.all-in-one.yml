@@ -4,7 +4,7 @@ services:
   bunsqstat:
     build:
       context: .
-      dockerfile: Dockerfile.all-in-one
+      dockerfile: Dockerfile
     container_name: bunsqstat-all-in-one
     restart: unless-stopped
     ports:
