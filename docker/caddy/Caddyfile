@@ -3,17 +3,24 @@
     encode gzip
     header remote_addr "{header.X-Forwarded-For}"
 
+    # API endpoints (включая WebSocket через /api/ws/*)
     handle_path /api/* {
+        @websockets {
+        		header Connection *Upgrade*
+        		header Upgrade    websocket
+        }
+        reverse_proxy @websockets bunsqstat_server:3000
+
         reverse_proxy bunsqstat_server:3000 {
             health_uri /health
             health_interval 10s
-            # Enable WebSocket support
-            header_up Upgrade {>Upgrade}
-            header_up Connection {>Connection}
-            header_up Sec-WebSocket-Key {>Sec-WebSocket-Key}
-            header_up Sec-WebSocket-Version {>Sec-WebSocket-Version}
-            header_up Sec-WebSocket-Extensions {>Sec-WebSocket-Extensions}
-            header_up Sec-WebSocket-Protocol {>Sec-WebSocket-Protocol}
+            # WebSocket specific headers  
+#            header_up Upgrade {>Upgrade}
+#            header_up Connection {>Connection}
+#            header_up Sec-WebSocket-Key {>Sec-WebSocket-Key}
+#            header_up Sec-WebSocket-Version {>Sec-WebSocket-Version}
+#            header_up Sec-WebSocket-Extensions {>Sec-WebSocket-Extensions}
+#            header_up Sec-WebSocket-Protocol {>Sec-WebSocket-Protocol}
         }
     }
 

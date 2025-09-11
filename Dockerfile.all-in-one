@@ -6,6 +6,9 @@ FROM oven/bun:1.2.21-alpine AS builder
 
 WORKDIR /app
 
+# Set production environment for proper Vite build
+ENV NODE_ENV=production
+
 # Copy source files
 COPY package.json bun.lock turbo.json ./
 COPY apps ./apps

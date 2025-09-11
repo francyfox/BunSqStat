@@ -45,7 +45,9 @@ fileWatcher.onFileChange((event) => {
 		const messageData = JSON.stringify(event);
 
 		for (const [clientId, client] of connectedClients.entries()) {
-			console.log(`Broadcasting to client ${clientId} on channel ${client.channel}`);
+			console.log(
+				`Broadcasting to client ${clientId} on channel ${client.channel}`,
+			);
 			try {
 				// Use send() to directly send to this specific client
 				client.ws.send(messageData);
@@ -68,66 +70,70 @@ fileWatcher.onFileChange((event) => {
 	}
 });
 
+const wsConfig = {
+	body: t.Any(),
+	open(ws: any) {
+		const {
+			data: {
+				params: { log },
+			},
+		} = ws;
+
+		const clientId = nanoid(10);
+		const client: WebSocketClient = {
+			id: clientId,
+			ws,
+			lastPing: Date.now(),
+			channel: log,
+		};
+
+		(ws.data as any).clientId = clientId;
+		(ws.data as any).channel = log;
+
+		connectedClients.set(clientId, client);
+		ws.subscribe(log);
+		// Send welcome message directly to this client
+		ws.send(JSON.stringify({ type: "hello", clientId }));
+
+		console.info(
+			`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${connectedClients.size}`,
+		);
+	},
+	message(ws: any, message: any) {
+		const clientId = (ws.data as any).clientId;
+		const client = connectedClients.get(clientId);
+
+		if (client) {
+			client.lastPing = Date.now();
+
+			if (typeof message === "object") {
+				switch ((message as any)?.type) {
+					case "ping":
+						ws.send(JSON.stringify({ type: "pong" }));
+						break;
+					default:
+						ws.send(JSON.stringify({ type: "error", message: "NO_CONTENT" }));
+				}
+			}
+		}
+	},
+	close(ws: any) {
+		const channel = (ws.data as any).channel ?? "access-logs";
+		ws.unsubscribe(channel);
+		const clientId = (ws.data as any).clientId;
+		if (clientId && connectedClients.has(clientId)) {
+			connectedClients.delete(clientId);
+			console.info(
+				`WebSocket client [${clientId}] disconnected. Total clients: ${connectedClients.size}`,
+			);
+		}
+	},
+};
+
 export const WS = new Elysia()
 	.model({
 		"log.response": LogModel,
 	})
-	.ws("/ws/:log", {
-		body: t.Any(),
-open(ws) {
-			const {
-				data: {
-					params: { log },
-				},
-			} = ws;
-
-			const clientId = nanoid(10);
-			const client: WebSocketClient = {
-				id: clientId,
-				ws,
-				lastPing: Date.now(),
-				channel: log,
-			};
-
-			(ws.data as any).clientId = clientId;
-			(ws.data as any).channel = log;
-
-			connectedClients.set(clientId, client);
-			ws.subscribe(log);
-			// Send welcome message directly to this client
-			ws.send(JSON.stringify({ type: "hello", clientId }));
-
-			console.info(
-				`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${connectedClients.size}`,
-			);
-		},
-		message(ws, message) {
-			const clientId = (ws.data as any).clientId;
-			const client = connectedClients.get(clientId);
-
-			if (client) {
-				client.lastPing = Date.now();
-
-				if (typeof message === "object") {
-					switch ((message as any)?.type) {
-						case "ping":
-							ws.send(JSON.stringify({ type: "pong" }));
-							break;
-						default:
-							ws.send(JSON.stringify({ type: "error", message: "NO_CONTENT" }));
-					}
-				}
-			}
-		},
-close(ws) {
-			const channel = (ws.data as any).channel ?? "access-logs";
-			ws.unsubscribe(channel);
-			const clientId = (ws.data as any).clientId;
-			if (clientId && connectedClients.has(clientId)) {
-				connectedClients.delete(clientId);
-				console.info(
-					`WebSocket client [${clientId}] disconnected. Total clients: ${connectedClients.size}`,
-				);
-			}
-		},
-	});
+	// WebSocket endpoints - поддерживаем как прямой доступ, так и через /api префикс
+	.ws("/ws/:log", wsConfig)
+	.ws("/api/ws/:log", wsConfig);

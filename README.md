@@ -23,6 +23,8 @@ BunSqStat is a modern, high-performance web application for analyzing Squid prox
 docker run -d \
   --name bunsqstat \
   -p 80:80 \
+  -p 3000:3000 \
+  -p 6379:6379 \
   -v /var/log/squid/access.log:/app/logs/access.log:ro \
   -v /var/log/squid/cache.log:/app/logs/cache.log:ro \
   -e REDIS_PASSWORD=your-secure-password \
@@ -32,21 +34,31 @@ docker run -d \
 ### Using Docker Compose
 
 ```yaml
-version: '3.8'
 services:
   bunsqstat:
     image: francyfox/bunsqstat:latest
     container_name: bunsqstat
     restart: unless-stopped
     ports:
-      - "80:80"
+      - "80:80"      # Web interface
+      - "3000:3000"  # API (optional, for direct access)
+      - "6379:6379"  # Redis (optional, for external access)
     environment:
-      - REDIS_PASSWORD=your-secure-password
+      - NODE_ENV=production
+      - REDIS_PASSWORD=123
       - SQUID_HOST=127.0.0.1
       - SQUID_PORT=3128
+      - ACCESS_LOG=/app/logs/access.log
+      - CACHE_LOG=/app/logs/cache.log
     volumes:
-      - /var/log/squid/access.log:/app/logs/access.log:ro
-      - /var/log/squid/cache.log:/app/logs/cache.log:ro
+      - ./docker/access.log:/app/logs/access.log:ro
+      - ./docker/cache.log:/app/logs/cache.log:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 ```
 
 ## 📈 Roadmap
