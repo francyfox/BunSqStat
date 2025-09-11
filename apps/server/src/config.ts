@@ -5,9 +5,12 @@ import Ajv from "ajv";
 const ajv = new Ajv();
 
 export const configSchema = t.Object({
-	NODE_ENV: t.Union([t.Literal("development"), t.Literal("production")], {
-		default: "development",
-	}),
+	NODE_ENV: t.Union(
+		[t.Literal("development"), t.Literal("production"), t.Literal("test")],
+		{
+			default: "development",
+		},
+	),
 	SQUID_HOST: t.String(),
 	SQUID_PORT: t.String(),
 	ACCESS_LOG: t.String(),

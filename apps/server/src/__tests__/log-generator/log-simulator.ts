@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { appendFile, writeFile } from "node:fs/promises";
 import { RedisClient } from "bun";
-import { SquidLogGenerator } from "@/test/log-generator";
+import { SquidLogGenerator } from "@/__tests__/log-generator/log-generator";
 
 /**
  * Конфигурация для симулятора логов

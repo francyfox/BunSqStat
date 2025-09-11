@@ -16,7 +16,7 @@
 		"test": "bun test apps/server/src/test",
 		"test:watch": "bun test --watch apps/server/src/test",
 		"test:generator": "bun test apps/server/src/test/log-generator.test.ts",
-		"test:simulator": "bun test apps/server/src/test/log-simulator.test.ts"
+		"test:simulator": "bun test apps/server/src/test/log-generator/log-simulator.test.ts"
 	},
 	"workspaces": [
 		"apps/*",
