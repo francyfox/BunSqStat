@@ -1,8 +1,5 @@
 import { faker } from "@faker-js/faker";
 
-/**
- * Генератор реалистичных строк логов Squid для тестирования
- */
 export class SquidLogGenerator {
 	private readonly resultTypes = [
 		"TCP_MISS",
@@ -76,24 +73,20 @@ export class SquidLogGenerator {
 	/**
 	 * Генерирует массив строк логов
 	 * @param count - количество строк
-	 * @param timeSpread - разброс времени в секундах
 	 * @returns массив строк логов
 	 */
-	generateLogLines(count: number, timeSpread: number = 3600): string[] {
+	generateLogLines(count: number): string[] {
 		const baseTime = Date.now() / 1000;
 		const lines: string[] = [];
 
 		for (let i = 0; i < count; i++) {
-			const timestamp = baseTime + i + (i * 0.001);
+			const timestamp = baseTime + i + i * 0.001;
 			lines.push(this.generateLogLine(timestamp));
 		}
 
 		return lines;
 	}
 
-	/**
-	 * Генерирует URL на основе HTTP метода
-	 */
 	private generateURL(method: string): string {
 		switch (method) {
 			case "CONNECT":
@@ -102,19 +95,16 @@ export class SquidLogGenerator {
 				return (
 					faker.internet.url() +
 					(faker.datatype.boolean()
-						? "?" + faker.internet.url().split("?")[1] || ""
+						? `?${faker.internet.url().split("?")[1]}` || ""
 						: "")
 				);
 			case "POST":
-				return faker.internet.url() + "/api/" + faker.lorem.slug();
+				return `${faker.internet.url()}/api/${faker.lorem.slug()}`;
 			default:
 				return faker.internet.url();
 		}
 	}
 
-	/**
-	 * Генерирует hierarchy host на основе типа
-	 */
 	private generateHierarchyHost(hierarchyType: string): string {
 		switch (hierarchyType) {
 			case "HIER_DIRECT":
@@ -126,25 +116,16 @@ export class SquidLogGenerator {
 		}
 	}
 
-	/**
-	 * Генерирует сценарий активности (пиковая нагрузка, обычная и т.д.)
-	 */
-	generateActivityBurst(scenario: "normal" | "peak" | "heavy"): string[] {
+	generateActivityBurst(scenario?: "normal" | "peak" | "heavy"): string[] {
 		switch (scenario) {
 			case "normal":
-				return this.generateLogLines(faker.number.int({ min: 5, max: 15 }), 60);
+				return this.generateLogLines(faker.number.int({ min: 5, max: 15 }));
 			case "peak":
-				return this.generateLogLines(
-					faker.number.int({ min: 50, max: 100 }),
-					30,
-				);
+				return this.generateLogLines(faker.number.int({ min: 50, max: 100 }));
 			case "heavy":
-				return this.generateLogLines(
-					faker.number.int({ min: 100, max: 200 }),
-					10,
-				);
+				return this.generateLogLines(faker.number.int({ min: 100, max: 200 }));
 			default:
-				return this.generateLogLines(10, 60);
+				return this.generateLogLines(10);
 		}
 	}
 }
