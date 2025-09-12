@@ -19,7 +19,8 @@
 		"ajv": "^8.17.1",
 		"chokidar": "^4.0.3",
 		"elysia": "latest",
-		"elysia-rate-limit": "^4.4.0"
+		"elysia-rate-limit": "^4.4.0",
+		"mathjs": "^14.7.0"
 	},
 	"devDependencies": {
 		"bun-types": "latest"

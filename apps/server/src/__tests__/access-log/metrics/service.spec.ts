@@ -1,15 +1,18 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { SquidLogGenerator } from "@/__tests__/log-generator/log-generator";
 import { config } from "@/config";
-import { AccessLogsMetrics } from "@/modules/access-logs/metrics/service";
+import { AccessLogsMetricsService } from "@/modules/access-logs/metrics/service";
 import { AccessLogService } from "@/modules/access-logs/service";
 import { redisClient } from "@/redis";
 
+// TODO: disable random
 describe("MetricsService", () => {
 	beforeAll(async () => {
 		const generator = new SquidLogGenerator();
 		const lines = generator.generateActivityBurst("normal");
 		await Bun.write(config.ACCESS_LOG, lines.join("\n"));
+		await AccessLogService.createIndex();
+		await AccessLogService.readAccessLogs();
 	});
 
 	afterAll(async () => {
@@ -24,16 +27,23 @@ describe("MetricsService", () => {
 	});
 
 	test("get total bytes/duration", async () => {
-		await AccessLogService.createIndex();
-		await AccessLogService.readAccessLogs();
-
-		const { items, count } = await AccessLogsMetrics.getTotalSum();
+		const { items, count } = await AccessLogsMetricsService.getTotalSum();
 		const hasKeys = new RegExp(
-			["user", "total_bytes", "total_duration"].join("|"),
+			["user", "totalBytes", "totalDuration"].join("|"),
 		).test(Object.keys(items[0] as any).join("|"));
 
 		expect(count).toBeGreaterThan(0);
-		expect(items.length).toBeGreaterThan(0);
 		expect(hasKeys).toBe(true);
+	});
+
+	test("get total RPS", async () => {
+		const count = await AccessLogsMetricsService.getTotalRequestByTime(10000);
+		expect(count).toBeGreaterThan(0);
+	});
+
+	test("get statuses", async () => {
+		const { items, count } =
+			await AccessLogsMetricsService.getTotalStatusesByTime(10000);
+		expect(count).toBeGreaterThan(0);
 	});
 });
