@@ -69,30 +69,6 @@ rps = totalCount / ((endTime - startTime) / 1000)
 
 ### 2. Cache Hit Ratio (коэффициент попаданий в кэш)
 
-> ⚠️ **Ограничение**: В новых версиях Squid (6+) удален `object_cache`, поэтому Hit Ratio можно рассчитывать только на основе access логов
-
-#### Базовая формула (для Squid 5 и ниже)
-```
-hitRatio = (hitRequests / totalRequests) * 100%
-
-где:
-hitRequests = count(resultType содержит "HIT")
-totalRequests = count(всех записей)
-```
-
-#### Подробная формула по типам (для Squid 5 и ниже)
-```
-# Кэш попадания
-totalHits = TCP_HIT + TCP_MEM_HIT + TCP_REFRESH_HIT + TCP_IMS_HIT
-
-# Промахи
-totalMisses = TCP_MISS + TCP_REFRESH_MISS + TCP_CLIENT_REFRESH_MISS
-
-# Общее количество запросов
-totalRequests = totalHits + totalMisses + otherTypes
-
-hitRatio = (totalHits / totalRequests) * 100%
-```
 
 #### Альтернативные метрики для Squid 6+
 ```
@@ -109,6 +85,8 @@ redirectRate = count(status 3xx) / totalRequests * 100%
 
 # 4. Процент быстрых ответов (по времени отклика)
 fastResponseRate = count(duration < 100ms) / totalRequests * 100%
+
+FT.AGGREGATE log_idx "*" APPLY "floor(@resultStatus/100)*100" AS status_class GROUPBY 1 @status_class REDUCE COUNT 0 AS count SORTBY 2 @status_class ASC
 ```
 
 #### RediSearch запросы для Hit Ratio
