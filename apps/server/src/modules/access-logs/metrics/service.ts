@@ -1,11 +1,10 @@
 import { evaluate } from "mathjs";
 import { redisClient } from "@/redis";
-import { toPascalCaseObject } from "@/utils/object";
 
 export interface IMetricBytesAndDuration {
 	user: string;
-	totalBytes: string;
-	totalDuration: string;
+	totalBytes: number;
+	totalDuration: number;
 }
 
 export const AccessLogsMetricsService = {
@@ -21,8 +20,14 @@ export const AccessLogsMetricsService = {
 			),
 		);
 
-		const items: IMetricBytesAndDuration[] = results.map((i: any) =>
-			toPascalCaseObject(i.extra_attributes),
+		const items: IMetricBytesAndDuration[] = results.map(
+			({ extra_attributes: i }: any) => {
+				return {
+					user: i.user,
+					totalBytes: Number(i.total_bytes),
+					totalDuration: Number(i.total_duration),
+				};
+			},
 		);
 
 		return {
@@ -48,10 +53,11 @@ export const AccessLogsMetricsService = {
 		return total_results;
 	},
 
-	async getTotalStatusesByTime(time: number = 60) {
+	async getTotalStatusesByTime(time?: number) {
 		const currentTime = Date.now();
-		const endTime = currentTime + time;
-		const TIMESTAMP = `@timestamp:[${currentTime} ${endTime}]`;
+		const TIMESTAMP = time
+			? `@timestamp:[${currentTime} ${currentTime + time}]`
+			: "*";
 		const aggregateQuery = `APPLY floor(@resultStatus/100) AS status_class GROUPBY 1 @status_class REDUCE COUNT 0 AS count SORTBY 2 @status_class ASC`;
 
 		const { total_results, results } = await redisClient.send("FT.AGGREGATE", [
@@ -63,7 +69,7 @@ export const AccessLogsMetricsService = {
 		const items = results.map((i: any) => {
 			return {
 				status: `${i.extra_attributes.status_class}XX`,
-				count: i.extra_attributes.count,
+				count: Number(i.extra_attributes.count),
 			};
 		});
 
@@ -73,14 +79,13 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
-	async getTotal(items: IMetricBytesAndDuration[]) {
+	async getTotal(items: IMetricBytesAndDuration[], time: number = 60) {
 		const result = {
 			bytes: 0,
 			duration: 0,
 		};
 
-		const requestPerMinute = await this.getTotalRequestByTime();
-		const { items: statusCount } = await this.getTotalStatusesByTime();
+		const requestPerSecond = await this.getTotalRequestByTime(time);
 
 		for (const i of items) {
 			result.bytes += Number(i.totalBytes || 0);
@@ -88,9 +93,14 @@ export const AccessLogsMetricsService = {
 		}
 
 		return {
-			...result,
-			rps: evaluate(`${requestPerMinute} / 60`),
-			statusCount,
+			globalStates: {
+				...result,
+				statusCodes: await this.getTotalStatusesByTime(),
+			},
+			currentStates: {
+				rps: evaluate(`${requestPerSecond} / ${time}`),
+				statusCodes: await this.getTotalStatusesByTime(time),
+			},
 		};
 	},
 
