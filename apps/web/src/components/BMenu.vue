@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BookOutline as BookIcon } from "@vicons/ionicons5";
+import { BarChart, BookOutline as BookIcon } from "@vicons/ionicons5";
 import type { MenuOption } from "naive-ui";
 import { NIcon, NLayout, NLayoutContent, NLayoutSider, NMenu } from "naive-ui";
 import type { Component } from "vue";
@@ -26,6 +26,22 @@ const menuOptions: MenuOption[] = [
 			),
 		key: "access-log-data",
 		icon: renderIcon(BookIcon),
+	},
+	{
+		label: () =>
+			h(
+				RouterLink,
+				{
+					to: {
+						name: "/access-log-metrics",
+					},
+				},
+				{
+					default: () => "Access Log Metrics",
+				},
+			),
+		key: "access-log-metrics",
+		icon: renderIcon(BarChart),
 	},
 ];
 

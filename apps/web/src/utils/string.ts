@@ -174,3 +174,37 @@ export function combineWithAND(queries: string[]): string {
 export function combineWithOR(queries: string[]): string {
 	return queries.filter(Boolean).join(" | ");
 }
+
+export function formatBytes(bytes: number = 0, decimals = 2) {
+	if (!+bytes) return "0 Bytes";
+
+	const k = 1024;
+	const dm = decimals < 0 ? 0 : decimals;
+	const sizes = [
+		"Bytes",
+		"KiB",
+		"MiB",
+		"GiB",
+		"TiB",
+		"PiB",
+		"EiB",
+		"ZiB",
+		"YiB",
+	];
+
+	const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+	return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
+}
+
+export function formatMilliseconds(ms: number | undefined): string {
+	if (ms === undefined) return "-";
+	const milliseconds = ms % 1000;
+	const seconds = Math.floor((ms / 1000) % 60);
+	const minutes = Math.floor((ms / (1000 * 60)) % 60);
+	const hours = Math.floor(ms / (1000 * 60 * 60));
+
+	const pad = (num: number, size = 2) => `000${num}`.slice(-size);
+
+	return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(milliseconds, 3)}`;
+}

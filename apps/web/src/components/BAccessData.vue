@@ -158,11 +158,13 @@ watchDebounced(
             v-model:value="form.field"
             placeholder="Select"
             :options="fieldOptions"
+            size="large"
             class="w-[200px]"
         />
         <NInput
             v-model:value="form.search"
             placeholder="Search by column"
+            size="large"
         />
 
         <NTooltip placement="bottom" trigger="hover">
@@ -182,17 +184,17 @@ watchDebounced(
       </div>
     </NForm>
     <div class="flex gap-2">
-
-      <NTag>
+      <NTag class="text-xl">
         Total Records: {{ total }}
       </NTag>
-      <NTag>
+      <NTag class="text-xl">
         Count: {{ count }}
       </NTag>
       <NButton
           size="small"
           :type="`${!pause ? 'error' : 'success'}`"
           @click="handlePause"
+          class="text-xl"
       >
         <template #icon>
           <Icon>
@@ -204,7 +206,7 @@ watchDebounced(
         {{ !pause ? 'Pause' : 'Start' }}
       </NButton>
 
-      <NTag>
+      <NTag class="text-xl">
         Interval:
       </NTag>
       <NInputNumber
@@ -213,7 +215,7 @@ watchDebounced(
           :show-button="false"
           class="max-w-[50px]"
       />
-      <NTag>
+      <NTag class="text-xl">
         WS: {{ status }}
       </NTag>
     </div>

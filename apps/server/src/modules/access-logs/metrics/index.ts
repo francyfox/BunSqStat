@@ -1,38 +1,28 @@
 import { Elysia, t } from "elysia";
 import { AccessLogsMetricsService } from "@/modules/access-logs/metrics/service";
+import { AccessLogMetricsSchema } from "@/modules/access-logs/metrics/types";
 
 export const AccessLogsMetrics = new Elysia().get(
 	"/stats/access-logs/metrics",
 	async ({ query }) => {
-		const { limit } = query;
-		const { items } = await AccessLogsMetricsService.getTotalSum(limit);
+		const { limit, time } = query;
+		const { items, count } = await AccessLogsMetricsService.getTotalSum(limit);
 		const userInfo = await AccessLogsMetricsService.getUsersInfo(items);
-		const total = await AccessLogsMetricsService.getTotal(items);
+		const total = await AccessLogsMetricsService.getTotal(items, time);
 		return {
 			...total,
 			users: userInfo,
 		};
 	},
 	{
-		query: t.Object({
-			limit: t.Number({ default: 50 }),
-		}),
-		response: {
-			"200": t.Object({
-				rps: t.Number(),
-				statusCount: t.Array(t.Any()),
-				bytes: t.Number(),
-				duration: t.Number(),
-				users: t.Array(
-					t.Object({
-						currentSpeed: t.Number(),
-						speed: t.Number(),
-						user: t.String(),
-						totalBytes: t.String(),
-						totalDuration: t.String(),
-					}),
-				),
+		query: t.Partial(
+			t.Object({
+				limit: t.Number({ default: 50 }),
+				time: t.Number({ default: 60 }),
 			}),
+		),
+		response: {
+			"200": AccessLogMetricsSchema,
 		},
 	},
 );
