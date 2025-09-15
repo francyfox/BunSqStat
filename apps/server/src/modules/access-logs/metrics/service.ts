@@ -89,7 +89,7 @@ export const AccessLogsMetricsService = {
 
 		for (const i of items) {
 			result.bytes += Number(i.totalBytes || 0);
-			result.duration += Number(i.totalBytes || 0);
+			result.duration += Number(i.totalDuration || 0);
 		}
 
 		return {
