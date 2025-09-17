@@ -66,7 +66,7 @@ const options = computed<ChartOptions<"bar">>(() => {
 <template>
   <div class="status-chart">
       <Bar
-          v-if="status.length > 0"
+          v-if="status?.length > 0"
           v-bind="{ options, data }"
           class="!h-[120px] !w-full"
       />

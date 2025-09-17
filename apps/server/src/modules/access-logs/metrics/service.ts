@@ -39,12 +39,21 @@ export const AccessLogsMetricsService = {
 	/**
 	 * @param time milliseconds
 	 */
-	async getTotalRequestByTime(time: number = 60) {
-		const currentTime = Date.now();
-		const endTime = currentTime + time;
+	async getTotalRequestByTime({
+		startTime,
+		endTime,
+	}: {
+		startTime?: number;
+		endTime?: number;
+	}) {
+		const TIMESTAMP =
+			startTime && endTime
+				? `@timestamp:[${startTime || Date.now()} ${endTime || Date.now()}]`
+				: "*";
+
 		const { total_results } = await redisClient.send("FT.SEARCH", [
 			"log_idx",
-			`@timestamp:[${currentTime} ${endTime}]`,
+			TIMESTAMP,
 			"LIMIT",
 			"0",
 			"0",
@@ -53,11 +62,17 @@ export const AccessLogsMetricsService = {
 		return total_results;
 	},
 
-	async getTotalStatusesByTime(time?: number) {
-		const currentTime = Date.now();
-		const TIMESTAMP = time
-			? `@timestamp:[${currentTime} ${currentTime + time}]`
-			: "*";
+	async getTotalStatusesByTime({
+		startTime,
+		endTime,
+	}: {
+		startTime?: number;
+		endTime?: number;
+	}) {
+		const TIMESTAMP =
+			startTime && endTime
+				? `@timestamp:[${startTime || Date.now()} ${endTime || Date.now()}]`
+				: "*";
 		const aggregateQuery = `APPLY floor(@resultStatus/100) AS status_class GROUPBY 1 @status_class REDUCE COUNT 0 AS count SORTBY 2 @status_class ASC`;
 
 		const { total_results, results } = await redisClient.send("FT.AGGREGATE", [
@@ -79,7 +94,10 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
-	async getTotal(items: IMetricBytesAndDuration[], time: number = 60) {
+	async getTotal(
+		items: IMetricBytesAndDuration[],
+		time: { startTime?: number; endTime?: number },
+	) {
 		const result = {
 			bytes: 0,
 			duration: 0,
@@ -92,16 +110,20 @@ export const AccessLogsMetricsService = {
 			result.duration += Number(i.totalDuration || 0);
 		}
 
-		return {
+		const { startTime, endTime } = time;
+		const timeRange = ((startTime || 0) - (endTime || 0)) / 1000;
+		const output = {
 			globalStates: {
 				...result,
-				statusCodes: await this.getTotalStatusesByTime(),
+				statusCodes: await this.getTotalStatusesByTime(time),
 			},
 			currentStates: {
-				rps: evaluate(`${requestPerSecond} / ${time}`),
+				rps: evaluate(`${requestPerSecond} / ${timeRange}`),
 				statusCodes: await this.getTotalStatusesByTime(time),
 			},
 		};
+
+		return output;
 	},
 
 	async getUsersInfo(items: IMetricBytesAndDuration[]) {

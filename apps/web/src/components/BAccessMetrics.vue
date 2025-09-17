@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { watchDebounced } from "@vueuse/core";
+import MasonryWall from "@yeger/vue-masonry-wall";
 import {
 	NDatePicker,
 	NForm,
@@ -60,6 +61,12 @@ onUnmounted(() => {
 
 <template>
   <div class="flex flex-col gap-5">
+    ff
+    <MasonryWall :items="['test', 'fff']" :column-width="300" :gap="16">
+      <template #default="{ item }">
+        {{ item }}
+      </template>
+    </MasonryWall>
     <NForm :model="form"
            class="flex gap-2"
     >
