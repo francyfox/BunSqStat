@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watchDebounced } from "@vueuse/core";
+import { useWebSocket, watchDebounced } from "@vueuse/core";
 import {
 	NDatePicker,
 	NForm,
@@ -7,13 +7,22 @@ import {
 	NInputNumber,
 	NTabPane,
 	NTabs,
+	useNotification,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import BCardMetric from "@/components/BCardMetric.vue";
 import BStatuses from "@/components/BStatuses.vue";
+import BUserSpeed from "@/components/BUserSpeed.vue";
+import { WS_URL } from "@/consts.ts";
 import { useStatsStore } from "@/stores/stats.ts";
+import { diffDate } from "@/utils/date.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
+
+const route = useRoute();
+const router = useRouter();
+const notification = useNotification();
 
 const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
@@ -23,10 +32,88 @@ const form = ref({
 	time: undefined,
 });
 
+const diffTime = computed(() => {
+	if (!form.value.time) return 3600;
+	return form.value.time[0] - form.value.time[1];
+});
+
+const tab = ref("actual");
+
 await statsStore.getAccessMetrics();
 
-watchDebounced(form, async (v) => {
-	await statsStore.getAccessMetrics(v);
+function handleTabChange(tab: string) {
+	router.push({ name: route.name, hash: `#${tab}` });
+}
+
+watchDebounced(
+	form,
+	async (v) => {
+		const { limit, time: [startTime, endTime] = [] } = v;
+
+		await statsStore.getAccessMetrics({
+			limit,
+			startTime,
+			endTime,
+		});
+	},
+	{
+		deep: true,
+		debounce: 500,
+	},
+);
+
+watch(
+	() => route.hash,
+	(v) => {
+		tab.value = v ? v.replace("#", "") : "actual";
+	},
+);
+
+const { data } = useWebSocket(`${WS_URL}/ws/access-logs`, {
+	autoReconnect: {
+		retries: 3,
+		delay: 1000,
+		onFailed() {
+			notification.error({
+				content: "Failed to connect WebSocket after 3 retries",
+			});
+		},
+	},
+});
+
+watchDebounced(data, async (v) => {
+	if (!v) return;
+	let value: any;
+	try {
+		value = JSON.parse(v);
+	} catch (_) {
+		// Ignore non-JSON messages
+		return;
+	}
+
+	if (
+		typeof value?.changedLinesCount !== "number" ||
+		value.changedLinesCount <= 0
+	) {
+		return;
+	}
+	console.log(`Received ${value.changedLinesCount} new log entries`);
+
+	await statsStore.getAccessMetrics({
+		limit: form.value.limit,
+		startTime: form.value.time ? form.value.time[0] : undefined,
+		endTime: form.value.time ? form.value.time[1] : undefined,
+	});
+});
+
+onMounted(() => {
+	if (route.hash) {
+		tab.value = route.hash.replace("#", "");
+	}
+});
+
+onUnmounted(() => {
+	window.location.hash = "";
 });
 </script>
 
@@ -49,23 +136,26 @@ watchDebounced(form, async (v) => {
         <NDatePicker
             v-model:value="form.time"
             type="datetimerange"
-            :actions="['now', 'clear']"
+            :actions="['now', 'clear', 'confirm']"
             size="large"
             clearable
         />
       </NFormItem>
-
-      {{ form.time }}
     </NForm>
     <NTabs
+        v-model:value="tab"
         type="line"
         size="large"
+        @update:value="handleTabChange"
         animated
     >
-      <NTabPane name="per-60" tab="Per 60 sec">
+      <NTabPane name="actual" tab="Actual">
         <div class="metric-list grid grid-cols-4 gap-5">
           <BCardMetric>
-            {{ accessMetrics?.currentStates.rps }}
+            {{ accessMetrics?.currentStates?.rps?.toFixed(5) || "0" }} <br>
+            <span class="text-lg">
+              {{ accessMetrics?.currentStates?.rps * diffTime }} in {{ diffDate(form.time) }}
+            </span>
 
             <template #name>
               RPS
@@ -83,9 +173,9 @@ watchDebounced(form, async (v) => {
         </div>
       </NTabPane>
 
-      <NTabPane name="per-month" tab="Per Month">
-        <div class="metric-list grid grid-cols-4 items-start gap-5">
-          <BCardMetric>
+      <NTabPane name="per-n" tab="Per N">
+        <div class="metric-list columns-4">
+          <BCardMetric class="max-w-sm">
             {{ formatBytes(accessMetrics?.globalStates.bytes) }}
 
             <template #name>
@@ -93,7 +183,7 @@ watchDebounced(form, async (v) => {
             </template>
           </BCardMetric>
 
-          <BCardMetric>
+          <BCardMetric class="max-w-sm">
             <div class="text-center text-sm font-300">
               hour:minute:second:millisecond
             </div>
@@ -106,7 +196,7 @@ watchDebounced(form, async (v) => {
             </template>
           </BCardMetric>
 
-          <BCardMetric>
+          <BCardMetric class="max-w-sm">
             <BStatuses
                 :status="accessMetrics?.globalStates.statusCodes.items"
             />
@@ -114,14 +204,21 @@ watchDebounced(form, async (v) => {
               STATUS
             </template>
           </BCardMetric>
+
+          <BCardMetric class="max-w-sm">
+            <BUserSpeed :users="accessMetrics?.users" />
+          </BCardMetric>
         </div>
       </NTabPane>
     </NTabs>
-
-
   </div>
 </template>
 
-<style scoped>
-
+<style lang="postcss" scoped>
+.metric-list {
+  column-gap: 0.5rem;
+  .n-card {
+    margin-bottom: 0.5rem;
+  }
+}
 </style>

@@ -33,7 +33,11 @@ export const useStatsStore = defineStore("stats", () => {
 		return response;
 	}
 
-	async function getAccessMetrics(query?: { limit?: number; time?: number }) {
+	async function getAccessMetrics(query?: {
+		limit?: number;
+		startTime?: number;
+		endTime?: number;
+	}) {
 		loading.value = true;
 
 		const response = await api.stats["access-logs"].metrics.get({

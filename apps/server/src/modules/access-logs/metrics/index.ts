@@ -5,10 +5,13 @@ import { AccessLogMetricsSchema } from "@/modules/access-logs/metrics/types";
 export const AccessLogsMetrics = new Elysia().get(
 	"/stats/access-logs/metrics",
 	async ({ query }) => {
-		const { limit, time } = query;
+		const { limit, startTime, endTime } = query;
 		const { items, count } = await AccessLogsMetricsService.getTotalSum(limit);
 		const userInfo = await AccessLogsMetricsService.getUsersInfo(items);
-		const total = await AccessLogsMetricsService.getTotal(items, time);
+		const total = await AccessLogsMetricsService.getTotal(items, {
+			startTime,
+			endTime,
+		} as any);
 		return {
 			...total,
 			users: userInfo,
@@ -18,7 +21,12 @@ export const AccessLogsMetrics = new Elysia().get(
 		query: t.Partial(
 			t.Object({
 				limit: t.Number({ default: 50 }),
-				time: t.Number({ default: 60 }),
+				startTime: t.Partial(
+					t.Number({ description: `Timestamp like ${Date.now()}` }),
+				),
+				endTime: t.Partial(
+					t.Number({ description: `Timestamp like ${Date.now()}` }),
+				),
 			}),
 		),
 		response: {

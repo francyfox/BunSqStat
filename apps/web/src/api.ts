@@ -6,6 +6,4 @@ import type { EdenApp } from "server";
 const baseUrl =
 	process.env.NODE_ENV === "production" ? "localhost/api" : "localhost:3000";
 
-console.log(baseUrl);
-
 export const api = treaty<EdenApp>(baseUrl);

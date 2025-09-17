@@ -1,6 +1,6 @@
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import { routes } from "vue-router/auto-routes";
 import "virtual:uno.css";
 import "@unocss/reset/tailwind-compat.css";
@@ -12,7 +12,7 @@ import App from "./App.vue";
 const pinia = createPinia();
 
 const router = createRouter({
-	history: createMemoryHistory(),
+	history: createWebHashHistory(),
 	routes,
 });
 
