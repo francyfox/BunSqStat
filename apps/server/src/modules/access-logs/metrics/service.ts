@@ -47,9 +47,7 @@ export const AccessLogsMetricsService = {
 		endTime?: number;
 	}) {
 		const TIMESTAMP =
-			startTime && endTime
-				? `@timestamp:[${startTime || Date.now()} ${endTime || Date.now()}]`
-				: "*";
+			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
 
 		const { total_results } = await redisClient.send("FT.SEARCH", [
 			"log_idx",
@@ -70,9 +68,7 @@ export const AccessLogsMetricsService = {
 		endTime?: number;
 	}) {
 		const TIMESTAMP =
-			startTime && endTime
-				? `@timestamp:[${startTime || Date.now()} ${endTime || Date.now()}]`
-				: "*";
+			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
 		const aggregateQuery = `APPLY floor(@resultStatus/100) AS status_class GROUPBY 1 @status_class REDUCE COUNT 0 AS count SORTBY 2 @status_class ASC`;
 
 		const { total_results, results } = await redisClient.send("FT.AGGREGATE", [
@@ -103,22 +99,42 @@ export const AccessLogsMetricsService = {
 			duration: 0,
 		};
 
-		const requestPerSecond = await this.getTotalRequestByTime(time);
+		const rpsTime = (): { startTime: number; endTime: number } => {
+			if (!time.startTime && !time.endTime) {
+				// TODO: fix time types
+				const now = Date.now();
+
+				return {
+					startTime: now - 60 * 60 * 1000,
+					endTime: now,
+				};
+			}
+
+			return time;
+		};
+
+		const recentRequestCount = await this.getTotalRequestByTime(rpsTime());
 
 		for (const i of items) {
 			result.bytes += Number(i.totalBytes || 0);
 			result.duration += Number(i.totalDuration || 0);
 		}
 
-		const { startTime, endTime } = time;
-		const timeRange = ((startTime || 0) - (endTime || 0)) / 1000;
+		const timeRangeSeconds = Math.abs(
+			(rpsTime().endTime - rpsTime().startTime) / 1000,
+		);
+
+		const test = (await redisClient.keys("log:*"))[0].replace("log:", "");
+		console.log(
+			`${recentRequestCount}\n${timeRangeSeconds}\n${new Date(rpsTime().startTime)}\n${new Date(rpsTime().endTime)}\n${new Date(Number(test))}`,
+		);
 		const output = {
 			globalStates: {
 				...result,
 				statusCodes: await this.getTotalStatusesByTime(time),
 			},
 			currentStates: {
-				rps: evaluate(`${requestPerSecond} / ${timeRange}`),
+				rps: evaluate(`${recentRequestCount} / ${timeRangeSeconds}`),
 				statusCodes: await this.getTotalStatusesByTime(time),
 			},
 		};

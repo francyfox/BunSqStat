@@ -85,20 +85,17 @@ watchDebounced(
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
 
-const { data, status, send, ws, close, open } = useWebSocket(
-	`${WS_URL}/ws/access-logs`,
-	{
-		autoReconnect: {
-			retries: 3,
-			delay: 1000,
-			onFailed() {
-				notification.error({
-					content: "Failed to connect WebSocket after 3 retries",
-				});
-			},
+const { data, status, close, open } = useWebSocket(`${WS_URL}/ws/access-logs`, {
+	autoReconnect: {
+		retries: 3,
+		delay: 1000,
+		onFailed() {
+			notification.error({
+				content: "Failed to connect WebSocket after 3 retries",
+			});
 		},
 	},
-);
+});
 
 function handlePause() {
 	pause.value = !pause.value;

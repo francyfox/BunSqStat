@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { watchDebounced } from "@vueuse/core";
-import MasonryWall from "@yeger/vue-masonry-wall";
+import { useWebSocket, watchDebounced } from "@vueuse/core";
 import {
 	NDatePicker,
 	NForm,
@@ -8,18 +7,22 @@ import {
 	NInputNumber,
 	NTabPane,
 	NTabs,
+	useNotification,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { onMounted, onUnmounted, ref, watch } from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BCardMetric from "@/components/BCardMetric.vue";
 import BStatuses from "@/components/BStatuses.vue";
 import BUserSpeed from "@/components/BUserSpeed.vue";
+import { WS_URL } from "@/consts.ts";
 import { useStatsStore } from "@/stores/stats.ts";
+import { diffDate } from "@/utils/date.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const route = useRoute();
 const router = useRouter();
+const notification = useNotification();
 
 const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
@@ -27,6 +30,11 @@ const { accessMetrics } = storeToRefs(statsStore);
 const form = ref({
 	limit: 50,
 	time: undefined,
+});
+
+const diffTime = computed(() => {
+	if (!form.value.time) return 3600;
+	return form.value.time[0] - form.value.time[1];
 });
 
 const tab = ref("actual");
@@ -37,9 +45,22 @@ function handleTabChange(tab: string) {
 	router.push({ name: route.name, hash: `#${tab}` });
 }
 
-watchDebounced(form, async (v) => {
-	await statsStore.getAccessMetrics(v);
-});
+watchDebounced(
+	form,
+	async (v) => {
+		const { limit, time: [startTime, endTime] = [] } = v;
+
+		await statsStore.getAccessMetrics({
+			limit,
+			startTime,
+			endTime,
+		});
+	},
+	{
+		deep: true,
+		debounce: 500,
+	},
+);
 
 watch(
 	() => route.hash,
@@ -47,6 +68,43 @@ watch(
 		tab.value = v ? v.replace("#", "") : "actual";
 	},
 );
+
+const { data } = useWebSocket(`${WS_URL}/ws/access-logs`, {
+	autoReconnect: {
+		retries: 3,
+		delay: 1000,
+		onFailed() {
+			notification.error({
+				content: "Failed to connect WebSocket after 3 retries",
+			});
+		},
+	},
+});
+
+watchDebounced(data, async (v) => {
+	if (!v) return;
+	let value: any;
+	try {
+		value = JSON.parse(v);
+	} catch (_) {
+		// Ignore non-JSON messages
+		return;
+	}
+
+	if (
+		typeof value?.changedLinesCount !== "number" ||
+		value.changedLinesCount <= 0
+	) {
+		return;
+	}
+	console.log(`Received ${value.changedLinesCount} new log entries`);
+
+	await statsStore.getAccessMetrics({
+		limit: form.value.limit,
+		startTime: form.value.time ? form.value.time[0] : undefined,
+		endTime: form.value.time ? form.value.time[1] : undefined,
+	});
+});
 
 onMounted(() => {
 	if (route.hash) {
@@ -61,12 +119,6 @@ onUnmounted(() => {
 
 <template>
   <div class="flex flex-col gap-5">
-    ff
-    <MasonryWall :items="['test', 'fff']" :column-width="300" :gap="16">
-      <template #default="{ item }">
-        {{ item }}
-      </template>
-    </MasonryWall>
     <NForm :model="form"
            class="flex gap-2"
     >
@@ -84,13 +136,11 @@ onUnmounted(() => {
         <NDatePicker
             v-model:value="form.time"
             type="datetimerange"
-            :actions="['now', 'clear']"
+            :actions="['now', 'clear', 'confirm']"
             size="large"
             clearable
         />
       </NFormItem>
-
-      {{ form.time }}
     </NForm>
     <NTabs
         v-model:value="tab"
@@ -102,7 +152,10 @@ onUnmounted(() => {
       <NTabPane name="actual" tab="Actual">
         <div class="metric-list grid grid-cols-4 gap-5">
           <BCardMetric>
-            {{ accessMetrics?.currentStates.rps }}
+            {{ accessMetrics?.currentStates?.rps?.toFixed(5) || "0" }} <br>
+            <span class="text-lg">
+              {{ accessMetrics?.currentStates?.rps * diffTime }} in {{ diffDate(form.time) }}
+            </span>
 
             <template #name>
               RPS
