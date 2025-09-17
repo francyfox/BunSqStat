@@ -9,11 +9,16 @@ import {
 	NTabs,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import { useRoute, useRouter } from "vue-router";
 import BCardMetric from "@/components/BCardMetric.vue";
 import BStatuses from "@/components/BStatuses.vue";
+import BUserSpeed from "@/components/BUserSpeed.vue";
 import { useStatsStore } from "@/stores/stats.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
+
+const route = useRoute();
+const router = useRouter();
 
 const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
@@ -23,10 +28,33 @@ const form = ref({
 	time: undefined,
 });
 
+const tab = ref("actual");
+
 await statsStore.getAccessMetrics();
+
+function handleTabChange(tab: string) {
+	router.push({ name: route.name, hash: `#${tab}` });
+}
 
 watchDebounced(form, async (v) => {
 	await statsStore.getAccessMetrics(v);
+});
+
+watch(
+	() => route.hash,
+	(v) => {
+		tab.value = v ? v.replace("#", "") : "actual";
+	},
+);
+
+onMounted(() => {
+	if (route.hash) {
+		tab.value = route.hash.replace("#", "");
+	}
+});
+
+onUnmounted(() => {
+	window.location.hash = "";
 });
 </script>
 
@@ -58,11 +86,13 @@ watchDebounced(form, async (v) => {
       {{ form.time }}
     </NForm>
     <NTabs
+        v-model:value="tab"
         type="line"
         size="large"
+        @update:value="handleTabChange"
         animated
     >
-      <NTabPane name="per-60" tab="Per 60 sec">
+      <NTabPane name="actual" tab="Actual">
         <div class="metric-list grid grid-cols-4 gap-5">
           <BCardMetric>
             {{ accessMetrics?.currentStates.rps }}
@@ -83,9 +113,9 @@ watchDebounced(form, async (v) => {
         </div>
       </NTabPane>
 
-      <NTabPane name="per-month" tab="Per Month">
-        <div class="metric-list grid grid-cols-4 items-start gap-5">
-          <BCardMetric>
+      <NTabPane name="per-n" tab="Per N">
+        <div class="metric-list columns-4">
+          <BCardMetric class="max-w-sm">
             {{ formatBytes(accessMetrics?.globalStates.bytes) }}
 
             <template #name>
@@ -93,7 +123,7 @@ watchDebounced(form, async (v) => {
             </template>
           </BCardMetric>
 
-          <BCardMetric>
+          <BCardMetric class="max-w-sm">
             <div class="text-center text-sm font-300">
               hour:minute:second:millisecond
             </div>
@@ -106,7 +136,7 @@ watchDebounced(form, async (v) => {
             </template>
           </BCardMetric>
 
-          <BCardMetric>
+          <BCardMetric class="max-w-sm">
             <BStatuses
                 :status="accessMetrics?.globalStates.statusCodes.items"
             />
@@ -114,14 +144,21 @@ watchDebounced(form, async (v) => {
               STATUS
             </template>
           </BCardMetric>
+
+          <BCardMetric class="max-w-sm">
+            <BUserSpeed :users="accessMetrics?.users" />
+          </BCardMetric>
         </div>
       </NTabPane>
     </NTabs>
-
-
   </div>
 </template>
 
-<style scoped>
-
+<style lang="postcss" scoped>
+.metric-list {
+  column-gap: 0.5rem;
+  .n-card {
+    margin-bottom: 0.5rem;
+  }
+}
 </style>
