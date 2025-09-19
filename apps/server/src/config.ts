@@ -4,21 +4,27 @@ import Ajv from "ajv";
 
 const ajv = new Ajv();
 
-export const configSchema = t.Object({
-	NODE_ENV: t.Union(
-		[t.Literal("development"), t.Literal("production"), t.Literal("test")],
-		{
-			default: "development",
-		},
+export const configSchema = t.Intersect([
+	t.Object({
+		NODE_ENV: t.Union(
+			[t.Literal("development"), t.Literal("production"), t.Literal("test")],
+			{
+				default: "development",
+			},
+		),
+		REDIS_PASSWORD: t.String(),
+	}),
+	t.Partial(
+		t.Object({
+			SQUID_HOST: t.String(),
+			SQUID_PORT: t.String(),
+			REDIS_HOST: t.String({ default: "localhost" }),
+			REDIS_PORT: t.String({ default: "6379" }),
+			LOG_DIR: t.String({ default: "/tmp/squid/log" }),
+			HAS_LOG_ROTATION: t.Boolean({ default: false }),
+		}),
 	),
-	SQUID_HOST: t.String(),
-	SQUID_PORT: t.String(),
-	ACCESS_LOG: t.String(),
-	CACHE_LOG: t.String(),
-	REDIS_HOST: t.String({ default: "localhost" }),
-	REDIS_PORT: t.String({ default: "6379" }),
-	REDIS_PASSWORD: t.String(),
-});
+]);
 
 export type TConfig = Static<typeof configSchema>;
 const validate = ajv.compile(configSchema);

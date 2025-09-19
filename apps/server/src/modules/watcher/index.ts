@@ -18,10 +18,7 @@ class FileWatcher {
 	private pendingPath: string | null = null;
 
 	constructor() {
-		const watchPaths = [resolve(config.ACCESS_LOG), resolve(config.CACHE_LOG)];
-		console.log("Chokidar watching paths:", watchPaths);
-
-		this.watcher = chokidar.watch(watchPaths, {
+		this.watcher = chokidar.watch(config.LOG_DIR, {
 			usePolling: true,
 			interval: 100, // More frequent polling
 			binaryInterval: 200,

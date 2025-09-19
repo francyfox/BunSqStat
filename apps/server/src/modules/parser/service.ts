@@ -19,6 +19,7 @@ export const ParserService = {
 			);
 		await redisClient.send("FT.CREATE", args);
 	},
+
 	getFileInfo(id: number) {
 		return redisClient.hmget(`file:${id}`, this.fields);
 	},
