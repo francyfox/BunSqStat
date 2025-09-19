@@ -15,7 +15,7 @@ export const AccessLogService = {
 
 		for (const [key, value] of Object.entries(sanitized)) {
 			const fieldType = this.fieldTypes.get(key);
-			if (fieldType && fieldType.includes("NUMERIC")) {
+			if (fieldType?.includes("NUMERIC")) {
 				if (!value || value === "-" || Number.isNaN(Number(value))) {
 					sanitized[key] = "0";
 				}

@@ -5,6 +5,7 @@ export async function readFileLines(
 	try {
 		const logFile = Bun.file(filePath);
 
+		console.log(await logFile.stat());
 		// Check if file exists first
 		const exists = await logFile.exists();
 		if (!exists) {
@@ -43,7 +44,9 @@ export async function readFileLines(
 
 		return lines.slice(-maxLines);
 	} catch (error) {
-		console.error(`Error reading ${filePath.split("/").pop()}: ${(error as Error).message}`);
+		console.error(
+			`Error reading ${filePath.split("/").pop()}: ${(error as Error).message}`,
+		);
 		return [];
 	}
 }
