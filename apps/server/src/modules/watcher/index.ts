@@ -18,7 +18,7 @@ class FileWatcher {
 	private pendingPath: string | null = null;
 
 	constructor() {
-		this.watcher = chokidar.watch(config.LOG_DIR, {
+		this.watcher = chokidar.watch([`${config.LOG_DIR}/access.log`], {
 			usePolling: true,
 			interval: 100, // More frequent polling
 			binaryInterval: 200,
@@ -59,7 +59,7 @@ class FileWatcher {
 			if (!this.pendingPath) return;
 
 			try {
-				const newLogsCount = await AccessLogService.readAccessLogs();
+				const newLogsCount = await AccessLogService.readLogs();
 				console.log(`Found ${newLogsCount} new log entries`);
 
 				if (newLogsCount > 0) {

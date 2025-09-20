@@ -50,3 +50,22 @@ export async function readFileLines(
 		return [];
 	}
 }
+
+export async function readMultiplyFiles(
+	files: string[],
+	maxLines: number = 100,
+) {
+	let count = maxLines;
+	let result: string[] = [];
+
+	for (let i = 0; i < files.length; i++) {
+		const lines = await readFileLines(files[i] as string, count);
+		result = [...result, ...lines];
+
+		if (count >= lines.length) break;
+
+		count -= lines.length;
+	}
+
+	return result;
+}

@@ -1,12 +1,12 @@
-import { config } from "@/config";
 import { fieldTypes, regexMap } from "@/consts";
 import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
 import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
-import { readFileLines } from "@/utils/file";
+import { readMultiplyFiles } from "@/utils/file";
 import { parseLogLine } from "@/utils/log";
 
 export const AccessLogService = {
+	name: "access",
 	regexMap,
 	fieldTypes,
 
@@ -47,24 +47,9 @@ export const AccessLogService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
-	async readLastLines(count: number) {
-		const logs = await readFileLines(config.ACCESS_LOG, count);
-
-		const stack = logs.map((log) => {
-			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
-
-			const sanitized = this.sanitizeLogData(parsed);
-			return redisClient.hmset(
-				`log:${sanitized["timestamp"] || Date.now().toString()}`,
-				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
-			);
-		});
-
-		await Promise.all(stack);
-	},
-
-	async readAccessLogs() {
-		const logLines = await readFileLines(config.ACCESS_LOG, 500);
+	async readLogs(files: string[]) {
+		console.log(files);
+		const logLines = await readMultiplyFiles(files, 1000);
 		if (logLines.length === 0) return 0;
 
 		const newLogs: string[] = [];

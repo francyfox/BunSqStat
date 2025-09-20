@@ -21,28 +21,34 @@ export const LogManager = {
 	},
 
 	async getAccessLogs() {
-		return this.logs.filter((i) => /(?<=\/)access.*/.test(i));
+		return this.logs
+			.filter((i) => /(?<=\/)access.*/.test(i))
+			.sort((a, b) => Number(a.match(/\d/)?.[0]) - Number(b.match(/\d/)?.[0]));
 	},
 
 	async getCacheLogs() {
-		return this.logs.filter((i) => /(?<=\/)cache.*/.test(i));
+		return this.logs
+			.filter((i) => /(?<=\/)cache.*/.test(i))
+			.sort((a, b) => Number(a.match(/\d/)?.[0]) - Number(b.match(/\d/)?.[0]));
 	},
 
 	async readLogs() {
 		const logs = [AccessLogService];
 		await this.findLogs();
-		console.log(this.logs);
-		console.log(await this.getAccessLogs());
 
-		// for (const log of logs) {
-		// 	try {
-		// 		await log.readLastLines(1000);
-		// 		await log.createIndex();
-		// 		console.log("Successfully initialized log service");
-		// 	} catch (error) {
-		// 		console.error("Error initializing log service:", error);
-		// 		// Don't throw - allow the app to start even without logs
-		// 	}
-		// }
+		for (const log of logs) {
+			try {
+				const files =
+					log.name === "access"
+						? await this.getAccessLogs()
+						: await this.getCacheLogs();
+				await log.readLogs(files);
+				await log.createIndex();
+				console.log("Successfully initialized log service");
+			} catch (error) {
+				console.error("Error initializing log service:", error);
+				// Don't throw - allow the app to start even without logs
+			}
+		}
 	},
 };
