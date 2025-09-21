@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import { fieldTypes, regexMap } from "@/consts";
 import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
 import { redisClient } from "@/redis";
@@ -48,22 +49,23 @@ export const AccessLogService = {
 	},
 
 	async readLogs(files: string[]) {
-		console.log(files);
 		const logLines = await readMultiplyFiles(files, 1000);
 		if (logLines.length === 0) return 0;
 
 		const newLogs: string[] = [];
 
-		for (let i = 0; i < logLines.length; i += 1) {
-			const logLine = logLines[i] || "";
-			const parsed = parseLogLine(logLine, this.regexMap) as TAccessLog;
-			const logKey = `log:${parsed.timestamp}`;
-			const exists = await redisClient.exists(logKey);
-
-			if (!exists) {
-				newLogs.push(logLine);
-			}
-		}
+		// TODO: CHECK Offset
+		// for (let i = 0; i < logLines.length; i += 1) {
+		// 	const logLine = logLines[i] || "";
+		// 	const parsed = parseLogLine(logLine, this.regexMap) as TAccessLog;
+		// 	const logKey = `log:${parsed.id}`;
+		// 	const exists = await redisClient.exists(logKey);
+		// 	console.log(parsed, exists);
+		//
+		// 	if (!exists) {
+		// 		newLogs.push(logLine);
+		// 	}
+		// }
 
 		newLogs.sort((a, b) => {
 			const timestampA = parseFloat(a.split(" ")[0] || "");
@@ -75,9 +77,12 @@ export const AccessLogService = {
 
 		const stack = newLogs.map((log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
-			const sanitized = this.sanitizeLogData(parsed);
+			const sanitized = {
+				...this.sanitizeLogData(parsed),
+				id: `access:${parsed.timestamp}_${nanoid(5)}`,
+			};
 			return redisClient.hmset(
-				`log:${sanitized["timestamp"] || Date.now().toString()}`,
+				`log:${sanitized.id}`,
 				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
 			);
 		});

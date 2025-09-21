@@ -7,6 +7,7 @@ export interface getLogParams {
 }
 
 export const AccessLogSchema = t.Object({
+	id: t.String(),
 	timestamp: t.String(),
 	duration: t.String(),
 	clientIP: t.String(),

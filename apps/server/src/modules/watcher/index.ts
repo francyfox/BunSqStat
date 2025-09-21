@@ -1,4 +1,3 @@
-import { resolve } from "node:path";
 import chokidar, { type FSWatcher } from "chokidar";
 import { config } from "@/config";
 import { AccessLogService } from "@/modules/access-logs/service";
@@ -20,12 +19,11 @@ class FileWatcher {
 	constructor() {
 		this.watcher = chokidar.watch([`${config.LOG_DIR}/access.log`], {
 			usePolling: true,
-			interval: 100, // More frequent polling
+			interval: 100,
 			binaryInterval: 200,
 			ignoreInitial: true,
 			persistent: true,
-			atomic: false, // Don't wait for atomic writes
-			// Remove awaitWriteFinish to avoid delays
+			atomic: false,
 		});
 
 		this.setupEventHandlers();
@@ -59,7 +57,7 @@ class FileWatcher {
 			if (!this.pendingPath) return;
 
 			try {
-				const newLogsCount = await AccessLogService.readLogs();
+				const newLogsCount = await AccessLogService.readLogs([path]);
 				console.log(`Found ${newLogsCount} new log entries`);
 
 				if (newLogsCount > 0) {
