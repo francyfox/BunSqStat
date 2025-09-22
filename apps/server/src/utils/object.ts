@@ -9,3 +9,7 @@ export function toPascalCaseObject(obj: any) {
 
 	return result;
 }
+
+export type Mutable<T> = {
+	-readonly [P in keyof T]: T[P] extends object ? Mutable<T[P]> : T[P];
+};

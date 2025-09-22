@@ -1,45 +1,51 @@
+import { ParserService } from "@/modules/parser/service";
+
 export async function readFileLines(
 	filePath: string,
 	maxLines: number = 100,
 ): Promise<string[]> {
 	try {
 		const logFile = Bun.file(filePath);
-
-		console.log(await logFile.stat());
-		// Check if file exists first
 		const exists = await logFile.exists();
 		if (!exists) {
 			console.warn(`File ${filePath} does not exist, returning empty array`);
 			return [];
 		}
 
-		const stream = logFile.stream();
-		const reader = stream.getReader();
+		const { offset: begin } = await ParserService.getFileInfo(
+			filePath.split("/").pop() as string,
+		);
+
+		if (Number(begin) === logFile.size) {
+			return [];
+		}
+
+		const stream = logFile.slice(Number(begin)).stream();
 		const decoder = new TextDecoder();
 
 		let buffer = "";
+		let offset = 0;
 		let lines: string[] = [];
-		let done = false;
 
-		while (!done) {
-			const { value, done: readerDone } = await reader.read();
-			done = readerDone;
+		for await (const chunk of stream) {
+			const decoded = decoder.decode(chunk);
+			buffer += decoded;
+			offset += decoded.length;
 
-			if (value) {
-				buffer += decoder.decode(value, { stream: !done });
-				const currentLines = buffer.split("\n");
-				buffer = done ? "" : currentLines.pop() || "";
+			const currentLines = buffer.split("\n");
+			lines.push(...currentLines.filter((line) => line.trim().length > 0));
 
-				lines.push(...currentLines.filter((line) => line.trim().length > 0));
-
-				if (lines.length > maxLines * 2) {
-					lines = lines.slice(-maxLines);
-				}
+			if (lines.length > maxLines * 2) {
+				lines = lines.slice(-maxLines);
 			}
 		}
 
 		if (buffer.trim().length > 0) {
 			lines.push(buffer.trim());
+		}
+
+		if (offset !== 0) {
+			await ParserService.add(logFile, offset);
 		}
 
 		return lines.slice(-maxLines);

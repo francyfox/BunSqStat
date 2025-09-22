@@ -1,17 +1,17 @@
 services:
-  squid:
-    image: mpreu/squid:5.7 # Or another suitable Squid 5.7 image
-    container_name: squid-proxy
-    ports:
-      - "3128:3128" # Map host port 3128 to container port 3128 (Squid's default)
-    volumes:
-      - ./docker/passwd:/etc/squid/squid_passwd
-      - ./docker/squid_new.conf:/etc/squid/squid.conf
-      - /tmp/squid/cache:/var/spool/squid # Persistent cache directory
-      - /tmp/squid/log:/var/log/squid # Optional: Mount custom Squid configuration
-    environment:
-      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
-    restart: always
+#  squid:
+#    image: mpreu/squid:5.7 # Or another suitable Squid 5.7 image
+#    container_name: squid-proxy
+#    ports:
+#      - "3128:3128" # Map host port 3128 to container port 3128 (Squid's default)
+#    volumes:
+#      - ./docker/passwd:/etc/squid/squid_passwd
+#      - ./docker/squid_new.conf:/etc/squid/squid.conf
+#      - /tmp/squid/cache:/var/spool/squid # Persistent cache directory
+#      - /tmp/squid/log:/var/log/squid # Optional: Mount custom Squid configuration
+#    environment:
+#      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
+#    restart: always
 
   redis:
     container_name: redis-bunsqstat
