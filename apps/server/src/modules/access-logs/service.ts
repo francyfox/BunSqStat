@@ -1,12 +1,13 @@
-import { config } from "@/config";
+import { nanoid } from "nanoid";
 import { fieldTypes, regexMap } from "@/consts";
 import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
 import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
-import { readFileLines } from "@/utils/file";
+import { readMultiplyFiles } from "@/utils/file";
 import { parseLogLine } from "@/utils/log";
 
 export const AccessLogService = {
+	name: "access",
 	regexMap,
 	fieldTypes,
 
@@ -15,7 +16,7 @@ export const AccessLogService = {
 
 		for (const [key, value] of Object.entries(sanitized)) {
 			const fieldType = this.fieldTypes.get(key);
-			if (fieldType && fieldType.includes("NUMERIC")) {
+			if (fieldType?.includes("NUMERIC")) {
 				if (!value || value === "-" || Number.isNaN(Number(value))) {
 					sanitized[key] = "0";
 				}
@@ -47,58 +48,32 @@ export const AccessLogService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
-	async readLastLines(count: number) {
-		const logs = await readFileLines(config.ACCESS_LOG, count);
-
-		const stack = logs.map((log) => {
-			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
-
-			const sanitized = this.sanitizeLogData(parsed);
-			return redisClient.hmset(
-				`log:${sanitized["timestamp"] || Date.now().toString()}`,
-				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
-			);
-		});
-
-		await Promise.all(stack);
-	},
-
-	async readAccessLogs() {
-		const logLines = await readFileLines(config.ACCESS_LOG, 500);
+	async readLogs(files: string[]) {
+		const logLines = await readMultiplyFiles(files, 1000);
 		if (logLines.length === 0) return 0;
 
-		const newLogs: string[] = [];
-
-		for (let i = 0; i < logLines.length; i += 1) {
-			const logLine = logLines[i] || "";
-			const parsed = parseLogLine(logLine, this.regexMap) as TAccessLog;
-			const logKey = `log:${parsed.timestamp}`;
-			const exists = await redisClient.exists(logKey);
-
-			if (!exists) {
-				newLogs.push(logLine);
-			}
-		}
-
-		newLogs.sort((a, b) => {
+		logLines.sort((a, b) => {
 			const timestampA = parseFloat(a.split(" ")[0] || "");
 			const timestampB = parseFloat(b.split(" ")[0] || "");
 			return timestampA - timestampB;
 		});
 
-		if (newLogs.length === 0) return 0;
+		if (logLines.length === 0) return 0;
 
-		const stack = newLogs.map((log) => {
+		const stack = logLines.map((log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
-			const sanitized = this.sanitizeLogData(parsed);
+			const sanitized = {
+				...this.sanitizeLogData(parsed),
+				id: `access:${parsed.timestamp}_${nanoid(5)}`,
+			};
 			return redisClient.hmset(
-				`log:${sanitized["timestamp"] || Date.now().toString()}`,
+				`log:${sanitized.id}`,
 				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
 			);
 		});
 
 		await Promise.all(stack);
-		return newLogs.length;
+		return logLines.length;
 	},
 
 	async getLogs({ search, page, fields }: getLogParams = {}) {

@@ -176,21 +176,11 @@ export function combineWithOR(queries: string[]): string {
 }
 
 export function formatBytes(bytes: number = 0, decimals = 2) {
-	if (!+bytes) return "0 Bytes";
+	if (!+bytes) return "0 B";
 
 	const k = 1024;
 	const dm = decimals < 0 ? 0 : decimals;
-	const sizes = [
-		"Bytes",
-		"KiB",
-		"MiB",
-		"GiB",
-		"TiB",
-		"PiB",
-		"EiB",
-		"ZiB",
-		"YiB",
-	];
+	const sizes = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB", "ZiB", "YiB"];
 
 	const i = Math.floor(Math.log(bytes) / Math.log(k));
 
@@ -207,4 +197,13 @@ export function formatMilliseconds(ms: number | undefined): string {
 	const pad = (num: number, size = 2) => `000${num}`.slice(-size);
 
 	return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}.${pad(milliseconds, 3)}`;
+}
+
+export function formatDuration(ms: string): { value: string; type: string } {
+	const duration = Number(ms);
+	if (duration <= 1000) return { value: `${duration}ms`, type: "success" };
+	if (duration <= 5000) return { value: `${duration}ms`, type: "warning" };
+	if (duration <= 30000)
+		return { value: `${(duration / 1000).toFixed(1)}s`, type: "error" };
+	return { value: `${(duration / 1000).toFixed(1)}s`, type: "error" };
 }

@@ -149,8 +149,8 @@ onUnmounted(() => {
         @update:value="handleTabChange"
         animated
     >
-      <NTabPane name="actual" tab="Actual">
-        <div class="metric-list grid grid-cols-4 gap-5">
+      <NTabPane name="actual" tab="By time">
+        <div class="metric-list columns-4">
           <BCardMetric>
             {{ accessMetrics?.currentStates?.rps?.toFixed(5) || "0" }} <br>
             <span class="text-lg">
@@ -173,7 +173,7 @@ onUnmounted(() => {
         </div>
       </NTabPane>
 
-      <NTabPane name="per-n" tab="Per N">
+      <NTabPane name="per-n" tab="By limit">
         <div class="metric-list columns-4">
           <BCardMetric class="max-w-sm">
             {{ formatBytes(accessMetrics?.globalStates.bytes) }}
