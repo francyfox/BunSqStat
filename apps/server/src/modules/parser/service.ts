@@ -21,7 +21,7 @@ export const ParserService = {
 
 	async getFileInfo(
 		id: string,
-	): Promise<Record<TParserModel["fields"][number], string>> {
+	): Promise<Partial<Record<TParserModel["fields"][number], string>>> {
 		const result = await redisClient.hmget(`file:${id}`, this.fields);
 		return result.reduce((acc: any, currentValue, currentIndex) => {
 			acc[this.fields[currentIndex] as string] = currentValue;

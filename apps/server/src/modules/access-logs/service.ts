@@ -52,30 +52,15 @@ export const AccessLogService = {
 		const logLines = await readMultiplyFiles(files, 1000);
 		if (logLines.length === 0) return 0;
 
-		const newLogs: string[] = [];
-
-		// TODO: CHECK Offset
-		// for (let i = 0; i < logLines.length; i += 1) {
-		// 	const logLine = logLines[i] || "";
-		// 	const parsed = parseLogLine(logLine, this.regexMap) as TAccessLog;
-		// 	const logKey = `log:${parsed.id}`;
-		// 	const exists = await redisClient.exists(logKey);
-		// 	console.log(parsed, exists);
-		//
-		// 	if (!exists) {
-		// 		newLogs.push(logLine);
-		// 	}
-		// }
-
-		newLogs.sort((a, b) => {
+		logLines.sort((a, b) => {
 			const timestampA = parseFloat(a.split(" ")[0] || "");
 			const timestampB = parseFloat(b.split(" ")[0] || "");
 			return timestampA - timestampB;
 		});
 
-		if (newLogs.length === 0) return 0;
+		if (logLines.length === 0) return 0;
 
-		const stack = newLogs.map((log) => {
+		const stack = logLines.map((log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
 			const sanitized = {
 				...this.sanitizeLogData(parsed),
@@ -88,7 +73,7 @@ export const AccessLogService = {
 		});
 
 		await Promise.all(stack);
-		return newLogs.length;
+		return logLines.length;
 	},
 
 	async getLogs({ search, page, fields }: getLogParams = {}) {

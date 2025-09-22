@@ -4,28 +4,13 @@ import type { TAccessLog } from "server/schema";
 import { h } from "vue";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
-import { pascalToKebabCase } from "@/utils/string.ts";
+import {
+	formatBytes,
+	formatDuration,
+	pascalToKebabCase,
+} from "@/utils/string.ts";
 
 type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
-
-// Утилиты для форматирования
-function formatDuration(ms: string): { value: string; type: string } {
-	const duration = Number(ms);
-	if (duration <= 1000) return { value: `${duration}ms`, type: "success" };
-	if (duration <= 5000) return { value: `${duration}ms`, type: "warning" };
-	if (duration <= 30000)
-		return { value: `${(duration / 1000).toFixed(1)}s`, type: "error" };
-	return { value: `${(duration / 1000).toFixed(1)}s`, type: "error" };
-}
-
-function formatBytes(bytes: string): string {
-	const size = Number(bytes);
-	if (size === 0) return "0 B";
-	if (size < 1024) return `${size} B`;
-	if (size < 1048576) return `${(size / 1024).toFixed(1)} KB`;
-	if (size < 1073741824) return `${(size / 1048576).toFixed(1)} MB`;
-	return `${(size / 1073741824).toFixed(1)} GB`;
-}
 
 function getStatusType(status: string): string {
 	const code = Number(status);
@@ -115,6 +100,9 @@ export function accessColumnAttributes(
 		case "resultType":
 			return {
 				width: 140,
+				ellipsis: {
+					tooltip: true,
+				},
 				render(row) {
 					const type = getResultType(row[column]);
 					return h(NTag, { type, size: "small" }, () => row[column]);
@@ -124,6 +112,9 @@ export function accessColumnAttributes(
 		case "resultStatus":
 			return {
 				width: 80,
+				ellipsis: {
+					tooltip: true,
+				},
 				render(row) {
 					const type = getStatusType(row[column]);
 					return h(NTag, { type, size: "small" }, () => row[column]);
@@ -189,6 +180,9 @@ export function accessColumnAttributes(
 		case "hierarchyType":
 			return {
 				width: 120,
+				ellipsis: {
+					tooltip: true,
+				},
 				render(row) {
 					const type = getHierarchyTypeColor(row[column]);
 					return h(NTag, { type, size: "small" }, () => row[column]);
