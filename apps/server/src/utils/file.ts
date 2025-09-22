@@ -16,11 +16,13 @@ export async function readFileLines(
 			filePath.split("/").pop() as string,
 		);
 
+		const start = Number(begin || 0);
+
 		if (Number(begin) === logFile.size) {
 			return [];
 		}
 
-		const stream = logFile.slice(Number(begin)).stream();
+		const stream = logFile.slice(Number(begin || 0)).stream();
 		const decoder = new TextDecoder();
 
 		let buffer = "";
@@ -29,6 +31,8 @@ export async function readFileLines(
 
 		for await (const chunk of stream) {
 			const decoded = decoder.decode(chunk);
+			if (!decoded) continue;
+
 			buffer += decoded;
 			offset += decoded.length;
 
@@ -40,12 +44,8 @@ export async function readFileLines(
 			}
 		}
 
-		if (buffer.trim().length > 0) {
-			lines.push(buffer.trim());
-		}
-
 		if (offset !== 0) {
-			await ParserService.add(logFile, offset);
+			await ParserService.add(logFile, start + offset);
 		}
 
 		return lines.slice(-maxLines);

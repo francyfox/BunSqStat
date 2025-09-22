@@ -155,7 +155,21 @@ export function accessColumnAttributes(
 					tooltip: true,
 				},
 				render(row) {
-					return h(BCopy, { text: row[column] });
+					const url = () => {
+						const [_, port] = row[column].match(/:(\d+)$/);
+
+						switch (port) {
+							case "443":
+								return `https://${row[column].replace(_, "")}`;
+							case "80":
+								return new URL(
+									`http://${row[column].replace(_, "")}`,
+								).toString();
+							default:
+								return row[column];
+						}
+					};
+					return h(BCopy, { text: url() });
 				},
 			};
 

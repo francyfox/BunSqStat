@@ -19,6 +19,10 @@ export const ParserService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
+	/**
+	 * @param id
+	 * @return item by id or file object
+	 */
 	async getFileInfo(
 		id: string,
 	): Promise<Partial<Record<TParserModel["fields"][number], string>>> {
@@ -29,6 +33,11 @@ export const ParserService = {
 		}, {});
 	},
 
+	/**
+	 * @description Add or update log information
+	 * @param file
+	 * @param offset - offset for file reader `used Blob slice`
+	 */
 	async add(file: BunFile, offset: number) {
 		const { mtimeMs, ctimeMs } = await file.stat();
 		const name = file.name?.split("/").pop() as string;

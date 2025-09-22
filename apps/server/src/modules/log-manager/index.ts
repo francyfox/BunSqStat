@@ -29,7 +29,8 @@ export const LogManager = {
 	async getCacheLogs() {
 		return this.logs
 			.filter((i) => /(?<=\/)cache.*/.test(i))
-			.sort((a, b) => Number(a.match(/\d/)?.[0]) - Number(b.match(/\d/)?.[0]));
+			.sort((a, b) => Number(a.match(/\d/)?.[0]) - Number(b.match(/\d/)?.[0]))
+			.reverse();
 	},
 
 	async readLogs() {
@@ -42,6 +43,7 @@ export const LogManager = {
 					log.name === "access"
 						? await this.getAccessLogs()
 						: await this.getCacheLogs();
+
 				await log.readLogs(files);
 				await log.createIndex();
 				console.log("Successfully initialized log service");

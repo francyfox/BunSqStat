@@ -10,6 +10,5 @@ export function parseLogLine(line: string, regexMap: Map<string, RegExp>) {
 		}
 	}
 
-	console.log(line, result);
 	return result;
 }

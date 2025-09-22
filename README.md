@@ -69,12 +69,16 @@ services:
 - [X] Real-time WebSocket updates
 - [ ] Access log charts
 - - [ ] Hit Ratio
-- - [ ] User speed
+- - [X] User speed
+- - [ ] masonry-wall
+- [ ] Adaptive. Mobile | Tile windows (custom size)
+- [ ] Check multiply tabs (optimize ws)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
-- [ ] Use index for recording last line (slow parse speed)
-- [ ] Log rotate support (logfile_rotate N)
-- - [ ] {inode, offset}
-- - [ ] size < offset, reset offset
+- [X] Use offset for reading logs (slow parse speed)
+- [X] Log rotate support (logfile_rotate N)
+- - [X] {inode, offset}
+- [ ] Add custom logs format like ([to squid docs](https://www.squid-cache.org/Doc/config/logformat/))
+- [ ] Stress test
 
 ### History:
 

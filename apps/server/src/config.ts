@@ -21,7 +21,6 @@ export const configSchema = t.Intersect([
 			REDIS_HOST: t.String({ default: "localhost" }),
 			REDIS_PORT: t.String({ default: "6379" }),
 			LOG_DIR: t.String({ default: "/tmp/squid/log" }),
-			HAS_LOG_ROTATION: t.Boolean({ default: false }),
 		}),
 	),
 ]);
