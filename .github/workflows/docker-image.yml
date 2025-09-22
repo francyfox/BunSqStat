@@ -2,8 +2,8 @@ name: Docker Image CI
 
 on:
   push:
-    tags: # Триггер по новым тегам
-      - 'v*.*.*' # Шаблон, который будет соответствовать тегам, например, v1.0.0
+    tags:
+      - 'v*.*.*'
   pull_request:
     branches: [ "master" ]
 
@@ -21,6 +21,6 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     - name: Build Docker
-      run: docker build . --file Dockerfile --tag my-image-name:${{ steps.get_tag.outputs.TAG_NAME }}
+      run: docker build . --file Dockerfile --tag bunsqstat:${{ steps.get_tag.outputs.TAG_NAME }}
     - name: Push Docker
-      run: docker push my-image-name:${{ steps.get_tag.outputs.TAG_NAME }}
+      run: docker push bunsqstat:${{ steps.get_tag.outputs.TAG_NAME }}
