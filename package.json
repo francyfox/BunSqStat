@@ -1,6 +1,6 @@
 {
 	"name": "bunsqstat",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"devDependencies": {
 		"@biomejs/biome": "2.2.2",
 		"@faker-js/faker": "^10.0.0",
