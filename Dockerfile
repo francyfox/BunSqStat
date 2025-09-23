@@ -1,26 +1,24 @@
-# All-in-One BunSqStat Docker Image (Alpine-based)
-# Contains Redis, Backend Server, and Frontend in a single container
-
-# Build stage
 FROM oven/bun:1.2.21-alpine AS builder
+
+# Set default environment variables
+ENV NODE_ENV=production
+ENV SQUID_HOST=127.0.0.1
+ENV SQUID_PORT=3128
+ENV LOG_DIR=/tmp/squid/log
+ENV REDIS_HOST=localhost
+ENV REDIS_PORT=6379
+ENV REDIS_PASSWORD=bunsqstat123
 
 WORKDIR /app
 
-# Set production environment for proper Vite build
-ENV NODE_ENV=production
-
-# Copy source files
 COPY package.json bun.lock turbo.json ./
 COPY apps ./apps
 
-# Install dependencies and build
 RUN bun install
 RUN bun run build
 
-# Final production stage - use Redis Stack base
 FROM redis/redis-stack:7.2.0-v18
 
-# Install system dependencies and Caddy
 RUN apt-get update && apt-get install -y \
     curl \
     supervisor \
@@ -65,17 +63,7 @@ RUN mkdir -p /app/logs
 # Create basic Redis Stack configuration
 RUN echo 'port 6379' > /redis-stack.conf && \
     echo 'bind 0.0.0.0' >> /redis-stack.conf && \
-    echo 'requirepass bunsqstat123' >> /redis-stack.conf
-
-# Set default environment variables
-ENV NODE_ENV=production
-ENV SQUID_HOST=127.0.0.1
-ENV SQUID_PORT=3128
-ENV ACCESS_LOG=/app/logs/access.log
-ENV CACHE_LOG=/app/logs/cache.log
-ENV REDIS_HOST=localhost
-ENV REDIS_PORT=6379
-ENV REDIS_PASSWORD=bunsqstat123
+    echo "requirepass $REDIS_PASSWORD" >> /redis-stack.conf
 
 # Expose ports
 EXPOSE 80 3000 6379
@@ -86,6 +74,14 @@ EXPOSE 80 3000 6379
 # Add healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost/api/health || exit 1
+
+ARG UNAME=bunsqstat
+ARG UID=1000
+ARG GID=1000
+
+RUN groupadd -g $GID -o $UNAME
+RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
+USER $UNAME
 
 # Start all services
 CMD ["/app/start.sh"]

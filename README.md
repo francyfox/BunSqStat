@@ -1,4 +1,4 @@
-# 🦄 BunSqStat [WIP]
+#  BunSqStat [WIP]
 
 [![Bun](https://img.shields.io/badge/Bun-000?logo=bun&logoColor=fff&style=for-the-badge)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
@@ -26,10 +26,9 @@ docker run -d \
   -p 80:80 \
   -p 3000:3000 \
   -p 6379:6379 \
-  -v /var/log/squid/access.log:/app/logs/access.log:ro \
-  -v /var/log/squid/cache.log:/app/logs/cache.log:ro \
+  -v /tmp/squid/log:/tmp/squid/log:ro \
   -e REDIS_PASSWORD=your-secure-password \
-  francyfox/bunsqstat:latest
+  ghcr.io/francyfox/bunsqstat:latest
 ```
 
 ### Using Docker Compose
@@ -37,7 +36,7 @@ docker run -d \
 ```yaml
 services:
   bunsqstat:
-    image: francyfox/bunsqstat:latest
+    image: ghcr.io/francyfox/bunsqstat:latest
     container_name: bunsqstat
     restart: unless-stopped
     ports:
@@ -45,12 +44,11 @@ services:
       - "3000:3000"  # API (optional, for direct access)
       - "6379:6379"  # Redis (optional, for external access)
     environment:
-      - NODE_ENV=production
-      - REDIS_PASSWORD=123
-      - SQUID_HOST=127.0.0.1
-      - SQUID_PORT=3128
-      - ACCESS_LOG=/app/logs/access.log
-      - CACHE_LOG=/app/logs/cache.log
+      - NODE_ENV=production # optional
+      - REDIS_PASSWORD=123 # optional
+      - SQUID_HOST=127.0.0.1 # optional
+      - SQUID_PORT=3128 # optional
+      - LOG_DIR=/tmp/squid/log
     volumes:
       - ./docker/access.log:/app/logs/access.log:ro
       - ./docker/cache.log:/app/logs/cache.log:ro
@@ -70,7 +68,10 @@ services:
 - - [ ] Hit Ratio
 - - [X] User speed
 - - [ ] masonry-wall
-- [ ] Adaptive. Mobile | Tile windows (custom size)
+- [ ] Adaptive
+- - [ ] Mobile/Tablet (last 2 versions)
+- - [ ] Tile windows (custom size)
+- - [ ] CLI???
 - [ ] Check multiply tabs (optimize ws)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
 - [X] Use offset for reading logs (slow parse speed)
@@ -78,19 +79,20 @@ services:
 - - [X] {inode, offset}
 - [ ] Add custom logs format like ([to squid docs](https://www.squid-cache.org/Doc/config/logformat/))
 - [ ] Stress test
+- [ ] Deploy test
 
 ### History:
 
 This web app modern analog of SqStat. Old web app used object_cache (removed in squid 6), so we cant use
 socket for grabbing realtime data. Now we can only use logs like: access_log/cache_log
 
+Alternative SquidAnalyzer, but it runs only by cron
+
 ## ✨ Features
 
 - 🚀 **Real-time monitoring** - Watch logs update live as requests flow through your proxy
-- 🔍 **Advanced search** - Full-text search with Redis Search including IP, users, URLs, and more  
-- 📊 **Rich analytics** - Detailed statistics and insights about proxy usage
-- 🎯 **Smart filtering** - Filter by status codes, methods, time ranges, users
-- 📱 **Responsive UI** - Beautiful Vue 3 interface that works on all devices
+- 🔍 **Advanced search** - Full-text search with Redis Search including IP, users, URLs, and more
+- 📱 **Responsive UI** - Tile manager (not standard window size) | CLI UI
 - ⚡ **High performance** - Built on Bun runtime for maximum speed
 - 🐳 **Docker ready** - Easy deployment with Docker Compose
 
@@ -189,12 +191,8 @@ bun run test:simulator   # Log simulator tests
 
 ## 📖 Documentation
 
-- [📋 Installation Guide](./docs/installation.md)
-- [⚙️ Configuration](./docs/configuration.md)
 - [🔍 Search Syntax](./docs/search-guide.md)
-- [🧪 Testing Guide](./docs/testing.md)
 - [🚀 Deployment](./docs/deployment.md)
-- [🔌 API Reference](./docs/api.md)
 
 ## 🛠️ Tech Stack
 
@@ -239,7 +237,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Squid Cache](http://squid-cache.org/) - The proxy server we analyze
 - [Redis Team](https://redis.io) - For the amazing search capabilities
 - [Bun Team](https://bun.sh) - For the incredible JavaScript runtime
-
+- [Elysia](https://elysiajs.com/) - For the salty version of fastify
 ---
 
 <div align="center">

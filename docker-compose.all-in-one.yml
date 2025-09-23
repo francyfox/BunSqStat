@@ -13,26 +13,15 @@ services:
       - "6379:6379"  # Redis (optional, for external access)
     environment:
       - NODE_ENV=production
-      # Squid Configuration
       - SQUID_HOST=127.0.0.1
       - SQUID_PORT=3128
-      
-      # Redis Configuration
       - REDIS_PASSWORD=your-secure-password
-      
-      # Log file paths (inside container)
-      - ACCESS_LOG=/app/logs/access.log
-      - CACHE_LOG=/app/logs/cache.log
-    
+      - LOG_DIR=/tmp/squid/log
     volumes:
-      # Mount your Squid log files here
-      # Change the left side paths to match your Squid installation
       - ./docker/access.log:/app/logs/access.log:ro
       - ./docker/cache.log:/app/logs/cache.log:ro
-      
       # Alternative: mount entire log directory
       # - /var/log/squid:/app/logs:ro
-    
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/api/health"]
       interval: 30s
