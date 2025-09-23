@@ -1,4 +1,7 @@
-#  BunSqStat [WIP]
+<h1 align="center">BunSqStat [WIP]</h1>
+<p align="center">
+    <img width="120" src="./docs/squid.png" alt="drawing" width="200"/>
+</p>
 
 [![Bun](https://img.shields.io/badge/Bun-000?logo=bun&logoColor=fff&style=for-the-badge)](https://bun.sh)
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
