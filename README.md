@@ -4,9 +4,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
 [![Vue.js](https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D)](https://vuejs.org)
 [![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io)
-[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://docker.com)
-![Docker Image Size](https://img.shields.io/docker/image-size/francyfox/bunsqstat?style=for-the-badge)
-![Docker Pulls](https://img.shields.io/docker/pulls/francyfox/bunsqstat?style=for-the-badge)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/francyfox/BunSqStat/pkgs/container/bunsqstat)
+![GitHub Tag](https://img.shields.io/github/v/tag/francyfox/BunSqStat?include_prereleases&sort=semver&style=for-the-badge&color=blue)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](./LICENSE)
 
 
