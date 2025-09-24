@@ -1,6 +1,5 @@
 FROM oven/bun:1.2.21-alpine AS builder
 
-# Set default environment variables
 ENV NODE_ENV=production
 ENV SQUID_HOST=127.0.0.1
 ENV SQUID_PORT=3128
@@ -30,48 +29,35 @@ RUN apt-get update && apt-get install -y \
     && apt-get update && apt-get install -y caddy \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Bun
 RUN curl -fsSL https://bun.sh/install | bash
 ENV PATH="/root/.bun/bin:$PATH"
 
-# Create app directory
 WORKDIR /app
 
-# Copy built applications
 COPY --from=builder /app/apps/server/dist ./backend/
 COPY --from=builder /app/apps/server/package.json ./backend/
 COPY --from=builder /app/apps/web/dist ./frontend/
 
-# Install production dependencies for backend
 WORKDIR /app/backend
 RUN bun install --production
 
-# Copy configuration files
 WORKDIR /app
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile.template
 COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/start.sh /app/start.sh
 
-# Create optimized Caddyfile for all-in-one setup
 RUN sed 's|/srv|/app/frontend|g' /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && \
     sed -i 's|bunsqstat_server:3000|localhost:3000|g' /etc/caddy/Caddyfile && \
     chmod +x /app/start.sh
 
-# Create volume mount points for log files
 RUN mkdir -p /app/logs
 
-# Create basic Redis Stack configuration
 RUN echo 'port 6379' > /redis-stack.conf && \
     echo 'bind 0.0.0.0' >> /redis-stack.conf && \
     echo "requirepass $REDIS_PASSWORD" >> /redis-stack.conf
 
-# Expose ports
 EXPOSE 80 3000 6379
 
-# Note: Don't use VOLUME directive as it creates directories for non-existent files
-# Users can mount log files directly using docker-compose volumes
-
-# Add healthcheck
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost/api/health || exit 1
 
@@ -79,9 +65,4 @@ ARG UNAME=bunsqstat
 ARG UID=1000
 ARG GID=1000
 
-RUN groupadd -g $GID -o $UNAME
-RUN useradd -m -u $UID -g $GID -o -s /bin/bash $UNAME
-USER $UNAME
-
-# Start all services
 CMD ["/app/start.sh"]

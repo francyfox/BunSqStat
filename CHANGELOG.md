@@ -1,3 +1,9 @@
+## 0.1.3 - 23 Sep 2025
+Bugfix:
+- Log dir for env (log rotate)
+## 0.1.1 - 23 Sep 2025
+Bugfix:
+- Deploy docker by git ci (ghcr.io)
 ## 0.1.0 - 22 Sep 2025
 
 Feature:

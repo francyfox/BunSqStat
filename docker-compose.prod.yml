@@ -34,8 +34,7 @@ services:
       - NODE_ENV=production
       - SQUID_HOST=127.0.0.1
       - SQUID_PORT=3128
-      - ACCESS_LOG=/app/logs/access.log
-      - CACHE_LOG=/app/logs/cache.log
+      - LOG_DIR=/app/logs
       - REDIS_HOST=redis-bunsqstat
       - REDIS_PORT=6379
       - REDIS_PASSWORD=123
