@@ -11,17 +11,8 @@ services:
       - "80:80"      # Web interface
       - "3000:3000"  # API (optional, for direct access)
       - "6379:6379"  # Redis (optional, for external access)
-    environment:
-      - NODE_ENV=production
-      - SQUID_HOST=127.0.0.1
-      - SQUID_PORT=3128
-      - REDIS_PASSWORD=your-secure-password
-      - LOG_DIR=/tmp/squid/log
     volumes:
-      - ./docker/access.log:/app/logs/access.log:ro
-      - ./docker/cache.log:/app/logs/cache.log:ro
-      # Alternative: mount entire log directory
-      # - /var/log/squid:/app/logs:ro
+      - /tmp/squid/log:/app/logs:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/api/health"]
       interval: 30s
