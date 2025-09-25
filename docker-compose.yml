@@ -1,17 +1,34 @@
 services:
-  squid:
-    image: mpreu/squid:5.7 # Or another suitable Squid 5.7 image
+#  squid:
+#    image: mpreu/squid:5.7 # Or another suitable Squid 5.7 image
+#    container_name: squid-proxy
+#    ports:
+#      - "3128:3128" # Map host port 3128 to container port 3128 (Squid's default)
+#    volumes:
+#      - ./docker/passwd:/etc/squid/squid_passwd
+#      - ./docker/squid_new.conf:/etc/squid/squid.conf
+#      - /tmp/squid/cache:/var/spool/squid # Persistent cache directory
+#      - /tmp/squid/log:/var/log/squid # Optional: Mount custom Squid configuration
+#    environment:
+#      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
+#    restart: always
+  squid-proxy:
+    image: ajeris/squid_docker
     container_name: squid-proxy
     ports:
-      - "3128:3128" # Map host port 3128 to container port 3128 (Squid's default)
+      - "3128:3128"
+      - "3129:3129"
     volumes:
-      - ./docker/passwd:/etc/squid/squid_passwd
-      - ./docker/squid_new.conf:/etc/squid/squid.conf
-      - /tmp/squid/cache:/var/spool/squid # Persistent cache directory
-      - /tmp/squid/log:/var/log/squid # Optional: Mount custom Squid configuration
+      - ./docker/squid.sergey.conf:/etc/squid/squid.conf:ro
+      - ./cache:/var/spool/squid
+      - ./logs:/var/log/squid
     environment:
-      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
-    restart: always
+      - TZ=Asia/Qyzylorda
+    entrypoint: >
+      sh -c "exec squid -N -d 1"
+    restart: unless-stopped
+    networks:
+      - squid-net
 
   redis:
     container_name: redis-bunsqstat
@@ -37,3 +54,5 @@ volumes:
 
 networks:
   local:
+  squid-net:
+    driver: bridge
