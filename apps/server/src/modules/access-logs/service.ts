@@ -60,7 +60,7 @@ export const AccessLogService = {
 
 		if (logLines.length === 0) return 0;
 
-		const stack = logLines.map((log) => {
+		const stack = logLines.map(async (log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
 			const sanitized = {
 				...this.sanitizeLogData(parsed),

@@ -20,7 +20,8 @@
 		"chokidar": "^4.0.3",
 		"elysia": "^1.4.7",
 		"elysia-rate-limit": "^4.4.0",
-		"mathjs": "^14.8.0"
+		"mathjs": "^14.8.0",
+		"mime": "^4.1.0"
 	},
 	"devDependencies": {
 		"bun-types": "^1.2.22"

@@ -155,23 +155,7 @@ export function accessColumnAttributes(
 					tooltip: true,
 				},
 				render(row) {
-					const url = () => {
-						const match = row[column].match(/:(\d+)$/);
-						if (!match) return row[column];
-						const [_, port] = row[column].match(/:(\d+)$/);
-
-						switch (port) {
-							case "443":
-								return `https://${row[column].replace(_, "")}`;
-							case "80":
-								return new URL(
-									`http://${row[column].replace(_, "")}`,
-								).toString();
-							default:
-								return row[column];
-						}
-					};
-					return h(BCopy, { text: url() });
+					return h(BCopy, { text: row[column] });
 				},
 			};
 
@@ -230,6 +214,7 @@ export function accessColumnAttributes(
 					tooltip: true,
 				},
 				render(row) {
+					console.log(row[column]);
 					if (row[column] === "-" || !row[column]) {
 						return "-";
 					}
