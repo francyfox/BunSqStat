@@ -12,23 +12,22 @@ services:
 #    environment:
 #      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
 #    restart: always
-  squid-proxy:
-    image: ajeris/squid_docker
-    container_name: squid-proxy
+#  satishweb/squid-ssl-proxy:latest
+  squid:
+    user: "3128:3128"
+    image: ghcr.io/b4tman/squid-ssl-bump:latest
+    restart: unless-stopped
     ports:
       - "3128:3128"
       - "3129:3129"
     volumes:
-      - ./docker/squid.sergey.conf:/etc/squid/squid.conf:ro
-      - ./cache:/var/spool/squid
+      - ./docker/ssl:/etc/squid/ssl/
+      - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
       - ./logs:/var/log/squid
     environment:
-      - TZ=Asia/Qyzylorda
-    entrypoint: >
-      sh -c "exec squid -N -d 1"
-    restart: unless-stopped
-    networks:
-      - squid-net
+      - SQUID_CONFIG_FILE=/etc/squid/conf.d/squid.conf
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
   redis:
     container_name: redis-bunsqstat

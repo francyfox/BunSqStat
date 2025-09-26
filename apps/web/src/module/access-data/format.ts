@@ -156,6 +156,8 @@ export function accessColumnAttributes(
 				},
 				render(row) {
 					const url = () => {
+						const match = row[column].match(/:(\d+)$/);
+						if (!match) return row[column];
 						const [_, port] = row[column].match(/:(\d+)$/);
 
 						switch (port) {
