@@ -17,7 +17,7 @@ import Rainbow from "./components/rainbow.vue";
       </div>
 
       <BMenu>
-        <div class="app">
+        <div class="app pb-10 xl:pb-0">
           <BHeader />
 
           <RouterView />

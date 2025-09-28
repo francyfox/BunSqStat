@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { InformationCircle, Pause, Play } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
-import { useWebSocket, watchDebounced } from "@vueuse/core";
+import {
+	breakpointsTailwind,
+	useBreakpoints,
+	useWebSocket,
+	watchDebounced,
+} from "@vueuse/core";
 import {
 	NButton,
 	NDataTable,
@@ -16,16 +21,18 @@ import {
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { WS_URL } from "@/consts.ts";
 import { formatColumns } from "@/module/access-data/format.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
 
+const breakpoints = useBreakpoints(breakpointsTailwind);
 const notification = useNotification();
 const statsStore = useStatsStore();
 const { accessLog, total, loading, count, error } = storeToRefs(statsStore);
 
+const isTablet = computed(() => breakpoints.md.value);
 const fieldOptions = accessKeys.map((key: string) => {
 	return {
 		label: `@${key}:`,
@@ -38,6 +45,7 @@ const form = ref({
 	search: null,
 });
 
+const tableMaxHeight = computed(() => (breakpoints.md.value ? 560 : 280));
 const interval = ref(300);
 const pause = ref(false);
 const page = ref();
@@ -77,6 +85,7 @@ watchDebounced(
 watchDebounced(
 	form,
 	async (v) => {
+		page.value = 1;
 		await statsStore.getAccessLogs({
 			page: page.value,
 			search: search.value,
@@ -180,8 +189,8 @@ watchDebounced(
         </NTooltip>
       </div>
     </NForm>
-    <div class="flex gap-2">
-      <NTag class="text-xl">
+    <div class="flex flex-wrap gap-2">
+      <NTag v-if="isTablet" class="text-xl">
         Total Records: {{ total }}
       </NTag>
       <NTag class="text-xl">
@@ -203,31 +212,33 @@ watchDebounced(
         {{ !pause ? 'Pause' : 'Start' }}
       </NButton>
 
-      <NTag class="text-xl">
+      <NTag v-if="isTablet" class="text-xl">
         Interval:
       </NTag>
       <NInputNumber
+          v-if="isTablet"
           v-model:value="interval"
           size="small"
           :show-button="false"
           class="max-w-[50px]"
       />
-      <NTag class="text-xl">
+      <NTag v-if="isTablet" class="text-xl">
         WS: {{ status }}
       </NTag>
     </div>
 
-    <n-data-table
+    <NDataTable
         :columns="columns"
         :data="accessLog"
-        :max-height="560"
+        :max-height="tableMaxHeight"
         :loading="loading"
         :row-class-name="rowClassName"
+        :scroll-x="1420"
     />
-    <n-pagination
+    <NPagination
         v-model:page="page"
         :page-count="pageCount"
-        show-quick-jumper
+        simple
         size="large"
     />
   </div>

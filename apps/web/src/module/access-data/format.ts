@@ -1,4 +1,6 @@
 // @ts-nocheck
+
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
 import type { TAccessLog } from "server/schema";
 import { h } from "vue";
@@ -55,12 +57,15 @@ function getHierarchyTypeColor(type: string): string {
 export function accessColumnAttributes(
 	column: keyof TAccessLog,
 ): ArrayElement<DataTableColumns> {
+	const breakpoints = useBreakpoints(breakpointsTailwind);
 	const dayjs = useDayjs();
 
 	switch (column) {
 		case "timestamp":
 			return {
+				order: 0,
 				width: 120,
+				fixed: breakpoints.md.value ? "left" : false,
 				render(row) {
 					return h(
 						NTooltip,
@@ -76,92 +81,11 @@ export function accessColumnAttributes(
 				},
 			};
 
-		case "duration":
-			return {
-				width: 100,
-				render(row) {
-					const { value, type } = formatDuration(row[column]);
-					return h(NTag, { type, size: "small" }, () => value);
-				},
-			};
-
-		case "clientIP":
-			return {
-				width: 130,
-				render(row) {
-					return h(
-						NTag,
-						{ type: "info", size: "small", bordered: false },
-						() => row[column],
-					);
-				},
-			};
-
-		case "resultType":
-			return {
-				width: 140,
-				ellipsis: {
-					tooltip: true,
-				},
-				render(row) {
-					const type = getResultType(row[column]);
-					return h(NTag, { type, size: "small" }, () => row[column]);
-				},
-			};
-
-		case "resultStatus":
-			return {
-				width: 80,
-				ellipsis: {
-					tooltip: true,
-				},
-				render(row) {
-					const type = getStatusType(row[column]);
-					return h(NTag, { type, size: "small" }, () => row[column]);
-				},
-			};
-
-		case "bytes":
-			return {
-				width: 90,
-				render(row) {
-					const formatted = formatBytes(row[column]);
-					const type = Number(row[column]) > 1048576 ? "warning" : "default";
-					return h(
-						NTag,
-						{ type, size: "small", bordered: false },
-						() => formatted,
-					);
-				},
-			};
-
-		case "method":
-			return {
-				width: 90,
-				render(row) {
-					const type = getMethodColor(row[column]);
-					return h(
-						NTag,
-						{ type, size: "small", strong: true },
-						() => row[column],
-					);
-				},
-			};
-
-		case "url":
-			return {
-				minWidth: 200,
-				ellipsis: {
-					tooltip: true,
-				},
-				render(row) {
-					return h(BCopy, { text: row[column] });
-				},
-			};
-
 		case "user":
 			return {
+				order: 1,
 				width: 140,
+				fixed: breakpoints.md.value ? "left" : false,
 				ellipsis: {
 					tooltip: true,
 				},
@@ -174,6 +98,96 @@ export function accessColumnAttributes(
 						);
 					}
 					return row[column];
+				},
+			};
+
+		case "url":
+			return {
+				order: 2,
+				minWidth: 200,
+				ellipsis: {
+					tooltip: true,
+				},
+				render(row) {
+					return h(BCopy, { text: row[column] });
+				},
+			};
+
+		case "duration":
+			return {
+				order: 3,
+				width: 100,
+				render(row) {
+					const { value, type } = formatDuration(row[column]);
+					return h(NTag, { type, size: "small" }, () => value);
+				},
+			};
+
+		case "resultStatus":
+			return {
+				order: 4,
+				width: 80,
+				ellipsis: {
+					tooltip: true,
+				},
+				render(row) {
+					const type = getStatusType(row[column]);
+					return h(NTag, { type, size: "small" }, () => row[column]);
+				},
+			};
+
+		case "bytes":
+			return {
+				order: 5,
+				width: 90,
+				render(row) {
+					const formatted = formatBytes(row[column]);
+					const type = Number(row[column]) > 1048576 ? "warning" : "default";
+					return h(
+						NTag,
+						{ type, size: "small", bordered: false },
+						() => formatted,
+					);
+				},
+			};
+
+		case "resultType":
+			return {
+				order: 6,
+				width: 140,
+				ellipsis: {
+					tooltip: true,
+				},
+				render(row) {
+					const type = getResultType(row[column]);
+					return h(NTag, { type, size: "small" }, () => row[column]);
+				},
+			};
+
+		case "method":
+			return {
+				order: 7,
+				width: 90,
+				render(row) {
+					const type = getMethodColor(row[column]);
+					return h(
+						NTag,
+						{ type, size: "small", strong: true },
+						() => row[column],
+					);
+				},
+			};
+
+		case "clientIP":
+			return {
+				order: 8,
+				width: 130,
+				render(row) {
+					return h(
+						NTag,
+						{ type: "info", size: "small", bordered: false },
+						() => row[column],
+					);
 				},
 			};
 
@@ -214,7 +228,6 @@ export function accessColumnAttributes(
 					tooltip: true,
 				},
 				render(row) {
-					console.log(row[column]);
 					if (row[column] === "-" || !row[column]) {
 						return "-";
 					}
@@ -233,12 +246,14 @@ export function accessColumnAttributes(
 }
 
 export function formatColumns(data: Array<keyof TAccessLog>): DataTableColumns {
-	return data.map((column, index) => {
-		return {
-			key: column,
-			position: index,
-			title: pascalToKebabCase(column).toUpperCase(),
-			...accessColumnAttributes(column),
-		};
-	});
+	return data
+		.map((column, index) => {
+			return {
+				key: column,
+				position: index,
+				title: pascalToKebabCase(column).toUpperCase(),
+				...accessColumnAttributes(column),
+			};
+		})
+		.sort((a, b) => a?.order > b?.order);
 }
