@@ -25,10 +25,8 @@ import Rainbow from "./components/rainbow.vue";
               <Transition mode="out-in">
                 <KeepAlive>
                   <Suspense>
-                    <!-- main content -->
                     <component :is="Component"></component>
 
-                    <!-- loading state -->
                     <template #fallback>
                       Loading...
                     </template>
@@ -39,7 +37,6 @@ import Rainbow from "./components/rainbow.vue";
           </RouterView>
         </div>
       </BMenu>
-
     </NNotificationProvider>
   </NConfigProvider>
 </template>
