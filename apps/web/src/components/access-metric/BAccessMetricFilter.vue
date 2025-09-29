@@ -13,8 +13,10 @@ const form = defineModel<{
 </script>
 
 <template>
-  <NForm :model="form"
-         class="flex gap-2"
+  <NForm
+      v-if="false"
+      :model="form"
+      class="flex gap-2 mb-[-40px]"
   >
     <NFormItem
         label="Limit records"

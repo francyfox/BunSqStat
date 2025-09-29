@@ -1,6 +1,6 @@
 import { useDayjs } from "@/composables/dayjs.ts";
 
-export function diffDate(dates?: [number, number][]) {
+export function diffDate(dates?: [number, number]) {
 	if (!dates) return "1 h.";
 
 	const dayjs = useDayjs();

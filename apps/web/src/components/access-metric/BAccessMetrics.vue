@@ -5,8 +5,8 @@ import { storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
-import BTabActual from "@/components/access-metric/BTabActual.vue";
-import BTabLimit from "@/components/access-metric/BTabLimit.vue";
+import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
+import BTabRecent from "@/components/access-metric/BTabRecent.vue";
 import { WS_URL } from "@/consts.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 
@@ -21,7 +21,7 @@ const form = ref({
 	time: undefined,
 });
 
-const tab = ref("actual");
+const tab = ref("recent");
 
 await statsStore.getAccessMetrics();
 
@@ -49,7 +49,7 @@ watchDebounced(
 watch(
 	() => route.hash,
 	(v) => {
-		tab.value = v ? v.replace("#", "") : "actual";
+		tab.value = v ? v.replace("#", "") : "recent";
 	},
 );
 
@@ -114,14 +114,14 @@ onUnmounted(() => {
         @update:value="handleTabChange"
         animated
     >
-      <NTabPane name="actual" tab="By time">
-        <BTabActual
+      <NTabPane name="recent" tab="Recent">
+        <BTabRecent
             v-model="form"
         />
       </NTabPane>
 
-      <NTabPane name="per-n" tab="By limit">
-        <BTabLimit />
+      <NTabPane name="global" tab="Global">
+        <BTabGlobal />
       </NTabPane>
     </NTabs>
   </div>

@@ -37,6 +37,7 @@ const columns = computed(() => [
         :columns="columns"
         :data="users"
         :bordered="false"
+        :max-height="300"
         size="large"
     />
   </BCardMetric>
