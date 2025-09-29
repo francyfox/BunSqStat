@@ -70,9 +70,9 @@ services:
 - [ ] Access log charts
 - - [ ] Hit Ratio
 - - [X] User speed
-- - [ ] masonry-wall
+- - [X] masonry-wall
 - [ ] Adaptive
-- - [ ] Mobile/Tablet (last 2 versions)
+- - [X] Mobile/Tablet (last 2 versions)
 - - [ ] Tile windows (custom size)
 - - [ ] CLI???
 - [ ] Check multiply tabs (optimize ws)

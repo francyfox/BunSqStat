@@ -4,13 +4,7 @@ import BAccessMetrics from "@/components/access-metric/BAccessMetrics.vue";
 
 <template>
   <div class="mx-a container">
-    <Suspense>
-      <BAccessMetrics />
-
-      <template #fallback>
-        Loading...
-      </template>
-    </Suspense>
+    <BAccessMetrics />
   </div>
 </template>
 

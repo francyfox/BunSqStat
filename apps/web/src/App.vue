@@ -20,7 +20,23 @@ import Rainbow from "./components/rainbow.vue";
         <div class="app pb-10 xl:pb-0">
           <BHeader />
 
-          <RouterView />
+          <RouterView v-slot="{ Component }">
+            <template v-if="Component">
+              <Transition mode="out-in">
+                <KeepAlive>
+                  <Suspense>
+                    <!-- main content -->
+                    <component :is="Component"></component>
+
+                    <!-- loading state -->
+                    <template #fallback>
+                      Loading...
+                    </template>
+                  </Suspense>
+                </KeepAlive>
+              </Transition>
+            </template>
+          </RouterView>
         </div>
       </BMenu>
 
@@ -28,5 +44,14 @@ import Rainbow from "./components/rainbow.vue";
   </NConfigProvider>
 </template>
 
-<style scoped>
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 150ms ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>

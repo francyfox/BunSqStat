@@ -5,13 +5,7 @@ import BAccessData from "@/components/access-data/BAccessData.vue";
 <template>
   <section>
     <div class="mx-a container">
-      <Suspense>
-        <BAccessData />
-
-        <template #fallback>
-          Loading...
-        </template>
-      </Suspense>
+      <BAccessData />
     </div>
   </section>
 </template>
