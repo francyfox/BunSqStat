@@ -5,14 +5,13 @@ import { storeToRefs } from "pinia";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
+import BCardBytes from "@/components/access-metric/masonry-wall/BCardBytes.vue";
+import BCardDuration from "@/components/access-metric/masonry-wall/BCardDuration.vue";
 import BCardRPS from "@/components/access-metric/masonry-wall/BCardRPS.vue";
 import BCardStatus from "@/components/access-metric/masonry-wall/BCardStatus.vue";
-import BCardMetric from "@/components/BCardMetric.vue";
-import BStatuses from "@/components/BStatuses.vue";
-import BUserSpeed from "@/components/BUserSpeed.vue";
+import BCardUserSpeed from "@/components/access-metric/masonry-wall/BCardUserSpeed.vue";
 import { WS_URL } from "@/consts.ts";
 import { useStatsStore } from "@/stores/stats.ts";
-import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const route = useRoute();
 const router = useRouter();
@@ -140,39 +139,21 @@ onUnmounted(() => {
 
       <NTabPane name="per-n" tab="By limit">
         <div class="metric-list columns-4">
-          <BCardMetric class="max-w-sm">
-            {{ formatBytes(accessMetrics?.globalStates.bytes) }}
+          <BCardBytes
+              :bytes="accessMetrics?.globalStates.bytes"
+          />
 
-            <template #name>
-              TOTAL REQUEST SIZE
-            </template>
-          </BCardMetric>
+          <BCardDuration
+              :duration="accessMetrics?.globalStates.duration"
+          />
 
-          <BCardMetric class="max-w-sm">
-            <div class="text-center text-sm font-300">
-              hour:minute:second:millisecond
-            </div>
-            <div class="text-center font-900 text-4xl">
-              {{ formatMilliseconds(accessMetrics?.globalStates.duration) }}
-            </div>
+          <BCardStatus
+            :items="accessMetrics?.globalStates.statusCodes.items"
+          />
 
-            <template #name>
-              DURATION
-            </template>
-          </BCardMetric>
-
-          <BCardMetric class="max-w-sm">
-            <BStatuses
-                :status="accessMetrics?.globalStates.statusCodes.items"
-            />
-            <template #name>
-              STATUS
-            </template>
-          </BCardMetric>
-
-          <BCardMetric class="max-w-sm">
-            <BUserSpeed :users="accessMetrics?.users" />
-          </BCardMetric>
+          <BCardUserSpeed
+              :users="accessMetrics?.users"
+          />
         </div>
       </NTabPane>
     </NTabs>

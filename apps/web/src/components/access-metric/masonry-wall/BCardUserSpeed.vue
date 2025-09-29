@@ -2,7 +2,6 @@
 import { NDataTable } from "naive-ui";
 import type { TAccessLogMetricsResponse } from "server/schema";
 import { computed } from "vue";
-import BCardMetric from "@/components/BCardMetric.vue";
 import { formatBytes } from "@/utils/string.ts";
 
 const { users = [] } = defineProps<{
@@ -32,14 +31,12 @@ const columns = computed(() => [
 </script>
 
 <template>
-  <BCardMetric class="max-w-sm">
-    <NDataTable
-        :columns="columns"
-        :data="users"
-        :bordered="false"
-        size="large"
-    />
-  </BCardMetric>
+  <NDataTable
+      :columns="columns"
+      :data="users"
+      :bordered="false"
+      size="large"
+  />
 </template>
 
 <style scoped>
