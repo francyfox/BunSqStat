@@ -1,50 +1,31 @@
 <script setup lang="ts">
-import { InformationCircle, Pause, Play } from "@vicons/ionicons5";
-import { Icon } from "@vicons/utils";
 import {
 	breakpointsTailwind,
 	useBreakpoints,
 	useWebSocket,
 	watchDebounced,
 } from "@vueuse/core";
-import {
-	NButton,
-	NDataTable,
-	NForm,
-	NInput,
-	NInputNumber,
-	NPagination,
-	NSelect,
-	NTag,
-	NTooltip,
-	useNotification,
-} from "naive-ui";
+import { NDataTable, NPagination, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
 import { computed, ref, watch } from "vue";
+import BAccessDataFilter from "@/components/BAccessDataFilter.vue";
+import BAccessDataTags from "@/components/BAccessDataTags.vue";
 import { WS_URL } from "@/consts.ts";
 import { formatColumns } from "@/module/access-data/format.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
 
-const breakpoints = useBreakpoints(breakpointsTailwind);
 const notification = useNotification();
 const statsStore = useStatsStore();
 const { accessLog, total, loading, count, error } = storeToRefs(statsStore);
-
-const isTablet = computed(() => breakpoints.md.value);
-const fieldOptions = accessKeys.map((key: string) => {
-	return {
-		label: `@${key}:`,
-		value: `@${key}:`,
-	};
-});
 
 const form = ref({
 	field: "@user:",
 	search: null,
 });
 
+const breakpoints = useBreakpoints(breakpointsTailwind);
 const tableMaxHeight = computed(() => (breakpoints.md.value ? 560 : 280));
 const interval = ref(300);
 const pause = ref(false);
@@ -158,74 +139,15 @@ watchDebounced(
 
 <template>
   <div class="access-data flex flex-col gap-5">
-    <NForm :model="form" class="search">
-      <div class="max-w-xl flex gap-2">
-        <n-select
-            v-model:value="form.field"
-            placeholder="Select"
-            :options="fieldOptions"
-            size="large"
-            class="w-[200px]"
-        />
-        <NInput
-            v-model:value="form.search"
-            placeholder="Search by column"
-            size="large"
-        />
+    <BAccessDataFilter
+        v-model="form"
+    />
 
-        <NTooltip placement="bottom" trigger="hover">
-          <template #trigger>
-            <Icon size="32" class="cursor-pointer">
-              <InformationCircle />
-            </Icon>
-          </template>
-          This input use for <a target="_blank" rel="noopener" href="https://redis.io/docs/latest/develop/ai/search-and-query/query/" class="c-amber underline">redis query</a> like <NTag>@user: fox</NTag>
-          <br>
-          Search by IP: <NTag>192.168.1.1</NTag> (auto-escaped)
-          <br>
-          Single number: <NTag>200</NTag> → <NTag>[200 200]</NTag>
-          <br>
-          Number ranges: <NTag>[200 299]</NTag> or <NTag>[0 20]</NTag>
-        </NTooltip>
-      </div>
-    </NForm>
-    <div class="flex flex-wrap gap-2">
-      <NTag v-if="isTablet" class="text-xl">
-        Total Records: {{ total }}
-      </NTag>
-      <NTag class="text-xl">
-        Count: {{ count }}
-      </NTag>
-      <NButton
-          size="small"
-          :type="`${!pause ? 'error' : 'success'}`"
-          @click="handlePause"
-          class="text-xl"
-      >
-        <template #icon>
-          <Icon>
-            <Pause v-if="!pause" />
-            <Play v-else />
-          </Icon>
-        </template>
-
-        {{ !pause ? 'Pause' : 'Start' }}
-      </NButton>
-
-      <NTag v-if="isTablet" class="text-xl">
-        Interval:
-      </NTag>
-      <NInputNumber
-          v-if="isTablet"
-          v-model:value="interval"
-          size="small"
-          :show-button="false"
-          class="max-w-[50px]"
-      />
-      <NTag v-if="isTablet" class="text-xl">
-        WS: {{ status }}
-      </NTag>
-    </div>
+    <BAccessDataTags
+        v-model:interval="interval"
+        v-bind="{ total, count, pause, status }"
+        @handlePause="handlePause"
+    />
 
     <NDataTable
         :columns="columns"

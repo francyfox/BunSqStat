@@ -118,7 +118,6 @@ onMounted(() => {
     >
       <NMenu
           mode="horizontal"
-          collapsed
           :icon-size="24"
           :collapsed-width="64"
           :collapsed-icon-size="22"

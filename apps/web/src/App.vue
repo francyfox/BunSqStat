@@ -6,12 +6,12 @@ import Rainbow from "./components/rainbow.vue";
 </script>
 
 <template>
-  <n-config-provider
+  <NConfigProvider
       :theme-overrides="{ common: { fontWeightStrong: '600' } }"
       :theme="darkTheme"
       preflight-style-disabled
   >
-    <n-notification-provider :max="3">
+    <NNotificationProvider :max="3">
       <div class="fixed">
         <Rainbow />
       </div>
@@ -24,8 +24,8 @@ import Rainbow from "./components/rainbow.vue";
         </div>
       </BMenu>
 
-    </n-notification-provider>
-  </n-config-provider>
+    </NNotificationProvider>
+  </NConfigProvider>
 </template>
 
 <style scoped>
