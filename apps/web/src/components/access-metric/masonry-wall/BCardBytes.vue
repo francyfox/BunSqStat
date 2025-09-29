@@ -8,7 +8,7 @@ const { bytes = 0 } = defineProps<{
 </script>
 
 <template>
-  <BCardMetric class="max-w-sm">
+  <BCardMetric>
     {{ formatBytes(bytes) }}
 
     <template #name>

@@ -8,7 +8,7 @@ const { duration = 0 } = defineProps<{
 </script>
 
 <template>
-  <BCardMetric class="max-w-sm">
+  <BCardMetric>
     <div class="text-center text-sm font-300">
       hour:minute:second:millisecond
     </div>
