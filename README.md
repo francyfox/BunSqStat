@@ -67,19 +67,22 @@ services:
 
 - [X] Access log data table
 - [X] Real-time WebSocket updates
-- [ ] Access log charts
-- - [ ] Hit Ratio
+- [X] Access log charts
+- - [X] Hit Ratio
 - - [X] User speed
 - - [X] masonry-wall
 - [ ] Adaptive
 - - [X] Mobile/Tablet (last 2 versions)
 - - [ ] Tile windows (custom size)
 - - [ ] CLI???
-- [ ] Check multiply tabs (optimize ws)
+- [ ] Optimize WS for few tabs (one tab permitted requests)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
 - [X] Use offset for reading logs (slow parse speed)
 - [X] Log rotate support (logfile_rotate N)
 - - [X] {inode, offset}
+- [ ] PWA?
+- [ ] Anomaly detects?
+- - [ ] Browser/Mobile alerts
 - [ ] Add custom logs format like ([to squid docs](https://www.squid-cache.org/Doc/config/logformat/))
 - [ ] Stress test
 - [ ] Deploy test
