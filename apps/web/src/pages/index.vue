@@ -1,17 +1,11 @@
 <script setup lang="ts">
-import BAccessData from "@/components/BAccessData.vue";
+import BAccessData from "@/components/access-data/BAccessData.vue";
 </script>
 
 <template>
   <section>
     <div class="mx-a container">
-      <Suspense>
-        <BAccessData />
-
-        <template #fallback>
-          Loading...
-        </template>
-      </Suspense>
+      <BAccessData />
     </div>
   </section>
 </template>

@@ -6,27 +6,49 @@ import Rainbow from "./components/rainbow.vue";
 </script>
 
 <template>
-  <n-config-provider
+  <NConfigProvider
       :theme-overrides="{ common: { fontWeightStrong: '600' } }"
       :theme="darkTheme"
       preflight-style-disabled
   >
-    <n-notification-provider :max="3">
+    <NNotificationProvider :max="3">
       <div class="fixed">
         <Rainbow />
       </div>
 
       <BMenu>
-        <div class="app">
+        <div class="app pb-10 xl:pb-0">
           <BHeader />
 
-          <RouterView />
+          <RouterView v-slot="{ Component }">
+            <template v-if="Component">
+              <Transition mode="out-in">
+                <KeepAlive>
+                  <Suspense>
+                    <component :is="Component"></component>
+
+                    <template #fallback>
+                      Loading...
+                    </template>
+                  </Suspense>
+                </KeepAlive>
+              </Transition>
+            </template>
+          </RouterView>
         </div>
       </BMenu>
-
-    </n-notification-provider>
-  </n-config-provider>
+    </NNotificationProvider>
+  </NConfigProvider>
 </template>
 
-<style scoped>
+<style>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 150ms ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 </style>

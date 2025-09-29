@@ -32,11 +32,12 @@ const columns = computed(() => [
 </script>
 
 <template>
-  <BCardMetric class="max-w-sm">
+  <BCardMetric>
     <NDataTable
         :columns="columns"
         :data="users"
         :bordered="false"
+        :max-height="300"
         size="large"
     />
   </BCardMetric>

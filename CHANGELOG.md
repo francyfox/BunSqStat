@@ -1,9 +1,17 @@
-## 0.1.3 - 23 Sep 2025
+## 0.1.3 - 29 Sep 2025
+
+Feature: 
+- Adaptive
+- New cards for metrics. Content type / Optimization
 Bugfix:
 - Log dir for env (log rotate)
+- Metrics bytes (use only bytes for server response)
+
 ## 0.1.1 - 23 Sep 2025
+
 Bugfix:
 - Deploy docker by git ci (ghcr.io)
+
 ## 0.1.0 - 22 Sep 2025
 
 Feature:

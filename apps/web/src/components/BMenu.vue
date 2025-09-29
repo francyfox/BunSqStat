@@ -1,10 +1,27 @@
 <script setup lang="ts">
 import { BarChart, BookOutline as BookIcon } from "@vicons/ionicons5";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import type { MenuOption } from "naive-ui";
-import { NIcon, NLayout, NLayoutContent, NLayoutSider, NMenu } from "naive-ui";
-import type { Component } from "vue";
-import { h, ref } from "vue";
+import {
+	NIcon,
+	NLayout,
+	NLayoutContent,
+	NLayoutFooter,
+	NLayoutSider,
+	NMenu,
+} from "naive-ui";
+import {
+	type Component,
+	computed,
+	h,
+	onMounted,
+	ref,
+	shallowRef,
+	watch,
+} from "vue";
 import { RouterLink } from "vue-router";
+
+const breakpoints = useBreakpoints(breakpointsTailwind);
 
 function renderIcon(icon: Component) {
 	return () => h(NIcon, null, { default: () => h(icon) });
@@ -46,11 +63,35 @@ const menuOptions: MenuOption[] = [
 ];
 
 const collapsed = ref(false);
+
+const isTablet = computed(() => breakpoints.xl.value);
+
+watch(breakpoints.xl, (v) => {
+	if (!v) {
+		collapsed.value = true;
+	} else {
+		collapsed.value = false;
+	}
+});
+
+onMounted(() => {
+	setTimeout(() => {
+		if (!breakpoints.xl.value) {
+			collapsed.value = true;
+		} else {
+			collapsed.value = false;
+		}
+	});
+});
 </script>
 
 <template>
-  <n-layout has-sider>
-    <n-layout-sider
+  <NLayout
+      position="absolute"
+      :has-sider="isTablet"
+  >
+    <NLayoutSider
+        v-if="isTablet"
         bordered
         collapse-mode="width"
         :collapsed-width="64"
@@ -60,19 +101,35 @@ const collapsed = ref(false);
         @collapse="collapsed = true"
         @expand="collapsed = false"
     >
-      <n-menu
+      <NMenu
+          mode="vertical"
           :collapsed="collapsed"
           :collapsed-width="64"
           :collapsed-icon-size="22"
           :options="menuOptions"
+          responsive
       />
-    </n-layout-sider>
+    </NLayoutSider>
+
+    <NLayoutFooter
+        v-if="!isTablet"
+        position="absolute"
+        class="z-50"
+    >
+      <NMenu
+          mode="horizontal"
+          :icon-size="24"
+          :collapsed-width="64"
+          :collapsed-icon-size="22"
+          :options="menuOptions"
+      />
+    </NLayoutFooter>
 
 
-    <n-layout-content content-style="padding: 24px;">
+    <NLayoutContent content-style="padding: 16px;">
       <slot />
-    </n-layout-content>
-  </n-layout>
+    </NLayoutContent>
+  </NLayout>
 </template>
 
 <style scoped>

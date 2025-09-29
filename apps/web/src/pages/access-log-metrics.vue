@@ -1,16 +1,10 @@
 <script setup lang="ts">
-import BAccessMetrics from "@/components/BAccessMetrics.vue";
+import BAccessMetrics from "@/components/access-metric/BAccessMetrics.vue";
 </script>
 
 <template>
   <div class="mx-a container">
-    <Suspense>
-      <BAccessMetrics />
-
-      <template #fallback>
-        Loading...
-      </template>
-    </Suspense>
+    <BAccessMetrics />
   </div>
 </template>
 
