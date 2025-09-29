@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { NForm, NInput, NSelect } from "naive-ui";
 import { accessKeys } from "server/schema";
-import BAccessDataHelper from "@/components/BAccessDataHelper.vue";
+import BAccessDataHelper from "@/components/access-data/BAccessDataHelper.vue";
 
 const form = defineModel<{
 	field: string;

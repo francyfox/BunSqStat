@@ -1,23 +1,17 @@
 <script setup lang="ts">
 import { useWebSocket, watchDebounced } from "@vueuse/core";
-import {
-	NDatePicker,
-	NForm,
-	NFormItem,
-	NInputNumber,
-	NTabPane,
-	NTabs,
-	useNotification,
-} from "naive-ui";
+import { NTabPane, NTabs, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
+import BCardRPS from "@/components/access-metric/masonry-wall/BCardRPS.vue";
+import BCardStatus from "@/components/access-metric/masonry-wall/BCardStatus.vue";
 import BCardMetric from "@/components/BCardMetric.vue";
 import BStatuses from "@/components/BStatuses.vue";
 import BUserSpeed from "@/components/BUserSpeed.vue";
 import { WS_URL } from "@/consts.ts";
 import { useStatsStore } from "@/stores/stats.ts";
-import { diffDate } from "@/utils/date.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const route = useRoute();
@@ -119,29 +113,10 @@ onUnmounted(() => {
 
 <template>
   <div class="flex flex-col gap-5">
-    <NForm :model="form"
-           class="flex gap-2"
-    >
-      <NFormItem
-          label="Limit records"
-          class="max-w-[150px]"
-      >
-        <NInputNumber
-            v-model:value="form.limit"
-            size="large"
-        />
-      </NFormItem>
+    <BAccessMetricFilter
+        v-model="form"
+    />
 
-      <NFormItem label="Limit by end time (UTC)">
-        <NDatePicker
-            v-model:value="form.time"
-            type="datetimerange"
-            :actions="['now', 'clear', 'confirm']"
-            size="large"
-            clearable
-        />
-      </NFormItem>
-    </NForm>
     <NTabs
         v-model:value="tab"
         type="line"
@@ -151,25 +126,15 @@ onUnmounted(() => {
     >
       <NTabPane name="actual" tab="By time">
         <div class="metric-list columns-4">
-          <BCardMetric>
-            {{ accessMetrics?.currentStates?.rps?.toFixed(5) || "0" }} <br>
-            <span class="text-lg">
-              {{ accessMetrics?.currentStates?.rps * diffTime }} in {{ diffDate(form.time) }}
-            </span>
+          <BCardRPS
+              :rps="accessMetrics?.currentStates?.rps"
+              :diff-time="diffTime"
+              :time="form.time"
+          />
 
-            <template #name>
-              RPS
-            </template>
-          </BCardMetric>
-
-          <BCardMetric>
-            <BStatuses
-                :status="accessMetrics?.currentStates.statusCodes.items"
-            />
-            <template #name>
-              STATUS
-            </template>
-          </BCardMetric>
+          <BCardStatus
+              :items="accessMetrics?.currentStates.statusCodes.items"
+          />
         </div>
       </NTabPane>
 
