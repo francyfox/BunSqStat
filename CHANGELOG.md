@@ -1,8 +1,20 @@
+## 0.1.4 - 30 Sep 2025
+
+Feature:
+- Reset button for search field
+- Sort columns for access data table
+
+Bugfix:
+- Search field escape (for url, remove http protocol)
+- Make components for metrics reactive
+- Set duration for chart animation 0. After redraw, start animation from zero
+
 ## 0.1.3 - 29 Sep 2025
 
 Feature: 
 - Adaptive
 - New cards for metrics. Content type / Optimization
+
 Bugfix:
 - Log dir for env (log rotate)
 - Metrics bytes (use only bytes for server response)

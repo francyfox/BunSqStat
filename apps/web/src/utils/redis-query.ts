@@ -28,9 +28,11 @@ export function buildSearchQuery(
 
 		case "resultType":
 		case "method":
+			return `@${fieldName}:{${value.replace(/\./g, "*")}}`;
 		case "hierarchyType":
 		case "contentType":
 		case "url":
+			return createTextQuery(fieldName, value.replace(/^https?:\/\//g, ""));
 		case "hierarchyHost":
 			return `@${fieldName}:${value.replace(/\./g, "*")}`;
 
@@ -38,12 +40,9 @@ export function buildSearchQuery(
 		case "duration":
 		case "resultStatus":
 		case "bytes":
-			// Numeric fields in Redis Search require range syntax
 			if (value.match(/^[\[\(].*[\]\)]$/)) {
-				// User provided range like [200 299] or (0 100) - use as-is
 				return `@${fieldName}:${value}`;
 			} else {
-				// Single value like "200" - convert to exact range [200 200]
 				return `@${fieldName}:[${value} ${value}]`;
 			}
 

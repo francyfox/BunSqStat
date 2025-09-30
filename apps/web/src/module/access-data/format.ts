@@ -2,10 +2,12 @@
 
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
+import { storeToRefs } from "pinia";
 import type { TAccessLog } from "server/schema";
 import { h } from "vue";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
+import { useStatsStore } from "@/stores/stats.ts";
 import {
 	formatBytes,
 	formatDuration,
@@ -64,8 +66,9 @@ export function accessColumnAttributes(
 		case "timestamp":
 			return {
 				order: 0,
-				width: 120,
+				width: 125,
 				fixed: breakpoints.md.value ? "left" : false,
+				defaultSortOrder: "descend",
 				render(row) {
 					return h(
 						NTooltip,
@@ -117,6 +120,9 @@ export function accessColumnAttributes(
 			return {
 				order: 3,
 				width: 100,
+				ellipsis: {
+					tooltip: true,
+				},
 				render(row) {
 					const { value, type } = formatDuration(row[column]);
 					return h(NTag, { type, size: "small" }, () => value);
@@ -167,7 +173,10 @@ export function accessColumnAttributes(
 		case "method":
 			return {
 				order: 7,
-				width: 90,
+				width: 100,
+				ellipsis: {
+					tooltip: true,
+				},
 				render(row) {
 					const type = getMethodColor(row[column]);
 					return h(
@@ -246,6 +255,8 @@ export function accessColumnAttributes(
 }
 
 export function formatColumns(data: Array<keyof TAccessLog>): DataTableColumns {
+	const store = useStatsStore();
+
 	return data
 		.map((column, index) => {
 			return {
@@ -253,6 +264,13 @@ export function formatColumns(data: Array<keyof TAccessLog>): DataTableColumns {
 				position: index,
 				title: pascalToKebabCase(column).toUpperCase(),
 				...accessColumnAttributes(column),
+				sorter: true,
+				customNextSortOrder: (order) => {
+					if (typeof order === "string") {
+						store.setSortBy(column, order);
+					}
+					return order === "ascend" ? "descend" : "ascend";
+				},
 			};
 		})
 		.sort((a, b) => a?.order > b?.order);

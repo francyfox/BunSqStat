@@ -76,19 +76,27 @@ export const AccessLogService = {
 		return logLines.length;
 	},
 
-	async getLogs({ search, page, fields }: getLogParams = {}) {
+	async getLogs({ search, sortBy, page, fields }: getLogParams = {}) {
 		const keys = await redisClient.keys("log:*");
 		const total = keys.length;
 
 		const pageSize = 10;
 		const returnFields = fields ? `RETURN ${fields.join(" ")}` : "";
-		const sortBy = "SORTBY timestamp DESC";
 
-		const args =
-			`log_idx ${search || "'*'"} ${sortBy} LIMIT ${((page || 1) - 1) * pageSize} ${pageSize} ${returnFields}`
-				.split(" ")
-				.filter(Boolean);
+		const args = [
+			"log_idx",
+			search || "*",
+			"SORTBY",
+			(sortBy || "timestamp, DESC").split(","),
+			"LIMIT",
+			(((page || 1) - 1) * pageSize).toString(),
+			pageSize.toString(),
+			returnFields,
+		]
+			.flat()
+			.filter(Boolean) as string[];
 
+		console.log(args);
 		const response = await redisClient.send("FT.SEARCH", args);
 		const items = response.results.map((i: any) => i.extra_attributes);
 

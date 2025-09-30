@@ -24,7 +24,7 @@ const diffTime = computed(() => {
 	return form.value.time[0] - form.value.time[1];
 });
 
-const items = [
+const items = computed(() => [
 	{
 		component: h(BCardRPS, {
 			rps: accessMetrics.value?.currentStates?.rps,
@@ -37,7 +37,7 @@ const items = [
 			items: accessMetrics.value?.currentStates.statusCodes.items,
 		}),
 	},
-];
+]);
 </script>
 
 <template>

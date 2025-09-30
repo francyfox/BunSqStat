@@ -1,33 +1,26 @@
 services:
-#  squid:
-#    image: mpreu/squid:5.7 # Or another suitable Squid 5.7 image
-#    container_name: squid-proxy
+#  bunsqstat_client:
+#    image: ghcr.io/francyfox/bunsqstat:v0.1.3
+#    container_name: bunsqstat-client
+#    restart: unless-stopped
 #    ports:
-#      - "3128:3128" # Map host port 3128 to container port 3128 (Squid's default)
-#    volumes:
-#      - ./docker/passwd:/etc/squid/squid_passwd
-#      - ./docker/squid_new.conf:/etc/squid/squid.conf
-#      - /tmp/squid/cache:/var/spool/squid # Persistent cache directory
-#      - /tmp/squid/log:/var/log/squid # Optional: Mount custom Squid configuration
+#      - "80:80"      # Web interface
+#      - "3000:3000"  # API (optional, for direct access)
+#      - "6379:6379"  # Redis (optional, for external access)
 #    environment:
-#      - SQUID_CONFIG=/etc/squid/squid.conf # Specify custom config path if mounted
-#    restart: always
-#  satishweb/squid-ssl-proxy:latest
-  squid:
-    user: "3128:3128"
-    image: ghcr.io/b4tman/squid-ssl-bump:latest
-    restart: unless-stopped
-    ports:
-      - "3128:3128"
-      - "3129:3129"
-    volumes:
-      - ./docker/ssl:/etc/squid/ssl/
-      - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
-      - ./logs:/var/log/squid
-    environment:
-      - SQUID_CONFIG_FILE=/etc/squid/conf.d/squid.conf
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
+#      - NODE_ENV=production # optional
+#      - REDIS_PASSWORD=123 # optional
+#      - SQUID_HOST=127.0.0.1 # optional
+#      - SQUID_PORT=3128 # optional
+#      - LOG_DIR=/app/logs
+#    volumes:
+#      - ./logs:/app/logs
+#    healthcheck:
+#      test: ["CMD", "curl", "-f", "http://localhost/api/health"]
+#      interval: 30s
+#      timeout: 10s
+#      retries: 3
+#      start_period: 30s
 
   redis:
     container_name: redis-bunsqstat
@@ -47,6 +40,22 @@ services:
       - predis_data:/data
     networks:
       local:
+
+  squid:
+    user: "3128:3128"
+    image: ghcr.io/b4tman/squid-ssl-bump:latest
+    restart: unless-stopped
+    ports:
+      - "3128:3128"
+      - "3129:3129"
+    volumes:
+      - ./docker/ssl:/etc/squid/ssl/
+      - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
+      - ./logs:/var/log/squid
+    environment:
+      - SQUID_CONFIG_FILE=/etc/squid/conf.d/squid.conf
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
 
 volumes:
   predis_data:

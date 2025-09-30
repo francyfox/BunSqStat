@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { NForm, NInput, NSelect } from "naive-ui";
+import { Close } from "@vicons/ionicons5";
+import { Icon } from "@vicons/utils";
+import { NButton, NForm, NInput, NSelect } from "naive-ui";
 import { accessKeys } from "server/schema";
 import BAccessDataHelper from "@/components/access-data/BAccessDataHelper.vue";
 
+const emit = defineEmits<{
+	reset: [];
+}>();
 const form = defineModel<{
 	field: string;
 	search: string | null;
@@ -32,6 +37,16 @@ const fieldOptions = accessKeys.map((key: string) => {
           placeholder="Search by column"
           size="large"
       />
+
+      <NButton
+          type="error"
+          size="large"
+          @click="emit('reset')"
+      >
+        <Icon :size="24">
+          <Close />
+        </Icon>
+      </NButton>
 
       <BAccessDataHelper />
     </div>
