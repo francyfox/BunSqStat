@@ -15,6 +15,9 @@ export const AccessLogs = new Elysia().get(
 				search: t.String(),
 				page: t.Number(),
 				fields: t.Array(t.KeyOf(AccessLogSchema)),
+				sortBy: t.String({
+					default: "timestamp,DESC",
+				}),
 			}),
 		),
 		response: {

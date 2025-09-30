@@ -3,6 +3,7 @@ import { type Static, t } from "elysia";
 export interface getLogParams {
 	search?: string;
 	page?: number;
+	sortBy?: string;
 	fields?: string[];
 }
 

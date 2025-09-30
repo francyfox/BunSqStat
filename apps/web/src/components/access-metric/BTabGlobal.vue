@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import MasonryWall from "@yeger/vue-masonry-wall";
 import { storeToRefs } from "pinia";
-import { h } from "vue";
+import { computed, h } from "vue";
 import BCardBytes from "@/components/access-metric/masonry-wall/BCardBytes.vue";
 import BCardContentStats from "@/components/access-metric/masonry-wall/BCardContentStats.vue";
 import BCardDuration from "@/components/access-metric/masonry-wall/BCardDuration.vue";
@@ -13,7 +13,7 @@ import { useStatsStore } from "@/stores/stats.ts";
 const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
 
-const items = [
+const items = computed(() => [
 	{
 		component: h(BCardContentStats, {
 			items: accessMetrics.value?.globalStates.contentTypes.items,
@@ -46,7 +46,7 @@ const items = [
 			successRatePercent: accessMetrics.value?.globalStates.successRatePercent,
 		}),
 	},
-];
+]);
 </script>
 
 <template>

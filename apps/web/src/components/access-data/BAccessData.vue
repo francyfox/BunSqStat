@@ -18,7 +18,8 @@ import { buildSearchQuery } from "@/utils/redis-query.ts";
 
 const notification = useNotification();
 const statsStore = useStatsStore();
-const { accessLog, total, loading, count, error } = storeToRefs(statsStore);
+const { accessLog, sortBy, total, loading, count, error } =
+	storeToRefs(statsStore);
 
 const form = ref({
 	field: "@user:",
@@ -58,6 +59,19 @@ watchDebounced(
 		await statsStore.getAccessLogs({
 			page: v,
 			search: search.value,
+			sortBy: sortBy.value,
+		});
+	},
+	{ debounce: 500, maxWait: 1000 },
+);
+
+watchDebounced(
+	sortBy,
+	async (v) => {
+		await statsStore.getAccessLogs({
+			page: page.value,
+			search: search.value,
+			sortBy: v,
 		});
 	},
 	{ debounce: 500, maxWait: 1000 },
@@ -66,10 +80,12 @@ watchDebounced(
 watchDebounced(
 	form,
 	async (v) => {
+		console.log(sortBy.value);
 		page.value = 1;
 		await statsStore.getAccessLogs({
 			page: page.value,
 			search: search.value,
+			sortBy: sortBy.value,
 		});
 	},
 	{ debounce: 500, maxWait: 1000, deep: true },
@@ -97,6 +113,20 @@ function handlePause() {
 	}
 }
 
+async function handleReset() {
+	form.value = {
+		field: "@user",
+		search: null,
+	};
+	sortBy.value = "timestamp,DESC";
+
+	await statsStore.getAccessLogs({
+		page: page.value,
+		search: search.value,
+		sortBy: sortBy.value,
+	});
+}
+
 watchDebounced(
 	data,
 	async (v) => {
@@ -121,6 +151,7 @@ watchDebounced(
 				await statsStore.getAccessLogs({
 					page: page.value,
 					search: search.value,
+					sortBy: sortBy.value,
 				});
 			} finally {
 				highlightCount.value = value.changedLinesCount;
@@ -141,6 +172,7 @@ watchDebounced(
   <div class="access-data flex flex-col gap-5">
     <BAccessDataFilter
         v-model="form"
+        @reset="handleReset"
     />
 
     <BAccessDataTags

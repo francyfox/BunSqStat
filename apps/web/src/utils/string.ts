@@ -37,7 +37,7 @@ export function pascalToKebabCase(pascalCaseString: string) {
 /**
  * Characters that need to be escaped in Redis Search queries
  */
-const REDIS_SEARCH_SPECIAL_CHARS = /[.,()\[\]{}~*?"'|&!@:+=^$\\-]/g;
+const REDIS_SEARCH_SPECIAL_CHARS = /[.,()\[\]{}~*?"'|&!@:+=^$\-]/g;
 
 /**
  * Escapes special characters for Redis Search queries
