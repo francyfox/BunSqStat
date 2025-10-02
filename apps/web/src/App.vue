@@ -1,5 +1,10 @@
 <script setup lang="ts">
-import { darkTheme, NConfigProvider, NNotificationProvider } from "naive-ui";
+import {
+	darkTheme,
+	NConfigProvider,
+	NMessageProvider,
+	NNotificationProvider,
+} from "naive-ui";
 import BHeader from "./components/BHeader.vue";
 import BMenu from "./components/BMenu.vue";
 import Rainbow from "./components/rainbow.vue";
@@ -11,33 +16,35 @@ import Rainbow from "./components/rainbow.vue";
       :theme="darkTheme"
       preflight-style-disabled
   >
-    <NNotificationProvider :max="3">
-      <div class="fixed">
-        <Rainbow />
-      </div>
-
-      <BMenu>
-        <div class="app pb-10 xl:pb-0">
-          <BHeader />
-
-          <RouterView v-slot="{ Component }">
-            <template v-if="Component">
-              <Transition mode="out-in">
-                <KeepAlive>
-                  <Suspense>
-                    <component :is="Component"></component>
-
-                    <template #fallback>
-                      Loading...
-                    </template>
-                  </Suspense>
-                </KeepAlive>
-              </Transition>
-            </template>
-          </RouterView>
+    <NMessageProvider>
+      <NNotificationProvider :max="3">
+        <div class="fixed">
+          <Rainbow />
         </div>
-      </BMenu>
-    </NNotificationProvider>
+
+        <BMenu>
+          <div class="app pb-10 xl:pb-0">
+            <BHeader />
+
+            <RouterView v-slot="{ Component }">
+              <template v-if="Component">
+                <Transition mode="out-in">
+                  <KeepAlive>
+                    <Suspense>
+                      <component :is="Component"></component>
+
+                      <template #fallback>
+                        Loading...
+                      </template>
+                    </Suspense>
+                  </KeepAlive>
+                </Transition>
+              </template>
+            </RouterView>
+          </div>
+        </BMenu>
+      </NNotificationProvider>
+    </NMessageProvider>
   </NConfigProvider>
 </template>
 

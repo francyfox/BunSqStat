@@ -12,6 +12,7 @@ export const useStatsStore = defineStore("stats", () => {
 	const loading = ref(true);
 	const error = ref(undefined);
 	const sortBy = ref<string>("timestamp,DESC");
+	const maxMemory = ref(0);
 
 	function setSortBy(column: string, order: string) {
 		const redisOrder = order === "ascend" ? "DESC" : "ASC";
@@ -50,6 +51,12 @@ export const useStatsStore = defineStore("stats", () => {
 			query,
 		});
 
+		if (response.error) {
+			error.value = response.error.message;
+
+			return;
+		}
+
 		accessMetrics.value = response.data;
 		loading.value = false;
 
@@ -64,6 +71,7 @@ export const useStatsStore = defineStore("stats", () => {
 		accessMetrics,
 		total,
 		sortBy,
+		maxMemory,
 		setSortBy,
 		getAccessLogs,
 		getAccessMetrics,

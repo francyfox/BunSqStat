@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { BarChart, BookOutline as BookIcon } from "@vicons/ionicons5";
+import {
+	BarChart,
+	BookOutline as BookIcon,
+	CogOutline,
+} from "@vicons/ionicons5";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import type { MenuOption } from "naive-ui";
 import {
@@ -59,6 +63,22 @@ const menuOptions: MenuOption[] = [
 			),
 		key: "access-log-metrics",
 		icon: renderIcon(BarChart),
+	},
+	{
+		label: () =>
+			h(
+				RouterLink,
+				{
+					to: {
+						name: "/settings",
+					},
+				},
+				{
+					default: () => "Settings",
+				},
+			),
+		key: "settings",
+		icon: renderIcon(CogOutline),
 	},
 ];
 
