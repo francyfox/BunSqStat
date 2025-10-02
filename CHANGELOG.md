@@ -1,3 +1,6 @@
+## 0.15 - 02 Oct 2025
+Feature:
+- GET/SET Config redis maxmemory
 ## 0.1.4 - 30 Sep 2025
 
 Feature:
