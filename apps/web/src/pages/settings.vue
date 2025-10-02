@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { NButton, NInputNumber, useMessage } from "naive-ui";
+import { InformationCircle } from "@vicons/ionicons5";
+import { Icon } from "@vicons/utils";
+import { NButton, NInputNumber, NTooltip, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useSettingsStore } from "@/stores/settings.ts";
@@ -29,18 +31,27 @@ const handleSave = async () => {
       <div class="text-lg font-500 mb-3">Redis Settings</div>
       <div class="flex items-center gap-2">
         <label>Max Memory:</label>
-        <NInputNumber
-          v-model:value="store.settings.maxMemory"
-          placeholder="e.g., 1gb, 512mb"
-          style="width: 200px"
-        >
-          <template #suffix>
-            bytes
-          </template>
-        </NInputNumber>
+        <div class="w-full max-w-sm relative flex flex-col gap-1">
+          <NInputNumber
+              v-model:value="store.settings.maxMemory"
+          >
+            <template #suffix>
+              bytes
+            </template>
+          </NInputNumber>
+        </div>
+
         <NButton type="primary" @click="handleSave" :loading="store.loading">
           Save
         </NButton>
+        <NTooltip placement="bottom" trigger="hover">
+          <template #trigger>
+            <Icon size="32" class="cursor-pointer">
+              <InformationCircle />
+            </Icon>
+          </template>
+          This app watch logs 1 hour. Set optimal size for your company
+        </NTooltip>
       </div>
     </div>
   </section>
