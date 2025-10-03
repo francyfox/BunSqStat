@@ -10,7 +10,7 @@ export const useSettingsStore = defineStore("settings", () => {
 	const loading = ref(false);
 
 	async function getMaxMemory() {
-		const response = await api.stats["redis"].maxmemory.get();
+		const response = await api.stats.settings.redis.maxmemory.get();
 		const {
 			data: { maxMemory },
 		} = response;
@@ -29,7 +29,7 @@ export const useSettingsStore = defineStore("settings", () => {
 
 	async function setMaxMemory(value: number) {
 		loading.value = true;
-		const response = await api.stats["redis"].maxmemory.post({
+		const response = await api.stats.settings.redis.maxmemory.post({
 			maxMemory: value,
 		});
 

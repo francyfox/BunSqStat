@@ -11,6 +11,10 @@ export const AccessLogService = {
 	regexMap,
 	fieldTypes,
 
+	dropLogs() {
+		return redisClient.del("log:access");
+	},
+
 	sanitizeLogData(logData: Record<string, string>): Record<string, string> {
 		const sanitized = { ...logData };
 
@@ -66,10 +70,13 @@ export const AccessLogService = {
 				...this.sanitizeLogData(parsed),
 				id: `access:${parsed.timestamp}_${nanoid(5)}`,
 			};
-			return redisClient.hmset(
-				`log:${sanitized.id}`,
+			const logKey = `log:${sanitized.id}`;
+
+			await redisClient.hmset(
+				logKey,
 				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
 			);
+			await redisClient.expire(logKey, 604800); // 7 days
 		});
 
 		await Promise.all(stack);
