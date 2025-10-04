@@ -15,7 +15,7 @@ import { Icon } from "@vicons/utils";
             <Heart />
           </Icon>
 
-          <span>by Hellizart</span>
+          <a href="https://github.com/francyfox" target="_blank" rel="noopener" class="underline">by Hellizart</a>
         </div>
       </div>
     </div>

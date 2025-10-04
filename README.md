@@ -71,10 +71,14 @@ services:
 - - [X] Hit Ratio
 - - [X] User speed
 - - [X] masonry-wall
+- - [ ] New tab for user table like SquidAnalyzer (currently display only speed)
 - [ ] Adaptive
 - - [X] Mobile/Tablet (last 2 versions)
 - - [ ] Tile windows (custom size)
 - - [ ] CLI???
+- [ ] User alias by ip
+- [ ] Exclude list
+- [ ] i18n?
 - [ ] Optimize WS for few tabs (one tab permitted requests)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
 - [X] Use offset for reading logs (slow parse speed)
@@ -83,6 +87,8 @@ services:
 - [ ] PWA?
 - [ ] Anomaly detects?
 - - [ ] Browser/Mobile alerts
+- [ ] Squid cache logs?
+- [ ] Squid guard logs?
 - [ ] Add custom logs format like ([to squid docs](https://www.squid-cache.org/Doc/config/logformat/))
 - [ ] Stress test
 - [ ] Deploy test

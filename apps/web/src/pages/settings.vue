@@ -43,7 +43,6 @@ const handleSave = async () => {
             <div class="w-full max-w-sm relative flex flex-col gap-1">
               <NFormItem
                   label="Max Memory:"
-                  class="w-full"
               >
                 <NInputNumber
                     v-model:value="store.settings.maxMemory"
@@ -59,7 +58,12 @@ const handleSave = async () => {
               </NFormItem>
             </div>
 
-            <NButton type="primary" @click="handleSave" :loading="store.loading">
+            <NButton
+                type="primary"
+                @click="handleSave"
+                :loading="store.loading"
+                class="min-w-[120px]"
+            >
               Save
             </NButton>
             <NTooltip placement="bottom" trigger="hover">
@@ -76,10 +80,10 @@ const handleSave = async () => {
         <div class="flex flex-col gap-2">
           <div class="text-lg font-500 mb-3">BunSqStat Settings</div>
 
-          <div class="w-full max-w-sm flex items-end gap-1">
+          <div class="flex gap-1">
             <NFormItem
-                label="User alias by ip (old ip will be replaced)"
-                class="w-full"
+                label="User alias by ip"
+                class="w-full max-w-sm"
             >
               <NInput
                   type="textarea"
@@ -89,17 +93,34 @@ const handleSave = async () => {
             maxRows: 5,
           }"
                   placeholder="127.0.0.1 username 127.0.0.2 username2 ..."
+                  class="w-full"
               />
             </NFormItem>
 
-            <NButton
-                type="primary"
-                @click="handleSave"
-                :loading="store.loading"
-                class="relative top-[-25px]"
-            >
-              MODIFY
-            </NButton>
+            <div class="pt-[25px] flex gap-1">
+              <NButton
+                  type="primary"
+                  @click="handleSave"
+                  :loading="store.loading"
+                  class="min-w-[120px]"
+              >
+                Modify
+              </NButton>
+
+              <NTooltip
+                  placement="bottom"
+                  trigger="hover"
+              >
+                <template #trigger>
+                  <Icon size="32"
+                        class="cursor-pointer"
+                  >
+                    <InformationCircle />
+                  </Icon>
+                </template>
+                Old ip will be replaced. <br>Alias uses only on frontend, and dont overwrite redis log usernames
+              </NTooltip>
+            </div>
           </div>
         </div>
       </div>

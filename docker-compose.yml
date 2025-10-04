@@ -60,27 +60,29 @@ services:
     networks:
       - squid-net
 
-#  squidanalyzer:
-#    image: coun/squidanalyzer:latest
-#    container_name: squidanalyzer
-#    restart: unless-stopped
-#    ports:
-#      - "8080:8090"  # Web interface для SquidAnalyzer
-#    volumes:
-#      - ./logs:/var/log/squid:ro  # Логи Squid только для чтения
-#      - squidanalyzer_data:/var/www/html  # Данные отчетов
-#      - ./docker/squidanalyzer.conf:/etc/squidanalyzer/squidanalyzer.conf:ro
-#    depends_on:
-#      - squid
-#    networks:
-#      - squid-net
-#    environment:
-#      - TZ=Asia/Almaty
-#      - LANG=ru_RU
-#      - LOGIN=admin
-#      - PASS=123456
-#      - LOCALE=ru_RU
-#      - PATHLOGS=/var/log/squid/access.log
+  squidanalyzer:
+    image: coun/squidanalyzer:latest
+    container_name: squidanalyzer
+    restart: unless-stopped
+    ports:
+      - "8080:8090"  # Web interface для SquidAnalyzer
+    volumes:
+      - ./logs:/var/log/squid:ro  # Логи Squid только для чтения
+      - squidanalyzer_data:/var/www/html  # Данные отчетов
+      - ./docker/squidanalyzer.conf:/etc/squidanalyzer/squidanalyzer.conf:ro
+    depends_on:
+      - squid
+    networks:
+      - squid-net
+    environment:
+      - TZ=Asia/Almaty
+      - LANG=ru_RU
+      - LOGIN=admin
+      - PASS=123456
+      - LOCALE=ru_RU
+      - PATHLOGS=/var/log/squid/access.log
+#    command: >
+#      chmod -R 755 /var/www/html
 
 volumes:
   predis_data:
