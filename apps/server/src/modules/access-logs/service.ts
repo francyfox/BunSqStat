@@ -12,7 +12,10 @@ export const AccessLogService = {
 	fieldTypes,
 
 	dropLogs() {
-		return redisClient.del("log:access");
+		return Promise.all([
+			redisClient.del("log:access"),
+			redisClient.del("file:access*"),
+		]);
 	},
 
 	sanitizeLogData(logData: Record<string, string>): Record<string, string> {

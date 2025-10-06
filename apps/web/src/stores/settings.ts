@@ -14,9 +14,8 @@ export const useSettingsStore = defineStore("settings", () => {
 	const error = ref();
 	const loading = ref(false);
 
-	function getAliasByIp(ip: string) {
+	function getAliasByIp(ip: string | any) {
 		const route = ip.replaceAll(".", "/");
-		console.log(route);
 		return aliasRouter.lookup(route);
 	}
 
@@ -40,7 +39,6 @@ export const useSettingsStore = defineStore("settings", () => {
 			aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
 		}
 
-		console.log(aliasRouter);
 		aliasRouterIsInitialized.value = true;
 
 		return response;
@@ -57,6 +55,9 @@ export const useSettingsStore = defineStore("settings", () => {
 			error.value = "";
 		}
 
+		aliasRouterIsInitialized.value = false;
+		await getAliases();
+		aliasRouterIsInitialized.value = true; // TODO: bad way. Double update. Use watchEffect
 		loading.value = false;
 
 		return response;

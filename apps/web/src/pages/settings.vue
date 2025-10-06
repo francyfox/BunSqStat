@@ -33,7 +33,7 @@ async function handleUpdateMaxMemory() {
 }
 
 async function handleUpdateAliases() {
-	await store.setAliases();
+	await Promise.all([store.setAliases(), store.getAliases()]);
 
 	if (error.value) {
 		message.error(error.value);
@@ -92,7 +92,7 @@ async function handleUpdateAliases() {
 
           <div class="flex gap-1">
             <NFormItem
-                label="User alias by ip"
+                label="User alias by ip (Names without spaces)"
                 class="w-full max-w-sm"
             >
               <NInput
@@ -129,7 +129,7 @@ async function handleUpdateAliases() {
                     <InformationCircle />
                   </Icon>
                 </template>
-                Old ip will be replaced. <br>Alias uses only on frontend, and dont overwrite redis log usernames
+                User search doesnt work with alias. Old ip will be replaced. <br>Alias uses only on frontend, and dont overwrite redis log usernames
               </NTooltip>
             </div>
           </div>
