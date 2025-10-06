@@ -22,15 +22,25 @@ onMounted(async () => {
 	await store.getMaxMemory();
 });
 
-const handleSave = async () => {
+async function handleUpdateMaxMemory() {
 	await store.setMaxMemory(store.settings.maxMemory);
 
 	if (error.value) {
-		message.error("Failed to update max memory");
+		message.error(error.value);
 	} else {
-		message.success("Max memory updated successfully");
+		message.success("Max Memory updated");
 	}
-};
+}
+
+async function handleUpdateAliases() {
+	await store.setAliases();
+
+	if (error.value) {
+		message.error(error.value);
+	} else {
+		message.success("Aliases updated");
+	}
+}
 </script>
 
 <template>
@@ -60,11 +70,11 @@ const handleSave = async () => {
 
             <NButton
                 type="primary"
-                @click="handleSave"
+                @click="handleUpdateAliases"
                 :loading="store.loading"
                 class="min-w-[120px]"
             >
-              Save
+              SET
             </NButton>
             <NTooltip placement="bottom" trigger="hover">
               <template #trigger>
@@ -86,6 +96,7 @@ const handleSave = async () => {
                 class="w-full max-w-sm"
             >
               <NInput
+                  v-model:value="store.settings.aliases"
                   type="textarea"
                   size="small"
                   :autosize="{
@@ -100,11 +111,11 @@ const handleSave = async () => {
             <div class="pt-[25px] flex gap-1">
               <NButton
                   type="primary"
-                  @click="handleSave"
+                  @click="handleUpdateAliases"
                   :loading="store.loading"
                   class="min-w-[120px]"
               >
-                Modify
+                SET
               </NButton>
 
               <NTooltip

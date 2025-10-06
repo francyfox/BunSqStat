@@ -1,12 +1,13 @@
 // @ts-nocheck
 
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import { breakpointsTailwind, set, useBreakpoints } from "@vueuse/core";
 import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
 import { storeToRefs } from "pinia";
 import type { TAccessLog } from "server/schema";
-import { h } from "vue";
+import { computed, h, watchEffect } from "vue";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
+import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import {
 	formatBytes,
@@ -59,6 +60,8 @@ function getHierarchyTypeColor(type: string): string {
 export function accessColumnAttributes(
 	column: keyof TAccessLog,
 ): ArrayElement<DataTableColumns> {
+	const settingsStore = useSettingsStore();
+	const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
 	const breakpoints = useBreakpoints(breakpointsTailwind);
 	const dayjs = useDayjs();
 
@@ -87,12 +90,23 @@ export function accessColumnAttributes(
 		case "user":
 			return {
 				order: 1,
+				minWidth: 80,
+				maxWidth: 300,
 				width: 140,
+				resizable: true,
 				fixed: breakpoints.md.value ? "left" : false,
 				ellipsis: {
 					tooltip: true,
 				},
 				render(row) {
+					const router = computed(() =>
+						aliasRouterIsInitialized.value
+							? settingsStore.getAliasByIp(row["clientIP"])?.payload
+							: null,
+					);
+
+					if (router.value) return router.value;
+
 					if (row[column] === "-" || !row[column]) {
 						return h(
 							NTag,
@@ -100,7 +114,7 @@ export function accessColumnAttributes(
 							() => "Anonymous",
 						);
 					}
-					return row[column];
+					return router.value;
 				},
 			};
 

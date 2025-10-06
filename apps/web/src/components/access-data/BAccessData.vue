@@ -8,16 +8,21 @@ import {
 import { NDataTable, NPagination, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import BAccessDataFilter from "@/components/access-data/BAccessDataFilter.vue";
 import BAccessDataTags from "@/components/access-data/BAccessDataTags.vue";
 import { WS_URL } from "@/consts.ts";
 import { formatColumns } from "@/module/access-data/format.ts";
+import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
 
 const notification = useNotification();
 const statsStore = useStatsStore();
+
+const settingsStore = useSettingsStore();
+const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
+
 const { accessLog, sortBy, total, loading, count, error } =
 	storeToRefs(statsStore);
 
@@ -166,6 +171,12 @@ watchDebounced(
 		debounce: interval,
 	},
 );
+
+onMounted(async () => {
+	if (!aliasRouterIsInitialized.value) {
+		await settingsStore.getAliases();
+	}
+});
 </script>
 
 <template>

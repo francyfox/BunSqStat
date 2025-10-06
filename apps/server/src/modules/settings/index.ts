@@ -7,7 +7,8 @@ export const Settings = new Elysia()
 		"settings/aliases",
 		async ({ query }) => {
 			const { ipMap } = query;
-			const items = await SettingsService.getAliases(ipMap);
+
+			const items = await SettingsService.getAliases(ipMap?.split(","));
 			return {
 				items,
 				count: items.length,
@@ -15,10 +16,12 @@ export const Settings = new Elysia()
 		},
 		{
 			detail: { description: "Get aliases" },
-			response: t.Object({ items: t.String(), count: t.Number() }),
-			params: t.Object({
-				ipMap: t.Array(t.String()),
-			}),
+			response: t.Object({ items: t.Array(t.Any()), count: t.Number() }),
+			query: t.Partial(
+				t.Object({
+					ipMap: t.String(),
+				}),
+			),
 		},
 	)
 	.post(
@@ -26,8 +29,7 @@ export const Settings = new Elysia()
 		async ({ body }) => {
 			const { aliases } = body;
 
-			console.log(aliases.trim().split(" "));
-			// await SettingsService.setAliases(aliases.trim().split(" "));
+			await SettingsService.setAliases(aliases.trim().split(" "));
 
 			return { success: true };
 		},
@@ -36,8 +38,8 @@ export const Settings = new Elysia()
 				aliases: t.String({
 					description: "Example: '127.0.0.1 username 127.0.0.2 username2 ...'",
 				}),
-				response: t.Object({ success: t.Boolean() }),
 			}),
+			response: t.Object({ success: t.Boolean() }),
 		},
 	)
 	.delete(

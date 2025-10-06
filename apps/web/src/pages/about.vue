@@ -6,7 +6,7 @@
   <section>
     <div class="mx-a container">
       <p>
-        This app is remake of realtime SqStat log manager. App use only realtime logs (1-N hours). <br>
+        This app is remake of realtime SqStat log manager. App use only realtime logs (one or few hours default). <br>
       </p>
       <p>
         For every day logs you can use SquidAnalyzer or another app.

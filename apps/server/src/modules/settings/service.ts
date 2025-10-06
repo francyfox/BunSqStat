@@ -5,8 +5,16 @@ export const SettingsService = {
 		return redisClient.hmset("settings:alias", aliases);
 	},
 
-	getAliases(ipMap: string[]) {
-		return redisClient.hmget("settings:alias", ipMap);
+	async getAliases(
+		ipMap: string[] = [],
+	): Promise<(string | null)[] | [string, string][]> {
+		if (ipMap.length > 0) {
+			return redisClient.hmget("settings:alias", ipMap);
+		}
+
+		const response = await redisClient.send("HGETALL", ["settings:alias"]);
+
+		return Object.entries(response);
 	},
 
 	dropAliases() {
