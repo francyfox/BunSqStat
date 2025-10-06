@@ -151,22 +151,22 @@ export function createURLQuery(field: string, url: string): string {
 		// User explicitly wants wildcard search
 		return `@${field}:${url}`;
 	}
-	
+
 	// Protocol in URLs (https://) causes syntax errors in Redis Search
 	// Remove protocol for search if present
-	const cleanUrl = url.replace(/^https?:\/\//, '');
-	
+	const cleanUrl = url.replace(/^https?:\/\//, "");
+
 	// For very long URLs with many special chars, use wildcard search
 	if (cleanUrl.length > 50 && /[=\-]/.test(cleanUrl)) {
 		// Extract unique part from long URLs for better matching
-		const parts = cleanUrl.split('/');
-		if (parts.length > 1 && parts[1].length > 10) {
+		const parts = cleanUrl.split("/");
+		if (parts.length > 1 && (parts[1] || "").length > 10) {
 			// Use first significant path segment
-			const uniquePart = parts[1].substring(0, 16);
+			const uniquePart = (parts[1] || "").substring(0, 16);
 			return `@${field}:*${uniquePart}*`;
-			}
 		}
-	
+	}
+
 	// Use cleaned URL (without protocol) for search
 	return `@${field}:${cleanUrl}`;
 }

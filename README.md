@@ -71,7 +71,8 @@ services:
 - - [X] Hit Ratio
 - - [X] User speed
 - - [X] masonry-wall
-- - [ ] New tab for user table like SquidAnalyzer (currently display only speed)
+- - [ ] Top user table
+- - [ ] Top domain table
 - [ ] Adaptive
 - - [X] Mobile/Tablet (last 2 versions)
 - - [ ] Tile windows (custom size)
