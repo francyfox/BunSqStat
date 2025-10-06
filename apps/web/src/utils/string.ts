@@ -139,6 +139,39 @@ export function createWildcardQuery(field: string, pattern: string): string {
 }
 
 /**
+ * Creates a Redis Search URL query for TEXT SORTABLE fields
+ * Redis tokenizes URLs and direct search works for most tokens.
+ * For URLs with problematic characters (:// in protocols), we use alternatives
+ * @param field - Field name
+ * @param url - URL to search for
+ * @returns Properly formatted URL query
+ */
+export function createURLQuery(field: string, url: string): string {
+	if (url.includes("*") || url.includes("?")) {
+		// User explicitly wants wildcard search
+		return `@${field}:${url}`;
+	}
+
+	// Protocol in URLs (https://) causes syntax errors in Redis Search
+	// Remove protocol for search if present
+	const cleanUrl = url.replace(/^https?:\/\//, "");
+
+	// For very long URLs with many special chars, use wildcard search
+	if (cleanUrl.length > 50 && /[=\-]/.test(cleanUrl)) {
+		// Extract unique part from long URLs for better matching
+		const parts = cleanUrl.split("/");
+		if (parts.length > 1 && (parts[1] || "").length > 10) {
+			// Use first significant path segment
+			const uniquePart = (parts[1] || "").substring(0, 16);
+			return `@${field}:*${uniquePart}*`;
+		}
+	}
+
+	// Use cleaned URL (without protocol) for search
+	return `@${field}:${cleanUrl}`;
+}
+
+/**
  * Creates a Redis Search range query for numeric fields
  * @param field - Field name
  * @param min - Minimum value (use '-inf' for negative infinity)

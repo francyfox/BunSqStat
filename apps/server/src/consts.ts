@@ -39,7 +39,7 @@ export const fieldTypes = new Map<string, string>([
 	["resultStatus", "NUMERIC SORTABLE"],
 	["bytes", "NUMERIC SORTABLE"],
 	["method", "TAG SORTABLE"],
-	["url", "TEXT"],
+	["url", "TEXT SORTABLE"],
 	["user", "TEXT"],
 	["hierarchyType", "TAG SORTABLE"],
 	["hierarchyHost", "TEXT"],

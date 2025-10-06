@@ -1,4 +1,8 @@
-import { createTagQuery, createTextQuery } from "@/utils/string";
+import {
+	createTagQuery,
+	createTextQuery,
+	createURLQuery,
+} from "@/utils/string";
 
 /**
  * Builds a smart Redis Search query with proper escaping based on field type
@@ -31,8 +35,11 @@ export function buildSearchQuery(
 			return `@${fieldName}:{${value.replace(/\./g, "*")}}`;
 		case "hierarchyType":
 		case "contentType":
+			return `@${fieldName}:'${value}'`;
+
 		case "url":
-			return createTextQuery(fieldName, value.replace(/^https?:\/\//g, ""));
+			// URL is TEXT SORTABLE field - use specialized URL query function
+			return createURLQuery(fieldName, value.replace(/^https?:\/\//g, ""));
 		case "hierarchyHost":
 			return `@${fieldName}:${value.replace(/\./g, "*")}`;
 

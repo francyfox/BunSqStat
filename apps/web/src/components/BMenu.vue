@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import {
+	Accessibility,
 	BarChart,
 	BookOutline as BookIcon,
 	CogOutline,
@@ -79,6 +80,22 @@ const menuOptions: MenuOption[] = [
 			),
 		key: "settings",
 		icon: renderIcon(CogOutline),
+	},
+	{
+		label: () =>
+			h(
+				RouterLink,
+				{
+					to: {
+						name: "/about",
+					},
+				},
+				{
+					default: () => "About",
+				},
+			),
+		key: "about",
+		icon: renderIcon(Accessibility),
 	},
 ];
 

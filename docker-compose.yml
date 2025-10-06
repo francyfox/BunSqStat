@@ -51,6 +51,7 @@ services:
     volumes:
       - ./docker/ssl:/etc/squid/ssl/
       - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
+      - ./docker/passwd:/etc/squid/passwords:ro
       - ./logs:/var/log/squid
     environment:
       - SQUID_CONFIG_FILE=/etc/squid/conf.d/squid.conf
@@ -61,7 +62,7 @@ services:
 
   squidanalyzer:
     image: coun/squidanalyzer:latest
-    container_name: squidanalyzer  
+    container_name: squidanalyzer
     restart: unless-stopped
     ports:
       - "8080:8090"  # Web interface для SquidAnalyzer
@@ -80,6 +81,8 @@ services:
       - PASS=123456
       - LOCALE=ru_RU
       - PATHLOGS=/var/log/squid/access.log
+#    command: >
+#      chmod -R 755 /var/www/html
 
 volumes:
   predis_data:
