@@ -1,8 +1,23 @@
 import { Elysia, t } from "elysia";
+import { LogManager } from "@/modules/log-manager";
 import { SettingsService } from "@/modules/settings/service";
 import { redisClient } from "@/redis";
 
 export const Settings = new Elysia()
+	.post(
+		"settings/parser",
+		async () => {
+			await LogManager.readLogs();
+
+			return {
+				success: true,
+			};
+		},
+		{
+			detail: { description: "Read logs from files (use after drop database)" },
+			response: t.Object({ success: t.Boolean() }),
+		},
+	)
 	.get(
 		"settings/aliases",
 		async ({ query }) => {

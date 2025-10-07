@@ -5,7 +5,7 @@ import { NTag, NTooltip } from "naive-ui";
 </script>
 
 <template>
-  <NTooltip placement="bottom" trigger="hover">
+  <NTooltip placement="bottom" trigger="click">
     <template #trigger>
       <Icon size="32" class="cursor-pointer">
         <InformationCircle />
