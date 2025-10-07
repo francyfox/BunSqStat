@@ -671,6 +671,9 @@ spec:
 
 ## Manual Deployment
 
+You can use this latest artifacts from build pipeline
+https://github.com/your-username/your-repo/actions/runs/latest
+
 ### System Requirements
 
 ```bash
