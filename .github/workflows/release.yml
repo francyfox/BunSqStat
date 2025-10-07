@@ -10,40 +10,52 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/master'
+    env:
+      TURBO_FORCE: true
+      TURBO_API_URL: https://api.vercel.com/v5/artifacts
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - name: Cache Turbo and dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            .turbo
+            **/node_modules
+          key: ${{ runner.os }}-turbo-node-${{ hashFiles('**/package.json', '**/bun.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-turbo-node-
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
-    - name: Setup Bun
-      uses: oven-sh/setup-bun@v2
-      with:
-        bun-version: latest
+      - name: Install dependencies
+        run: bun install
 
-    - name: Install dependencies
-      run: bun install
+      - name: Build frontend
+        run: cd apps/web && bun run build
 
-    - name: Build frontend
-      run: cd apps/web && bun run build
+      - name: Build backend
+        run: cd apps/server && bun run build
 
-    - name: Build backend
-      run: cd apps/server && bun run build
+      - name: Prepare release directory
+        run: |
+          mkdir -p release/web
+          mkdir -p release/backend
+          cp -r apps/web/dist/* release/web/
+          cp -r apps/server/dist/* release/backend/
 
-    - name: Prepare release directory
-      run: |
-        mkdir -p release/web
-        mkdir -p release/backend
-        cp -r apps/web/dist/* release/web/
-        cp -r apps/server/dist/* release/backend/
+      - name: Create archive
+        run: tar -czf release.tar.gz release/
 
-    - name: Create archive
-      run: tar -czf release.tar.gz release/
-
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v2
-      if: github.ref_type == 'tag'
-      with:
-        files: |
-          CHANGELOG.md
-          LICENSE
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+#        if: github.ref_type == 'tag'
+        with:
+          files: |
+            CHANGELOG.md
+            LICENSE
