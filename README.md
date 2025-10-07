@@ -77,7 +77,10 @@ services:
 - - [X] Mobile/Tablet (last 2 versions)
 - - [ ] Tile windows (custom size)
 - - [ ] CLI???
-- [ ] User alias by ip
+- [ ] Settings
+- - [X] User alias by ip
+- - [X] Redis maxmemory
+- - [X] DANGER ZONE
 - [ ] Exclude list
 - [ ] i18n?
 - [ ] Optimize WS for few tabs (one tab permitted requests)
