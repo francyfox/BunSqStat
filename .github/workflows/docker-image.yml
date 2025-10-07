@@ -2,19 +2,19 @@ name: Docker Image CI
 
 on:
   push:
+    branches:
+      - master
     tags:
       - 'v*.*.*'
-#  pull_request:
-#    branches:
-#      - 'master'
 
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build:
+  build-and-push-docker:
     runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: read
       packages: write
@@ -51,3 +51,43 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
+
+  build-artifacts:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    env:
+      TURBO_FORCE: true
+      TURBO_API_URL: https://api.vercel.com/v5/artifacts
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Cache Turbo and dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          .turbo
+          **/node_modules
+        key: ${{ runner.os }}-turbo-node-${{ hashFiles('**/package.json', '**/bun.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-turbo-node-
+    - name: Setup Bun
+      uses: oven-sh/setup-bun@v2
+      with:
+        bun-version: latest
+    - name: Install dependencies
+      run: bun install
+    - name: Build frontend
+      run: cd apps/web && bun run build
+    - name: Upload frontend artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: frontend-dist
+        path: apps/web/dist/
+    - name: Build server
+      run: cd apps/server && bun run build
+    - name: Upload server artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: server-dist
+        path: apps/server/dist/
