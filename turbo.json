@@ -3,6 +3,7 @@
 	"globalDependencies": ["package.json"],
 	"globalEnv": ["NODE_ENV"],
 	"remoteCache": {
+		"enabled": true,
 		"signature": true
 	},
 	"tasks": {
