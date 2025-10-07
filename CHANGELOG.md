@@ -1,4 +1,15 @@
+## 0.16 - 07 Oct 2025
+
+Feature:
+- Settings redis maxmemory | user alias | danger zone
+- API parse logs | user alias | drop logs + files | drop alias
+
+Bugfix:
+- Url search didnt worked with protocol
+- Url escape
+
 ## 0.15 - 02 Oct 2025
+
 Feature:
 - GET/SET Config redis maxmemory
 
