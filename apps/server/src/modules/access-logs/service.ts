@@ -11,11 +11,17 @@ export const AccessLogService = {
 	regexMap,
 	fieldTypes,
 
-	dropLogs() {
-		return Promise.all([
-			redisClient.del("log:access"),
-			redisClient.del("file:access*"),
-		]);
+	async dropLogs() {
+		const logKeys = await redisClient.keys("log:access:*");
+		const fileKeys = await redisClient.keys("file:access*");
+
+		if (logKeys.length > 0) {
+			await redisClient.del(...logKeys);
+		}
+
+		if (fileKeys.length > 0) {
+			await redisClient.del(...fileKeys);
+		}
 	},
 
 	sanitizeLogData(logData: Record<string, string>): Record<string, string> {

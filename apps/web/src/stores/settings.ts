@@ -14,6 +14,42 @@ export const useSettingsStore = defineStore("settings", () => {
 	const error = ref();
 	const loading = ref(false);
 
+	async function parseLogs() {
+		const response = await api.settings.parser.post();
+
+		if (response.error) {
+			error.value = response.error.message;
+		} else {
+			error.value = "";
+		}
+
+		return response;
+	}
+
+	async function dropLogAccess() {
+		const response = await api.stats["access-logs"].delete();
+
+		if (response.error) {
+			error.value = response.error.message;
+		} else {
+			error.value = "";
+		}
+
+		return response;
+	}
+
+	async function dropAliases() {
+		const response = await api.settings.aliases.delete();
+
+		if (response.error) {
+			error.value = response.error.message;
+		} else {
+			error.value = "";
+		}
+
+		return response;
+	}
+
 	function getAliasByIp(ip: string | any) {
 		const route = ip.replaceAll(".", "/");
 		return aliasRouter.lookup(route);
@@ -24,22 +60,20 @@ export const useSettingsStore = defineStore("settings", () => {
 
 		if (response.error) {
 			error.value = response.error.message;
-
-			return;
 		} else {
 			error.value = "";
+
+			const {
+				data: { items },
+			} = response;
+			for (const [ip, alias] of items) {
+				aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
+			}
+
+			aliasRouterIsInitialized.value = true;
 		}
 
 		loading.value = false;
-
-		const {
-			data: { items },
-		} = response;
-		for (const [ip, alias] of items) {
-			aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
-		}
-
-		aliasRouterIsInitialized.value = true;
 
 		return response;
 	}
@@ -53,11 +87,12 @@ export const useSettingsStore = defineStore("settings", () => {
 			error.value = response.error.message;
 		} else {
 			error.value = "";
+
+			aliasRouterIsInitialized.value = false;
+			await getAliases();
+			aliasRouterIsInitialized.value = true; // TODO: bad way. Double update. Use watchEffect
 		}
 
-		aliasRouterIsInitialized.value = false;
-		await getAliases();
-		aliasRouterIsInitialized.value = true; // TODO: bad way. Double update. Use watchEffect
 		loading.value = false;
 
 		return response;
@@ -73,11 +108,10 @@ export const useSettingsStore = defineStore("settings", () => {
 			error.value = response.error.message;
 		} else {
 			error.value = "";
+			settings.maxMemory = Number(maxMemory);
 		}
 
 		loading.value = false;
-
-		settings.maxMemory = Number(maxMemory);
 		return response;
 	}
 
@@ -99,12 +133,15 @@ export const useSettingsStore = defineStore("settings", () => {
 	}
 
 	return {
-		aliasRouterIsInitialized,
+		dropAliases,
+		dropLogAccess,
 		getAliases,
 		getAliasByIp,
 		setAliases,
 		getMaxMemory,
 		setMaxMemory,
+		parseLogs,
+		aliasRouterIsInitialized,
 		settings,
 		loading,
 		error,
