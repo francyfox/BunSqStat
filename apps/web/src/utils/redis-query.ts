@@ -1,4 +1,5 @@
 import {
+	createIPProceededQuery,
 	createTagQuery,
 	createTextQuery,
 	createURLQuery,
@@ -23,7 +24,7 @@ export function buildSearchQuery(
 
 	switch (fieldName) {
 		case "clientIP":
-			return `@${fieldName}:${value.replace(/\./g, "*")}`;
+			return createIPProceededQuery(fieldName, value);
 
 		case "user":
 			return value.includes("@")
@@ -41,7 +42,7 @@ export function buildSearchQuery(
 			// URL is TEXT SORTABLE field - use specialized URL query function
 			return createURLQuery(fieldName, value.replace(/^https?:\/\//g, ""));
 		case "hierarchyHost":
-			return `@${fieldName}:${value.replace(/\./g, "*")}`;
+			return createIPProceededQuery(fieldName, value);
 
 		case "timestamp":
 		case "duration":

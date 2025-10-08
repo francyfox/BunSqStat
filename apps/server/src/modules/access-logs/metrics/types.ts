@@ -43,6 +43,8 @@ export const AccessLogMetricsSchema = t.Object({
 			speed: t.Number(),
 			totalBytes: t.Number(),
 			totalDuration: t.Number(),
+			lastRequestUrl: t.String(),
+			lastActivity: t.Number(),
 		}),
 	),
 });

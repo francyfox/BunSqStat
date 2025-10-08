@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useWebSocket, watchDebounced } from "@vueuse/core";
 import { NTabPane, NTabs, useNotification } from "naive-ui";
-import { storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
+import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
-import BTabRecent from "@/components/access-metric/BTabRecent.vue";
+import BTabUsers from "@/components/access-metric/BTabUsers.vue";
 import { WS_URL } from "@/consts.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 
@@ -21,7 +21,7 @@ const form = ref({
 	time: undefined,
 });
 
-const tab = ref("recent");
+const tab = ref("global");
 
 await statsStore.getAccessMetrics();
 
@@ -49,7 +49,7 @@ watchDebounced(
 watch(
 	() => route.hash,
 	(v) => {
-		tab.value = v ? v.replace("#", "") : "recent";
+		tab.value = v ? v.replace("#", "") : "global";
 	},
 );
 
@@ -114,14 +114,18 @@ onUnmounted(() => {
         @update:value="handleTabChange"
         animated
     >
-      <NTabPane name="recent" tab="Recent">
-        <BTabRecent
+      <NTabPane name="global" tab="GLOBAL">
+        <BTabGlobal
             v-model="form"
         />
       </NTabPane>
 
-      <NTabPane name="global" tab="Global">
-        <BTabGlobal />
+      <NTabPane name="users" tab="USERS">
+        <BTabUsers />
+      </NTabPane>
+
+      <NTabPane name="domains" tab="DOMAINS">
+        <BTabDomains />
       </NTabPane>
     </NTabs>
   </div>

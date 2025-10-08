@@ -206,10 +206,8 @@ export function accessColumnAttributes(
 				order: 8,
 				width: 130,
 				render(row) {
-					return h(
-						NTag,
-						{ type: "info", size: "small", bordered: false },
-						() => row[column],
+					return h(NTag, { type: "info", size: "small", bordered: false }, () =>
+						row[column].replaceAll("_", "."),
 					);
 				},
 			};
@@ -240,7 +238,7 @@ export function accessColumnAttributes(
 							() => "Local",
 						);
 					}
-					return row[column];
+					return row[column].replaceAll("_", ".");
 				},
 			};
 
