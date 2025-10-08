@@ -671,8 +671,8 @@ spec:
 
 ## Manual Deployment
 
-You can use this latest artifacts from build pipeline
-https://github.com/your-username/your-repo/actions/runs/latest
+You can use this [latest artifacts](https://github.com/francyfox/BunSqStat/releases) from build pipeline
+
 
 ### System Requirements
 
@@ -701,14 +701,8 @@ npm install -g pm2
 
 ```bash
 # Clone and build
-git clone https://github.com/francyfox/BunSqStat.git
-cd BunSqStat
-
-# Install dependencies
-bun install
-
-# Build applications
-bun run build
+curl -O https://github.com/francyfox/BunSqStat/releases/download/v0.1.6/bunsqstat.zip
+unzip bunsqstat.zip
 
 # Set up environment
 cp .env.production .env
@@ -727,6 +721,12 @@ sudo mkdir -p /etc/bunsqstat
 sudo cp -r . /opt/bunsqstat/
 sudo chown -R bunsqstat:bunsqstat /opt/bunsqstat
 sudo chown -R bunsqstat:bunsqstat /var/log/bunsqstat
+
+# Run
+# Use pm2 for starting demon process for backend service
+# https://bun.com/guides/ecosystem/pm2
+# Serve frontend files with nginx/apache/caddy 
+
 ```
 
 ### Systemd Services
