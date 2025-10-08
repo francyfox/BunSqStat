@@ -46,12 +46,13 @@ jobs:
       - name: Build backend
         run: cd apps/server && bun run build
 
-      - name: Prepare release directory
+      - name: Prepare releases directory
         run: |
-          mkdir -p release/web
-          mkdir -p release/backend
-          cp -r apps/web/dist/* release/web/
-          cp -r apps/server/dist/* release/backend/
+          mkdir -p releases/web
+          mkdir -p releases/backend
+          cp -r apps/web/dist/* releases/web/
+          cp -r apps/server/dist/* releases/backend/
+          cd releases && ls
 
       - name: Create Release
         id: create_release
