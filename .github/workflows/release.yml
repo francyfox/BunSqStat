@@ -18,6 +18,11 @@ jobs:
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
     steps:
       - uses: actions/checkout@v4
+      - name: Get latest tag from GitHub API
+        id: get_latest_tag
+        run: |
+          TAG_NAME=$(curl -sL "https://api.github.com/repos/francyfox/BunSqStat/tags" | jq -r '.[0].name')
+          echo "LATEST_TAG=$TAG_NAME" >> $GITHUB_ENV
       - name: Cache Turbo and dependencies
         uses: actions/cache@v4
         with:
@@ -48,14 +53,16 @@ jobs:
           cp -r apps/web/dist/* release/web/
           cp -r apps/server/dist/* release/backend/
 
-      - name: Create archive
-        run: tar -czf release.tar.gz release/
-
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
 #        if: github.ref_type == 'tag'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
+          tag_name: ${{ env.LATEST_TAG }}
+          name: Release ${{ env.LATEST_TAG }}
           files: |
+            release/*
             CHANGELOG.md
             LICENSE
