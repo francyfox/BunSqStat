@@ -10,12 +10,12 @@ on:
 jobs:
   build-and-release:
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
     env:
       TURBO_FORCE: true
       TURBO_API_URL: https://api.vercel.com/v5/artifacts
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
     steps:
       - uses: actions/checkout@v4
       - name: Get latest tag from GitHub API
