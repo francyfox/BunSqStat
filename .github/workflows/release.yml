@@ -53,9 +53,15 @@ jobs:
         run: |
           mkdir -p releases/web
           mkdir -p releases/backend
+          cp LICENSE releases/LICENSE
+          cp README.md releases/README.md
+          cp -r docs/* releases/docs/
           cp -r apps/web/dist/* releases/web/
           cp -r apps/server/dist/* releases/backend/
-          cd releases && ls
+
+      - name: Archive
+        run: |
+          zip -r bunsqstat.zip releases
 
       - name: Create Release
         id: create_release
@@ -67,6 +73,4 @@ jobs:
           tag_name: ${{ env.LATEST_TAG }}
           name: Release ${{ env.LATEST_TAG }}
           files: |
-            releases/**/*
-            CHANGELOG.md
-            LICENSE
+            bunsqstat.zip
