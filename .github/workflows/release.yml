@@ -57,7 +57,7 @@ jobs:
           cp .env.example releases/
           cp LICENSE releases/LICENSE
           cp README.md releases/README.md
-          cp -r docs/*/ releases/docs/
+          cp -r docs/* releases/docs/
           cp -r apps/web/dist/* releases/web/
           cp -r apps/server/dist/* releases/backend/
 
