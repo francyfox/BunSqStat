@@ -54,9 +54,10 @@ jobs:
           mkdir -p releases/web
           mkdir -p releases/backend
           mkdir -p releases/docs
+          cp .env.example releases/
           cp LICENSE releases/LICENSE
           cp README.md releases/README.md
-          cp -r docs/* releases/docs/
+          cp -r docs/*/ releases/docs/
           cp -r apps/web/dist/* releases/web/
           cp -r apps/server/dist/* releases/backend/
 
@@ -67,7 +68,6 @@ jobs:
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
-#        if: github.ref_type == 'tag'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
