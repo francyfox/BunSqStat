@@ -80,7 +80,7 @@ export const useSettingsStore = defineStore("settings", () => {
 
 	async function setAliases() {
 		const response = await api.settings.aliases.post({
-			aliases: settings.aliases,
+			aliases: (settings.aliases as any).replaceAll(".", "_"),
 		});
 
 		if (response.error) {

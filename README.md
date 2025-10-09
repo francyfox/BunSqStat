@@ -82,6 +82,7 @@ services:
 - - [X] Redis maxmemory
 - - [X] DANGER ZONE
 - [ ] Exclude list
+- - [ ] CIDR exclude?
 - [ ] i18n?
 - [ ] Optimize WS for few tabs (one tab permitted requests)
 - [ ] Add to env lazy mode (use watcher only has ws clients)

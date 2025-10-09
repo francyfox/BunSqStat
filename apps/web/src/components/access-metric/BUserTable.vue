@@ -2,14 +2,20 @@
 import { Time } from "@vicons/ionicons5";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { NDataTable, NFlex, NMarquee, NTag, NTooltip } from "naive-ui";
+import { storeToRefs } from "pinia";
 import type { TAccessLogMetricsResponse } from "server/schema";
 import { computed, h } from "vue";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
+import { useSettingsStore } from "@/stores/settings.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const dayjs = useDayjs();
+
+const settingsStore = useSettingsStore();
+const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
+
 const { users = [] } = defineProps<{
 	users?: TAccessLogMetricsResponse["users"];
 }>();
@@ -20,9 +26,27 @@ const columns = computed(() => [
 	{
 		key: "user",
 		title: "User",
+		minWidth: 80,
+		maxWidth: 300,
+		width: 140,
+		resizable: true,
+		fixed: breakpoints.md.value ? "left" : false,
+		ellipsis: {
+			tooltip: true,
+		},
 		render(row: any) {
-			const username = row.user === "-" ? "Anonymous" : row.user;
-			return username;
+			const router = computed(() =>
+				aliasRouterIsInitialized.value
+					? settingsStore.getAliasByIp(row["clientIP"])?.payload
+					: null,
+			);
+
+			if (router.value) return router.value;
+
+			if (row.user === "-" || !row.user) {
+				return h(NTag, { type: "default", size: "small" }, () => "Anonymous");
+			}
+			return router.value;
 		},
 	},
 	{
