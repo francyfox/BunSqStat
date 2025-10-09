@@ -196,17 +196,24 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
-	async getTotalSum(limit?: number): Promise<{
+	async getTotalSum(
+		limit?: number,
+		fresh: boolean = false,
+	): Promise<{
 		count: number;
 		items: IMetricBytesAndDuration[];
 	}> {
+		const TIMESTAMP = fresh
+			? `@timestamp:[${(Date.now() - 60000).toString()} inf]`
+			: "*";
 		const LIMIT = limit ? ` LIMIT 0 ${limit}` : "";
-		const { results, total_results } = await redisClient.send(
-			"FT.AGGREGATE",
-			`log_idx * LOAD 1 @bytes GROUPBY 1 @clientIP REDUCE SUM 1 @bytes AS total_bytes REDUCE SUM 1 @duration as total_duration${LIMIT}`.split(
+		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
+			"log_idx",
+			TIMESTAMP,
+			...`LOAD 1 @bytes GROUPBY 1 @clientIP REDUCE SUM 1 @bytes AS total_bytes REDUCE SUM 1 @duration as total_duration${LIMIT}`.split(
 				" ",
 			),
-		);
+		]);
 
 		const items: IMetricBytesAndDuration[] = results.map(
 			({ extra_attributes: i }: any) => {
@@ -342,38 +349,37 @@ export const AccessLogsMetricsService = {
 	 * @returns Array of user info with speeds in bytes per second
 	 */
 	async getUsersInfo(items: IMetricBytesAndDuration[]) {
-		const recentTime = Date.now() - 30000; // Last 30 seconds
-		const { items: freshMetrics } = await this.getTotalSum(
-			undefined,
-			recentTime,
+		const output = [];
+		const { items: freshData } = await AccessLogsMetricsService.getTotalSum(
+			1000,
+			true,
 		);
 
-		return items
-			.filter((i) => i.clientIP)
-			.map(async (i) => {
-				const freshMetric = freshMetrics.find((j) => j.user === i.user);
+		for (const i of items) {
+			const freshItem = freshData.find(
+				(j: IMetricBytesAndDuration) => j.clientIP === i.clientIP,
+			);
+			const { results } = await redisClient.send(
+				"FT.SEARCH",
+				`log_idx @clientIP:{${i.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 3 user url timestamp`.split(
+					" ",
+				),
+			);
 
-				const { results } = await redisClient.send(
-					"FT.SEARCH",
-					`log_idx @clientIP:${i.clientIP} SORTBY timestamp DESC LIMIT 0 1 RETURN 3 user url timestamp`.split(
-						" ",
-					),
-				);
-
-				console.log(i.clientIP);
-
-				return {
-					...i,
-					currentSpeed: freshMetric?.totalBytes
-						? evaluate(
-								`${freshMetric.totalBytes} / ${freshMetric.totalDuration || 1} * 1000`,
-							)
-						: 0,
-					// user: results[0].extra_attributes.user || "-",
-					// speed: evaluate(`${i.totalBytes} / ${i.totalDuration || 1} * 1000`),
-					// lastRequestUrl: results[0].extra_attributes.url || "",
-					// lastActivity: Number(results[0].extra_attributes.timestamp) || 0,
-				};
+			output.push({
+				...i,
+				currentSpeed: freshItem
+					? evaluate(
+							`${freshItem?.totalBytes} / ${freshItem?.totalDuration || 1} * 1000`,
+						)
+					: 0,
+				user: results[0].extra_attributes.user || "-",
+				speed: evaluate(`${i.totalBytes} / ${i.totalDuration || 1} * 1000`),
+				lastRequestUrl: results[0].extra_attributes.url || "",
+				lastActivity: Number(results[0].extra_attributes.timestamp) || 0,
 			});
+		}
+
+		return output;
 	},
 };

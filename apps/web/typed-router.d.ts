@@ -21,6 +21,7 @@ declare module 'vue-router/auto-routes' {
     '/': RouteRecordInfo<'/', '/', Record<never, never>, Record<never, never>>,
     '/about': RouteRecordInfo<'/about', '/about', Record<never, never>, Record<never, never>>,
     '/access-log-metrics': RouteRecordInfo<'/access-log-metrics', '/access-log-metrics', Record<never, never>, Record<never, never>>,
+    '/not-found': RouteRecordInfo<'/not-found', '/not-found', Record<never, never>, Record<never, never>>,
     '/settings': RouteRecordInfo<'/settings', '/settings', Record<never, never>, Record<never, never>>,
   }
 
@@ -45,6 +46,10 @@ declare module 'vue-router/auto-routes' {
     }
     'src/pages/access-log-metrics.vue': {
       routes: '/access-log-metrics'
+      views: never
+    }
+    'src/pages/not-found.vue': {
+      routes: '/not-found'
       views: never
     }
     'src/pages/settings.vue': {

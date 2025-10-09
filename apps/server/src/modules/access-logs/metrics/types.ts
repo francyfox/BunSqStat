@@ -41,6 +41,7 @@ export const AccessLogMetricsSchema = t.Object({
 			user: t.String(),
 			currentSpeed: t.Number(),
 			speed: t.Number(),
+			clientIP: t.String(),
 			totalBytes: t.Number(),
 			totalDuration: t.Number(),
 			lastRequestUrl: t.String(),
