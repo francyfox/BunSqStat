@@ -171,6 +171,16 @@ export function createURLQuery(field: string, url: string): string {
 	return `@${field}:${cleanUrl}`;
 }
 
+export function createIPProceededQuery(field: string, value: string): string {
+	const processed = value.replace(/\./g, "_");
+	const final =
+		processed.split("_").filter(Boolean).length <= 3
+			? `${processed}*`
+			: processed;
+
+	return `@${field}:{${final}}`;
+}
+
 /**
  * Creates a Redis Search range query for numeric fields
  * @param field - Field name

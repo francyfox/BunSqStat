@@ -12,6 +12,7 @@ export const AccessLogsMetrics = new Elysia().get(
 			startTime,
 			endTime,
 		} as any);
+
 		return {
 			...total,
 			users: userInfo,

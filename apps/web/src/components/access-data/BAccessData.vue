@@ -85,7 +85,6 @@ watchDebounced(
 watchDebounced(
 	form,
 	async (v) => {
-		console.log(sortBy.value);
 		page.value = 1;
 		await statsStore.getAccessLogs({
 			page: page.value,

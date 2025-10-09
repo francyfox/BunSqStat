@@ -13,8 +13,12 @@ export function parseLogLine(line: string, regexMap: Map<string, RegExp>) {
 			}
 		}
 
-		if (key === "url" && result[key] !== "error:invalid-request") {
-			result[key] = sanitizeUrl(result[key]) || result[key];
+		if (key === "clientIP" && result[key] !== "-") {
+			result[key] = result[key].replace(/\./g, '_');
+		}
+
+		if (key === "hierarchyHost" && result[key] !== "-") {
+			result[key] = result[key].replace(/\./g, '_');
 		}
 
 		const NO_CONTENT_TYPE =

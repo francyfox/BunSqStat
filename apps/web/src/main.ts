@@ -8,6 +8,7 @@ import "./style.css";
 import "vfonts/Lato.css";
 import "vfonts/FiraCode.css";
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate";
+import NotFound from "@/pages/not-found.vue";
 import App from "./App.vue";
 
 const pinia = createPinia();
@@ -16,7 +17,10 @@ pinia.use(piniaPluginPersistedstate);
 
 const router = createRouter({
 	history: createWebHashHistory(),
-	routes,
+	routes: [
+		...[{ path: "/:pathMatch(.*)*", name: "NotFound", component: NotFound }],
+		...routes,
+	],
 });
 
 const app = createApp(App);

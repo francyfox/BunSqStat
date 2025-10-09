@@ -6,14 +6,36 @@ import BCardBytes from "@/components/access-metric/masonry-wall/BCardBytes.vue";
 import BCardContentStats from "@/components/access-metric/masonry-wall/BCardContentStats.vue";
 import BCardDuration from "@/components/access-metric/masonry-wall/BCardDuration.vue";
 import BCardOptimization from "@/components/access-metric/masonry-wall/BCardOptimization.vue";
+import BCardRPS from "@/components/access-metric/masonry-wall/BCardRPS.vue";
 import BCardStatus from "@/components/access-metric/masonry-wall/BCardStatus.vue";
-import BCardUserSpeed from "@/components/access-metric/masonry-wall/BCardUserSpeed.vue";
 import { useStatsStore } from "@/stores/stats.ts";
 
 const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
 
+const form = defineModel<{
+	limit: number;
+	time?: [number, number];
+}>({
+	default: {
+		limit: 50,
+		time: undefined,
+	},
+});
+
+const diffTime = computed(() => {
+	if (!form.value.time) return 3600;
+	return form.value.time[0] - form.value.time[1];
+});
+
 const items = computed(() => [
+	{
+		component: h(BCardRPS, {
+			rps: accessMetrics.value?.currentStates?.rps,
+			diffTime: diffTime.value,
+			time: form.value.time,
+		}),
+	},
 	{
 		component: h(BCardContentStats, {
 			items: accessMetrics.value?.globalStates.contentTypes.items,
@@ -22,11 +44,6 @@ const items = computed(() => [
 	{
 		component: h(BCardBytes, {
 			bytes: accessMetrics.value?.globalStates.bytes,
-		}),
-	},
-	{
-		component: h(BCardUserSpeed, {
-			users: accessMetrics.value?.users,
 		}),
 	},
 	{
