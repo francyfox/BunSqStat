@@ -1,3 +1,9 @@
+## 0.1.8 - 09 Oct 2025
+
+Bugfix:
+- Aliases for users table
+- Fixed/Resizeble user column for users table
+
 ## 0.1.7 - 09 Oct 2025
 
 Feature:
