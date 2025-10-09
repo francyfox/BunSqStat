@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { useWebSocket, watchDebounced } from "@vueuse/core";
 import { NTabPane, NTabs, useNotification } from "naive-ui";
-import { onMounted, onUnmounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onActivated, onMounted, onUnmounted, ref, watch } from "vue";
+import {
+	beforeRouteEnter,
+	onBeforeRouteLeave,
+	useRoute,
+	useRouter,
+} from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
 import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
@@ -53,7 +58,7 @@ watch(
 	},
 );
 
-const { data } = useWebSocket(`${WS_URL}/ws/access-logs`, {
+const { data, close, open, status } = useWebSocket(`${WS_URL}/ws/access-logs`, {
 	autoReconnect: {
 		retries: 3,
 		delay: 1000,
@@ -91,6 +96,8 @@ watchDebounced(data, async (v) => {
 });
 
 onMounted(() => {
+	if (status.value === "CLOSED") open();
+
 	if (route.hash) {
 		tab.value = route.hash.replace("#", "");
 	}
@@ -98,6 +105,14 @@ onMounted(() => {
 
 onUnmounted(() => {
 	window.location.hash = "";
+});
+
+onBeforeRouteLeave(() => {
+	close();
+});
+
+onActivated(() => {
+	if (status.value === "CLOSED") open();
 });
 </script>
 

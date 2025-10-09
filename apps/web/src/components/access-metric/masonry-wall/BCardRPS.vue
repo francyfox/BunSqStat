@@ -14,7 +14,7 @@ const { rps, diffTime, time } = defineProps<{
     {{ rps?.toFixed(5) || "0" }} <br>
 
     <span class="text-lg">
-        {{ rps * diffTime }} in {{ diffDate(time) }}
+        {{ (rps * diffTime).toFixed(0) }} in {{ diffDate(time) }}
     </span>
 
     <template #name>

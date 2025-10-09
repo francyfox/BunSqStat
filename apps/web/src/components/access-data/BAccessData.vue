@@ -8,7 +8,8 @@ import {
 import { NDataTable, NPagination, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onActivated, onMounted, ref, watch } from "vue";
+import { onBeforeRouteLeave } from "vue-router";
 import BAccessDataFilter from "@/components/access-data/BAccessDataFilter.vue";
 import BAccessDataTags from "@/components/access-data/BAccessDataTags.vue";
 import { WS_URL } from "@/consts.ts";
@@ -172,9 +173,19 @@ watchDebounced(
 );
 
 onMounted(async () => {
+	if (status.value === "CLOSED") open();
+
 	if (!aliasRouterIsInitialized.value) {
 		await settingsStore.getAliases();
 	}
+});
+
+onActivated(() => {
+	if (status.value === "CLOSED") open();
+});
+
+onBeforeRouteLeave(() => {
+	close();
 });
 </script>
 

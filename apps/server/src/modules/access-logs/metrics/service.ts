@@ -1,5 +1,6 @@
 import { evaluate } from "mathjs";
 import { redisClient } from "@/redis";
+import { extractDomain } from "@/utils/string";
 
 export interface IMetricBytesAndDuration {
 	clientIP: string;
@@ -381,5 +382,101 @@ export const AccessLogsMetricsService = {
 		}
 
 		return output;
+	},
+	async getDomainsInfo({
+		search,
+		page = 1,
+		limit = 20,
+		startTime,
+		endTime,
+	}: {
+		search?: string;
+		page?: number;
+		limit?: number;
+		startTime?: number;
+		endTime?: number;
+	}): Promise<{
+		count: number;
+		items: Array<{
+			domain: string;
+			requestCount: number;
+			bytes: number;
+			duration: number;
+			lastActivity: number;
+			errorsRate: number;
+		}>;
+	}> {
+		const TIMESTAMP =
+			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
+		const limitNum = 100000; // max to load for aggregation
+
+		const { results } = (await redisClient.send("FT.SEARCH", [
+			"log_idx",
+			TIMESTAMP,
+			"LIMIT",
+			"0",
+			limitNum.toString(),
+			"RETURN",
+			"5",
+			"url",
+			"bytes",
+			"duration",
+			"timestamp",
+			"resultStatus",
+		])) as { results: any[] };
+
+		// group by domain
+		const domainMap = new Map<
+			string,
+			{ requestCount: number; bytes: number; duration: number; lastActivity: number; errorsCount: number }
+		>();
+
+		for (const result of results) {
+			const { extra_attributes: item } = result;
+			const domain = extractDomain(item.url);
+			if (!domain || domain === "-") continue;
+			if (search && !domain.toLowerCase().includes(search.toLowerCase())) continue;
+
+			if (!domainMap.has(domain)) {
+				domainMap.set(domain, {
+					requestCount: 0,
+					bytes: 0,
+					duration: 0,
+					lastActivity: 0,
+					errorsCount: 0,
+				});
+			}
+			const data = domainMap.get(domain)!;
+			data.requestCount++;
+			data.bytes += Number(item.bytes || 0);
+			data.duration += Number(item.duration || 0);
+			const ts = Number(item.timestamp || 0);
+			if (ts > data.lastActivity) data.lastActivity = ts;
+			const status = Number(item.resultStatus || 0);
+			if (status >= 400) data.errorsCount++;
+		}
+
+		const items = Array.from(domainMap.entries()).map(([domain, data]) => ({
+			domain,
+			requestCount: data.requestCount,
+			bytes: data.bytes,
+			duration: data.duration,
+			lastActivity: data.lastActivity,
+			errorsRate: data.requestCount > 0 ? (data.errorsCount / data.requestCount) * 100 : 0,
+		}));
+
+		// sort by requestCount DESC
+		items.sort((a, b) => b.requestCount - a.requestCount);
+
+		// paginate
+		const pageSize = limit || 20;
+		const startIdx = (page - 1) * pageSize;
+		const endIdx = startIdx + pageSize;
+		const paginated = items.slice(startIdx, endIdx);
+
+		return {
+			count: items.length,
+			items: paginated,
+		};
 	},
 };
