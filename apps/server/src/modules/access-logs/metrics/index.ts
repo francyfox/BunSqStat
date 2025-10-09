@@ -6,7 +6,7 @@ export const AccessLogsMetrics = new Elysia().get(
 	"/stats/access-logs/metrics",
 	async ({ query }) => {
 		const { limit, startTime, endTime } = query;
-		const { items, count } = await AccessLogsMetricsService.getTotalSum(limit);
+		const { items } = await AccessLogsMetricsService.getTotalSum(limit);
 		const userInfo = await AccessLogsMetricsService.getUsersInfo(items);
 		const total = await AccessLogsMetricsService.getTotal(items, {
 			startTime,

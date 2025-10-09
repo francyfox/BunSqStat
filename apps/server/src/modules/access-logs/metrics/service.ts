@@ -294,7 +294,7 @@ export const AccessLogsMetricsService = {
 			duration: 0,
 		};
 
-		const rpsTime = (): { startTime: number; endTime: number } => {
+		const rpsTime = (): any => {
 			if (!time.startTime && !time.endTime) {
 				const now = Date.now();
 				return {
