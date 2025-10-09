@@ -71,7 +71,7 @@ services:
 - - [X] Hit Ratio
 - - [X] User speed
 - - [X] masonry-wall
-- - [ ] Top user table
+- - [X] Top user table
 - - [ ] Top domain table
 - [ ] Adaptive
 - - [X] Mobile/Tablet (last 2 versions)
@@ -91,9 +91,13 @@ services:
 - [ ] PWA?
 - [ ] Anomaly detects?
 - - [ ] Browser/Mobile alerts
+- - [ ] Proxy/VPN detect
+- - [ ] WHOIS
 - [ ] Squid cache logs?
 - [ ] Squid guard logs?
 - [ ] Add custom logs format like ([to squid docs](https://www.squid-cache.org/Doc/config/logformat/))
+- - [ ] User agent
+- - [ ] SSL bump status
 - [ ] Stress test
 - [ ] Deploy test
 

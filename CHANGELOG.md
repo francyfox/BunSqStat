@@ -1,3 +1,9 @@
+## 0.1.7 - 09 Oct 2025
+
+Feature:
+- Translated RPS card to GLOBAL tab
+- Added USERS tab
+
 ## 0.1.6 - 07 Oct 2025
 
 Feature:
