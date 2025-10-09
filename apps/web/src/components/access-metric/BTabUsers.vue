@@ -11,20 +11,21 @@ const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
 
 const status = computed(() => {
-	const online = accessMetrics.value?.users.reduce((acc, current) => {
-		const secondsAgo = dayjs().diff(current.lastActivity, "s");
-		const isOnline = secondsAgo < 300;
+	const online =
+		accessMetrics.value?.users.reduce((acc, current) => {
+			const secondsAgo = dayjs().diff(current.lastActivity, "s");
+			const isOnline = secondsAgo < 300;
 
-		if (isOnline) {
-			return acc + 1;
-		}
+			if (isOnline) {
+				return acc + 1;
+			}
 
-		return acc;
-	}, 0);
+			return acc;
+		}, 0) || 0;
 
 	return {
 		online,
-		offline: accessMetrics.value?.users.length - online,
+		offline: accessMetrics.value?.users?.length || 0 - online,
 	};
 });
 </script>
