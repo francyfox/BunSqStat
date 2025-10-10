@@ -1,3 +1,4 @@
+import { Static, t } from "elysia";
 import { evaluate } from "mathjs";
 import { redisClient } from "@/redis";
 import { extractDomain } from "@/utils/string";
@@ -9,6 +10,26 @@ export interface IMetricBytesAndDuration {
 	lastRequestUrl?: string;
 	lastActivity?: number;
 }
+
+export interface IMetricDomainOptions {
+	search?: string;
+	page?: number;
+	limit?: number;
+	startTime?: number;
+	endTime?: number;
+}
+
+export const MetricDomainItemSchema = t.Object({
+	domain: t.String(),
+	requestCount: t.Number(),
+	bytes: t.Number(),
+	duration: t.Number(),
+	lastActivity: t.Number(),
+	errorsRate: t.Number(),
+	hasBlocked: t.Boolean(),
+});
+
+export type TMetricDomainItem = Static<typeof MetricDomainItemSchema>;
 
 export const AccessLogsMetricsService = {
 	/**
@@ -383,32 +404,20 @@ export const AccessLogsMetricsService = {
 
 		return output;
 	},
+
 	async getDomainsInfo({
 		search,
 		page = 1,
 		limit = 20,
 		startTime,
 		endTime,
-	}: {
-		search?: string;
-		page?: number;
-		limit?: number;
-		startTime?: number;
-		endTime?: number;
-	}): Promise<{
+	}: IMetricDomainOptions): Promise<{
 		count: number;
-		items: Array<{
-			domain: string;
-			requestCount: number;
-			bytes: number;
-			duration: number;
-			lastActivity: number;
-			errorsRate: number;
-		}>;
+		items: TMetricDomainItem[];
 	}> {
 		const TIMESTAMP =
 			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
-		const limitNum = 100000; // max to load for aggregation
+		const limitNum = 50000; // optimized limit for aggregation
 
 		const { results } = (await redisClient.send("FT.SEARCH", [
 			"log_idx",
@@ -428,14 +437,22 @@ export const AccessLogsMetricsService = {
 		// group by domain
 		const domainMap = new Map<
 			string,
-			{ requestCount: number; bytes: number; duration: number; lastActivity: number; errorsCount: number }
+			{
+				requestCount: number;
+				bytes: number;
+				duration: number;
+				lastActivity: number;
+				errorsCount: number;
+				hasBlocked: boolean;
+			}
 		>();
 
 		for (const result of results) {
 			const { extra_attributes: item } = result;
 			const domain = extractDomain(item.url);
 			if (!domain || domain === "-") continue;
-			if (search && !domain.toLowerCase().includes(search.toLowerCase())) continue;
+			if (search && !domain.toLowerCase().includes(search.toLowerCase()))
+				continue;
 
 			if (!domainMap.has(domain)) {
 				domainMap.set(domain, {
@@ -444,6 +461,7 @@ export const AccessLogsMetricsService = {
 					duration: 0,
 					lastActivity: 0,
 					errorsCount: 0,
+					hasBlocked: false,
 				});
 			}
 			const data = domainMap.get(domain)!;
@@ -453,7 +471,17 @@ export const AccessLogsMetricsService = {
 			const ts = Number(item.timestamp || 0);
 			if (ts > data.lastActivity) data.lastActivity = ts;
 			const status = Number(item.resultStatus || 0);
-			if (status >= 400) data.errorsCount++;
+			if (
+				status >= 400 ||
+				status === 0 ||
+				item.resultType?.includes("DENIED") ||
+				item.resultType?.includes("TIMEOUT")
+			) {
+				data.errorsCount++;
+				if (item.resultType?.includes("DENIED")) {
+					data.hasBlocked = true;
+				}
+			}
 		}
 
 		const items = Array.from(domainMap.entries()).map(([domain, data]) => ({
@@ -462,7 +490,11 @@ export const AccessLogsMetricsService = {
 			bytes: data.bytes,
 			duration: data.duration,
 			lastActivity: data.lastActivity,
-			errorsRate: data.requestCount > 0 ? (data.errorsCount / data.requestCount) * 100 : 0,
+			errorsRate:
+				data.requestCount > 0
+					? (data.errorsCount / data.requestCount) * 100
+					: 0,
+			hasBlocked: data.hasBlocked,
 		}));
 
 		// sort by requestCount DESC

@@ -270,6 +270,7 @@ export function formatColumns(data: Array<keyof TAccessLog>): DataTableColumns {
 	const store = useStatsStore();
 
 	return data
+		.filter(column => column !== 'domain')
 		.map((column, index) => {
 			return {
 				key: column,

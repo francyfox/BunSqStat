@@ -152,7 +152,6 @@ const columns = computed(() => [
       :max-height="300"
       :scroll-x="scroll"
       size="large"
-
   />
 </template>
 
