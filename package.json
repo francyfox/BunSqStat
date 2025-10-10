@@ -2,7 +2,7 @@
 	"name": "bunsqstat",
 	"version": "0.1.0",
 	"devDependencies": {
-		"@biomejs/biome": "2.2.4",
+		"@biomejs/biome": "2.2.5",
 		"@faker-js/faker": "^10.0.0",
 		"turbo": "^2.5.8"
 	},
@@ -23,7 +23,6 @@
 		"packages/*"
 	],
 	"dependencies": {
-		"@unocss/reset": "^66.5.2",
 		"nanoid": "^5.1.6"
 	}
 }
