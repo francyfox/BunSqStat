@@ -25,7 +25,7 @@ const { bandwidth } = defineProps<{
           Hit Rate
         </div>
         <NTag size="large">
-          <div class="text-2xl">{{ hitRatePercent.toFixed(2) || 0 }} %</div>
+          <div class="text-2xl">{{ hitRatePercent?.toFixed(2) || 0 }} %</div>
         </NTag>
       </div>
 
@@ -33,7 +33,7 @@ const { bandwidth } = defineProps<{
       <div class="w-full">
         <div class="text-xl">Success Rate</div>
         <NTag size="large">
-          <div class="text-2xl">{{ successRatePercent.toFixed(2) || 0 }} %</div>
+          <div class="text-2xl">{{ successRatePercent?.toFixed(2) || 0 }} %</div>
         </NTag>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import { Elysia, t } from "elysia";
+import { AccessLogsMetricsService } from "@/modules/access-logs/metrics/service";
 import {
-	AccessLogsMetricsService,
+	AccessLogMetricsSchema,
 	MetricDomainItemSchema,
-} from "@/modules/access-logs/metrics/service";
-import { AccessLogMetricsSchema } from "@/modules/access-logs/metrics/types";
+} from "@/modules/access-logs/metrics/types";
 
 export const AccessLogsMetrics = new Elysia()
 	.get(
@@ -52,13 +52,13 @@ export const AccessLogsMetrics = new Elysia()
 					page: t.Number({ default: 1 }),
 					limit: t.Number({ default: 20, maximum: 100 }),
 					sortBy: t.Union([
-						t.Literal('requestCount'),
-						t.Literal('bytes'),
-						t.Literal('duration'),
-						t.Literal('lastActivity'),
-						t.Literal('errorsRate'),
+						t.Literal("requestCount"),
+						t.Literal("bytes"),
+						t.Literal("duration"),
+						t.Literal("lastActivity"),
+						t.Literal("errorsRate"),
 					]),
-					sortOrder: t.Union([t.Literal('asc'), t.Literal('desc')]),
+					sortOrder: t.Union([t.Literal("asc"), t.Literal("desc")]),
 					startTime: t.Partial(
 						t.Number({ description: `Timestamp like ${Date.now()}` }),
 					),

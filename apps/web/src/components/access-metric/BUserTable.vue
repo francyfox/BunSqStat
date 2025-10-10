@@ -1,10 +1,21 @@
 <script setup lang="ts">
-import { Time } from "@vicons/ionicons5";
+import { Close, Time } from "@vicons/ionicons5";
+import { Icon } from "@vicons/utils";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
-import { NDataTable, NFlex, NMarquee, NTag, NTooltip } from "naive-ui";
+import { useFuse } from "@vueuse/integrations/useFuse";
+import {
+	type DataTableColumns,
+	NButton,
+	NDataTable,
+	NFlex,
+	NInput,
+	NMarquee,
+	NTag,
+	NTooltip,
+} from "naive-ui";
 import { storeToRefs } from "pinia";
 import type { TAccessLogMetricsResponse } from "server/schema";
-import { computed, h } from "vue";
+import { computed, h, ref } from "vue";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
@@ -20,9 +31,43 @@ const { users = [] } = defineProps<{
 	users?: TAccessLogMetricsResponse["users"];
 }>();
 
+const aliasUsers = computed(() =>
+	users.map((i) => {
+		const router = computed(() =>
+			aliasRouterIsInitialized.value
+				? settingsStore.getAliasByIp(i?.clientIP)?.payload
+				: null,
+		);
+
+		const { user, ...item } = i;
+
+		console.log(router.value, i.user);
+		return {
+			user: router.value || i.user,
+			...item,
+		};
+	}),
+);
+
+const search = ref("");
+
+const { results } = useFuse(search, aliasUsers, {
+	matchAllWhenSearchEmpty: true,
+	fuseOptions: {
+		isCaseSensitive: false,
+		keys: ["user"],
+	},
+});
+
+const filteredUsers = computed(() => results.value.map((i) => i.item));
+
 const scroll = computed(() => (breakpoints.xl.value ? undefined : 1200));
 
-const columns = computed(() => [
+function handleReset() {
+	search.value = "";
+}
+
+const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "user",
 		title: "User",
@@ -35,18 +80,11 @@ const columns = computed(() => [
 			tooltip: true,
 		},
 		render(row: any) {
-			const router = computed(() =>
-				aliasRouterIsInitialized.value
-					? settingsStore.getAliasByIp(row["clientIP"])?.payload
-					: null,
-			);
-
-			if (router.value) return router.value;
-
 			if (row.user === "-" || !row.user) {
 				return h(NTag, { type: "default", size: "small" }, () => "Anonymous");
 			}
-			return router.value;
+
+			return row.user;
 		},
 	},
 	{
@@ -69,7 +107,7 @@ const columns = computed(() => [
 						size: "small",
 						bordered: false,
 					},
-					isOnline ? "Online" : "Offline",
+					() => (isOnline ? "Online" : "Offline"),
 				),
 				h(
 					NTooltip,
@@ -90,7 +128,7 @@ const columns = computed(() => [
 		title: "IP",
 		render(row) {
 			return h(NTag, { type: "info", size: "small", bordered: false }, () =>
-				row["clientIP"].replaceAll("_", "."),
+				row["clientIP"]?.replaceAll("_", "."),
 			);
 		},
 	},
@@ -145,14 +183,35 @@ const columns = computed(() => [
 </script>
 
 <template>
-  <NDataTable
-      :columns="columns"
-      :data="users"
-      :bordered="false"
-      :max-height="300"
-      :scroll-x="scroll"
-      size="large"
-  />
+  <div class="flex flex-col gap-2">
+    <div class="flex gap-2 max-w-sm">
+      <NInput
+          v-model:value="search"
+          size="large"
+          placeholder="Search for users"
+      />
+
+      <NButton
+          type="error"
+          size="large"
+          @click="handleReset"
+      >
+        <Icon :size="24">
+          <Close />
+        </Icon>
+      </NButton>
+    </div>
+
+    <NDataTable
+        :columns="columns"
+        :data="filteredUsers"
+        :bordered="false"
+        :max-height="300"
+        :scroll-x="scroll"
+        size="large"
+    />
+  </div>
+
 </template>
 
 <style scoped>

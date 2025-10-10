@@ -13,6 +13,7 @@ import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
 import BTabUsers from "@/components/access-metric/BTabUsers.vue";
 import { WS_URL } from "@/consts.ts";
+import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 
 const route = useRoute();
@@ -20,6 +21,7 @@ const router = useRouter();
 const notification = useNotification();
 
 const statsStore = useStatsStore();
+const settingsStore = useSettingsStore();
 
 const form = ref({
 	limit: 50,
@@ -27,8 +29,6 @@ const form = ref({
 });
 
 const tab = ref("global");
-
-await statsStore.getAccessMetrics();
 
 function handleTabChange(tab: string) {
 	router.push({ name: route.name, hash: `#${tab}` });
@@ -95,11 +95,18 @@ watchDebounced(data, async (v) => {
 	});
 });
 
-onMounted(() => {
+onMounted(async () => {
+	await Promise.all([
+		statsStore.getAccessMetrics(),
+		settingsStore.getAliases(),
+	]);
+
 	if (status.value === "CLOSED") open();
 
 	if (route.hash) {
-		tab.value = route.hash.replace("#", "");
+		setTimeout(() => {
+			tab.value = route.hash?.replace("#", "");
+		}, 500);
 	}
 });
 

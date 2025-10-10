@@ -190,16 +190,16 @@ onBeforeRouteLeave(() => {
 </script>
 
 <template>
-  <div class="access-data flex flex-col gap-5">
-    <BAccessDataFilter
-        v-model="form"
-        @reset="handleReset"
-    />
-
+  <div class="access-data flex flex-col gap-2">
     <BAccessDataTags
         v-model:interval="interval"
         v-bind="{ total, count, pause, status }"
         @handlePause="handlePause"
+    />
+
+    <BAccessDataFilter
+        v-model="form"
+        @reset="handleReset"
     />
 
     <NDataTable

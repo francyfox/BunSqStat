@@ -1,35 +1,11 @@
-import { Static, t } from "elysia";
 import { evaluate } from "mathjs";
+import {
+	IMetricBytesAndDuration,
+	IMetricDomainOptions,
+	TMetricDomainItem,
+} from "@/modules/access-logs/metrics/types";
 import { redisClient } from "@/redis";
 import { extractDomain } from "@/utils/string";
-
-export interface IMetricBytesAndDuration {
-	clientIP: string;
-	totalBytes: number;
-	totalDuration: number;
-	lastRequestUrl?: string;
-	lastActivity?: number;
-}
-
-export interface IMetricDomainOptions {
-	search?: string;
-	page?: number;
-	limit?: number;
-	startTime?: number;
-	endTime?: number;
-}
-
-export const MetricDomainItemSchema = t.Object({
-	domain: t.String(),
-	requestCount: t.Number(),
-	bytes: t.Number(),
-	duration: t.Number(),
-	lastActivity: t.Number(),
-	errorsRate: t.Number(),
-	hasBlocked: t.Boolean(),
-});
-
-export type TMetricDomainItem = Static<typeof MetricDomainItemSchema>;
 
 export const AccessLogsMetricsService = {
 	/**
