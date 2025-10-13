@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import { useWebSocket, watchDebounced } from "@vueuse/core";
+import { useRouteHash } from "@vueuse/router";
 import { NTabPane, NTabs, useNotification } from "naive-ui";
 import { onActivated, onMounted, onUnmounted, ref, watch } from "vue";
-import {
-	beforeRouteEnter,
-	onBeforeRouteLeave,
-	useRoute,
-	useRouter,
-} from "vue-router";
+import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
 import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
 import BTabUsers from "@/components/access-metric/BTabUsers.vue";
 import { WS_URL } from "@/consts.ts";
+import { useDomainStore } from "@/stores/domains.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 
@@ -22,6 +19,8 @@ const notification = useNotification();
 
 const statsStore = useStatsStore();
 const settingsStore = useSettingsStore();
+
+const domainStore = useDomainStore();
 
 const form = ref({
 	limit: 50,
@@ -93,6 +92,10 @@ watchDebounced(data, async (v) => {
 		startTime: form.value.time ? form.value.time[0] : undefined,
 		endTime: form.value.time ? form.value.time[1] : undefined,
 	});
+
+	if (route.hash === "#domains") {
+		await domainStore.getMetricsDomain();
+	}
 });
 
 onMounted(async () => {

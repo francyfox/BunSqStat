@@ -1,56 +1,41 @@
 <script setup lang="ts">
-import { Close } from "@vicons/ionicons5";
-import { Icon } from "@vicons/utils";
-import { watchDebounced } from "@vueuse/core";
-import { NButton, NFormItem, NInput } from "naive-ui";
+import { useRouteHash } from "@vueuse/router";
+import { type DataTableColumns, NTag, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { IMetricDomainOptions } from "server/schema";
-import { reactive, ref } from "vue";
-import { useDayjs } from "@/composables/dayjs.ts";
+import { computed, onMounted } from "vue";
+import BDomainTable from "@/components/access-metric/BDomainTable.vue";
 import { useDomainStore } from "@/stores/domains.ts";
 
-const dayjs = useDayjs();
+const hash = useRouteHash();
 
-const domainsStore = useDomainStore();
-const { items, loading, error, count } = storeToRefs(domainsStore);
-const search = ref("");
-const query = reactive<IMetricDomainOptions>({
-	search: search.value,
-});
+const domainStore = useDomainStore();
+const { items, error } = storeToRefs(domainStore);
+const notification = useNotification();
 
-async function handleSearch() {
-	await domainsStore.getMetricsDomain();
-}
-
-async function handleReset() {
-	search.value = "";
-}
-
-watchDebounced(search, (v) => {}, {
-	debounce: 200,
+onMounted(async () => {
+	try {
+		await domainStore.getMetricsDomain();
+	} catch (_) {
+		notification.error({
+			title: "Cant load domain metrics",
+			description: error.value,
+		});
+	}
 });
 </script>
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="flex gap-2 max-w-sm">
-      <NInput
-          v-model:value="search"
-          size="large"
-          placeholder="Search for Domains"
-      />
-
-      <NButton
-          type="error"
-          size="large"
-          @click="handleReset"
-      >
-        <Icon :size="24">
-          <Close />
-        </Icon>
-      </NButton>
+    <div class="flex flex-wrap gap-1">
+      <NTag class="text-xl">
+        TOTAL:
+        {{ items?.length }}
+      </NTag>
     </div>
 
+    <BDomainTable
+        :domains="items"
+    />
   </div>
 </template>
 

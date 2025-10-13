@@ -34,7 +34,7 @@ const status = computed(() => {
   <div class="users flex flex-col gap-2">
     <div class="flex flex-wrap gap-1">
       <NTag class="text-xl">
-        COUNT:
+        TOTAL:
         {{ accessMetrics?.users?.length }}
       </NTag>
       <NTag class="text-xl" type="success">

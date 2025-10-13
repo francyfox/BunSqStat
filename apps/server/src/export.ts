@@ -2,6 +2,7 @@ import { regexMap } from "./consts";
 import type {
 	IMetricDomainOptions,
 	TAccessLogMetricsResponse,
+	TMetricDomainItem,
 } from "./modules/access-logs/metrics/types";
 import type { getLogParams, TAccessLog } from "./modules/access-logs/types";
 
@@ -12,5 +13,6 @@ export {
 	type getLogParams,
 	type TAccessLog,
 	type TAccessLogMetricsResponse,
+	type TMetricDomainItem,
 	type IMetricDomainOptions,
 };

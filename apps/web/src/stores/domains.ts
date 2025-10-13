@@ -1,15 +1,20 @@
 import { defineStore } from "pinia";
 import type { IMetricDomainOptions } from "server/schema";
-import { ref, shallowRef } from "vue";
+import { reactive, ref, shallowRef } from "vue";
 import { api } from "@/api.ts";
 
 export const useDomainStore = defineStore("domains", () => {
-	const items = shallowRef();
+	const items = shallowRef([]);
 	const count = ref(0);
 	const loading = ref(false);
 	const error = ref();
+	const query = reactive<IMetricDomainOptions>({
+		search: "",
+		limit: 10,
+		page: 1,
+	});
 
-	async function getMetricsDomain(query: IMetricDomainOptions) {
+	async function getMetricsDomain() {
 		loading.value = true;
 		const response = await api.stats["access-logs"].metrics.domains.get({
 			query,
@@ -34,6 +39,7 @@ export const useDomainStore = defineStore("domains", () => {
 		count,
 		loading,
 		error,
+		query,
 		getMetricsDomain,
 	};
 });

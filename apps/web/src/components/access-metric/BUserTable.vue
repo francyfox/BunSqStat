@@ -41,7 +41,6 @@ const aliasUsers = computed(() =>
 
 		const { user, ...item } = i;
 
-		console.log(router.value, i.user);
 		return {
 			user: router.value || i.user,
 			...item,
