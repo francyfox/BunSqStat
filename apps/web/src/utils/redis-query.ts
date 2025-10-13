@@ -39,7 +39,6 @@ export function buildSearchQuery(
 			return `@${fieldName}:'${value}'`;
 
 		case "url":
-			// URL is TEXT SORTABLE field - use specialized URL query function
 			return createURLQuery(fieldName, value.replace(/^https?:\/\//g, ""));
 		case "hierarchyHost":
 			return createIPProceededQuery(fieldName, value);

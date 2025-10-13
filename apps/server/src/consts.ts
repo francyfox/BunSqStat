@@ -44,5 +44,5 @@ export const fieldTypes = new Map<string, string>([
 	["hierarchyType", "TAG SORTABLE"],
 	["hierarchyHost", "TAG SORTABLE"],
 	["contentType", "TEXT"],
-	["domain", "TAG SORTABLE"],
+	["domain", "TEXT SORTABLE"],
 ]);

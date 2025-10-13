@@ -4,6 +4,7 @@ import { AccessLogsMetrics } from "@/modules/access-logs/metrics";
 import { Settings } from "@/modules/settings";
 import { Stats } from "@/modules/stats";
 import { WS } from "@/modules/ws";
+import { AccessLogService } from "@/modules/access-logs/service";
 
 export const routes = new Elysia()
 	.get(

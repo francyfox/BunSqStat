@@ -128,7 +128,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		},
 	},
 	{
-		width: 80,
+		width: 100,
 		key: "errorsRate",
 		title: "Errors%",
 		align: "right",
@@ -155,16 +155,10 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		},
 	},
 	{
-		width: 100,
+		width: 120,
 		key: "hasBlocked",
 		title: "Blocked?",
 		align: "right",
-    customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
-			if (typeof order === "string") {
-				domainsStore.setSortBy("errorsRate", order);
-			}
-			return order === "ascend" ? "descend" : "ascend";
-		},
 		render: (row: any) =>
 			h(NTag, { type: row?.hasBlocked ? "error" : "success" }, () =>
 				h(Icon, { size: 16 }, () => h(row?.hasBlocked ? LockClosed : LockOpen)),

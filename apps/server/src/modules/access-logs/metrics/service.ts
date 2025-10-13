@@ -5,7 +5,6 @@ import {
 	TMetricDomainOptions,
 } from "@/modules/access-logs/metrics/types";
 import { redisClient } from "@/redis";
-import { extractDomain } from "@/utils/string";
 
 export const AccessLogsMetricsService = {
 	/**
@@ -386,7 +385,7 @@ export const AccessLogsMetricsService = {
 		limit = 10,
 		startTime,
 		endTime,
-		sortBy = "bytes",
+		sortBy = "requestCount",
 		sortOrder = "DESC",
 		page = 1,
 	}: TMetricDomainOptions): Promise<{
@@ -395,12 +394,18 @@ export const AccessLogsMetricsService = {
 	}> {
 		const TIMESTAMP =
 			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
-		const SEARCH_FILTER = search ? ` @domain:*${search}*` : "";
-		const FILTER = `${TIMESTAMP}${SEARCH_FILTER}`;
-		const LIMIT = `LIMIT ${	((page - 1) * limit).toString()} ${limit}`; // TODO: bug ?
-		console.log(page);
 
-		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error APPLY contains(@resultType,"DENIED") AS is_blocked GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount REDUCE MAX 1 @is_blocked AS hasBlocked SORTBY 2 @${sortBy} ${sortOrder} ${LIMIT}`;
+		const SEARCH_FILTER = search ? ` @url:${search}` : "";
+		const FILTER = TIMESTAMP === "*" && SEARCH_FILTER
+			? SEARCH_FILTER.trim()
+			: TIMESTAMP === "*"
+				? "*"
+				: SEARCH_FILTER
+					? `(${TIMESTAMP}${SEARCH_FILTER})`
+					: TIMESTAMP;
+
+		const redisSortBy = ["hasBlocked", "errorsRate"].includes(sortBy) ? "errorsCount" : sortBy; // fallback for client-side sorting
+		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error APPLY contains(@resultType,"DENIED") AS is_blocked GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount REDUCE MAX 1 @is_blocked AS hasBlocked SORTBY 2 @${redisSortBy} ${sortOrder} LIMIT ${(page - 1) * limit} ${limit}`;
 
 		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
 			"log_idx",
@@ -408,7 +413,7 @@ export const AccessLogsMetricsService = {
 			...aggregateQuery.split(" "),
 		]);
 
-		const items = results.map((result: any) => {
+		let items = results.map((result: any) => {
 			const { extra_attributes: data } = result;
 			return {
 				domain: data.domain,
