@@ -72,7 +72,7 @@ services:
 - - [X] User speed
 - - [X] masonry-wall
 - - [X] Top user table
-- - [ ] Top domain table
+- - [X] Top domain table
 - [ ] Adaptive
 - - [X] Mobile/Tablet (last 2 versions)
 - - [ ] Tile windows (custom size)

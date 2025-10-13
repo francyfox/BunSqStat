@@ -1,3 +1,8 @@
+## 0.2.0 - 13 Oct 2025
+
+Feature:
+- Added DOMAINS tab
+
 ## 0.1.8 - 09 Oct 2025
 
 Bugfix:
