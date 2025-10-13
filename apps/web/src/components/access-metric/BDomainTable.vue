@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { Close, LockClosed, LockOpen } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
-import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
+import {
+	breakpointsTailwind,
+	useBreakpoints,
+	watchDebounced,
+} from "@vueuse/core";
 import {
 	type DataTableColumns,
 	NButton,
@@ -28,7 +32,7 @@ const dayjs = useDayjs();
 const notification = useNotification();
 
 const domainsStore = useDomainStore();
-const { items, loading, error, count } = storeToRefs(domainsStore);
+const { items, loading, error, count, pageCount } = storeToRefs(domainsStore);
 
 const scroll = computed(() => (breakpoints.md.value ? undefined : 920));
 
@@ -37,8 +41,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		key: "domain",
 		title: "Domain",
 		minWidth: 80,
-		maxWidth: 300,
-
+		maxWidth: 500,
 		resizable: true,
 		fixed: breakpoints.md.value ? "left" : false,
 		ellipsis: {
@@ -106,13 +109,13 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 			const type = () => {
 				if (row?.errorsRate > 80) {
 					return "error";
-				} else if (row?.errorsRate > 50) {
+				} else if (row?.errorsRate > 10) {
 					return "warning";
 				}
 
 				return "info";
 			};
-			return h(NTag, { type: "info", size: "small", bordered: false }, () =>
+			return h(NTag, { type: type(), size: "small", bordered: false }, () =>
 				row?.errorsRate.toFixed(2),
 			);
 		},
@@ -137,6 +140,17 @@ async function handleReset() {
 	domainsStore.query.search = "";
 	await domainsStore.getMetricsDomain();
 }
+
+watchDebounced(
+	domainsStore.query,
+	async () => {
+		await domainsStore.getMetricsDomain();
+	},
+	{
+		deep: true,
+		debounce: 300,
+	},
+);
 </script>
 
 <template>
@@ -167,6 +181,10 @@ async function handleReset() {
     />
 
     <NPagination
+        v-model:page="domainsStore.query.page"
+        :page-count="pageCount"
+        simple
+        size="large"
     />
   </div>
 </template>

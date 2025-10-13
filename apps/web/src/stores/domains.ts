@@ -13,6 +13,7 @@ export const useDomainStore = defineStore("domains", () => {
 		limit: 10,
 		page: 1,
 	});
+	const pageCount = ref(0);
 
 	async function getMetricsDomain() {
 		loading.value = true;
@@ -29,6 +30,7 @@ export const useDomainStore = defineStore("domains", () => {
 
 		items.value = response.data.items;
 		count.value = response.data.count;
+		pageCount.value = Math.ceil(response.data.count / (query.limit || 10));
 		loading.value = false;
 
 		return response;
@@ -40,6 +42,7 @@ export const useDomainStore = defineStore("domains", () => {
 		loading,
 		error,
 		query,
+		pageCount,
 		getMetricsDomain,
 	};
 });
