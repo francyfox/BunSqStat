@@ -1,10 +1,6 @@
 // @ts-ignore
 import { default as mime } from "mime/lite";
-import {
-	extractDomain,
-	getFileExtensionFromUrl,
-	sanitizeUrl,
-} from "@/utils/string";
+import { extractDomain, getFileExtensionFromUrl } from "@/utils/string";
 
 export function parseLogLine(line: string, regexMap: Map<string, RegExp>) {
 	const result: Record<string, string> = {};

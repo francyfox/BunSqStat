@@ -1,8 +1,8 @@
 import { evaluate } from "mathjs";
 import {
 	IMetricBytesAndDuration,
-	IMetricDomainOptions,
 	TMetricDomainItem,
+	TMetricDomainOptions,
 } from "@/modules/access-logs/metrics/types";
 import { redisClient } from "@/redis";
 import { extractDomain } from "@/utils/string";
@@ -383,108 +383,49 @@ export const AccessLogsMetricsService = {
 
 	async getDomainsInfo({
 		search,
-		page = 1,
-		limit = 20,
+		limit = 10,
 		startTime,
 		endTime,
-	}: IMetricDomainOptions): Promise<{
+		sortBy = "bytes",
+		sortOrder = "DESC",
+		page = 1,
+	}: TMetricDomainOptions): Promise<{
 		count: number;
 		items: TMetricDomainItem[];
 	}> {
 		const TIMESTAMP =
 			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
-		const limitNum = 50000; // optimized limit for aggregation
+		const SEARCH_FILTER = search ? ` @domain:*${search}*` : "";
+		const FILTER = `${TIMESTAMP}${SEARCH_FILTER}`;
+		const LIMIT = `LIMIT ${	((page - 1) * limit).toString()} ${limit}`; // TODO: bug ?
+		console.log(page);
 
-		const { results } = (await redisClient.send("FT.SEARCH", [
+		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error APPLY contains(@resultType,"DENIED") AS is_blocked GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount REDUCE MAX 1 @is_blocked AS hasBlocked SORTBY 2 @${sortBy} ${sortOrder} ${LIMIT}`;
+
+		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
 			"log_idx",
-			TIMESTAMP,
-			"LIMIT",
-			"0",
-			limitNum.toString(),
-			"RETURN",
-			"5",
-			"url",
-			"bytes",
-			"duration",
-			"timestamp",
-			"resultStatus",
-		])) as { results: any[] };
+			FILTER,
+			...aggregateQuery.split(" "),
+		]);
 
-		// group by domain
-		const domainMap = new Map<
-			string,
-			{
-				requestCount: number;
-				bytes: number;
-				duration: number;
-				lastActivity: number;
-				errorsCount: number;
-				hasBlocked: boolean;
-			}
-		>();
-
-		for (const result of results) {
-			const { extra_attributes: item } = result;
-			const domain = extractDomain(item.url);
-			if (!domain || domain === "-") continue;
-			if (search && !domain.toLowerCase().includes(search.toLowerCase()))
-				continue;
-
-			if (!domainMap.has(domain)) {
-				domainMap.set(domain, {
-					requestCount: 0,
-					bytes: 0,
-					duration: 0,
-					lastActivity: 0,
-					errorsCount: 0,
-					hasBlocked: false,
-				});
-			}
-			const data = domainMap.get(domain)!;
-			data.requestCount++;
-			data.bytes += Number(item.bytes || 0);
-			data.duration += Number(item.duration || 0);
-			const ts = Number(item.timestamp || 0);
-			if (ts > data.lastActivity) data.lastActivity = ts;
-			const status = Number(item.resultStatus || 0);
-			if (
-				status >= 400 ||
-				status === 0 ||
-				item.resultType?.includes("DENIED") ||
-				item.resultType?.includes("TIMEOUT")
-			) {
-				data.errorsCount++;
-				if (item.resultType?.includes("DENIED")) {
-					data.hasBlocked = true;
-				}
-			}
-		}
-
-		const items = Array.from(domainMap.entries()).map(([domain, data]) => ({
-			domain,
-			requestCount: data.requestCount,
-			bytes: data.bytes,
-			duration: data.duration,
-			lastActivity: data.lastActivity,
-			errorsRate:
-				data.requestCount > 0
-					? (data.errorsCount / data.requestCount) * 100
+		const items = results.map((result: any) => {
+			const { extra_attributes: data } = result;
+			return {
+				domain: data.domain,
+				requestCount: Number(data.requestCount),
+				bytes: Number(data.bytes),
+				duration: Number(data.duration),
+				lastActivity: Number(data.lastActivity),
+				errorsRate: data.errorsCount && data.requestCount
+					? (Number(data.errorsCount) / Number(data.requestCount)) * 100
 					: 0,
-			hasBlocked: data.hasBlocked,
-		}));
-
-		// sort by requestCount DESC
-		items.sort((a, b) => b.requestCount - a.requestCount);
-
-		// paginate
-		const pageSize = limit || 20;
-		const startIdx = (page - 1) * pageSize;
-		const endIdx = startIdx + pageSize;
-		const paginated = items.slice(startIdx, endIdx);
+				hasBlocked: Boolean(Number(data.hasBlocked)),
+			};
+		});
 
 		return {
-			count: items.length,
-			items: paginated,
+			count: total_results,
+			items,
 		};
 	},
 };

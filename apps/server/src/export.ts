@@ -1,8 +1,8 @@
 import { regexMap } from "./consts";
 import type {
-	IMetricDomainOptions,
 	TAccessLogMetricsResponse,
 	TMetricDomainItem,
+	TMetricDomainOptions,
 } from "./modules/access-logs/metrics/types";
 import type { getLogParams, TAccessLog } from "./modules/access-logs/types";
 
@@ -14,5 +14,5 @@ export {
 	type TAccessLog,
 	type TAccessLogMetricsResponse,
 	type TMetricDomainItem,
-	type IMetricDomainOptions,
+	type TMetricDomainOptions,
 };

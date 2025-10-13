@@ -3,6 +3,7 @@ import { AccessLogsMetricsService } from "@/modules/access-logs/metrics/service"
 import {
 	AccessLogMetricsSchema,
 	MetricDomainItemSchema,
+	MetricDomainOptionsSchema,
 } from "@/modules/access-logs/metrics/types";
 
 export const AccessLogsMetrics = new Elysia()
@@ -46,27 +47,7 @@ export const AccessLogsMetrics = new Elysia()
 			return response;
 		},
 		{
-			query: t.Partial(
-				t.Object({
-					search: t.String(),
-					page: t.Number({ default: 1 }),
-					limit: t.Number({ default: 20, maximum: 100 }),
-					sortBy: t.Union([
-						t.Literal("requestCount"),
-						t.Literal("bytes"),
-						t.Literal("duration"),
-						t.Literal("lastActivity"),
-						t.Literal("errorsRate"),
-					]),
-					sortOrder: t.Union([t.Literal("asc"), t.Literal("desc")]),
-					startTime: t.Partial(
-						t.Number({ description: `Timestamp like ${Date.now()}` }),
-					),
-					endTime: t.Partial(
-						t.Number({ description: `Timestamp like ${Date.now()}` }),
-					),
-				}),
-			),
+			query: t.Partial(MetricDomainOptionsSchema),
 			response: {
 				"200": t.Object({
 					count: t.Number(),

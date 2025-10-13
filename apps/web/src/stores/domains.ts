@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { IMetricDomainOptions } from "server/schema";
+import type { TMetricDomainOptions } from "server/schema";
 import { reactive, ref, shallowRef } from "vue";
 import { api } from "@/api.ts";
 
@@ -8,12 +8,21 @@ export const useDomainStore = defineStore("domains", () => {
 	const count = ref(0);
 	const loading = ref(false);
 	const error = ref();
-	const query = reactive<IMetricDomainOptions>({
+	const query = reactive<Partial<TMetricDomainOptions>>({
 		search: "",
 		limit: 10,
 		page: 1,
+		sortBy: "requestCount",
+		sortOrder: "DESC",
 	});
+
 	const pageCount = ref(0);
+
+	function setSortBy(column: TMetricDomainOptions["sortBy"], order: "ascend" | "descend") {
+		const redisOrder = order === "ascend" ? "DESC" : "ASC";
+		query.sortBy = column;
+		query.sortOrder = redisOrder;
+	}
 
 	async function getMetricsDomain() {
 		loading.value = true;
@@ -43,6 +52,7 @@ export const useDomainStore = defineStore("domains", () => {
 		error,
 		query,
 		pageCount,
+		setSortBy,
 		getMetricsDomain,
 	};
 });
