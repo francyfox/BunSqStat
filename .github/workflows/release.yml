@@ -41,11 +41,8 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Build frontend
-        run: cd apps/web && bun run build
-
-      - name: Build backend
-        run: cd apps/server && bun run build
+      - name: Build
+        run: bun run build
 
       - name: Prepare releases directory
         run: |
