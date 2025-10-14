@@ -41,7 +41,15 @@ jobs:
           bun-version: latest
 
       - name: Install and build
-        run: bun i && bun run build
+        run: |
+          cd apps/web
+          bun i
+          cd apps/server
+          bun i
+          cd ..
+          bun i
+          bun run build
+        &&
 
       - name: Prepare releases directory
         run: |
