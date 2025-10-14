@@ -10,7 +10,8 @@
 		"build": {
 			"dependsOn": ["^build"],
 			"outputs": ["dist/**"],
-			"env": ["NODE_ENV"]
+			"env": ["NODE_ENV"],
+			"inputs": ["src/**", "../../apps/server/src/export.ts"]
 		},
 		"check-types": {
 			"dependsOn": ["^check-types"]
