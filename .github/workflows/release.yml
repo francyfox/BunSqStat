@@ -40,11 +40,8 @@ jobs:
         with:
           bun-version: latest
 
-      - name: Install dependencies
-        run: bun i
-
-      - name: Build
-        run: bun run build
+      - name: Install and build
+        run: bun i && bun run build
 
       - name: Prepare releases directory
         run: |
