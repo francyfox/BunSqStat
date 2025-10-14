@@ -4,7 +4,9 @@
 	"devDependencies": {
 		"@biomejs/biome": "2.2.5",
 		"@faker-js/faker": "^10.0.0",
-		"turbo": "^2.5.8"
+		"@types/node": "^24.7.2",
+		"turbo": "^2.5.8",
+		"typescript": "~5.9.3"
 	},
 	"description": "",
 	"packageManager": "bun@1.2.21",

@@ -7,6 +7,7 @@ import postcssSimpleVars from "postcss-simple-vars";
 import UnoCSS from "unocss/vite";
 import VueRouter from "unplugin-vue-router/vite";
 import { defineConfig } from "vite";
+// import { analyzer } from "vite-bundle-analyzer";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -24,11 +25,15 @@ export default defineConfig({
 					groups: [
 						{
 							name: "utils",
-							test: /@vueuse\/core|pinia|dayjs|lodash|date-fns|vueuc/,
+							test: /@vueuse\/core|pinia|dayjs|lodash|date-fns|vueuc|fuse.js|radix3/,
 						},
 						{
 							name: "chartjs",
 							test: /chart.js|vue-chartjs/,
+						},
+						{
+							name: "datatable",
+							test: /node_modules\/naive-ui\/es\/data-table/,
 						},
 						{
 							name: "ui",
@@ -40,7 +45,7 @@ export default defineConfig({
 						},
 						{
 							name: "vendor",
-							test: /vue|vue-router/,
+							test: /vue|vue-router|pinia|pinia-plugin-persistedstate/,
 						},
 					],
 				},

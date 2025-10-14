@@ -9,7 +9,9 @@
       "devDependencies": {
         "@biomejs/biome": "2.2.5",
         "@faker-js/faker": "^10.0.0",
+        "@types/node": "^24.7.2",
         "turbo": "^2.5.8",
+        "typescript": "~5.9.3",
       },
     },
     "apps/server": {
@@ -26,6 +28,8 @@
         "mime": "^4.1.0",
       },
       "devDependencies": {
+        "@sinclair/typebox": "^0.34.18",
+        "@types/node": "^24.7.2",
         "bun-types": "^1.2.23",
       },
     },
@@ -50,6 +54,7 @@
       },
       "devDependencies": {
         "@types/node": "^24.7.2",
+        "@unocss/preset-wind3": "^66.5.3",
         "@unocss/reset": "^66.5.3",
         "@vicons/ionicons5": "^0.13.0",
         "@vicons/utils": "^0.1.4",
@@ -64,6 +69,7 @@
         "unplugin-vue-router": "^0.15.0",
         "vfonts": "^0.0.3",
         "vite": "npm:rolldown-vite@^7.1.16",
+        "vite-bundle-analyzer": "^1.2.3",
         "vue-tsc": "^3.1.1",
       },
     },
@@ -660,6 +666,8 @@
     "vfonts": ["vfonts@0.0.3", "", {}, "sha512-nguyw8L6Un8eelg1vQ31vIU2ESxqid7EYmy8V+MDeMaHBqaRSkg3dTBToC1PR00D89UzS/SLkfYPnx0Wf23IQQ=="],
 
     "vite": ["rolldown-vite@7.1.16", "", { "dependencies": { "@oxc-project/runtime": "0.92.0", "fdir": "^6.5.0", "lightningcss": "^1.30.2", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rolldown": "1.0.0-beta.42", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "esbuild": "^0.25.0", "jiti": ">=1.21.0", "less": "^4.0.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "esbuild", "jiti", "less", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-cK6tCmZyEC0KRAcXTjQ+ara+wkqmaE7WUoI0ZfZzDuvaRaZ3mtvbhTJc4cH+PjKRok++++Z1bZZaNlf3+SnnGA=="],
+
+    "vite-bundle-analyzer": ["vite-bundle-analyzer@1.2.3", "", { "bin": { "analyze": "dist/bin.js" } }, "sha512-8nhwDGHWMKKgg6oegAOpDgTT7/yzTVzeYzLF4y8WBJoYu9gO7h29UpHiQnXD2rAvfQzDy5Wqe/Za5cgqhnxi5g=="],
 
     "vooks": ["vooks@0.2.12", "", { "dependencies": { "evtd": "^0.2.2" }, "peerDependencies": { "vue": "^3.0.0" } }, "sha512-iox0I3RZzxtKlcgYaStQYKEzWWGAduMmq+jS7OrNdQo1FgGfPMubGL3uGHOU9n97NIvfFDBGnpSvkWyb/NSn/Q=="],
 
