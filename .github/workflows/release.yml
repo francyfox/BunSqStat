@@ -42,11 +42,6 @@ jobs:
 
       - name: Install and build
         run: |
-          cd apps/web
-          bun i
-          cd apps/server
-          bun i
-          cd ..
           bun i
           bun run build
 
@@ -59,8 +54,8 @@ jobs:
           cp LICENSE releases/LICENSE
           cp README.md releases/README.md
           cp -r docs/* releases/docs/
-          cp -r apps/web/dist/* releases/web/
-          cp -r apps/server/dist/* releases/backend/
+          if [ -d apps/web/dist ]; then cp -r apps/web/dist/* releases/web/; fi
+          if [ -d apps/server/dist ]; then cp -r apps/server/dist/* releases/backend/; fi
 
       - name: Archive
         run: |

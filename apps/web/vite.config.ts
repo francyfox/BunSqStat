@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import postcssCalc from "postcss-calc";
+// @ts-ignore
 import postcssFor from "postcss-for";
 import postcssSimpleVars from "postcss-simple-vars";
 import UnoCSS from "unocss/vite";

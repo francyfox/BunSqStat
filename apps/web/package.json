@@ -25,6 +25,7 @@
 		"vue-router": "^4.5.1"
 	},
 	"devDependencies": {
+		"@types/node": "^24.7.2",
 		"@unocss/reset": "^66.5.3",
 		"@vicons/ionicons5": "^0.13.0",
 		"@vicons/utils": "^0.1.4",
