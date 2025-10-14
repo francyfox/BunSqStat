@@ -15,6 +15,37 @@ export default defineConfig({
 			plugins: [postcssSimpleVars(), postcssFor(), postcssCalc({})],
 		},
 	},
+	build: {
+		cssCodeSplit: true,
+		rolldownOptions: {
+			output: {
+				advancedChunks: {
+					groups: [
+						{
+							name: "utils",
+							test: /@vueuse\/core|pinia|dayjs|lodash|date-fns|vueuc/,
+						},
+						{
+							name: "chartjs",
+							test: /chart.js|vue-chartjs/,
+						},
+						{
+							name: "ui",
+							test: /naive-ui/,
+						},
+						{
+							name: "icons",
+							test: /@vicons/,
+						},
+						{
+							name: "vendor",
+							test: /vue|vue-router/,
+						},
+					],
+				},
+			},
+		},
+	},
 	resolve: {
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url)),
