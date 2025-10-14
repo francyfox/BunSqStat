@@ -42,6 +42,9 @@ jobs:
 
       - name: Install and build
         run: |
+          cd apps/web && bun i
+          cd ../server && bun i
+          cd ..
           bun i
           bun run build
 
