@@ -1,4 +1,9 @@
-## 0.21.1 - 16 Oct 2025
+## 0.21.2 - 15 Oct 2025
+
+Bugfix:
+- Removed manual bun download. Changed compile mode
+
+## 0.21.1 - 15 Oct 2025
 
 Test:
 - binary backend format

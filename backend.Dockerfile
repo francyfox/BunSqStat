@@ -1,4 +1,4 @@
-FROM oven/bun:1.2.21 AS base
+FROM oven/bun:1.3.0 AS base
 WORKDIR /usr/src/app
 
 # Install stage - copy dependencies and install
@@ -18,7 +18,7 @@ RUN bun run build:binary
 
 # Production stage - minimal runtime
 FROM base AS release
-COPY --from=build /usr/src/app/apps/server/bunsqstat-backend-binary ./bunsqstat-backend-binary
+COPY --from=build /usr/src/app/apps/server/bunsqstat-backend-binary /app/backend/bunsqstat-backend-binary
 
 
 

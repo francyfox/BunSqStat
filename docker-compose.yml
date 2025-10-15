@@ -1,6 +1,6 @@
 services:
   bunsqstat_client:
-    image: ghcr.io/francyfox/bunsqstat:v0.21.0
+    image: ghcr.io/francyfox/bunsqstat:v0.21.1
     container_name: bunsqstat-client
     restart: unless-stopped
 #    deploy:
