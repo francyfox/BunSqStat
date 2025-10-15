@@ -21,6 +21,7 @@ export const AccessLogSchema = t.Object({
 	hierarchyType: t.String(),
 	hierarchyHost: t.String(),
 	contentType: t.String(),
+	domain: t.String(),
 });
 
 export type TAccessLog = Static<typeof AccessLogSchema>;

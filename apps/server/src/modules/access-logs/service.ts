@@ -112,7 +112,6 @@ export const AccessLogService = {
 			.flat()
 			.filter(Boolean) as string[];
 
-		console.log(args);
 		const response = await redisClient.send("FT.SEARCH", args);
 		const items = response.results.map((i: any) => i.extra_attributes);
 

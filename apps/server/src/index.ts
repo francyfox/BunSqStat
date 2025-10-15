@@ -7,8 +7,6 @@ import { fileWatcher } from "@/modules/watcher";
 import { redisClient } from "@/redis";
 import { routes } from "@/routes";
 
-await LogManager.readLogs();
-
 const signals = ["SIGINT", "SIGTERM"];
 
 for (const signal of signals) {
@@ -30,6 +28,9 @@ process.on("unhandledRejection", (error) => {
 });
 
 const app = new Elysia()
+	.onStart(async () => {
+		await LogManager.readLogs();
+	})
 	.use(routes)
 	.use(cors())
 	.use(swagger())

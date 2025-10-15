@@ -1,6 +1,6 @@
 // @ts-ignore
 import { default as mime } from "mime/lite";
-import { getFileExtensionFromUrl, sanitizeUrl } from "@/utils/string";
+import { extractDomain, getFileExtensionFromUrl } from "@/utils/string";
 
 export function parseLogLine(line: string, regexMap: Map<string, RegExp>) {
 	const result: Record<string, string> = {};
@@ -14,11 +14,15 @@ export function parseLogLine(line: string, regexMap: Map<string, RegExp>) {
 		}
 
 		if (key === "clientIP" && result[key] !== "-") {
-			result[key] = result[key].replace(/\./g, '_');
+			result[key] = result[key].replace(/\./g, "_");
 		}
 
 		if (key === "hierarchyHost" && result[key] !== "-") {
-			result[key] = result[key].replace(/\./g, '_');
+			result[key] = result[key].replace(/\./g, "_");
+		}
+
+		if (key === "url" && result[key] !== "-") {
+			result["domain"] = extractDomain(result["url"] || "");
 		}
 
 		const NO_CONTENT_TYPE =

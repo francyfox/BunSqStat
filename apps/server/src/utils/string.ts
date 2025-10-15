@@ -36,3 +36,17 @@ export function getFileExtensionFromUrl(url: string) {
 		return null;
 	}
 }
+
+export function extractDomain(url: string): string {
+	if (!url || url === '-') return '-';
+
+	// Handle CONNECT method where url is domain:port
+	if (url.match(/^\d+\.\d+\.\d+\.\d+:\d+$/)) return url.split(':')[0]; // IP
+
+	const sanitized = sanitizeUrl(url);
+	try {
+		return new URL(sanitized).host || '-';
+	} catch (e) {
+		return '-';
+	}
+}

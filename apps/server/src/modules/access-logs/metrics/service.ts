@@ -1,13 +1,10 @@
 import { evaluate } from "mathjs";
+import {
+	IMetricBytesAndDuration,
+	TMetricDomainItem,
+	TMetricDomainOptions,
+} from "@/modules/access-logs/metrics/types";
 import { redisClient } from "@/redis";
-
-export interface IMetricBytesAndDuration {
-	clientIP: string;
-	totalBytes: number;
-	totalDuration: number;
-	lastRequestUrl?: string;
-	lastActivity?: number;
-}
 
 export const AccessLogsMetricsService = {
 	/**
@@ -294,7 +291,7 @@ export const AccessLogsMetricsService = {
 			duration: 0,
 		};
 
-		const rpsTime = (): { startTime: number; endTime: number } => {
+		const rpsTime = (): any => {
 			if (!time.startTime && !time.endTime) {
 				const now = Date.now();
 				return {
@@ -381,5 +378,59 @@ export const AccessLogsMetricsService = {
 		}
 
 		return output;
+	},
+
+	async getDomainsInfo({
+		search,
+		limit = 10,
+		startTime,
+		endTime,
+		sortBy = "requestCount",
+		sortOrder = "DESC",
+		page = 1,
+	}: TMetricDomainOptions): Promise<{
+		count: number;
+		items: TMetricDomainItem[];
+	}> {
+		const TIMESTAMP =
+			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
+
+		const SEARCH_FILTER = search ? ` @url:${search}` : "";
+		const FILTER = TIMESTAMP === "*" && SEARCH_FILTER
+			? SEARCH_FILTER.trim()
+			: TIMESTAMP === "*"
+				? "*"
+				: SEARCH_FILTER
+					? `(${TIMESTAMP}${SEARCH_FILTER})`
+					: TIMESTAMP;
+
+		const redisSortBy = ["hasBlocked", "errorsRate"].includes(sortBy) ? "errorsCount" : sortBy; // fallback for client-side sorting
+		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error APPLY contains(@resultType,"DENIED") AS is_blocked GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount REDUCE MAX 1 @is_blocked AS hasBlocked SORTBY 2 @${redisSortBy} ${sortOrder} LIMIT ${(page - 1) * limit} ${limit}`;
+
+		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
+			"log_idx",
+			FILTER,
+			...aggregateQuery.split(" "),
+		]);
+
+		let items = results.map((result: any) => {
+			const { extra_attributes: data } = result;
+			return {
+				domain: data.domain,
+				requestCount: Number(data.requestCount),
+				bytes: Number(data.bytes),
+				duration: Number(data.duration),
+				lastActivity: Number(data.lastActivity),
+				errorsRate: data.errorsCount && data.requestCount
+					? (Number(data.errorsCount) / Number(data.requestCount)) * 100
+					: 0,
+				hasBlocked: Boolean(Number(data.hasBlocked)),
+			};
+		});
+
+		return {
+			count: total_results,
+			items,
+		};
 	},
 };

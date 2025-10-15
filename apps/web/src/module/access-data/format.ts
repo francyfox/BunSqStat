@@ -1,10 +1,9 @@
 // @ts-nocheck
-
-import { breakpointsTailwind, set, useBreakpoints } from "@vueuse/core";
+import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
 import { storeToRefs } from "pinia";
 import type { TAccessLog } from "server/schema";
-import { computed, h, watchEffect } from "vue";
+import { computed, h } from "vue";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
@@ -114,7 +113,7 @@ export function accessColumnAttributes(
 							() => "Anonymous",
 						);
 					}
-					return router.value;
+					return router.value || row[column];
 				},
 			};
 
@@ -270,6 +269,7 @@ export function formatColumns(data: Array<keyof TAccessLog>): DataTableColumns {
 	const store = useStatsStore();
 
 	return data
+		.filter((column) => column !== "domain")
 		.map((column, index) => {
 			return {
 				key: column,

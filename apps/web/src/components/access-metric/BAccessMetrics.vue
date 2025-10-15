@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import { useWebSocket, watchDebounced } from "@vueuse/core";
+import { useRouteHash } from "@vueuse/router";
 import { NTabPane, NTabs, useNotification } from "naive-ui";
-import { onMounted, onUnmounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onActivated, onMounted, onUnmounted, ref, watch } from "vue";
+import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
 import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
 import BTabUsers from "@/components/access-metric/BTabUsers.vue";
 import { WS_URL } from "@/consts.ts";
+import { useDomainStore } from "@/stores/domains.ts";
+import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 
 const route = useRoute();
@@ -15,6 +18,9 @@ const router = useRouter();
 const notification = useNotification();
 
 const statsStore = useStatsStore();
+const settingsStore = useSettingsStore();
+
+const domainStore = useDomainStore();
 
 const form = ref({
 	limit: 50,
@@ -22,8 +28,6 @@ const form = ref({
 });
 
 const tab = ref("global");
-
-await statsStore.getAccessMetrics();
 
 function handleTabChange(tab: string) {
 	router.push({ name: route.name, hash: `#${tab}` });
@@ -53,7 +57,7 @@ watch(
 	},
 );
 
-const { data } = useWebSocket(`${WS_URL}/ws/access-logs`, {
+const { data, close, open, status } = useWebSocket(`${WS_URL}/ws/access-logs`, {
 	autoReconnect: {
 		retries: 3,
 		delay: 1000,
@@ -88,16 +92,37 @@ watchDebounced(data, async (v) => {
 		startTime: form.value.time ? form.value.time[0] : undefined,
 		endTime: form.value.time ? form.value.time[1] : undefined,
 	});
+
+	if (route.hash === "#domains") {
+		await domainStore.getMetricsDomain();
+	}
 });
 
-onMounted(() => {
+onMounted(async () => {
+	await Promise.all([
+		statsStore.getAccessMetrics(),
+		settingsStore.getAliases(),
+	]);
+
+	if (status.value === "CLOSED") open();
+
 	if (route.hash) {
-		tab.value = route.hash.replace("#", "");
+		setTimeout(() => {
+			tab.value = route.hash?.replace("#", "");
+		}, 500);
 	}
 });
 
 onUnmounted(() => {
 	window.location.hash = "";
+});
+
+onBeforeRouteLeave(() => {
+	close();
+});
+
+onActivated(() => {
+	if (status.value === "CLOSED") open();
 });
 </script>
 

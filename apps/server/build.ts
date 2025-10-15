@@ -5,6 +5,7 @@ import { rm } from "node:fs/promises";
 	await Bun.build({
 		target: "bun",
 		root: "./src",
+		format: "esm",
 		entrypoints: ["./src/index.ts"],
 		outdir: "./dist",
 		splitting: true,

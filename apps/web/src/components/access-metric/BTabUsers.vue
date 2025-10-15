@@ -12,7 +12,7 @@ const { accessMetrics } = storeToRefs(statsStore);
 
 const status = computed(() => {
 	const online =
-		accessMetrics.value?.users.reduce((acc, current) => {
+		accessMetrics.value?.users?.reduce((acc, current) => {
 			const secondsAgo = dayjs().diff(current.lastActivity, "s");
 			const isOnline = secondsAgo < 300;
 
@@ -31,11 +31,11 @@ const status = computed(() => {
 </script>
 
 <template>
-  <div class="users flex flex-col gap-5">
+  <div class="users flex flex-col gap-2">
     <div class="flex flex-wrap gap-1">
       <NTag class="text-xl">
-        COUNT:
-        {{ accessMetrics?.users.length }}
+        TOTAL:
+        {{ accessMetrics?.users?.length }}
       </NTag>
       <NTag class="text-xl" type="success">
         ONLINE: {{ status.online }}
@@ -45,7 +45,7 @@ const status = computed(() => {
       </NTag>
     </div>
 
-    <BUserTable :users="accessMetrics?.users" />
+    <BUserTable :users="accessMetrics?.users || []" />
   </div>
 </template>
 
