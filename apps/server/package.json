@@ -9,7 +9,7 @@
 		"dev": "bun --env-file=../../.env run --watch src/index.ts",
 		"test": "bun test",
 		"build": "bun run build.ts",
-		"build:binary": "bun build src/index.ts --compile --outfile=bunsqstat-backend-binary",
+		"build:binary": "bun build src/index.ts --compile --target=bun-linux-x64-baseline --outfile=bunsqstat-backend-binary",
 		"preview": "bun --env-file=../../.env ./dist/index.js",
 		"test:logs": "bun run src/__tests__/log-generator/log-simulator.ts",
 		"test:logs:quick": "bun run src/__tests__/log-generator/log-simulator.ts --duration=30"
