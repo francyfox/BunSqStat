@@ -1,14 +1,14 @@
 services:
   bunsqstat_client:
-    image: ghcr.io/francyfox/bunsqstat:v0.2.0
+    image: ghcr.io/francyfox/bunsqstat:v0.21.0
     container_name: bunsqstat-client
     restart: unless-stopped
-    deploy:
-      resources:
-        limits:
-          memory: 10M # Sets a memory limit of 512 megabytes
-        reservations:
-          memory: 10M # Guarantees a minimum of 256 megabytes
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 100M # Sets a memory limit of 512 megabytes
+#        reservations:
+#          memory: 100M # Guarantees a minimum of 256 megabytes
     ports:
       - "80:80"      # Web interface
       - "3000:3000"  # API (optional, for direct access)

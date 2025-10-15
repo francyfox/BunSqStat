@@ -1,4 +1,8 @@
 logLevel="debug"
+
+[build]
+target = "bun"
+transpile = ["tsconfig.json"]
 [test]
 root="./src"
 coverage=true
