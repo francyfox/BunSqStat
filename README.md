@@ -16,7 +16,9 @@
 
 > **Real-time Squid proxy log analyzer with powerful search capabilities** ⚡
 
-BunSqStat is a modern, high-performance web application for analyzing Squid proxy server logs in real-time. Built with the latest technologies including Bun, Vue 3, Redis Stack, and RediSearch for lightning-fast full-text search.
+> **BunSqStat is a modern, high-performance web application for analyzing Squid proxy server logs in real-time. Built with the latest technologies including Bun, Vue 3, Redis Stack, and RediSearch for lightning-fast full-text search.**
+
+> **From version 0.21.0 we started to use bun-baseline version for virtual machines compatibility**
 
 
 ## Quick Start

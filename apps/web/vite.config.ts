@@ -1,4 +1,4 @@
-import { fileURLToPath, resolve, URL } from "node:url";
+import { fileURLToPath, URL } from "node:url";
 import vue from "@vitejs/plugin-vue";
 import postcssCalc from "postcss-calc";
 // @ts-ignore

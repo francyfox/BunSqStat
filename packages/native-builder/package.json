@@ -1,0 +1,19 @@
+{
+	"name": "native-builder",
+	"module": "src/index.ts",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "bun run build.ts",
+		"preview": "./dist/bunsqstat"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"elysia": "^1.4.11"
+	}
+}
