@@ -4,7 +4,9 @@ import { NDataTable } from "naive-ui";
 import { computed } from "vue";
 import BCardMetric from "@/components/BCardMetric.vue";
 import { formatBytes } from "@/utils/string.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const breakpoints = useBreakpoints(breakpointsTailwind);
 
 const { items } = defineProps<{
@@ -21,7 +23,7 @@ const scroll = computed(() => (breakpoints.md.value ? undefined : 460));
 const columns = computed(() => [
 	{
 		key: "contentType",
-		title: "Content-Type",
+		title: t('contentTypeColumn'),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -29,7 +31,7 @@ const columns = computed(() => [
 	{
 		width: 100,
 		key: "requestCount",
-		title: "Request",
+		title: t('contentRequestColumn'),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -39,7 +41,7 @@ const columns = computed(() => [
 	{
 		width: 100,
 		key: "bytes",
-		title: "Bytes",
+		title: t('contentBytesColumn'),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -51,7 +53,7 @@ const columns = computed(() => [
 	{
 		width: 80,
 		key: "hitRatePercent",
-		title: "Hit%",
+		title: t('hitPercentColumn'),
 		sorter: (row1: any, row2: any) => row1.hitRatePercent - row2.hitRatePercent,
 		render: (row: any) => {
 			return row.hitRatePercent.toFixed(2);

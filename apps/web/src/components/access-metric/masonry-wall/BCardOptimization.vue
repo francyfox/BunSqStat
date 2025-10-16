@@ -14,7 +14,7 @@ const { bandwidth } = defineProps<{
   <BCardMetric>
     <div class="flex flex-wrap items-center gap-2">
       <div class="flex-grow">
-        <div class="text-xl">bandwidth</div>
+        <div class="text-xl">{{ $t('bandwidth') }}</div>
         <NTag size="large">
           <div class="text-2xl">{{ formatBytes(bandwidth) }}/s</div>
         </NTag>
@@ -22,7 +22,7 @@ const { bandwidth } = defineProps<{
 
       <div class="flex-grow">
         <div class="text-xl">
-          Hit Rate
+          {{ $t('hitRate') }}
         </div>
         <NTag size="large">
           <div class="text-2xl">{{ hitRatePercent?.toFixed(2) || 0 }} %</div>
@@ -31,7 +31,7 @@ const { bandwidth } = defineProps<{
 
 
       <div class="w-full">
-        <div class="text-xl">Success Rate</div>
+        <div class="text-xl">{{ $t('successRate') }}</div>
         <NTag size="large">
           <div class="text-2xl">{{ successRatePercent?.toFixed(2) || 0 }} %</div>
         </NTag>
@@ -40,7 +40,7 @@ const { bandwidth } = defineProps<{
 
 
     <template #name>
-      OPTIMIZATION
+      {{ $t('optimizationTitle') }}
     </template>
   </BCardMetric>
 </template>

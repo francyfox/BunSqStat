@@ -4,7 +4,9 @@ import { Icon } from "@vicons/utils";
 import { NButton, NFormItem, NInput, NTooltip, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { useSettingsStore } from "@/stores/settings.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = useSettingsStore();
 const { loading, error } = storeToRefs(store);
 const message = useMessage();
@@ -16,7 +18,7 @@ async function handleUpdateAliases() {
 		if (error.value) {
 			message.error(error.value);
 		} else {
-			message.success("Aliases updated");
+			message.success(t('aliasesUpdated')); // Используем t() здесь
 		}
 	}
 }
@@ -24,11 +26,11 @@ async function handleUpdateAliases() {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="text-lg font-500 mb-3">BunSqStat Settings</div>
+    <div class="text-lg font-500 mb-3">{{ $t('settingsTitle') }}</div>
 
     <div class="flex flex-col md:flex-row gap-1">
       <NFormItem
-          label="User alias by ip (Names without spaces)"
+          :label="$t('userAliasLabel')"
           class="w-full max-w-sm"
       >
         <NInput
@@ -39,7 +41,7 @@ async function handleUpdateAliases() {
             minRows: 3,
             maxRows: 5,
           }"
-            placeholder="127.0.0.1 username 127.0.0.2 username2 ..."
+            :placeholder="$t('userAliasPlaceholder')"
             class="w-full"
         />
       </NFormItem>
@@ -51,7 +53,7 @@ async function handleUpdateAliases() {
             :loading="loading"
             class="min-w-[120px]"
         >
-          SET
+          {{ $t('set') }}
         </NButton>
 
         <NTooltip
@@ -65,7 +67,7 @@ async function handleUpdateAliases() {
               <InformationCircle />
             </Icon>
           </template>
-          User search doesnt work with alias. Old ip will be replaced. <br>Alias uses only on frontend, and dont overwrite redis log usernames
+          {{ $t('userAliasTooltip') }}
         </NTooltip>
       </div>
     </div>

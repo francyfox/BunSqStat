@@ -5,7 +5,9 @@ import { computed } from "vue";
 import BUserTable from "@/components/access-metric/BUserTable.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useStatsStore } from "@/stores/stats.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const dayjs = useDayjs();
 const statsStore = useStatsStore();
 const { accessMetrics } = storeToRefs(statsStore);
@@ -34,14 +36,14 @@ const status = computed(() => {
   <div class="users flex flex-col gap-2">
     <div class="flex flex-wrap gap-1">
       <NTag class="text-xl">
-        TOTAL:
+        {{ $t('total') }}
         {{ accessMetrics?.users?.length }}
       </NTag>
       <NTag class="text-xl" type="success">
-        ONLINE: {{ status.online }}
+        {{ $t('online') }} {{ status.online }}
       </NTag>
       <NTag class="text-xl" type="default">
-        OFFLINE: {{ status.offline }}
+        {{ $t('offline') }} {{ status.offline }}
       </NTag>
     </div>
 

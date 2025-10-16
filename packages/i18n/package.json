@@ -1,0 +1,18 @@
+{
+	"name": "@repo/i18n",
+	"version": "1.0.0",
+	"description": "",
+	"module": "src/index.js",
+	"exports": {
+		".": "./src/index.ts",
+		"./locales/en.json": "./locales/en.json",
+		"./locales/ru.json": "./locales/ru.json"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/francyfox/BunSqStat.git"
+	}
+}

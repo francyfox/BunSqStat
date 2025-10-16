@@ -85,7 +85,7 @@ const options = computed<ChartOptions<"bar">>(() => {
           v-bind="{ options, data }"
           class="!h-[120px] !w-full"
       />
-      <div v-else class="text-warmgray">NO DATA</div>
+      <div v-else class="text-warmgray">{{ $t('noData') }}</div>
   </div>
 </template>
 

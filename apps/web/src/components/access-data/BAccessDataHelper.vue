@@ -11,13 +11,13 @@ import { NTag, NTooltip } from "naive-ui";
         <InformationCircle />
       </Icon>
     </template>
-    This input use for <a target="_blank" rel="noopener" href="https://redis.io/docs/latest/develop/ai/search-and-query/query/" class="c-amber underline">redis query</a> like <NTag>@user: fox</NTag>
+    {{ $t('inputInfo') }} <a target="_blank" rel="noopener" href="https://redis.io/docs/latest/develop/ai/search-and-query/query/" class="c-amber underline">{{ $t('redisQueryLink') }}</a> like <NTag>@user: fox</NTag>
     <br>
-    Search by IP: <NTag>192.168.1.1</NTag> (auto-escaped)
+    {{ $t('searchByIp') }} <NTag>192.168.1.1</NTag> {{ $t('autoEscaped') }}
     <br>
-    Single number: <NTag>200</NTag> → <NTag>[200 200]</NTag>
+    {{ $t('singleNumber') }} <NTag>200</NTag> {{ $t('to') }} <NTag>[200 200]</NTag>
     <br>
-    Number ranges: <NTag>[200 299]</NTag> or <NTag>[0 20]</NTag>
+    {{ $t('numberRanges') }} <NTag>[200 299]</NTag> {{ $t('or') }} <NTag>[0 20]</NTag>
   </NTooltip>
 </template>
 

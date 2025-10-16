@@ -7,12 +7,12 @@ import { NButton, NResult } from "naive-ui";
     <div class="container">
       <NResult
           status="404"
-          title="404 Not Found"
-          description="You know life is always ridiculous."
+          :title="$t('notFoundStatus')"
+          :description="$t('notFoundDescription')"
       >
         <template #footer>
           <RouterLink to="/">
-            <NButton>Go to main</NButton>
+            <NButton>{{ $t('goToMain') }}</NButton>
           </RouterLink>
         </template>
       </NResult>

@@ -25,9 +25,9 @@ const { copy, copied, isSupported } = useClipboard({ source: text });
         <span>{{ text }}</span>
       </a>
     </template>
-    <span v-if="!isSupported">Your browser does not support Clipboard API.</span>
-    <span v-if="!copied">Copy</span>
-    <span v-else>Copied!</span>
+    <span v-if="!isSupported">{{ $t('clipboardNotSupported') }}</span>
+    <span v-if="!copied">{{ $t('copy') }}</span>
+    <span v-else>{{ $t('copied') }}</span>
   </n-tooltip>
 </template>
 

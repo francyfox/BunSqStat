@@ -20,7 +20,9 @@ import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const dayjs = useDayjs();
 
@@ -69,7 +71,7 @@ function handleReset() {
 const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "user",
-		title: "User",
+		title: t('userColumn'),
 		minWidth: 80,
 		maxWidth: 300,
 		width: 140,
@@ -80,7 +82,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 		},
 		render(row: any) {
 			if (row.user === "-" || !row.user) {
-				return h(NTag, { type: "default", size: "small" }, () => "Anonymous");
+				return h(NTag, { type: "default", size: "small" }, () => t('anonymous'));
 			}
 
 			return row.user;
@@ -88,7 +90,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "lastActivity",
-		title: "Activity",
+		title: t('activityColumn'),
 		width: 180,
 		sorter: (row1: any, row2: any) => row1.lastActivity - row2.lastActivity,
 		ellipsis: {
@@ -106,7 +108,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 						size: "small",
 						bordered: false,
 					},
-					() => (isOnline ? "Online" : "Offline"),
+					() => (isOnline ? t('onlineStatus') : t('offlineStatus')),
 				),
 				h(
 					NTooltip,
@@ -124,7 +126,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "clientIP",
-		title: "IP",
+		title: t('ipColumn'),
 		render(row) {
 			return h(NTag, { type: "info", size: "small", bordered: false }, () =>
 				row["clientIP"]?.replaceAll("_", "."),
@@ -133,7 +135,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "currentSpeed",
-		title: "Current Speed",
+		title: t('currentSpeedColumn'),
 		sorter: (row1: any, row2: any) => row1.currentSpeed - row2.currentSpeed,
 		defaultSortOrder: "descend",
 		render: (row: any) => {
@@ -143,7 +145,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "speed",
-		title: "Middle speed",
+		title: t('middleSpeedColumn'),
 		sorter: (row1: any, row2: any) => row1.speed - row2.speed,
 		render: (row: any) => {
 			const speed = formatBytes(row.speed);
@@ -152,7 +154,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "lastRequestUrl",
-		title: "Last Url",
+		title: t('lastUrlColumn'),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -162,7 +164,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "totalBytes",
-		title: "Bytes",
+		title: t('bytesColumn'),
 		sorter: (row1: any, row2: any) => row1.totalBytes - row2.totalBytes,
 		render: (row: any) => {
 			const formatted = formatBytes(row["totalBytes"]);
@@ -175,7 +177,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "totalDuration",
-		title: "Duration",
+		title: t('durationColumn'),
 		render: (row: any) => formatMilliseconds(row.totalDuration),
 	},
 ]);
@@ -187,7 +189,7 @@ const columns = computed<DataTableColumns<any>>(() => [
       <NInput
           v-model:value="search"
           size="large"
-          placeholder="Search for users"
+          :placeholder="t('userSearchPlaceholder')"
       />
 
       <NButton

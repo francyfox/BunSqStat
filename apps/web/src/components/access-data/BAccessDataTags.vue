@@ -4,7 +4,9 @@ import { Icon } from "@vicons/utils";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { NButton, NInputNumber, NTag } from "naive-ui";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const interval = defineModel<number>("interval", { default: 300 });
 
 const emit = defineEmits<{
@@ -24,10 +26,10 @@ const isTablet = computed(() => breakpoints.md.value);
 <template>
   <div class="flex flex-wrap gap-2">
     <NTag v-if="isTablet" class="text-xl">
-      Total Records: {{ total }}
+      {{ $t('totalRecords') }}: {{ total }}
     </NTag>
     <NTag class="text-xl">
-      Count: {{ count }}
+      {{ $t('count') }}: {{ count }}
     </NTag>
     <NButton
         size="small"
@@ -42,11 +44,11 @@ const isTablet = computed(() => breakpoints.md.value);
         </Icon>
       </template>
 
-      {{ !pause ? 'Pause' : 'Start' }}
+      {{ !pause ? $t('pause') : $t('start') }}
     </NButton>
 
     <NTag v-if="isTablet" class="text-xl">
-      Interval:
+      {{ $t('interval') }}:
     </NTag>
     <NInputNumber
         v-if="isTablet"
@@ -56,7 +58,7 @@ const isTablet = computed(() => breakpoints.md.value);
         class="max-w-[50px]"
     />
     <NTag v-if="isTablet" class="text-xl">
-      WS: {{ status }}
+      {{ $t('wsStatus') }}: {{ status }}
     </NTag>
   </div>
 </template>

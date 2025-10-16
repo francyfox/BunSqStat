@@ -15,17 +15,11 @@ import {
 	NLayoutSider,
 	NMenu,
 } from "naive-ui";
-import {
-	type Component,
-	computed,
-	h,
-	onMounted,
-	ref,
-	shallowRef,
-	watch,
-} from "vue";
+import { type Component, computed, h, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { RouterLink } from "vue-router";
 
+const { t } = useI18n();
 const breakpoints = useBreakpoints(breakpointsTailwind);
 
 function renderIcon(icon: Component) {
@@ -43,7 +37,7 @@ const menuOptions: MenuOption[] = [
 					},
 				},
 				{
-					default: () => "Access Log Data",
+					default: () => t("accessLogData"),
 				},
 			),
 		key: "access-log-data",
@@ -59,7 +53,7 @@ const menuOptions: MenuOption[] = [
 					},
 				},
 				{
-					default: () => "Access Log Metrics",
+					default: () => t("accessLogMetrics"),
 				},
 			),
 		key: "access-log-metrics",
@@ -75,7 +69,7 @@ const menuOptions: MenuOption[] = [
 					},
 				},
 				{
-					default: () => "Settings",
+					default: () => t("settings"),
 				},
 			),
 		key: "settings",
@@ -91,7 +85,7 @@ const menuOptions: MenuOption[] = [
 					},
 				},
 				{
-					default: () => "About",
+					default: () => t("about"),
 				},
 			),
 		key: "about",
