@@ -1,15 +1,32 @@
 <script setup lang="ts">
 import { InformationCircle } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
-import { NButton, NFormItem, NInput, NTooltip, useMessage } from "naive-ui";
+import {
+	NButton,
+	NFormItem,
+	NInput,
+	NSelect,
+	NTooltip,
+	useMessage,
+} from "naive-ui";
 import { storeToRefs } from "pinia";
-import { useSettingsStore } from "@/stores/settings.ts";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSettingsStore } from "@/stores/settings.ts";
 
-const { t } = useI18n();
+const { t, availableLocales } = useI18n();
 const store = useSettingsStore();
 const { loading, error } = storeToRefs(store);
 const message = useMessage();
+
+const locales = computed(() =>
+	availableLocales.map((i) => {
+		return {
+			label: i,
+			value: i,
+		};
+	}),
+);
 
 async function handleUpdateAliases() {
 	try {
@@ -18,7 +35,7 @@ async function handleUpdateAliases() {
 		if (error.value) {
 			message.error(error.value);
 		} else {
-			message.success(t('aliasesUpdated')); // Используем t() здесь
+			message.success(t("aliasesUpdated")); // Используем t() здесь
 		}
 	}
 }
@@ -28,7 +45,19 @@ async function handleUpdateAliases() {
   <div class="flex flex-col gap-2">
     <div class="text-lg font-500 mb-3">{{ $t('settingsTitle') }}</div>
 
+    <div           class="w-full max-w-sm"
+    >
+      <NFormItem :label="$t('userLocale')">
+        <NSelect
+            v-model:value="$i18n.locale"
+            :options="locales"
+            class="w-full"
+        />
+      </NFormItem>
+    </div>
+
     <div class="flex flex-col md:flex-row gap-1">
+
       <NFormItem
           :label="$t('userAliasLabel')"
           class="w-full max-w-sm"

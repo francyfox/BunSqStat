@@ -23,6 +23,7 @@ pinia.use(piniaPluginPersistedstate);
 const i18n = createI18n({
 	locale: "ru", // Устанавливаем русский язык по умолчанию
 	fallbackLocale: "en", // Запасной язык
+	availableLocales: ["en", "ru"],
 	messages: {
 		en,
 		ru,
