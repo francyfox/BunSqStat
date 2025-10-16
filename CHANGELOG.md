@@ -1,3 +1,8 @@
+## 0.22.0 - 16 Oct 2025
+
+Feature:
+- i18n (English/Russian)
+
 ## 0.21.2 - 15 Oct 2025
 
 Bugfix:
