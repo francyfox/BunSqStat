@@ -12,7 +12,7 @@ const { bytes = 0 } = defineProps<{
     {{ formatBytes(bytes) }}
 
     <template #name>
-      TOTAL REQUEST SIZE
+      {{ $t('totalRequestSizeTitle') }}
     </template>
   </BCardMetric>
 </template>

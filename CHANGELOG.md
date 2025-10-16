@@ -1,4 +1,19 @@
-## 0.21.0 - 13 Oct 2025
+## 0.22.0 - 16 Oct 2025
+
+Feature:
+- i18n (English/Russian)
+
+## 0.21.2 - 15 Oct 2025
+
+Bugfix:
+- Removed manual bun download. Changed compile mode
+
+## 0.21.1 - 15 Oct 2025
+
+Test:
+- binary backend format
+
+## 0.21.0 - 15 Oct 2025
 
 Bugfix:
 - CRITICAL!!! Replaced to Bun baseline for dockerfile. Compatibility with old processors and virtual machines (KVM, LXC etc.)

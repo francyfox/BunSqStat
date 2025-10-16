@@ -12,15 +12,15 @@ const { users = [] } = defineProps<{
 const columns = computed(() => [
 	{
 		key: "user",
-		title: "User",
+		title: $t('user'),
 		render(row: any) {
-			const username = row.user === "-" ? "Anonymous" : row.user;
+			const username = row.user === "-" ? $t('anonymous') : row.user;
 			return username;
 		},
 	},
 	{
 		key: "speed",
-		title: "Speed",
+		title: $t('speed'),
 		sorter: (row1: any, row2: any) => row1.speed - row2.speed,
 		defaultSortOrder: "descend",
 		render: (row: any) => {

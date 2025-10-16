@@ -85,7 +85,10 @@ services:
 - - [X] DANGER ZONE
 - [ ] Exclude list
 - - [ ] CIDR exclude?
-- [ ] i18n?
+- [X] i18n
+- - [X] en
+- - [X] ru
+- - [ ] ???
 - [ ] Optimize WS for few tabs (one tab permitted requests)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
 - [X] Use offset for reading logs (slow parse speed)

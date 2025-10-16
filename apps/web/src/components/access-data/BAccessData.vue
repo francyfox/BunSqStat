@@ -9,6 +9,7 @@ import { NDataTable, NPagination, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
 import { computed, onActivated, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { onBeforeRouteLeave } from "vue-router";
 import BAccessDataFilter from "@/components/access-data/BAccessDataFilter.vue";
 import BAccessDataTags from "@/components/access-data/BAccessDataTags.vue";
@@ -18,6 +19,7 @@ import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
 
+const { t } = useI18n();
 const notification = useNotification();
 const statsStore = useStatsStore();
 
@@ -102,7 +104,7 @@ const { data, status, close, open } = useWebSocket(`${WS_URL}/ws/access-logs`, {
 		delay: 1000,
 		onFailed() {
 			notification.error({
-				content: "Failed to connect WebSocket after 3 retries",
+				content: t("wsError"),
 			});
 		},
 	},
@@ -167,9 +169,7 @@ watchDebounced(
 			}
 		}
 	},
-	{
-		debounce: interval,
-	},
+	{ debounce: interval },
 );
 
 onMounted(async () => {

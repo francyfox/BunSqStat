@@ -22,7 +22,9 @@ import { computed, h } from "vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useDomainStore } from "@/stores/domains.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const { domains } = defineProps<{
 	domains: TMetricDomainItem[];
 }>();
@@ -39,7 +41,7 @@ const scroll = computed(() => (breakpoints.md.value ? undefined : 920));
 const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		key: "domain",
-		title: "Domain",
+		title: t('domainColumn'),
 		minWidth: 80,
 		maxWidth: 500,
 		resizable: true,
@@ -51,7 +53,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 100,
 		key: "requestCount",
-		title: "Request",
+		title: t('requestColumn'),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -67,7 +69,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 100,
 		key: "bytes",
-		title: "Bytes",
+		title: t('domainBytesColumn'),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -88,7 +90,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	},
 	{
 		key: "duration",
-		title: "Duration",
+		title: t('domainDurationColumn'),
 		order: 3,
 		width: 120,
 		ellipsis: {
@@ -105,7 +107,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	},
 	{
 		key: "lastActivity",
-		title: "Last Activity",
+		title: t('lastActivityColumn'),
 		sorter: true,
     customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
 			if (typeof order === "string") {
@@ -130,7 +132,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 100,
 		key: "errorsRate",
-		title: "Errors%",
+		title: t('errorsRateColumn'),
 		align: "right",
 		sorter: true,
     customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
@@ -157,7 +159,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 120,
 		key: "hasBlocked",
-		title: "Blocked?",
+		title: t('blockedColumn'),
 		align: "right",
 		render: (row: any) =>
 			h(NTag, { type: row?.hasBlocked ? "error" : "success" }, () =>
@@ -193,7 +195,7 @@ watchDebounced(
       <NInput
           v-model:value="domainsStore.query.search"
           size="large"
-          placeholder="Search for Domains"
+          :placeholder="t('domainSearchPlaceholder')"
           @change="handleSearch"
       />
 

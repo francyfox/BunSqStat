@@ -18,7 +18,7 @@ const { rps, diffTime, time } = defineProps<{
     </span>
 
     <template #name>
-      RPS
+      {{ $t('rpsTitle') }}
     </template>
   </BCardMetric>
 </template>

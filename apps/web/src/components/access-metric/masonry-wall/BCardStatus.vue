@@ -18,7 +18,7 @@ const { items = [] } = defineProps<{
         :status="items"
     />
     <template #name>
-      STATUS
+      {{ $t('statusTitle') }}
     </template>
   </BCardMetric>
 </template>

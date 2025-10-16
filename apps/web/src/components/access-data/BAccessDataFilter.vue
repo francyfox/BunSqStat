@@ -4,7 +4,9 @@ import { Icon } from "@vicons/utils";
 import { NButton, NForm, NInput, NSelect } from "naive-ui";
 import { accessKeys } from "server/schema";
 import BAccessDataHelper from "@/components/access-data/BAccessDataHelper.vue";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const emit = defineEmits<{
 	reset: [];
 }>();
@@ -26,7 +28,7 @@ const fieldOptions = accessKeys.map((key: string) => {
     <div class="max-w-xl flex items-center gap-2">
       <NSelect
           v-model:value="form.field"
-          placeholder="Select"
+          :placeholder="$t('selectPlaceholder')"
           :options="fieldOptions"
           size="large"
           class="w-[200px]"
@@ -34,7 +36,7 @@ const fieldOptions = accessKeys.map((key: string) => {
 
       <NInput
           v-model:value="form.search"
-          placeholder="Search by column"
+          :placeholder="$t('searchPlaceholder')"
           size="large"
       />
 

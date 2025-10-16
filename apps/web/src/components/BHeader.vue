@@ -9,7 +9,7 @@ import { Icon } from "@vicons/utils";
       <div class="flex flex-wrap gap-2 items-center">
         <h1 class="text-xl">BunSqStat |</h1>
         <div class="flex gap-2 items-center text-md">
-          <span>Made with</span>
+          <span>{{ $t('madeWith') }}</span>
 
           <Icon size="16">
             <Heart />

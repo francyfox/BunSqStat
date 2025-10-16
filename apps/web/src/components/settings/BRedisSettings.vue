@@ -12,7 +12,9 @@ import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { formatBytes } from "@/utils/string.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const store = useSettingsStore();
 const { loading, error } = storeToRefs(store);
 const message = useMessage();
@@ -24,7 +26,7 @@ async function handleUpdateMaxMemory() {
 		if (error.value) {
 			message.error(error.value);
 		} else {
-			message.success("Max Memory updated");
+			message.success(t('maxMemoryUpdated'));
 		}
 	}
 }
@@ -40,18 +42,18 @@ onMounted(async () => {
 
 <template>
   <div class="flex flex-col gap-2">
-    <div class="text-lg font-500">Redis Settings</div>
+    <div class="text-lg font-500">{{ $t('redisSettingsTitle') }}</div>
     <div class="flex flex-col md:flex-row items-start md:items-center gap-1">
       <div class="w-full max-w-sm relative flex flex-col gap-1">
         <NFormItem
-            label="Max Memory:"
+            :label="$t('maxMemoryLabel')"
         >
           <NInputNumber
               v-model:value="store.settings.maxMemory"
               class="w-full"
           >
             <template #prefix>
-              byte
+              {{ $t('bytePrefix') }}
             </template>
             <template #suffix>
               = {{ formatBytes(store.settings.maxMemory) }}
@@ -67,7 +69,7 @@ onMounted(async () => {
             :loading="loading"
             class="min-w-[120px]"
         >
-          SET
+          {{ $t('set') }}
         </NButton>
         <NTooltip placement="bottom" trigger="click">
           <template #trigger>
@@ -75,7 +77,7 @@ onMounted(async () => {
               <InformationCircle />
             </Icon>
           </template>
-          This app watch logs 1 hour. Set optimal size for your company
+          {{ $t('maxMemoryTooltip') }}
         </NTooltip>
       </div>
     </div>

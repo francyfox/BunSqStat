@@ -10,7 +10,7 @@ const { duration = 0 } = defineProps<{
 <template>
   <BCardMetric>
     <div class="text-center text-sm font-300">
-      hour:minute:second:millisecond
+      {{ $t('durationTimeFormat') }}
     </div>
 
     <div class="text-center font-900 text-4xl">
@@ -18,7 +18,7 @@ const { duration = 0 } = defineProps<{
     </div>
 
     <template #name>
-      DURATION
+      {{ $t('durationTitle') }}
     </template>
   </BCardMetric>
 </template>

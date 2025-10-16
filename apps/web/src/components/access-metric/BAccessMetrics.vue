@@ -12,7 +12,9 @@ import { WS_URL } from "@/consts.ts";
 import { useDomainStore } from "@/stores/domains.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
+import { useI18n } from "vue-i18n";
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 const notification = useNotification();
@@ -63,7 +65,7 @@ const { data, close, open, status } = useWebSocket(`${WS_URL}/ws/access-logs`, {
 		delay: 1000,
 		onFailed() {
 			notification.error({
-				content: "Failed to connect WebSocket after 3 retries",
+				content: t('wsError'),
 			});
 		},
 	},
@@ -139,17 +141,17 @@ onActivated(() => {
         @update:value="handleTabChange"
         animated
     >
-      <NTabPane name="global" tab="GLOBAL">
+      <NTabPane name="global" :tab="$t('globalTab')">
         <BTabGlobal
             v-model="form"
         />
       </NTabPane>
 
-      <NTabPane name="users" tab="USERS">
+      <NTabPane name="users" :tab="$t('usersTab')">
         <BTabUsers />
       </NTabPane>
 
-      <NTabPane name="domains" tab="DOMAINS">
+      <NTabPane name="domains" :tab="$t('domainsTab')">
         <BTabDomains />
       </NTabPane>
     </NTabs>
