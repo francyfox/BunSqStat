@@ -171,7 +171,10 @@ export function createURLQuery(field: string, url: string): string {
 	return `@${field}:${cleanUrl}`;
 }
 
-export function createIPProceededQuery(field: string | undefined, value: string): string {
+export function createIPProceededQuery(
+	field: string | undefined,
+	value: string,
+): string {
 	const processed = value.replace(/\./g, "_");
 	const final =
 		processed.split("_").filter(Boolean).length <= 3

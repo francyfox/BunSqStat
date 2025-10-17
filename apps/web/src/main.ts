@@ -28,7 +28,6 @@ const messages = {
 	ru,
 };
 
-
 const i18n = createI18n({
 	flatJson: true,
 	locale: languageCode,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSettingsStore } from '@/stores/settings.ts'
+import { useSettingsStore } from "@/stores/settings.ts";
 import {
 	darkTheme,
 	NConfigProvider,
@@ -7,24 +7,24 @@ import {
 	NModalProvider,
 	NNotificationProvider,
 } from "naive-ui";
-import { storeToRefs } from 'pinia'
-import { onMounted } from 'vue'
-import { useI18n } from 'vue-i18n'
+import { storeToRefs } from "pinia";
+import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import BHeader from "./components/BHeader.vue";
 import BMenu from "./components/BMenu.vue";
 import Rainbow from "./components/rainbow.vue";
 
 const { locale } = useI18n();
 const store = useSettingsStore();
-const { language } = storeToRefs(store)
+const { language } = storeToRefs(store);
 
 onMounted(() => {
-  if (!language.value) {
-    language.value = locale.value;
-  } else {
-    store.setLocale(language.value);
-  }
-})
+	if (!language.value) {
+		language.value = locale.value;
+	} else {
+		store.setLocale(language.value);
+	}
+});
 </script>
 
 <template>

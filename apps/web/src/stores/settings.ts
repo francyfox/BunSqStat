@@ -2,12 +2,12 @@ import { defineStore } from "pinia";
 import { createRouter } from "radix3";
 import { reactive, ref } from "vue";
 import { api } from "@/api.ts";
-import { useI18n } from 'vue-i18n'
+import { useI18n } from "vue-i18n";
 
 export const useSettingsStore = defineStore(
 	"settings",
 	() => {
-		const { locale } = useI18n()
+		const { locale } = useI18n();
 		const aliasRouter = createRouter();
 		const aliasRouterIsInitialized = ref(false);
 		const language = ref<string>();
@@ -161,7 +161,7 @@ export const useSettingsStore = defineStore(
 	},
 	{
 		persist: {
-			pick: ["language"]
+			pick: ["language"],
 		},
 	},
 );

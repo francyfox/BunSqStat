@@ -14,8 +14,8 @@ import { $ } from "bun";
 
 		const [SERVER_OUTPUT_DIR, FRONTEND_OUTPUT_DIR] = [
 			`${__dirname}/dist/server`,
-			`${__dirname}/dist/web`
-		]
+			`${__dirname}/dist/web`,
+		];
 		console.log("- Build app...");
 		await $`cd ${ROOT_DIR} && bun i && bun run build | wc -c`;
 		await $`mkdir -p ${__dirname}/dist/server | wc -c`.quiet();

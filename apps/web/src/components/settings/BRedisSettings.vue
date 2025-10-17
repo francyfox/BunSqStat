@@ -26,7 +26,7 @@ async function handleUpdateMaxMemory() {
 		if (error.value) {
 			message.error(error.value);
 		} else {
-			message.success(t('maxMemoryUpdated'));
+			message.success(t("maxMemoryUpdated"));
 		}
 	}
 }

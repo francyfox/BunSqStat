@@ -34,7 +34,7 @@ async function handlePositive() {
 		if (error.value) {
 			message.error(error.value);
 		} else {
-			message.success(t('actionConfirmed', { action: currentAction.value }));
+			message.success(t("actionConfirmed", { action: currentAction.value }));
 		}
 	}
 }
