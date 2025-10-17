@@ -1,4 +1,4 @@
-import { createIPProceededQuery } from '@/utils/string.ts'
+import { createIPProceededQuery } from "@/utils/string.ts";
 import { defineStore } from "pinia";
 import type { TMetricDomainOptions } from "server/schema";
 import { reactive, ref, shallowRef } from "vue";
@@ -19,7 +19,10 @@ export const useDomainStore = defineStore("domains", () => {
 
 	const pageCount = ref(0);
 
-	function setSortBy(column: TMetricDomainOptions["sortBy"], order: "ascend" | "descend") {
+	function setSortBy(
+		column: TMetricDomainOptions["sortBy"],
+		order: "ascend" | "descend",
+	) {
 		const redisOrder = order === "ascend" ? "DESC" : "ASC";
 		query.sortBy = column;
 		query.sortOrder = redisOrder;
@@ -28,7 +31,7 @@ export const useDomainStore = defineStore("domains", () => {
 	async function getMetricsDomain() {
 		loading.value = true;
 		const response = await api.stats["access-logs"].metrics.domains.get({
-			query
+			query,
 		});
 
 		if (response.error) {

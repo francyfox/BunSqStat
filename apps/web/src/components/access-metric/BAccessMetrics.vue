@@ -65,7 +65,7 @@ const { data, close, open, status } = useWebSocket(`${WS_URL}/ws/access-logs`, {
 		delay: 1000,
 		onFailed() {
 			notification.error({
-				content: t('wsError'),
+				content: t("wsError"),
 			});
 		},
 	},
