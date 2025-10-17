@@ -20,14 +20,21 @@ const pinia = createPinia();
 
 pinia.use(piniaPluginPersistedstate);
 
+const browserLanguage = navigator.language || navigator.languages[0];
+const languageCode = browserLanguage?.split("-")[0] || "en";
+
+const messages = {
+	en,
+	ru,
+};
+
+
 const i18n = createI18n({
-	locale: "ru", // Устанавливаем русский язык по умолчанию
+	flatJson: true,
+	locale: languageCode,
 	fallbackLocale: "en", // Запасной язык
 	availableLocales: ["en", "ru"],
-	messages: {
-		en,
-		ru,
-	},
+	messages,
 });
 
 const router = createRouter({

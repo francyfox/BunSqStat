@@ -2,9 +2,9 @@
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { NDataTable } from "naive-ui";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import BCardMetric from "@/components/BCardMetric.vue";
 import { formatBytes } from "@/utils/string.ts";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -23,7 +23,7 @@ const scroll = computed(() => (breakpoints.md.value ? undefined : 460));
 const columns = computed(() => [
 	{
 		key: "contentType",
-		title: t('contentTypeColumn'),
+		title: t("contentTypeColumn"),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -31,7 +31,7 @@ const columns = computed(() => [
 	{
 		width: 100,
 		key: "requestCount",
-		title: t('contentRequestColumn'),
+		title: t("contentRequestColumn"),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -41,7 +41,7 @@ const columns = computed(() => [
 	{
 		width: 100,
 		key: "bytes",
-		title: t('contentBytesColumn'),
+		title: t("contentBytesColumn"),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -51,9 +51,12 @@ const columns = computed(() => [
 		},
 	},
 	{
-		width: 80,
+		width: 100,
 		key: "hitRatePercent",
-		title: t('hitPercentColumn'),
+		title: t("hitPercentColumn"),
+		ellipsis: {
+			tooltip: true,
+		},
 		sorter: (row1: any, row2: any) => row1.hitRatePercent - row2.hitRatePercent,
 		render: (row: any) => {
 			return row.hitRatePercent.toFixed(2);

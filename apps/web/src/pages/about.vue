@@ -5,9 +5,7 @@
 <template>
   <section>
     <div class="mx-a container">
-      <p>
-        {{ $t('aboutParagraph1') }} <br>
-      </p>
+      <p v-html="$t('aboutParagraph1')" />
       <p>
         {{ $t('aboutParagraph2') }}
       </p>
