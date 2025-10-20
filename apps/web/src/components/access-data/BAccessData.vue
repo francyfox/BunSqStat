@@ -2,29 +2,27 @@
 import {
 	breakpointsTailwind,
 	useBreakpoints,
-	useWebSocket,
 	watchDebounced,
 } from "@vueuse/core";
 import { NDataTable, NPagination, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
 import { computed, onActivated, onMounted, ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { onBeforeRouteLeave } from "vue-router";
 import BAccessDataFilter from "@/components/access-data/BAccessDataFilter.vue";
 import BAccessDataTags from "@/components/access-data/BAccessDataTags.vue";
-import { WS_URL } from "@/consts.ts";
+import { useWsAccess } from "@/composables/ws-access.ts";
 import { formatColumns } from "@/module/access-data/format.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
 
-const { t } = useI18n();
 const notification = useNotification();
 const statsStore = useStatsStore();
 
 const settingsStore = useSettingsStore();
-const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
+const { aliasRouterIsInitialized, localClientsConnected, clientId } =
+	storeToRefs(settingsStore);
 
 const { accessLog, sortBy, total, loading, count, error } =
 	storeToRefs(statsStore);
@@ -98,17 +96,7 @@ watchDebounced(
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
 
-const { data, status, close, open } = useWebSocket(`${WS_URL}/ws/access-logs`, {
-	autoReconnect: {
-		retries: 3,
-		delay: 1000,
-		onFailed() {
-			notification.error({
-				content: t("wsError"),
-			});
-		},
-	},
-});
+const { data, status, close, open } = useWsAccess();
 
 function handlePause() {
 	pause.value = !pause.value;
@@ -173,8 +161,6 @@ watchDebounced(
 );
 
 onMounted(async () => {
-	if (status.value === "CLOSED") open();
-
 	if (!aliasRouterIsInitialized.value) {
 		await settingsStore.getAliases();
 	}
@@ -191,9 +177,11 @@ onBeforeRouteLeave(() => {
 
 <template>
   <div class="access-data flex flex-col gap-2">
+    {{ clientId }}
+    {{  localClientsConnected }}
     <BAccessDataTags
         v-model:interval="interval"
-        v-bind="{ total, count, pause, status }"
+        v-bind="{ total, count, pause, status, isBroadcast: clientId > 1 }"
         @handlePause="handlePause"
     />
 

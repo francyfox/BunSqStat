@@ -4,19 +4,19 @@ import { Icon } from "@vicons/utils";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { NButton, NInputNumber, NTag } from "naive-ui";
 import { computed } from "vue";
-import { useI18n } from "vue-i18n";
 
-const { t } = useI18n();
 const interval = defineModel<number>("interval", { default: 300 });
 
 const emit = defineEmits<{
 	handlePause: [];
 }>();
+
 const { total, count, pause, status } = defineProps<{
 	total: number;
 	count: number;
 	pause: boolean;
-	status: string; // ws status
+	status: string;
+	isBroadcast: boolean;
 }>();
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -57,6 +57,9 @@ const isTablet = computed(() => breakpoints.md.value);
         :show-button="false"
         class="max-w-[50px]"
     />
+    <NTag v-if="isBroadcast" class="text-xl">
+      BROADCAST
+    </NTag>
     <NTag v-if="isTablet" class="text-xl">
       {{ $t('wsStatus') }}: {{ status }}
     </NTag>
