@@ -61,10 +61,7 @@ export interface IMetricBytesAndDuration {
 }
 
 export const MetricDomainItemSchema = t.Object({
-	domain: t.Union([
-		t.String(),
-		t.Null()
-	]),
+	domain: t.Union([t.String(), t.Null()]),
 	requestCount: t.Number(),
 	bytes: t.Number(),
 	duration: t.Number(),

@@ -41,7 +41,7 @@ const scroll = computed(() => (breakpoints.md.value ? undefined : 920));
 const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		key: "domain",
-		title: t('domainColumn'),
+		title: t("domainColumn"),
 		minWidth: 80,
 		maxWidth: 500,
 		resizable: true,
@@ -53,13 +53,13 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 100,
 		key: "requestCount",
-		title: t('requestColumn'),
+		title: t("requestColumn"),
 		ellipsis: {
 			tooltip: true,
 		},
 		defaultSortOrder: "descend",
 		sorter: true,
-    customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
+		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
 			if (typeof order === "string") {
 				domainsStore.setSortBy("requestCount", order);
 			}
@@ -69,7 +69,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 100,
 		key: "bytes",
-		title: t('domainBytesColumn'),
+		title: t("domainBytesColumn"),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -90,14 +90,14 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	},
 	{
 		key: "duration",
-		title: t('domainDurationColumn'),
+		title: t("domainDurationColumn"),
 		order: 3,
 		width: 120,
 		ellipsis: {
 			tooltip: true,
 		},
 		sorter: true,
-    customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
+		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
 			if (typeof order === "string") {
 				domainsStore.setSortBy("duration", order);
 			}
@@ -107,9 +107,9 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	},
 	{
 		key: "lastActivity",
-		title: t('lastActivityColumn'),
+		title: t("lastActivityColumn"),
 		sorter: true,
-    customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
+		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
 			if (typeof order === "string") {
 				domainsStore.setSortBy("lastActivity", order);
 			}
@@ -132,10 +132,10 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 100,
 		key: "errorsRate",
-		title: t('errorsRateColumn'),
+		title: t("errorsRateColumn"),
 		align: "right",
 		sorter: true,
-    customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
+		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
 			if (typeof order === "string") {
 				domainsStore.setSortBy("errorsRate", order);
 			}
@@ -159,7 +159,7 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 	{
 		width: 120,
 		key: "hasBlocked",
-		title: t('blockedColumn'),
+		title: t("blockedColumn"),
 		align: "right",
 		render: (row: any) =>
 			h(NTag, { type: row?.hasBlocked ? "error" : "success" }, () =>

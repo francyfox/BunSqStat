@@ -86,7 +86,7 @@ describe("Domains API Tests", () => {
 
 		const [page1Res, page2Res] = await Promise.all([
 			fetch(page1Url),
-			fetch(page2Url)
+			fetch(page2Url),
 		]);
 
 		expect(page1Res.ok).toBe(true);
@@ -102,7 +102,7 @@ describe("Domains API Tests", () => {
 		const page1Domains = page1Data.items.map((item: any) => item.domain);
 		const page2Domains = page2Data.items.map((item: any) => item.domain);
 		const overlap = page1Domains.filter((domain: string) =>
-			page2Domains.includes(domain)
+			page2Domains.includes(domain),
 		);
 		expect(overlap.length).toBeLessThan(page1Data.items.length);
 	});

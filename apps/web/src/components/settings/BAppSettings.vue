@@ -10,13 +10,13 @@ import {
 	useMessage,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSettingsStore } from "@/stores/settings.ts";
 
-const { t, availableLocales } = useI18n();
+const { t, availableLocales, locale } = useI18n();
 const store = useSettingsStore();
-const { loading, error } = storeToRefs(store);
+const { loading, error, language } = storeToRefs(store);
 const message = useMessage();
 
 const locales = computed(() =>
@@ -49,7 +49,8 @@ async function handleUpdateAliases() {
     >
       <NFormItem :label="$t('userLocale')">
         <NSelect
-            v-model:value="$i18n.locale"
+            v-model:value="language"
+            @update:value="store.setLocale"
             :options="locales"
             class="w-full"
         />

@@ -71,7 +71,7 @@ function handleReset() {
 const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "user",
-		title: t('userColumn'),
+		title: t("userColumn"),
 		minWidth: 80,
 		maxWidth: 300,
 		width: 140,
@@ -82,7 +82,9 @@ const columns = computed<DataTableColumns<any>>(() => [
 		},
 		render(row: any) {
 			if (row.user === "-" || !row.user) {
-				return h(NTag, { type: "default", size: "small" }, () => t('anonymous'));
+				return h(NTag, { type: "default", size: "small" }, () =>
+					t("anonymous"),
+				);
 			}
 
 			return row.user;
@@ -90,7 +92,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "lastActivity",
-		title: t('activityColumn'),
+		title: t("activityColumn"),
 		width: 180,
 		sorter: (row1: any, row2: any) => row1.lastActivity - row2.lastActivity,
 		ellipsis: {
@@ -108,7 +110,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 						size: "small",
 						bordered: false,
 					},
-					() => (isOnline ? t('onlineStatus') : t('offlineStatus')),
+					() => (isOnline ? t("onlineStatus") : t("offlineStatus")),
 				),
 				h(
 					NTooltip,
@@ -126,7 +128,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "clientIP",
-		title: t('ipColumn'),
+		title: t("ipColumn"),
 		render(row) {
 			return h(NTag, { type: "info", size: "small", bordered: false }, () =>
 				row["clientIP"]?.replaceAll("_", "."),
@@ -135,7 +137,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "currentSpeed",
-		title: t('currentSpeedColumn'),
+		title: t("currentSpeedColumn"),
 		sorter: (row1: any, row2: any) => row1.currentSpeed - row2.currentSpeed,
 		defaultSortOrder: "descend",
 		render: (row: any) => {
@@ -145,7 +147,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "speed",
-		title: t('middleSpeedColumn'),
+		title: t("middleSpeedColumn"),
 		sorter: (row1: any, row2: any) => row1.speed - row2.speed,
 		render: (row: any) => {
 			const speed = formatBytes(row.speed);
@@ -154,7 +156,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "lastRequestUrl",
-		title: t('lastUrlColumn'),
+		title: t("lastUrlColumn"),
 		ellipsis: {
 			tooltip: true,
 		},
@@ -164,7 +166,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "totalBytes",
-		title: t('bytesColumn'),
+		title: t("bytesColumn"),
 		sorter: (row1: any, row2: any) => row1.totalBytes - row2.totalBytes,
 		render: (row: any) => {
 			const formatted = formatBytes(row["totalBytes"]);
@@ -177,7 +179,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	},
 	{
 		key: "totalDuration",
-		title: t('durationColumn'),
+		title: t("durationColumn"),
 		render: (row: any) => formatMilliseconds(row.totalDuration),
 	},
 ]);

@@ -48,6 +48,7 @@ COPY --from=builder /app/apps/server/bunsqstat-backend-binary ./backend/bunsqsta
 COPY --from=builder /app/apps/web/dist ./frontend/
 
 WORKDIR /app
+COPY docker/redis/redis.conf /app/docker/redis/redis.conf
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile.template
 COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/start.sh /app/start.sh

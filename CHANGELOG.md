@@ -1,3 +1,10 @@
+## 0.22.2 - 20 Oct 2025
+
+## 0.22.1 - 17 Oct 2025
+
+Bugfix:
+- Locale store persist. Browser locale auto-detect
+
 ## 0.22.0 - 16 Oct 2025
 
 Feature:

@@ -1,28 +1,28 @@
 {
-  "logFilePath": "/tmp/squid-access.log",
-  "redis": {
-    "host": "localhost", 
-    "port": 6379,
-    "password": "123"
-  },
-  "scenarios": {
-    "normal": {
-      "intervalMs": 5000,
-      "burstSize": 3,
-      "description": "Обычная нагрузка: каждые 5 секунд по 3 записи"
-    },
-    "peak": {
-      "intervalMs": 2000,
-      "burstSize": 10,
-      "description": "Пиковая нагрузка: каждые 2 секунды по 10 записей"
-    },
-    "heavy": {
-      "intervalMs": 1000,
-      "burstSize": 20,
-      "description": "Тяжелая нагрузка: каждую секунду по 20 записей"
-    }
-  },
-  "duration": 60,
-  "validateRedis": true,
-  "initialLogCount": 50
+	"logFilePath": "/tmp/squid-access.log",
+	"redis": {
+		"host": "localhost",
+		"port": 6379,
+		"password": "123"
+	},
+	"scenarios": {
+		"normal": {
+			"intervalMs": 5000,
+			"burstSize": 3,
+			"description": "Обычная нагрузка: каждые 5 секунд по 3 записи"
+		},
+		"peak": {
+			"intervalMs": 2000,
+			"burstSize": 10,
+			"description": "Пиковая нагрузка: каждые 2 секунды по 10 записей"
+		},
+		"heavy": {
+			"intervalMs": 1000,
+			"burstSize": 20,
+			"description": "Тяжелая нагрузка: каждую секунду по 20 записей"
+		}
+	},
+	"duration": 60,
+	"validateRedis": true,
+	"initialLogCount": 50
 }

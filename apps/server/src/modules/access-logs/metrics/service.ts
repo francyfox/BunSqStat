@@ -396,15 +396,18 @@ export const AccessLogsMetricsService = {
 			startTime && endTime ? `@timestamp:[${startTime} ${endTime}]` : "*";
 
 		const SEARCH_FILTER = search ? ` @url:${search}` : "";
-		const FILTER = TIMESTAMP === "*" && SEARCH_FILTER
-			? SEARCH_FILTER.trim()
-			: TIMESTAMP === "*"
-				? "*"
-				: SEARCH_FILTER
-					? `(${TIMESTAMP}${SEARCH_FILTER})`
-					: TIMESTAMP;
+		const FILTER =
+			TIMESTAMP === "*" && SEARCH_FILTER
+				? SEARCH_FILTER.trim()
+				: TIMESTAMP === "*"
+					? "*"
+					: SEARCH_FILTER
+						? `(${TIMESTAMP}${SEARCH_FILTER})`
+						: TIMESTAMP;
 
-		const redisSortBy = ["hasBlocked", "errorsRate"].includes(sortBy) ? "errorsCount" : sortBy; // fallback for client-side sorting
+		const redisSortBy = ["hasBlocked", "errorsRate"].includes(sortBy)
+			? "errorsCount"
+			: sortBy; // fallback for client-side sorting
 		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error APPLY contains(@resultType,"DENIED") AS is_blocked GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount REDUCE MAX 1 @is_blocked AS hasBlocked SORTBY 2 @${redisSortBy} ${sortOrder} LIMIT ${(page - 1) * limit} ${limit}`;
 
 		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
@@ -421,9 +424,10 @@ export const AccessLogsMetricsService = {
 				bytes: Number(data.bytes),
 				duration: Number(data.duration),
 				lastActivity: Number(data.lastActivity),
-				errorsRate: data.errorsCount && data.requestCount
-					? (Number(data.errorsCount) / Number(data.requestCount)) * 100
-					: 0,
+				errorsRate:
+					data.errorsCount && data.requestCount
+						? (Number(data.errorsCount) / Number(data.requestCount)) * 100
+						: 0,
 				hasBlocked: Boolean(Number(data.hasBlocked)),
 			};
 		});
