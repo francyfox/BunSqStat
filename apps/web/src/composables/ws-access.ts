@@ -17,5 +17,5 @@ export const useWsAccess = () => {
 			},
 		},
 	});
-	return {};
+	return socket;
 };

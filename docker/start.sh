@@ -17,8 +17,11 @@ echo "Redis: $REDIS_HOST:$REDIS_PORT"
 # Create logs directory
 mkdir -p /app/logs
 
+#    # Copy default redis config
+    cp /app/docker/redis/redis.conf /redis-stack.conf
+fi
+
 # Configure Redis Stack password in config
-if grep -q "^requirepass" /redis-stack.conf; then
   cat /redis-stack.conf
   sed -i "s/^requirepass .*/requirepass $REDIS_PASSWORD/" /redis-stack.conf;
 else
