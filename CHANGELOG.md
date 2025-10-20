@@ -1,4 +1,12 @@
+## 0.22.3 - 20 Oct 2025
+
+Bugfix:
+- redis.conf
+
 ## 0.22.2 - 20 Oct 2025
+
+Bugfix:
+- Include redis-stack.conf
 
 ## 0.22.1 - 17 Oct 2025
 
