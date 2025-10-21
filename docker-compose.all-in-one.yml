@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   bunsqstat:
     build:
@@ -8,11 +6,9 @@ services:
     container_name: bunsqstat-all-in-one
     restart: unless-stopped
     ports:
-      - "80:80"      # Web interface
-      - "3000:3000"  # API (optional, for direct access)
-      - "6379:6379"  # Redis (optional, for external access)
+      - "81:80"      # Web interface
     volumes:
-      - /tmp/squid/log:/app/logs:ro
+      - ./logs:/app/logs
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost/api/health"]
       interval: 30s

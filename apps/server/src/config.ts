@@ -20,6 +20,7 @@ export const configSchema = t.Intersect([
 			SQUID_PORT: t.String(),
 			REDIS_HOST: t.String({ default: "localhost" }),
 			REDIS_PORT: t.String({ default: "6379" }),
+			BACKEND_PORT: t.String({ default: "3000" }),
 			LOG_DIR: t.String({ default: "/tmp/squid/log" }),
 		}),
 	),

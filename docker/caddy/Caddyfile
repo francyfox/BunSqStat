@@ -4,7 +4,7 @@
     header remote_addr "{header.X-Forwarded-For}"
 
     # API endpoints (включая WebSocket через /api/ws/*)
-    handle_path /api/* {
+    handle_path /api* {
         @websockets {
         		header Connection *Upgrade*
         		header Upgrade    websocket
