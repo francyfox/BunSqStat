@@ -40,29 +40,22 @@ docker run -d \
 
 ```yaml
 services:
-  bunsqstat:
-    image: ghcr.io/francyfox/bunsqstat:latest
-    container_name: bunsqstat
-    restart: unless-stopped
-    ports:
-      - "80:80"      # Web interface
-      - "3000:3000"  # API (optional, for direct access)
-      - "6379:6379"  # Redis (optional, for external access)
-    environment:
-      - NODE_ENV=production # optional
-      - REDIS_PASSWORD=123 # optional
-      - SQUID_HOST=127.0.0.1 # optional
-      - SQUID_PORT=3128 # optional
-      - LOG_DIR=/tmp/squid/log
-    volumes:
-      - ./docker/access.log:/app/logs/access.log:ro
-      - ./docker/cache.log:/app/logs/cache.log:ro
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/api/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+    bunsqstat_client:
+      image: ghcr.io/francyfox/bunsqstat:latest
+      container_name: bunsqstat-client
+      restart: unless-stopped
+      ports:
+        - "8078:80" # Web UI
+      volumes:
+        - /export/hron-2/appdata/squid-1/logs:/app/logs # squid logs path
+      healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/api/health"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+        start_period: 30s
+      networks:
+        - squid-internal
 ```
 
 ## 📈 Roadmap
@@ -192,27 +185,14 @@ BunSqStat/
 ├── apps/
 │   ├── server/          # Bun backend API
 │   │   ├── src/         # Source code
-│   │   └── test/        # Test suites
+│   │   └── __tests__/   # Test suites
 │   └── web/             # Vue 3 frontend
 │       ├── src/         # Source code
 │       └── dist/        # Build output
 ├── docs/                # Documentation
 ├── docker/              # Docker configs
 └── packages/            # Shared packages
-```
-
-## 🧪 Testing
-
-```bash
-# Run all tests
-bun test
-
-# Watch mode
-bun run test:watch
-
-# Specific test suites
-bun run test:generator   # Log generator tests
-bun run test:simulator   # Log simulator tests
+    └── i18n             # locales
 ```
 
 ## 📖 Documentation
