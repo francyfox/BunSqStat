@@ -7,9 +7,7 @@ ENV LOG_DIR=/tmp/squid/log
 ENV REDIS_HOST=localhost
 ENV REDIS_PORT=6379
 ENV REDIS_PASSWORD=bunsqstat123
-
-
-
+ENV BACKEND_PORT=${BACKEND_PORT:-3000}
 
 WORKDIR /app
 
@@ -32,15 +30,13 @@ RUN apt-get install -y \
     gnupg \
     unzip \
     bash \
-    libstdc++6
-
+    libstdc++6 \
+    telnet
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
 RUN apt-get update && apt-get install -y caddy \
     && rm -rf /var/lib/apt/lists/*
-
-
 
 WORKDIR /app
 
@@ -59,13 +55,9 @@ RUN sed 's|/srv|/app/frontend|g' /etc/caddy/Caddyfile.template > /etc/caddy/Cadd
 
 RUN mkdir -p /app/logs
 
-
-
 EXPOSE 80 3000 6379
 
 HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD curl -f http://localhost/api/health || exit 1
-
-
 
 CMD ["/app/start.sh"]

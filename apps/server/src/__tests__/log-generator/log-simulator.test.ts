@@ -1,8 +1,8 @@
 import { test, expect, beforeAll, afterAll, describe } from "bun:test";
+import fs from "node:fs";
+import { config } from "@/config";
 import { AccessLogService } from "@/modules/access-logs/service";
 import { redisClient } from "@/redis";
-import { config } from "@/config";
-import fs from "node:fs";
 
 const TEST_LOGS = [
 	"1609459200.001 123 192.168.1.1 TCP_MISS/200 1024 GET http://example.com/page1 - HIER_DIRECT/93.184.216.34 text/html Mozilla/5.0",

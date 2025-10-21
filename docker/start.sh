@@ -9,6 +9,7 @@ export LOG_DIR=${LOG_DIR:-/app/logs}
 export REDIS_HOST=${REDIS_HOST:-localhost}
 export REDIS_PORT=${REDIS_PORT:-6379}
 export REDIS_PASSWORD=${REDIS_PASSWORD:-bunsqstat123}
+export BACKEND_PORT=${BACKEND_PORT:-3000}
 
 echo "Starting BunSqStat All-in-One..."
 echo "Environment: $NODE_ENV"
@@ -38,7 +39,7 @@ if ! grep -q "^port $REDIS_PORT" $REDIS_CONF_FILE; then
 fi
 
 # Point supervisord to the correct Redis configuration file
-sed -i "s|command=redis-stack-server .*|command=redis-stack-server $REDIS_CONF_FILE|g" /etc/supervisor/conf.d/supervisord.conf
+sed -i "s|command=redis-stack-server .*|command=/usr/bin/redis-server $REDIS_CONF_FILE|g" /etc/supervisor/conf.d/supervisord.conf
 
 # Update supervisor config with current environment variables for backend
 sed -i "s|environment=.*|environment=NODE_ENV=\"$NODE_ENV\",SQUID_HOST=\"$SQUID_HOST\",SQUID_PORT=\"$SQUID_PORT\",LOG_DIR=\"$LOG_DIR\",REDIS_HOST=\"$REDIS_HOST\",REDIS_PORT=\"$REDIS_PORT\",REDIS_PASSWORD=\"$REDIS_PASSWORD\"|g" /etc/supervisor/conf.d/supervisord.conf

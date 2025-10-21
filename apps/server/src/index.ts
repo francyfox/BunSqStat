@@ -2,6 +2,7 @@ import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
+import { config } from "@/config";
 import { LogManager } from "@/modules/log-manager";
 import { fileWatcher } from "@/modules/watcher";
 import { redisClient } from "@/redis";
@@ -38,7 +39,7 @@ const app = new Elysia()
 
 app.listen(
 	{
-		port: 3000,
+		port: config.BACKEND_PORT,
 	},
 	() => {
 		console.log(`🕮  Swagger is active at: ${app.server?.url.origin}/swagger`);
