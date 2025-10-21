@@ -5,7 +5,9 @@ import type { EdenApp } from "server";
 // In development, they go directly to localhost:3000
 const baseUrl =
 	process.env.NODE_ENV === "production"
-		? `${window.location.host.replace("https", "http")}/api`
+		? `http://${window.location.host}/api`
 		: "localhost:3000";
+
+console.log(window.location.host);
 
 export const api = treaty<EdenApp>(baseUrl);
