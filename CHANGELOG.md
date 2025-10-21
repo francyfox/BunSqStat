@@ -1,8 +1,17 @@
 ## 0.22.7 - 21 Oct 2025
 
+Bugfix:
+- Hard http for api
+
 ## 0.22.6 - 21 Oct 2025
 
+Bugfix:
+- Fixes for production
+
 ## 0.22.5 - 21 Oct 2025
+
+Bugfix:
+- Fixes for production
 
 ## 0.22.4 - 21 Oct 2025
 
