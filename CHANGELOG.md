@@ -1,3 +1,8 @@
+## 0.22.4 - 21 Oct 2025
+
+Bugfix:
+- ports for production!
+
 ## 0.22.3 - 20 Oct 2025
 
 Bugfix:
