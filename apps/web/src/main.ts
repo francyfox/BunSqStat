@@ -1,6 +1,6 @@
 import { createPinia } from "pinia";
 import { createApp } from "vue";
-import { createI18n } from "vue-i18n"; // Уже есть
+import { createI18n } from "vue-i18n";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { routes } from "vue-router/auto-routes";
 import "virtual:uno.css";
@@ -31,7 +31,7 @@ const messages = {
 const i18n = createI18n({
 	flatJson: true,
 	locale: languageCode,
-	fallbackLocale: "en", // Запасной язык
+	fallbackLocale: "en",
 	availableLocales: ["en", "ru"],
 	messages,
 });
@@ -46,4 +46,4 @@ const router = createRouter({
 
 const app = createApp(App);
 
-app.use(router).use(pinia).use(i18n).mount("#app"); // Добавляем use(i18n)
+app.use(router).use(pinia).use(i18n).mount("#app");

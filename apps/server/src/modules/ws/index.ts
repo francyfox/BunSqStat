@@ -93,7 +93,13 @@ const wsConfig = {
 		connectedClients.set(clientId, client);
 		ws.subscribe(log);
 		// Send welcome message directly to this client
-		ws.send(JSON.stringify({ type: "hello", clientId }));
+		ws.send(
+			JSON.stringify({
+				type: "hello",
+				clientId,
+				totalClients: connectedClients.size,
+			}),
+		);
 
 		console.info(
 			`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${connectedClients.size}`,
