@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useSettingsStore } from "@/stores/settings.ts";
 import {
 	darkTheme,
 	NConfigProvider,
@@ -10,6 +9,7 @@ import {
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import { useSettingsStore } from "@/stores/settings.ts";
 import BHeader from "./components/BHeader.vue";
 import BMenu from "./components/BMenu.vue";
 import Rainbow from "./components/rainbow.vue";

@@ -82,7 +82,7 @@ services:
 - - [X] en
 - - [X] ru
 - - [ ] ???
-- [ ] Optimize WS for few tabs (one tab permitted requests)
+- [X] Optimize WS for few tabs (one tab permitted requests)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
 - [X] Use offset for reading logs (slow parse speed)
 - [X] Log rotate support (logfile_rotate N)

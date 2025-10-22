@@ -1,12 +1,13 @@
 import { defineStore } from "pinia";
 import { createRouter } from "radix3";
 import { reactive, ref } from "vue";
-import { api } from "@/api.ts";
 import { useI18n } from "vue-i18n";
+import { api } from "@/api.ts";
 
 export const useSettingsStore = defineStore(
 	"settings",
 	() => {
+		const currentTab = ref<string>();
 		const { locale } = useI18n();
 		const aliasRouter = createRouter();
 		const aliasRouterIsInitialized = ref(false);
@@ -152,6 +153,7 @@ export const useSettingsStore = defineStore(
 			setMaxMemory,
 			parseLogs,
 			setLocale,
+			currentTab,
 			language,
 			aliasRouterIsInitialized,
 			settings,
@@ -160,8 +162,11 @@ export const useSettingsStore = defineStore(
 		};
 	},
 	{
-		persist: {
-			pick: ["language"],
-		},
+		persist: [
+			{
+				storage: localStorage,
+				pick: ["language", "tabs"],
+			},
+		],
 	},
 );
