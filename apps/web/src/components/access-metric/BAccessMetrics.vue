@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { watchDebounced } from "@vueuse/core";
 import { NTabPane, NTabs, useNotification } from "naive-ui";
-import { onActivated, onMounted, onUnmounted, ref, watch } from "vue";
+import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
-import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
 import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
@@ -16,7 +16,6 @@ import { useStatsStore } from "@/stores/stats.ts";
 const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
-const notification = useNotification();
 
 const statsStore = useStatsStore();
 const settingsStore = useSettingsStore();
@@ -58,25 +57,13 @@ watch(
 	},
 );
 
-const { data, close, open, status } = useWsAccess();
+const { value, status } = useWsAccess();
 
-watchDebounced(data, async (v) => {
-	if (!v) return;
-	let value: any;
-	try {
-		value = JSON.parse(v);
-	} catch (_) {
-		// Ignore non-JSON messages
+watchDebounced(value, async (v) => {
+	if (typeof v?.changedLinesCount !== "number" || v.changedLinesCount <= 0) {
 		return;
 	}
-
-	if (
-		typeof value?.changedLinesCount !== "number" ||
-		value.changedLinesCount <= 0
-	) {
-		return;
-	}
-	console.log(`Received ${value.changedLinesCount} new log entries`);
+	console.log(`Received ${v.changedLinesCount} new log entries`);
 
 	await statsStore.getAccessMetrics({
 		limit: form.value.limit,
@@ -95,8 +82,6 @@ onMounted(async () => {
 		settingsStore.getAliases(),
 	]);
 
-	if (status.value === "CLOSED") open();
-
 	if (route.hash) {
 		setTimeout(() => {
 			tab.value = route.hash?.replace("#", "");
@@ -106,14 +91,6 @@ onMounted(async () => {
 
 onUnmounted(() => {
 	window.location.hash = "";
-});
-
-onBeforeRouteLeave(() => {
-	close();
-});
-
-onActivated(() => {
-	if (status.value === "CLOSED") open();
 });
 </script>
 

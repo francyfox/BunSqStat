@@ -7,8 +7,7 @@ import {
 import { NDataTable, NPagination, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
-import { computed, onActivated, onMounted, ref, watch } from "vue";
-import { onBeforeRouteLeave } from "vue-router";
+import { computed, onMounted, ref, watch } from "vue";
 import BAccessDataFilter from "@/components/access-data/BAccessDataFilter.vue";
 import BAccessDataTags from "@/components/access-data/BAccessDataTags.vue";
 import { useWsAccess } from "@/composables/ws-access.ts";
@@ -21,8 +20,7 @@ const notification = useNotification();
 const statsStore = useStatsStore();
 
 const settingsStore = useSettingsStore();
-const { aliasRouterIsInitialized, localClientsConnected, clientId } =
-	storeToRefs(settingsStore);
+const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
 
 const { accessLog, sortBy, total, loading, count, error } =
 	storeToRefs(statsStore);
@@ -96,7 +94,7 @@ watchDebounced(
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
 
-const { data, status, close, open } = useWsAccess();
+const { value, status } = useWsAccess();
 
 function handlePause() {
 	pause.value = !pause.value;
@@ -123,23 +121,14 @@ async function handleReset() {
 }
 
 watchDebounced(
-	data,
+	value,
 	async (v) => {
+		console.log(v);
 		if (!v) return;
-		let value: any;
-		try {
-			value = JSON.parse(v);
-		} catch (_) {
-			// Ignore non-JSON messages
-			return;
-		}
 
-		if (
-			typeof value?.changedLinesCount !== "number" ||
-			value.changedLinesCount <= 0
-		)
+		if (typeof v?.changedLinesCount !== "number" || v.changedLinesCount <= 0)
 			return;
-		console.log(`Received ${value.changedLinesCount} new log entries`);
+		console.log(`Received ${v.changedLinesCount} new log entries`);
 
 		if (page.value === 1 || !page.value) {
 			try {
@@ -149,7 +138,7 @@ watchDebounced(
 					sortBy: sortBy.value,
 				});
 			} finally {
-				highlightCount.value = value.changedLinesCount;
+				highlightCount.value = v.changedLinesCount;
 
 				setTimeout(() => {
 					highlightCount.value = 0;
@@ -165,23 +154,13 @@ onMounted(async () => {
 		await settingsStore.getAliases();
 	}
 });
-
-onActivated(() => {
-	if (status.value === "CLOSED") open();
-});
-
-onBeforeRouteLeave(() => {
-	close();
-});
 </script>
 
 <template>
   <div class="access-data flex flex-col gap-2">
-    {{ clientId }}
-    {{  localClientsConnected }}
     <BAccessDataTags
         v-model:interval="interval"
-        v-bind="{ total, count, pause, status, isBroadcast: clientId > 1 }"
+        v-bind="{ total, count, pause, status }"
         @handlePause="handlePause"
     />
 

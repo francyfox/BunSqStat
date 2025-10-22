@@ -16,7 +16,6 @@ const { total, count, pause, status } = defineProps<{
 	count: number;
 	pause: boolean;
 	status: string;
-	isBroadcast: boolean;
 }>();
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -57,9 +56,6 @@ const isTablet = computed(() => breakpoints.md.value);
         :show-button="false"
         class="max-w-[50px]"
     />
-    <NTag v-if="isBroadcast" class="text-xl">
-      BROADCAST
-    </NTag>
     <NTag v-if="isTablet" class="text-xl">
       {{ $t('wsStatus') }}: {{ status }}
     </NTag>
