@@ -1,4 +1,4 @@
-## 0.23.1 - 21 Oct 2025
+## 0.23.0 - 21 Oct 2025
 
 Feature:
 - Optimization fix. Replaced websockets to shared worker. (1 browser = 1 client)
