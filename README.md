@@ -62,6 +62,7 @@ services:
 
 - [X] Access log data table
 - [X] Real-time WebSocket updates
+- - [ ] !Replace chokidar (file watcher) on daemon:tcp
 - [X] Access log charts
 - - [X] Hit Ratio
 - - [X] User speed
