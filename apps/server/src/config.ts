@@ -12,16 +12,20 @@ export const configSchema = t.Intersect([
 				default: "development",
 			},
 		),
-		REDIS_PASSWORD: t.String(),
+		SQUID_HOST: t.String({
+			default: "0.0.0.0",
+			description: "Used for listen udp logs",
+		}),
+		SQUID_PORT: t.String({
+			default: "5140",
+		}),
 	}),
 	t.Partial(
 		t.Object({
-			SQUID_HOST: t.String(),
-			SQUID_PORT: t.String(),
 			REDIS_HOST: t.String({ default: "localhost" }),
 			REDIS_PORT: t.String({ default: "6379" }),
 			BACKEND_PORT: t.String({ default: "3000" }),
-			LOG_DIR: t.String({ default: "/tmp/squid/log" }),
+			REDIS_PASSWORD: t.String(),
 		}),
 	),
 ]);
