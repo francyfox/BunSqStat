@@ -4,7 +4,7 @@ import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { config } from "@/config";
 import { LogManager } from "@/modules/log-manager";
-import { fileWatcher } from "@/modules/watcher";
+import { LogServer } from "@/modules/log-server";
 import { redisClient } from "@/redis";
 import { routes } from "@/routes";
 
@@ -14,7 +14,6 @@ for (const signal of signals) {
 	process.on(signal, async () => {
 		console.log(`Received ${signal}. Initiating graceful shutdown...`);
 		await app.stop();
-		await fileWatcher.close();
 		redisClient.close();
 		process.exit(0);
 	});
@@ -31,6 +30,7 @@ process.on("unhandledRejection", (error) => {
 const app = new Elysia()
 	.onStart(async () => {
 		await LogManager.readLogs();
+		await LogServer.start();
 	})
 	.use(routes)
 	.use(cors())

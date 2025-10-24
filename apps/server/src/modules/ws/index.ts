@@ -1,7 +1,6 @@
 import { Elysia, t } from "elysia";
 import { nanoid } from "nanoid";
 import { AccessLogSchema } from "@/modules/access-logs/types";
-import { fileWatcher } from "@/modules/watcher";
 
 const LogModel = t.Object({
 	changedLinesCount: t.Number(),
@@ -38,37 +37,6 @@ function cleanupDeadConnections() {
 }
 
 setInterval(cleanupDeadConnections, 30000);
-
-fileWatcher.onFileChange((event) => {
-	if (connectedClients.size > 0) {
-		const deadClients: string[] = [];
-		const messageData = JSON.stringify(event);
-
-		for (const [clientId, client] of connectedClients.entries()) {
-			console.log(
-				`Broadcasting to client ${clientId} on channel ${client.channel}`,
-			);
-			try {
-				// Use send() to directly send to this specific client
-				client.ws.send(messageData);
-				client.lastPing = Date.now();
-			} catch (error) {
-				console.error(`Failed to send to client ${clientId}:`, error);
-				deadClients.push(clientId);
-			}
-		}
-
-		for (const clientId of deadClients) {
-			connectedClients.delete(clientId);
-		}
-
-		if (connectedClients.size > 0) {
-			console.log(
-				`WebSocket broadcast: ${event.changedLinesCount} new lines to ${connectedClients.size} active clients`,
-			);
-		}
-	}
-});
 
 const wsConfig = {
 	body: t.Any(),

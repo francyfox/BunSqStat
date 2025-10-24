@@ -49,9 +49,6 @@ export const ParserService = {
 			mtimeMs,
 		};
 
-		await redisClient.hmset(
-			`file:${name}`,
-			mergeStrip(this.fields, Object.values(info)),
-		);
+		await redisClient.hset(`file:${name}`, info);
 	},
 };

@@ -2,8 +2,6 @@ import { nanoid } from "nanoid";
 import { fieldTypes, regexMap } from "@/consts";
 import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
 import { redisClient } from "@/redis";
-import { mergeStrip } from "@/utils/array";
-import { readMultiplyFiles } from "@/utils/file";
 import { parseLogLine } from "@/utils/log";
 
 export const AccessLogService = {
@@ -61,8 +59,7 @@ export const AccessLogService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
-	async readLogs(files: string[]) {
-		const logLines = await readMultiplyFiles(files, 1000);
+	async readLogs(logLines: string[]) {
 		if (logLines.length === 0) return 0;
 
 		logLines.sort((a, b) => {
@@ -81,10 +78,7 @@ export const AccessLogService = {
 			};
 			const logKey = `log:${sanitized.id}`;
 
-			await redisClient.hmset(
-				logKey,
-				mergeStrip(Object.keys(sanitized), Object.values(sanitized)),
-			);
+			await redisClient.hset(logKey, sanitized);
 			await redisClient.expire(logKey, 604800); // 7 days
 		});
 
