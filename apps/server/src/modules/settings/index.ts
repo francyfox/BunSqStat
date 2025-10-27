@@ -1,7 +1,7 @@
 import { Elysia, t } from "elysia";
+import { redisClient } from "@/libs/redis";
 import { LogManager } from "@/modules/log-manager";
 import { SettingsService } from "@/modules/settings/service";
-import { redisClient } from "@/redis";
 import { chuck } from "@/utils/array";
 
 export const Settings = new Elysia()

@@ -1,10 +1,10 @@
 import { evaluate } from "mathjs";
+import { redisClient } from "@/libs/redis";
 import {
 	IMetricBytesAndDuration,
 	TMetricDomainItem,
 	TMetricDomainOptions,
 } from "@/modules/access-logs/metrics/types";
-import { redisClient } from "@/redis";
 
 export const AccessLogsMetricsService = {
 	/**

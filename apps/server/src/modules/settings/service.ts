@@ -1,4 +1,4 @@
-import { redisClient } from "@/redis";
+import { redisClient } from "@/libs/redis";
 
 export const SettingsService = {
 	setAliases(aliases: Record<string, any>) {

@@ -1,6 +1,6 @@
 import type { BunFile } from "bun";
+import { redisClient } from "@/libs/redis";
 import { ParserModel, type TParserModel } from "@/modules/parser/model";
-import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
 
 export const ParserService = {

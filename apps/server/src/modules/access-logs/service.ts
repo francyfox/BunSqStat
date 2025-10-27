@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { fieldTypes, regexMap } from "@/consts";
+import { redisClient } from "@/libs/redis";
 import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
-import { redisClient } from "@/redis";
 import { parseLogLine } from "@/utils/log";
 
 export const AccessLogService = {
@@ -83,7 +83,8 @@ export const AccessLogService = {
 		});
 
 		await Promise.all(stack);
-		return logLines.length;
+
+		return;
 	},
 
 	async getLogs({ search, sortBy, page, fields }: getLogParams = {}) {

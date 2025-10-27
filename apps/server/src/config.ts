@@ -12,12 +12,10 @@ export const configSchema = t.Intersect([
 				default: "development",
 			},
 		),
-		SQUID_HOST: t.String({
-			default: "0.0.0.0",
-			description: "Used for listen udp logs",
-		}),
-		SQUID_PORT: t.String({
-			default: "5140",
+		SQUID_LISTENERS: t.String({
+			default: "0.0.0.0:5140",
+			description:
+				"Used for listen udp logs. Example: 0.0.0.0:5140,0.0.0.0:5141,...",
 		}),
 	}),
 	t.Partial(

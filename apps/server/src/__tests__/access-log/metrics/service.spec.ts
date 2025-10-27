@@ -1,9 +1,9 @@
 import { afterAll, beforeAll, describe, expect, test } from "bun:test";
 import { SquidLogGenerator } from "@/__tests__/log-generator/log-generator";
 import { config } from "@/config";
+import { redisClient } from "@/libs/redis";
 import { AccessLogsMetricsService } from "@/modules/access-logs/metrics/service";
 import { AccessLogService } from "@/modules/access-logs/service";
-import { redisClient } from "@/redis";
 
 // TODO: disable random
 describe("MetricsService", () => {

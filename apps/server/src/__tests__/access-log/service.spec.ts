@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "bun:test";
+import { redisClient } from "@/libs/redis";
 import { AccessLogService } from "@/modules/access-logs/service";
-import { redisClient } from "@/redis";
 
 describe("AccessLogService", () => {
 	beforeEach(async () => {
