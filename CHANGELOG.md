@@ -1,3 +1,12 @@
+## 0.24.0 - 27 Oct 2025
+
+Feature:
+- Listen UDP logs (new env)
+- Remove chokidar (file watcher)
+
+Bugfix:
+- Columns ellipsis for domain tables
+
 ## 0.23.0 - 21 Oct 2025
 
 Feature:

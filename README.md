@@ -29,10 +29,7 @@
 docker run -d \
   --name bunsqstat \
   -p 80:80 \
-  -p 3000:3000 \
-  -p 6379:6379 \
-  -v /tmp/squid/log:/tmp/squid/log:ro \
-  -e REDIS_PASSWORD=your-secure-password \
+  -e SQUID_LISTENERS=0.0.0.0:5140,0.0.0.0:5141,... \
   ghcr.io/francyfox/bunsqstat:latest
 ```
 
@@ -44,6 +41,8 @@ services:
       image: ghcr.io/francyfox/bunsqstat:latest
       container_name: bunsqstat-client
       restart: unless-stopped
+      env:
+        SQUID_LISTENERS: "0.0.0.0:5140,0.0.0.0:5141,..."
       ports:
         - "8078:80" # Web UI
       volumes:
@@ -62,18 +61,17 @@ services:
 
 - [X] Access log data table
 - [X] Real-time WebSocket updates
-- - [ ] !Replace chokidar (file watcher) on daemon:tcp
+- - [X] !Replace chokidar (file watcher) on daemon:tcp
 - [X] Access log charts
 - - [X] Hit Ratio
 - - [X] User speed
 - - [X] masonry-wall
 - - [X] Top user table
 - - [X] Top domain table
-- [ ] Adaptive
+- [X] Adaptive
 - - [X] Mobile/Tablet (last 2 versions)
-- - [ ] Tile windows (custom size)
-- - [ ] CLI???
-- [ ] Settings
+- - [X] Tile windows (custom size)
+- [X] Settings
 - - [X] User alias by ip
 - - [X] Redis maxmemory
 - - [X] DANGER ZONE
@@ -82,7 +80,6 @@ services:
 - [X] i18n
 - - [X] en
 - - [X] ru
-- - [ ] ???
 - [X] Optimize WS for few tabs (one tab permitted requests)
 - [ ] Add to env lazy mode (use watcher only has ws clients)
 - [X] Use offset for reading logs (slow parse speed)
@@ -116,19 +113,13 @@ Alternative SquidAnalyzer, but it runs only by cron
 - ⚡ **High performance** - Built on Bun runtime for maximum speed
 - 🐳 **Docker ready** - Easy deployment with Docker Compose
 
-## 🏗️ Architecture
+## 🏗️ Logs roadmap
+
 
 ```
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   Squid Proxy   │───▶│   BunSqStat      │───▶│   Redis Stack   │
-│                 │    │   (Log Parser)   │    │   (Search Index)│
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                                │
-                                ▼
-                       ┌─────────────────┐
-                       │   Vue 3 Web UI  │
-                       │   (Dashboard)   │
-                       └─────────────────┘
+Squid logs UDP -> UDP listen -> Parse logs ->
+-> Store logs to Redis -> Websockets 
+-> Vue 3 Web UI
 ```
 
 ## 🚀 Quick Start
@@ -150,7 +141,7 @@ cd BunSqStat
 bun install
 
 # Start Redis with Docker Compose
-docker-compose up -d redis
+docker-compose up -d
 
 # Copy environment template
 cp .env.example .env
