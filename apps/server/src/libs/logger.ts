@@ -20,13 +20,24 @@ export const dataLogger = createLogger({
 });
 
 export const logger = {
+	error: ({ operation }: { operation: string }, message: string) => {
+		dataLogger.pino.error(
+			{
+				operation,
+				duration: 0,
+				itemsProcessed: 0,
+				memory: heapStats().heapSize,
+			},
+			message,
+		);
+	},
 	info(
 		{
 			operation,
 			startTime,
 			count,
 		}: {
-			operation?: "process_data";
+			operation?: string;
 			startTime: number;
 			count?: number;
 		},
@@ -38,7 +49,6 @@ export const logger = {
 				duration: Date.now() - startTime,
 				itemsProcessed: count || 0,
 				memory: heapStats().heapSize,
-				success: true,
 			},
 			message,
 		);

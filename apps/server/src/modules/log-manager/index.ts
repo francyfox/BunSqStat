@@ -7,7 +7,6 @@ export const LogManager = {
 			console.log("Successfully initialized log service");
 		} catch (error) {
 			console.error("Error initializing log service:", error);
-			// Don't throw - allow the app to start even without logs
 		}
 	},
 };
