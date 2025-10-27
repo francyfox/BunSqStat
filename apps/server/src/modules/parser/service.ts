@@ -1,6 +1,6 @@
 import type { BunFile } from "bun";
+import { redisClient } from "@/libs/redis";
 import { ParserModel, type TParserModel } from "@/modules/parser/model";
-import { redisClient } from "@/redis";
 import { mergeStrip } from "@/utils/array";
 
 export const ParserService = {
@@ -49,9 +49,6 @@ export const ParserService = {
 			mtimeMs,
 		};
 
-		await redisClient.hmset(
-			`file:${name}`,
-			mergeStrip(this.fields, Object.values(info)),
-		);
+		await redisClient.hset(`file:${name}`, info);
 	},
 };

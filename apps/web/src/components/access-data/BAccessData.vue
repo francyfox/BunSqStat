@@ -123,7 +123,6 @@ async function handleReset() {
 watchDebounced(
 	value,
 	async (v) => {
-		console.log(v);
 		if (!v) return;
 
 		if (typeof v?.changedLinesCount !== "number" || v.changedLinesCount <= 0)
@@ -146,7 +145,7 @@ watchDebounced(
 			}
 		}
 	},
-	{ debounce: interval },
+	{ debounce: interval, flush: "post" },
 );
 
 onMounted(async () => {

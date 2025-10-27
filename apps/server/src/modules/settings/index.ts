@@ -1,7 +1,8 @@
 import { Elysia, t } from "elysia";
+import { redisClient } from "@/libs/redis";
 import { LogManager } from "@/modules/log-manager";
 import { SettingsService } from "@/modules/settings/service";
-import { redisClient } from "@/redis";
+import { chuck } from "@/utils/array";
 
 export const Settings = new Elysia()
 	.post(
@@ -44,7 +45,14 @@ export const Settings = new Elysia()
 		async ({ body }) => {
 			const { aliases } = body;
 
-			await SettingsService.setAliases(aliases.trim().split(" "));
+			const recordAliases = chuck(aliases.trim().split(" "), 2).reduce(
+				(acc: Record<string, any>, v) => {
+					if (v.length === 2) acc[v[0]] = v[1];
+					return acc;
+				},
+				{},
+			);
+			await SettingsService.setAliases(recordAliases);
 
 			return { success: true };
 		},

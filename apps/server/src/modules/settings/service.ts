@@ -1,8 +1,8 @@
-import { redisClient } from "@/redis";
+import { redisClient } from "@/libs/redis";
 
 export const SettingsService = {
-	setAliases(aliases: string[]) {
-		return redisClient.hmset("settings:alias", aliases);
+	setAliases(aliases: Record<string, any>) {
+		return redisClient.hset("settings:alias", aliases);
 	},
 
 	async getAliases(
