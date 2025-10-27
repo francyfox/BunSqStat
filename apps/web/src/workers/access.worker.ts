@@ -24,39 +24,39 @@ _self.onconnect = async (event) => {
 	port.onmessage = (event: MessageEvent) => {
 		const { url } = event.data;
 		if (!wsInstance) wsInstance = openWS(url);
-	};
 
-	wsInstance.onmessage = (event: MessageEvent) => {
-		const status = () => {
-			switch (wsInstance.readyState) {
-				case WebSocket.OPEN:
-					return "OPEN";
-				case WebSocket.CLOSED:
-					return "CLOSED";
-				case WebSocket.CONNECTING:
-					return "CONNECTING";
-				default:
-					return "CLOSED";
-			}
+		wsInstance.onmessage = (event: MessageEvent) => {
+			const status = () => {
+				switch (wsInstance.readyState) {
+					case WebSocket.OPEN:
+						return "OPEN";
+					case WebSocket.CLOSED:
+						return "CLOSED";
+					case WebSocket.CONNECTING:
+						return "CONNECTING";
+					default:
+						return "CLOSED";
+				}
+			};
+
+			sendMessage(
+				JSON.stringify({
+					data: event.data,
+					error: null,
+					status: status(),
+				}),
+			);
 		};
 
-		sendMessage(
-			JSON.stringify({
-				data: event.data,
-				error: null,
-				status: status(),
-			}),
-		);
-	};
-
-	wsInstance.onerror = (event) => {
-		sendMessage(
-			JSON.stringify({
-				data: null,
-				error: event,
-				status: "CLOSED",
-			}),
-		);
+		wsInstance.onerror = (event) => {
+			sendMessage(
+				JSON.stringify({
+					data: null,
+					error: event,
+					status: "CLOSED",
+				}),
+			);
+		};
 	};
 
 	port.start();

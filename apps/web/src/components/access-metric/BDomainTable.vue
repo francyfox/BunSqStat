@@ -19,10 +19,10 @@ import {
 import { storeToRefs } from "pinia";
 import type { TMetricDomainItem } from "server/schema";
 import { computed, h } from "vue";
+import { useI18n } from "vue-i18n";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useDomainStore } from "@/stores/domains.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const { domains } = defineProps<{
@@ -130,11 +130,14 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		},
 	},
 	{
-		width: 100,
+		width: 120,
 		key: "errorsRate",
 		title: t("errorsRateColumn"),
 		align: "right",
 		sorter: true,
+		ellipsis: {
+			tooltip: true,
+		},
 		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
 			if (typeof order === "string") {
 				domainsStore.setSortBy("errorsRate", order);
@@ -161,6 +164,9 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		key: "hasBlocked",
 		title: t("blockedColumn"),
 		align: "right",
+		ellipsis: {
+			tooltip: true,
+		},
 		render: (row: any) =>
 			h(NTag, { type: row?.hasBlocked ? "error" : "success" }, () =>
 				h(Icon, { size: 16 }, () => h(row?.hasBlocked ? LockClosed : LockOpen)),

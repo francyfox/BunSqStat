@@ -54,6 +54,7 @@ services:
     ports:
       - "3128:3128"
       - "3129:3129"
+      - "514:514"
     volumes:
       - ./docker/ssl:/etc/squid/ssl/
       - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
