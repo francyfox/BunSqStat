@@ -3,7 +3,7 @@ import { swagger } from "@elysiajs/swagger";
 import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { config } from "@/config";
-import { logger, loggerPlugin } from "@/libs/logger";
+import { loggerPlugin } from "@/libs/logger";
 import { redisClient } from "@/libs/redis";
 import { LogManager } from "@/modules/log-manager";
 import { LogServer } from "@/modules/log-server";

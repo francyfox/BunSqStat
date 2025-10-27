@@ -60,7 +60,7 @@ export const AccessLogService = {
 	},
 
 	async readLogs(logLines: string[]) {
-		if (logLines.length === 0) return 0;
+		if (logLines.length === 0) return;
 
 		logLines.sort((a, b) => {
 			const timestampA = parseFloat(a.split(" ")[0] || "");
@@ -68,7 +68,7 @@ export const AccessLogService = {
 			return timestampA - timestampB;
 		});
 
-		if (logLines.length === 0) return 0;
+		if (logLines.length === 0) return;
 
 		const stack = logLines.map(async (log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;

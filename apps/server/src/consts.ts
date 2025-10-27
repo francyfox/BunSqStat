@@ -46,3 +46,5 @@ export const fieldTypes = new Map<string, string>([
 	["contentType", "TEXT"],
 	["domain", "TEXT SORTABLE"],
 ]);
+
+export const STALE_TIMEOUT = 60_000;

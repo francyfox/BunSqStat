@@ -1,4 +1,4 @@
-import { heapStats } from "bun:jsc";
+import { memoryUsage } from "bun:jsc";
 import logixlysia, { createLogger } from "logixlysia";
 
 const defaultOptions = {
@@ -16,42 +16,44 @@ export const dataLogger = createLogger({
 	config: {
 		...defaultOptions,
 		logFilePath: "./logs/data.log",
+		customLogFormat: "{now} {level} {duration} {message} {context}",
 	},
 });
 
 export const logger = {
-	error: ({ operation }: { operation: string }, message: string) => {
-		dataLogger.pino.error(
-			{
-				operation,
-				duration: 0,
-				itemsProcessed: 0,
-				memory: heapStats().heapSize,
-			},
-			message,
-		);
+	error: (
+		{ operation, url }: { operation: string; url: string },
+		message: string,
+	) => {
+		dataLogger.error(new Request(`udp://${url}`), message, {
+			from: url,
+			operation,
+			memory: memoryUsage().current,
+			cpu: process.cpuUsage().user + process.cpuUsage().system,
+		});
 	},
 	info(
 		{
 			operation,
 			startTime,
 			count,
+			url,
 		}: {
 			operation?: string;
 			startTime: number;
 			count?: number;
+			url: string;
 		},
 		message: string = "",
 	) {
-		dataLogger.pino.info(
-			{
-				operation: operation || "process_data",
-				duration: Date.now() - startTime,
-				itemsProcessed: count || 0,
-				memory: heapStats().heapSize,
-			},
-			message,
-		);
+		dataLogger.info(new Request(`udp://${url}`), message, {
+			from: url,
+			operation: operation || "process_data",
+			duration: Date.now() - startTime,
+			itemsProcessed: count || 0,
+			memory: memoryUsage().current,
+			cpu: process.cpuUsage().user + process.cpuUsage().system,
+		});
 	},
 };
 
@@ -63,6 +65,6 @@ export const loggerPlugin = logixlysia({
 		logFilePath: "./logs/server.log",
 		ip: true,
 		customLogFormat:
-			"🦊 {now} {level} {duration} {method} {pathname} {status} {message} {ip}",
+			"{now} {level} {duration} {method} {pathname} {status} {message} {ip}",
 	},
 });

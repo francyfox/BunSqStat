@@ -1,6 +1,8 @@
 import { Elysia, t } from "elysia";
 import { nanoid } from "nanoid";
+import { STALE_TIMEOUT } from "@/consts";
 import { AccessLogSchema } from "@/modules/access-logs/types";
+import { type WebSocketClient, WsService } from "@/modules/ws/ws.service";
 
 const LogModel = t.Object({
 	changedLinesCount: t.Number(),
@@ -11,32 +13,10 @@ const LogModel = t.Object({
 	}),
 });
 
-interface WebSocketClient {
-	id: string;
-	ws: any;
-	lastPing: number;
-	channel: string;
-}
-
-const connectedClients = new Map<string, WebSocketClient>();
-
-function cleanupDeadConnections() {
-	const now = Date.now();
-	const staleTimeout = 60000; // 1 min
-
-	for (const [clientId, client] of connectedClients) {
-		if (now - client.lastPing > staleTimeout) {
-			try {
-				client.ws.send(JSON.stringify({ type: "ping" }));
-				client.lastPing = now;
-			} catch (error) {
-				connectedClients.delete(clientId);
-			}
-		}
-	}
-}
-
-setInterval(cleanupDeadConnections, 30000);
+setInterval(
+	() => WsService.cleanupDeadConnections(STALE_TIMEOUT),
+	STALE_TIMEOUT,
+);
 
 const wsConfig = {
 	body: t.Any(),
@@ -58,24 +38,23 @@ const wsConfig = {
 		(ws.data as any).clientId = clientId;
 		(ws.data as any).channel = log;
 
-		connectedClients.set(clientId, client);
+		WsService.connectedClients.set(clientId, client);
 		ws.subscribe(log);
-		// Send welcome message directly to this client
 		ws.send(
 			JSON.stringify({
 				type: "hello",
 				clientId,
-				totalClients: connectedClients.size,
+				totalClients: WsService.connectedClients.size,
 			}),
 		);
 
 		console.info(
-			`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${connectedClients.size}`,
+			`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${WsService.connectedClients.size}`,
 		);
 	},
 	message(ws: any, message: any) {
 		const clientId = (ws.data as any).clientId;
-		const client = connectedClients.get(clientId);
+		const client = WsService.connectedClients.get(clientId);
 
 		if (client) {
 			client.lastPing = Date.now();
@@ -95,10 +74,10 @@ const wsConfig = {
 		const channel = (ws.data as any).channel ?? "access-logs";
 		ws.unsubscribe(channel);
 		const clientId = (ws.data as any).clientId;
-		if (clientId && connectedClients.has(clientId)) {
-			connectedClients.delete(clientId);
+		if (clientId && WsService.connectedClients.has(clientId)) {
+			WsService.connectedClients.delete(clientId);
 			console.info(
-				`WebSocket client [${clientId}] disconnected. Total clients: ${connectedClients.size}`,
+				`WebSocket client [${clientId}] disconnected. Total clients: ${WsService.connectedClients.size}`,
 			);
 		}
 	},
@@ -108,6 +87,5 @@ export const WS = new Elysia()
 	.model({
 		"log.response": LogModel,
 	})
-	// WebSocket endpoints - поддерживаем как прямой доступ, так и через /api префикс
 	.ws("/ws/:log", wsConfig)
 	.ws("/api/ws/:log", wsConfig);

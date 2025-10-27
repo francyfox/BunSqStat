@@ -8,6 +8,4 @@ const baseUrl =
 		? `http://${window.location.host}/api`
 		: "localhost:3000";
 
-console.log(window.location.host);
-
 export const api = treaty<EdenApp>(baseUrl);
