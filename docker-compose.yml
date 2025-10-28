@@ -1,6 +1,6 @@
 services:
 #  bunsqstat_client:
-#    image: ghcr.io/francyfox/bunsqstat:v0.21.2
+#    image: ghcr.io/francyfox/bunsqstat:v0.24.0
 #    container_name: bunsqstat-client
 #    restart: unless-stopped
 ##    deploy:
@@ -11,22 +11,20 @@ services:
 ##          memory: 100M # Guarantees a minimum of 256 megabytes
 #    ports:
 #      - "80:80"      # Web interface
-#      - "3000:3000"  # API (optional, for direct access)
-#      - "6379:6379"  # Redis (optional, for external access)
+#      - "6379:6379"
 #    environment:
-#      - NODE_ENV=production # optional
-#      - REDIS_PASSWORD=123 # optional
-#      - SQUID_HOST=127.0.0.1 # optional
-#      - SQUID_PORT=3128 # optional
-#      - LOG_DIR=/app/logs
-#    volumes:
-#      - ./logs:/app/logs
+#      SQUID_LISTENERS: "0.0.0.0:5140"
+#      REDIS_PASSWORD: "123"
 #    healthcheck:
 #      test: ["CMD", "curl", "-f", "http://localhost/api/health"]
 #      interval: 30s
 #      timeout: 10s
 #      retries: 3
 #      start_period: 30s
+#    depends_on:
+#      - squid
+#    networks:
+#      - squid-net
 
   redis:
     container_name: redis-bunsqstat
@@ -46,15 +44,15 @@ services:
       - predis_data:/data
     networks:
       local:
-#
+##
   squid:
     user: "3128:3128"
     image: ghcr.io/b4tman/squid-ssl-bump:latest
+    container_name: squid-proxy
     restart: unless-stopped
     ports:
       - "3128:3128"
       - "3129:3129"
-      - "514:514"
     volumes:
       - ./docker/ssl:/etc/squid/ssl/
       - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
