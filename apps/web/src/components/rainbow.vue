@@ -4,7 +4,7 @@
 
 <template>
   <div class="wrap-anim">
-    <div class="anim"></div>
+    <div class="anim">gg</div>
   </div>
 </template>
 
