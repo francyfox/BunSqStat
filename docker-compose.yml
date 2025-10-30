@@ -1,49 +1,49 @@
 services:
-#  bunsqstat_client:
-#    image: ghcr.io/francyfox/bunsqstat:v0.24.0
-#    container_name: bunsqstat-client
-#    restart: unless-stopped
-##    deploy:
-##      resources:
-##        limits:
-##          memory: 100M # Sets a memory limit of 512 megabytes
-##        reservations:
-##          memory: 100M # Guarantees a minimum of 256 megabytes
-#    ports:
-#      - "80:80"      # Web interface
-#      - "6379:6379"
-#    environment:
-#      SQUID_LISTENERS: "0.0.0.0:5140"
-#      REDIS_PASSWORD: "123"
-#    healthcheck:
-#      test: ["CMD", "curl", "-f", "http://localhost/api/health"]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
-#      start_period: 30s
-#    depends_on:
-#      - squid
-#    networks:
-#      - squid-net
-
-  redis:
-    container_name: redis-bunsqstat
-    image: redis/redis-stack:7.2.0-v18
+  bunsqstat_client:
+    image: ghcr.io/francyfox/bunsqstat:v0.24.0
+    container_name: bunsqstat-client
     restart: unless-stopped
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 100M # Sets a memory limit of 512 megabytes
+#        reservations:
+#          memory: 100M # Guarantees a minimum of 256 megabytes
     ports:
+      - "80:80"      # Web interface
       - "6379:6379"
     environment:
-      - ALLOW_EMPTY_PASSWORD=false
-      - REDIS_AOF_ENABLED=no
-      - REDIS_PASSWORD=123
-    command: redis-server ./redis-stack.conf --requirepass 123
+      SQUID_LISTENERS: "0.0.0.0:5140"
+      REDIS_PASSWORD: "123"
     healthcheck:
-      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
-    volumes:
-      - ./docker/redis/redis.conf:/redis-stack.conf
-      - predis_data:/data
+      test: ["CMD", "curl", "-f", "http://localhost/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    depends_on:
+      - squid
     networks:
-      local:
+      - squid-net
+
+#  redis:
+#    container_name: redis-bunsqstat
+#    image: redis/redis-stack:7.2.0-v18
+#    restart: unless-stopped
+#    ports:
+#      - "6379:6379"
+#    environment:
+#      - ALLOW_EMPTY_PASSWORD=false
+#      - REDIS_AOF_ENABLED=no
+#      - REDIS_PASSWORD=123
+#    command: redis-server ./redis-stack.conf --requirepass 123
+#    healthcheck:
+#      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+#    volumes:
+#      - ./docker/redis/redis.conf:/redis-stack.conf
+#      - predis_data:/data
+#    networks:
+#      local:
 ##
   squid:
     user: "3128:3128"
