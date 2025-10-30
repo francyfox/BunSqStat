@@ -1,5 +1,6 @@
 import { memoryUsage } from "bun:jsc";
 import logixlysia, { createLogger } from "logixlysia";
+import { config } from "@/config";
 
 const defaultOptions = {
 	logRotation: {
@@ -9,6 +10,12 @@ const defaultOptions = {
 	},
 	timestamp: {
 		translateTime: "yyyy-mm-dd HH:MM:ss.SSS",
+	},
+	logFilter: {
+		level:
+			config.NODE_ENV === "production"
+				? ["ERROR", "WARNING"]
+				: ["DEBUG", "INFO", "WARNING", "ERROR"],
 	},
 };
 

@@ -1,0 +1,11 @@
+html[data-theme="light"]:root {
+	--sl-color-bg: #fbe9bf;
+	--sl-color-hairline: #000;
+	--sl-color-hairline-shade: #000;
+	--sl-color-bg-nav: #ffee95;
+	--sl-color-hairline-light: #000;
+}
+
+html[data-theme="light"] .expressive-code .frame {
+	--ec-frm-edBg: #ffe8f3;
+}

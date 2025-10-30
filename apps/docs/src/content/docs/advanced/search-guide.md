@@ -1,4 +1,6 @@
-# [WIP]🔍 Search Guide
+---
+title: Search Guide
+---
 
 This guide covers BunSqStat's powerful search capabilities powered by Redis Search.
 

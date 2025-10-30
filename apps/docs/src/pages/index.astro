@@ -1,0 +1,47 @@
+---
+import { Image } from "astro:assets";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Logo from "../assets/squid.webp";
+import MoviePresent from "../assets/vokoscreenNG-2025-10-29_17-19-49.webm?url";
+import MultiMovie from "../components/MultiMovie.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+        title="BunSqStat"
+        description="about"
+>
+    <div class="flex flex-col gap-2">
+        <div class="flex flex-col items-center xl:items-start xl:flex-row gap-2">
+            <div class="w-full max-w-[100px] h-[100px] xl:(max-w-sm h-sm) flex flex-col gap-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-[100%]">
+                <Image
+                  src={Logo}
+                  alt="Sweety squid"
+                  loading="eager"
+                  class="m-a flex w-[80%] text-white"
+                />
+            </div>
+            <div class="w-full flex flex-col gap-2">
+                <MultiMovie
+                  src={MoviePresent}
+                />
+            </div>
+        </div>
+
+        <div class="w-full flex justify-center xl:justify-start gap-2">
+            <div class="flex flex-col items-center gap-3 w-full max-w-sm pt-5">
+                <h1 class="text-center text-5xl text-white font-300">#BunSqStat</h1>
+
+                <a href={getRelativeLocaleUrl('en', '/getting-started/intro')}
+                   class="w-full max-w-[250px] flex items-center justify-center px-2 py-2 text-md font-bold text-white bg-blue-900 hover:bg-blue-700 transition-colors rounded-lg"
+                >
+                    WatchDocs
+                </a>
+                <main class="text-center text-sm text-gray-300">
+                    Real-time Squid proxy log analyzer with powerful search capabilities ⚡
+                </main>
+            </div>
+        </div>
+    </div>
+
+</BaseLayout>
