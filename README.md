@@ -189,7 +189,7 @@ BunSqStat/
 
 ## 📖 Documentation
 
-- [🔍 Search Syntax](./docs/search-guide.md)
+- [🔍 Search Syntax](apps/docs/src/content/docs/advanced/search-guide.md)
 - [🚀 Deployment](./docs/deployment.md)
 
 ## 🛠️ Tech Stack

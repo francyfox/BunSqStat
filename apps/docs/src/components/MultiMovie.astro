@@ -1,0 +1,42 @@
+---
+interface Props {
+	src: string;
+}
+
+const { src } = Astro.props;
+---
+
+<div class="multi-movie relative h-[55vw] xl:h-[200px]">
+    <video
+            muted
+            autoplay
+            loop
+            transition:name="media-player"
+            transition:persist
+            class="w-full absolute top-0 left-0 translate rotate-x-10 scale-80 shadow-xl rotate-y-40 border-solid border-gray-200 rounded-lg"
+    >
+        <source src={src} />
+    </video>
+
+    <video
+            muted
+            autoplay
+            loop
+            transition:name="media-player"
+            transition:persist
+            class="w-full absolute top-5 left-[-50px] translate rotate-x-10 scale-80 shadow-xl rotate-y-40 border-solid border-gray-200 rounded-lg"
+    >
+        <source src={src} />
+    </video>
+
+    <video
+            muted
+            autoplay
+            loop
+            transition:name="media-player"
+            transition:persist
+            class="absolute top-10 left-[-100px] translate rotate-x-10 scale-20 scale-80 shadow-xl rotate-y-40 border-solid border-gray-200 rounded-lg"
+    >
+        <source src={src} />
+    </video>
+</div>

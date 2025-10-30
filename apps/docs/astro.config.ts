@@ -2,14 +2,30 @@
 
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import UnoCSS from "unocss/astro";
 
 // https://astro.build/config
 export default defineConfig({
+	// i18n: {
+	// 	locales: ["en", "ru"],
+	// 	defaultLocale: "en",
+	// },
 	// site: "bunsqstat.shalotts.site",
 	integrations: [
+		UnoCSS(),
 		starlight({
-			title: "Docs",
+			title: "🐙 BunSqStat",
+			defaultLocale: "root",
 			customCss: ["./src/assets/index.css"],
+			locales: {
+				root: {
+					lang: "en",
+					label: "English",
+				},
+				ru: {
+					label: "Russian",
+				},
+			},
 			social: [
 				{
 					icon: "github",
@@ -19,15 +35,12 @@ export default defineConfig({
 			],
 			sidebar: [
 				{
-					label: "Guides",
-					items: [
-						// Each item here is one entry in the navigation menu.
-						{ label: "Example Guide", slug: "guides/example" },
-					],
+					label: "Getting-started",
+					autogenerate: { directory: "getting-started" },
 				},
 				{
-					label: "Reference",
-					autogenerate: { directory: "reference" },
+					label: "Advanced",
+					autogenerate: { directory: "advanced" },
 				},
 			],
 		}),

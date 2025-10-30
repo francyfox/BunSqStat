@@ -1,29 +1,11 @@
-
-.wrap-anim {
-     position: absolute;
-     width: 100vw;
-     height: 100vh;
-     overflow: hidden;
+html[data-theme="light"]:root {
+	--sl-color-bg: #fbe9bf;
+	--sl-color-hairline: #000;
+	--sl-color-hairline-shade: #000;
+	--sl-color-bg-nav: #ffee95;
+	--sl-color-hairline-light: #000;
 }
 
-.anim {
-    width: 100vw;
-    height: 100vw;
-    display: block;
-    position: absolute;
-    top: -100vh;
-    left: -25vw;
-    background: radial-gradient(circle at center, var(--c-bg-light) 10%, transparent 50%);
-    animation: bgPosTranslate 15s linear infinite;
-    will-change: transform;
-    z-index: -1;
-}
-
-@keyframes bgPosTranslate {
-    from {
-        transform: rotate(180deg) translateX(150px) rotate(180deg);
-    }
-    to {
-        transform: rotate(540deg) translateX(150px) rotate(540deg);
-    }
+html[data-theme="light"] .expressive-code .frame {
+	--ec-frm-edBg: #ffe8f3;
 }

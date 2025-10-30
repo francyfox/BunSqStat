@@ -11,7 +11,11 @@
 	},
 	"dependencies": {
 		"@astrojs/starlight": "^0.36.1",
+		"@fontsource-variable/victor-mono": "^5.2.8",
 		"astro": "^5.6.1",
 		"sharp": "^0.34.2"
+	},
+	"devDependencies": {
+		"@unocss/reset": "^66.5.4"
 	}
 }

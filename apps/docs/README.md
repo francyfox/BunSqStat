@@ -20,7 +20,7 @@ Inside of your Astro + Starlight project, you'll see the following folders and f
 │   ├── content/
 │   │   └── docs/
 │   └── content.config.ts
-├── astro.config.mjs
+├── astro.config.ts
 ├── package.json
 └── tsconfig.json
 ```
