@@ -5,8 +5,6 @@ import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { NButton, NInputNumber, NTag } from "naive-ui";
 import { computed } from "vue";
 
-const interval = defineModel<number>("interval", { default: 300 });
-
 const emit = defineEmits<{
 	handlePause: [];
 }>();
@@ -46,16 +44,6 @@ const isTablet = computed(() => breakpoints.md.value);
       {{ !pause ? $t('pause') : $t('start') }}
     </NButton>
 
-    <NTag v-if="isTablet" class="text-xl">
-      {{ $t('interval') }}:
-    </NTag>
-    <NInputNumber
-        v-if="isTablet"
-        v-model:value="interval"
-        size="small"
-        :show-button="false"
-        class="max-w-[50px]"
-    />
     <NTag v-if="isTablet" class="text-xl">
       {{ $t('wsStatus') }}: {{ status }}
     </NTag>

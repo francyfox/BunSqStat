@@ -5,18 +5,19 @@ import {
 	NButton,
 	NFormItem,
 	NInput,
+	NInputNumber,
 	NSelect,
 	NTooltip,
 	useMessage,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 import { useSettingsStore } from "@/stores/settings.ts";
 
-const { t, availableLocales, locale } = useI18n();
+const { t, availableLocales } = useI18n();
 const store = useSettingsStore();
-const { loading, error, language } = storeToRefs(store);
+const { loading, error, language, interval } = storeToRefs(store);
 const message = useMessage();
 
 const locales = computed(() =>
@@ -55,6 +56,35 @@ async function handleUpdateAliases() {
             class="w-full"
         />
       </NFormItem>
+    </div>
+
+    <div class="flex gap-1">
+      <div class="w-full flex gap-1 max-w-sm">
+        <NFormItem :label="$t('interval')" class="w-full">
+          <NInputNumber
+              v-model:value="interval"
+              :show-button="false"
+              class="w-full"
+          />
+        </NFormItem>
+      </div>
+
+      <div class="mt-[-10px] md:mt-[25px] pb-5 flex gap-1">
+        <NTooltip
+            placement="bottom"
+            trigger="click"
+        >
+          <template #trigger>
+            <Icon size="32"
+                  class="cursor-pointer"
+            >
+              <InformationCircle />
+            </Icon>
+          </template>
+
+          {{ $t('intervalTooltip') }}
+        </NTooltip>
+      </div>
     </div>
 
     <div class="flex flex-col md:flex-row gap-1">
@@ -97,7 +127,7 @@ async function handleUpdateAliases() {
               <InformationCircle />
             </Icon>
           </template>
-          {{ $t('userAliasTooltip') }}
+          <span v-html="$t('userAliasTooltip')"></span>
         </NTooltip>
       </div>
     </div>

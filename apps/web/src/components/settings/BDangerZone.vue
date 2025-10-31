@@ -4,8 +4,8 @@ import { Icon } from "@vicons/utils";
 import { NButton, NModal, NTooltip, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { ref } from "vue";
-import { useSettingsStore } from "@/stores/settings.ts";
 import { useI18n } from "vue-i18n";
+import { useSettingsStore } from "@/stores/settings.ts";
 
 const { t } = useI18n();
 const store = useSettingsStore();
@@ -15,7 +15,7 @@ const currentAction = ref();
 
 const showModal = ref(false);
 
-type TAction = "Drop access logs" | "Drop aliases" | "Parse logs";
+type TAction = "Drop access logs" | "Drop aliases";
 async function openModal(action: TAction) {
 	showModal.value = true;
 	currentAction.value = action;
@@ -27,8 +27,6 @@ async function handlePositive() {
 			await store.dropLogAccess();
 		} else if (currentAction.value === "Drop aliases") {
 			await store.dropAliases();
-		} else if (currentAction.value === "Parse logs") {
-			await store.parseLogs();
 		}
 	} finally {
 		if (error.value) {
@@ -69,13 +67,6 @@ async function handlePositive() {
           @click="openModal('Drop aliases')"
       >
         {{ $t('dropAliases') }}
-      </NButton>
-      <NButton
-          :loading="loading"
-          type="warning"
-          @click="openModal('Parse logs')"
-        >
-        {{ $t('parseLogs') }}
       </NButton>
     </div>
 
