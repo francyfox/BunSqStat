@@ -1,6 +1,7 @@
 import { config } from "@/config";
 import { logger } from "@/libs/logger";
 import { AccessLogService } from "@/modules/access-logs/service";
+import { ParserService } from "@/modules/parser/service";
 import { WsService } from "@/modules/ws/ws.service";
 
 export const LogServer = {
@@ -22,17 +23,27 @@ export const LogServer = {
 	},
 
 	async start() {
+		await ParserService.createIndex();
+
 		for (const listener of this.listeners) {
 			try {
 				await Bun.udpSocket({
 					hostname: listener.host,
 					port: Number(listener.port),
 					socket: {
-						data(_, data) {
+						async data(_, data, port, address) {
 							const startTime = Date.now();
 							const logEntries = data.toString().trim().split("\n");
+							const id = `${address.replaceAll(".", "")}${port}`;
+							const exist = await ParserService.exist(id);
+							const isListen = exist
+								? (await ParserService.get(id)).listen === "true"
+								: false;
 
-							AccessLogService.readLogs(logEntries);
+							if (!exist) await ParserService.add(id);
+							if (!isListen) return;
+
+							await AccessLogService.readLogs(logEntries, { port, address });
 							WsService.send({ changedLinesCount: logEntries.length });
 
 							logger.info(

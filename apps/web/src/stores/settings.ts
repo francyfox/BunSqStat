@@ -12,6 +12,7 @@ export const useSettingsStore = defineStore(
 		const aliasRouter = createRouter();
 		const aliasRouterIsInitialized = ref(false);
 		const language = ref<string>();
+		const interval = ref<number>(300);
 		const settings = reactive({
 			maxMemory: 0,
 			aliases: "",
@@ -23,18 +24,6 @@ export const useSettingsStore = defineStore(
 		function setLocale(v: string) {
 			language.value = v;
 			locale.value = v;
-		}
-
-		async function parseLogs() {
-			const response = await api.settings.parser.post();
-
-			if (response.error) {
-				error.value = response.error.message;
-			} else {
-				error.value = "";
-			}
-
-			return response;
 		}
 
 		async function dropLogAccess() {
@@ -151,8 +140,8 @@ export const useSettingsStore = defineStore(
 			setAliases,
 			getMaxMemory,
 			setMaxMemory,
-			parseLogs,
 			setLocale,
+			interval,
 			currentTab,
 			language,
 			aliasRouterIsInitialized,

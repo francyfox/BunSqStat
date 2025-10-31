@@ -1,8 +1,8 @@
 import type { Mutable } from "@/utils/object";
 
 const model = {
-	fields: ["id", "name", "offset", "mtimeMs"],
-	types: ["TAG", "TEXT SORTABLE", "NUMERIC", "NUMERIC"],
+	fields: ["id", "listen", "active"],
+	types: ["TAG", "TEXT", "TEXT"],
 } as const;
 
 type TModel = typeof model;

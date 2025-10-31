@@ -1,7 +1,9 @@
 // @ts-check
-
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import starlightChangelogs, {
+	makeChangelogsSidebarLinks,
+} from "starlight-changelogs";
 import UnoCSS from "unocss/astro";
 
 // https://astro.build/config
@@ -16,7 +18,11 @@ export default defineConfig({
 		starlight({
 			title: "🐙 BunSqStat",
 			defaultLocale: "root",
+			plugins: [starlightChangelogs()],
 			customCss: ["./src/assets/index.css"],
+			components: {
+				MarkdownContent: "./src/components/MarkdownContent.astro",
+			},
 			locales: {
 				root: {
 					lang: "en",
@@ -46,6 +52,13 @@ export default defineConfig({
 					label: "About",
 					autogenerate: { directory: "about" },
 				},
+				...makeChangelogsSidebarLinks([
+					{
+						type: "all",
+						base: "changelog",
+						label: "All versions",
+					},
+				]),
 			],
 		}),
 	],

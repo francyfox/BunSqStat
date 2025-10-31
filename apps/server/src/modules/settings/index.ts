@@ -1,22 +1,45 @@
 import { Elysia, t } from "elysia";
 import { redisClient } from "@/libs/redis";
-import { LogManager } from "@/modules/log-manager";
+import { ParserService } from "@/modules/parser/service";
 import { SettingsService } from "@/modules/settings/service";
 import { chuck } from "@/utils/array";
 
 export const Settings = new Elysia()
-	.post(
-		"settings/parser",
+	.get(
+		"settings/origin",
 		async () => {
-			await LogManager.readLogs();
+			const response = await ParserService.getAll();
+
+			return response;
+		},
+		{
+			detail: { description: "Get origin from UDP logs" },
+			response: t.Object({
+				items: t.Array(
+					t.Object({
+						id: t.String(),
+						listen: t.Boolean(),
+						active: t.Boolean(),
+					}),
+				),
+				total: t.Number(),
+			}),
+		},
+	)
+	.post(
+		"/settings/origin/:id",
+		async ({ params: { id }, body }) => {
+			const item = await ParserService.add(id, body);
 
 			return {
-				success: true,
+				item,
 			};
 		},
 		{
-			detail: { description: "Read logs from files (use after drop database)" },
-			response: t.Object({ success: t.Boolean() }),
+			body: t.Object({
+				listen: t.Boolean(),
+				active: t.Boolean(),
+			}),
 		},
 	)
 	.get(

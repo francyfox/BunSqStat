@@ -59,7 +59,10 @@ export const AccessLogService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
-	async readLogs(logLines: string[]) {
+	async readLogs(
+		logLines: string[],
+		{ port, address }: { port: number; address: string },
+	) {
 		if (logLines.length === 0) return;
 
 		logLines.sort((a, b) => {
@@ -75,6 +78,7 @@ export const AccessLogService = {
 			const sanitized = {
 				...this.sanitizeLogData(parsed),
 				id: `access:${parsed.timestamp}_${nanoid(5)}`,
+				from: `${address}:${port.toString()}`,
 			};
 			const logKey = `log:${sanitized.id}`;
 

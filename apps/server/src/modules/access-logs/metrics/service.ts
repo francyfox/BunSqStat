@@ -354,11 +354,11 @@ export const AccessLogsMetricsService = {
 
 		for (const i of items) {
 			const freshItem = freshData.find(
-				(j: IMetricBytesAndDuration) => j.clientIP === i.clientIP,
+				(j: IMetricBytesAndDuration) => j?.clientIP === i?.clientIP,
 			);
 			const { results } = await redisClient.send(
 				"FT.SEARCH",
-				`log_idx @clientIP:{${i.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 3 user url timestamp`.split(
+				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 3 user url timestamp`.split(
 					" ",
 				),
 			);
