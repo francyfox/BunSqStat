@@ -1,0 +1,42 @@
+---
+title: 📈 Roadmap
+---
+
+- [X] Access log data table
+- [X] Real-time WebSocket updates
+- - [X] !Replace chokidar (file watcher) on daemon:tcp
+- [X] Access log charts
+- - [X] Hit Ratio
+- - [X] User speed
+- - [X] masonry-wall
+- - [X] Top user table
+- - [X] Top domain table
+- [X] Adaptive
+- - [X] Mobile/Tablet (last 2 versions)
+- - [X] Tile windows (custom size)
+- [X] Settings
+- - [X] User alias by ip
+- - [X] Redis maxmemory
+- - [X] DANGER ZONE
+- [ ] Exclude list
+- - [ ] CIDR exclude?
+- [X] i18n
+- - [X] en
+- - [X] ru
+- [X] Optimize WS for few tabs (one tab permitted requests)
+- [ ] Add to env lazy mode (use watcher only has ws clients)
+- [X] Use offset for reading logs (slow parse speed)
+- [X] Log rotate support (logfile_rotate N)
+- - [X] {inode, offset}
+- [ ] PWA?
+- [ ] Anomaly detects?
+- - [ ] Browser/Mobile alerts
+- - [ ] Proxy/VPN detect
+- - [ ] WHOIS
+- [ ] Squid cache logs?
+- [ ] Squid guard logs?
+- [ ] Add custom logs format like ([to squid docs](https://www.squid-cache.org/Doc/config/logformat/))
+- - [ ] User agent
+- - [ ] SSL bump status
+- [ ] Stress test
+- [ ] Deploy test
