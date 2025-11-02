@@ -24,7 +24,5 @@
 		"apps/*",
 		"packages/*"
 	],
-	"dependencies": {
-		"nanoid": "^5.1.6"
-	}
+	"dependencies": {}
 }
