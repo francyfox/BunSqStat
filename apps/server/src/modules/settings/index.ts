@@ -18,6 +18,7 @@ export const Settings = new Elysia()
 				items: t.Array(
 					t.Object({
 						id: t.String(),
+						host: t.String(),
 						listen: t.Boolean(),
 						active: t.Boolean(),
 					}),

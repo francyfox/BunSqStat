@@ -40,7 +40,8 @@ export const LogServer = {
 								? (await ParserService.get(id)).listen === "true"
 								: false;
 
-							if (!exist) await ParserService.add(id);
+							if (!exist)
+								await ParserService.add(id, undefined, `${address}:${port}`);
 							if (!isListen) return;
 
 							await AccessLogService.readLogs(logEntries, { port, address });

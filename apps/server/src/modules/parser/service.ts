@@ -13,7 +13,7 @@ export const ParserService = {
 		}
 
 		const args =
-			`origin_idx on HASH PREFIX 1 log: SCHEMA ${mergeStrip(this.fields, this.types).join(" ")}`.split(
+			`origin_idx on HASH PREFIX 1 origin: SCHEMA ${mergeStrip(this.fields, this.types).join(" ")}`.split(
 				" ",
 			);
 		await redisClient.send("FT.CREATE", args);
@@ -46,6 +46,7 @@ export const ParserService = {
 		const items = results.map((i: any) => {
 			return {
 				id: i?.extra_attributes.id,
+				host: i?.extra_attributes.host,
 				listen: i?.extra_attributes.listen === "true",
 				active: i?.extra_attributes.active === "true",
 			};
@@ -63,9 +64,11 @@ export const ParserService = {
 			listen: true,
 			active: true,
 		},
+		host?: string,
 	) {
 		await redisClient.hset(`origin:${id}`, {
 			id,
+			host: host || "",
 			listen: listen ? "true" : "false",
 			active: active ? "true" : "false",
 		});
