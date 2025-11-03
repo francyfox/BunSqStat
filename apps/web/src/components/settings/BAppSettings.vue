@@ -92,7 +92,10 @@ onMounted(async () => {
       </div>
     </div>
 
-    <BOrigins v-model="store.settings.origins" />
+    <BOrigins
+        v-model="store.settings.origins"
+        @handleChange="store.setOrigin"
+    />
 
     <div class="flex flex-col md:flex-row gap-1">
 

@@ -1,4 +1,3 @@
-import { boolean } from "mathjs";
 import { redisClient } from "@/libs/redis";
 import { ParserModel, type TParserModel } from "@/modules/parser/model";
 import { mergeStrip } from "@/utils/array";
@@ -47,6 +46,7 @@ export const ParserService = {
 			return {
 				id: i?.extra_attributes.id,
 				host: i?.extra_attributes.host,
+				prefix: i?.extra_attributes.prefix,
 				listen: i?.extra_attributes.listen === "true",
 				active: i?.extra_attributes.active === "true",
 			};
@@ -65,10 +65,12 @@ export const ParserService = {
 			active: true,
 		},
 		host?: string,
+		prefix?: string,
 	) {
 		await redisClient.hset(`origin:${id}`, {
 			id,
 			host: host || "",
+			prefix: prefix || "",
 			listen: listen ? "true" : "false",
 			active: active ? "true" : "false",
 		});

@@ -9,6 +9,10 @@ const origins =
 		{ id: string; host: string; listen: boolean; active: boolean }[]
 	>();
 
+const emit = defineEmits<{
+	handleChange: [item: any];
+}>();
+
 const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
 </script>
 
@@ -40,10 +44,16 @@ const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
           {{ i?.host }}
         </td>
         <td>
-          <NSwitch v-model:value="i.active" />
+          <NSwitch
+              v-model:value="i.active"
+              @update:value="emit('handleChange', i)"
+          />
         </td>
         <td>
-          <NSwitch v-model:value="i.listen" />
+          <NSwitch
+              v-model:value="i.listen"
+              @update:value="emit('handleChange', i)"
+          />
         </td>
       </tr>
       </tbody>

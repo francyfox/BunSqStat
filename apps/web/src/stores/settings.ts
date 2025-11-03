@@ -41,14 +41,9 @@ export const useSettingsStore = defineStore(
 			return response;
 		}
 
-		async function setOrigin(id: string, body: any) {
+		async function setOrigin(v: any) {
 			loading.value = true;
-			const response = await api.settings.origin.post({
-				params: {
-					id,
-				},
-				body,
-			});
+			const response = await api.settings.origin({ id: v.id }).post(v);
 
 			if (response.error) {
 				error.value = response.error.message;
@@ -196,7 +191,7 @@ export const useSettingsStore = defineStore(
 		persist: [
 			{
 				storage: localStorage,
-				pick: ["language", "tabs"],
+				pick: ["language", "tabs", "interval"],
 			},
 		],
 	},

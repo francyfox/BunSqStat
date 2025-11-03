@@ -35,16 +35,22 @@ export const LogServer = {
 							const startTime = Date.now();
 							const logEntries = data.toString().trim().split("\n");
 							const id = `${address.replaceAll(".", "")}${port}`;
-							const exist = await ParserService.exist(id);
-							const isListen = exist
-								? (await ParserService.get(id)).listen === "true"
-								: false;
+							const { items, total } = await ParserService.getAll();
+							const origin = items.find((i: any) => i.id === id);
+							const prefix = origin?.prefix ?? `o${total + 1}`;
 
-							if (!exist)
-								await ParserService.add(id, undefined, `${address}:${port}`);
-							if (!isListen) return;
+							if (!origin) {
+								await ParserService.add(
+									id,
+									undefined,
+									`${address}:${port}`,
+									prefix,
+								);
+							} else {
+								if (!origin.listen) return;
+							}
 
-							await AccessLogService.readLogs(logEntries, { port, address });
+							await AccessLogService.readLogs(logEntries, prefix);
 							WsService.send({ changedLinesCount: logEntries.length });
 
 							logger.info(

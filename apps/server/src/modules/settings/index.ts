@@ -30,17 +30,28 @@ export const Settings = new Elysia()
 	)
 	.post(
 		"/settings/origin/:id",
-		async ({ params: { id }, body }) => {
-			const item = await ParserService.add(id, body);
-
-			return {
-				item,
-			};
+		async ({ params: { id }, body: { host, listen, active, prefix } }) => {
+			await ParserService.add(
+				id,
+				{
+					listen,
+					active,
+				},
+				host,
+				prefix,
+			);
+			return { success: true };
 		},
 		{
 			body: t.Object({
+				id: t.String(),
+				prefix: t.String(),
+				host: t.String(),
 				listen: t.Boolean(),
 				active: t.Boolean(),
+			}),
+			response: t.Object({
+				success: t.Boolean(),
 			}),
 		},
 	)
