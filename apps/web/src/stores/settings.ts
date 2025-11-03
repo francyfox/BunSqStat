@@ -15,6 +15,7 @@ export const useSettingsStore = defineStore(
 		const interval = ref<number>(300);
 		const settings = reactive({
 			maxMemory: 0,
+			origins: [],
 			aliases: "",
 		});
 
@@ -26,7 +27,36 @@ export const useSettingsStore = defineStore(
 			locale.value = v;
 		}
 
+		async function getOrigins() {
+			const response = await api.settings.origin.get();
+
+			if (response.error) {
+				error.value = response.error.message;
+			} else {
+				error.value = "";
+
+				settings.origins = response.data.items;
+			}
+
+			return response;
+		}
+
+		async function setOrigin(v: any) {
+			loading.value = true;
+			const response = await api.settings.origin({ id: v.id }).post(v);
+
+			if (response.error) {
+				error.value = response.error.message;
+			} else {
+				error.value = "";
+			}
+
+			loading.value = false;
+			return response;
+		}
+
 		async function dropLogAccess() {
+			loading.value = true;
 			const response = await api.stats["access-logs"].delete();
 
 			if (response.error) {
@@ -35,6 +65,7 @@ export const useSettingsStore = defineStore(
 				error.value = "";
 			}
 
+			loading.value = false;
 			return response;
 		}
 
@@ -56,6 +87,7 @@ export const useSettingsStore = defineStore(
 		}
 
 		async function getAliases() {
+			loading.value = true;
 			const response = await api.settings.aliases.get();
 
 			if (response.error) {
@@ -79,6 +111,8 @@ export const useSettingsStore = defineStore(
 		}
 
 		async function setAliases() {
+			loading.value = true;
+
 			const response = await api.settings.aliases.post({
 				aliases: (settings.aliases as any).replaceAll(".", "_"),
 			});
@@ -99,6 +133,7 @@ export const useSettingsStore = defineStore(
 		}
 
 		async function getMaxMemory() {
+			loading.value = true;
 			const response = await api.settings.redis.maxmemory.get();
 			const {
 				data: { item: maxMemory },
@@ -141,6 +176,8 @@ export const useSettingsStore = defineStore(
 			getMaxMemory,
 			setMaxMemory,
 			setLocale,
+			getOrigins,
+			setOrigin,
 			interval,
 			currentTab,
 			language,
@@ -154,7 +191,7 @@ export const useSettingsStore = defineStore(
 		persist: [
 			{
 				storage: localStorage,
-				pick: ["language", "tabs"],
+				pick: ["language", "tabs", "interval"],
 			},
 		],
 	},

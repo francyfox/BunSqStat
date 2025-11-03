@@ -1,3 +1,14 @@
+## 0.25.0 - 03 Nov 2025
+
+Feature:
+- UDP logs origins (added prefix to redis log:access:{originPrefix})
+- Added origins switcher in settings
+- Update interval translated to settings
+
+Bugfix:
+
+- Pause button. Not working after enabling shared workers
+
 ## 0.24.0 - 27 Oct 2025
 
 Feature:

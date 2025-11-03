@@ -11,8 +11,9 @@ import {
 	useMessage,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import BOrigins from "@/components/settings/BOrigins.vue";
 import { useSettingsStore } from "@/stores/settings.ts";
 
 const { t, availableLocales } = useI18n();
@@ -40,6 +41,10 @@ async function handleUpdateAliases() {
 		}
 	}
 }
+
+onMounted(async () => {
+	await store.getOrigins();
+});
 </script>
 
 <template>
@@ -86,6 +91,11 @@ async function handleUpdateAliases() {
         </NTooltip>
       </div>
     </div>
+
+    <BOrigins
+        v-model="store.settings.origins"
+        @handleChange="store.setOrigin"
+    />
 
     <div class="flex flex-col md:flex-row gap-1">
 

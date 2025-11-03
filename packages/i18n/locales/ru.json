@@ -27,6 +27,7 @@
   "count": "Количество",
   "currentSpeedColumn": "Текущая скорость",
   "dangerZoneTitle": "ОПАСНАЯ ЗОНА",
+  "display": "Отобразить",
   "domainBytesColumn": "Байты",
   "domainColumn": "Домен",
   "domainDurationColumn": "Продолжительность",
@@ -65,6 +66,9 @@
   "onlineStatus": "Онлайн",
   "optimizationTitle": "ОПТИМИЗАЦИЯ",
   "or": "или",
+  "origin": "Источник",
+  "originCaption": "Можно показывать только нужные источники udp логов, а можно запретить прослушку на сервере",
+  "originListen": "Прослушивать",
   "parseLogsTooltip": "ПАРСИТЬ ЛОГИ - парсит все логи.",
   "pause": "Пауза",
   "redisQueryLink": "запроса redis",
@@ -94,6 +98,7 @@
   "userLocale": "Язык",
   "userSearchPlaceholder": "Поиск пользователей",
   "usersTab": "ПОЛЬЗОВАТЕЛИ",
-  "wsError": "Не удалось подключиться к WebSocket после 3 попыток",
-  "wsStatus": "WS"
+  "wsError": "Соединение с Websocket закрыто",
+  "wsStatus": "WS",
+  "wsSuccess": "Соединение с Websocket восстановлено"
 }

@@ -2,7 +2,7 @@
 import { Pause, Play } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
-import { NButton, NInputNumber, NTag } from "naive-ui";
+import { NButton, NTag } from "naive-ui";
 import { computed } from "vue";
 
 const emit = defineEmits<{

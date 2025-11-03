@@ -1,12 +1,9 @@
 <script setup lang="ts">
-import { useRouteHash } from "@vueuse/router";
-import { type DataTableColumns, NTag, useNotification } from "naive-ui";
+import { NTag, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 import BDomainTable from "@/components/access-metric/BDomainTable.vue";
 import { useDomainStore } from "@/stores/domains.ts";
-
-const hash = useRouteHash();
 
 const domainStore = useDomainStore();
 const { items, error } = storeToRefs(domainStore);

@@ -54,7 +54,6 @@ jobs:
           cp .env.example releases/
           cp LICENSE releases/LICENSE
           cp README.md releases/README.md
-          cp -r docs/* releases/docs/
           if [ -d apps/web/dist ]; then cp -r apps/web/dist/* releases/web/; fi
           if [ -d apps/server/dist ]; then cp -r apps/server/dist/* releases/backend/; fi
 

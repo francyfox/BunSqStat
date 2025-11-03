@@ -27,6 +27,7 @@
   "count": "Count",
   "currentSpeedColumn": "Current Speed",
   "dangerZoneTitle": "DANGER ZONE",
+  "display": "Display",
   "domainBytesColumn": "Bytes",
   "domainColumn": "Domain",
   "domainDurationColumn": "Duration",
@@ -65,6 +66,9 @@
   "onlineStatus": "Online",
   "optimizationTitle": "OPTIMIZATION",
   "or": "or",
+  "origin": "Origin",
+  "originCaption": "You can show only dedicated origins from udp logs or disallow listening on server",
+  "originListen": "Listen",
   "parseLogsTooltip": "PARSE LOGS - parse all logs.",
   "pause": "Pause",
   "redisQueryLink": "redis query",
@@ -94,6 +98,7 @@
   "userLocale": "Language",
   "userSearchPlaceholder": "Search for users",
   "usersTab": "USERS",
-  "wsError": "Failed to connect WebSocket after 3 retries",
-  "wsStatus": "WS"
+  "wsError": "Connection to WebSocket closed",
+  "wsStatus": "WS",
+  "wsSuccess": "Connection to Websocket successful"
 }
