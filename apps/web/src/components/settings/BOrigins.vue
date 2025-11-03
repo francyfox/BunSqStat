@@ -47,6 +47,7 @@ const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
           <NSwitch
               v-model:value="i.active"
               @update:value="emit('handleChange', i)"
+              :disabled="true"
           />
         </td>
         <td>
