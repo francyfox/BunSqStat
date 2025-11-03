@@ -20,7 +20,7 @@ const notification = useNotification();
 const statsStore = useStatsStore();
 
 const settingsStore = useSettingsStore();
-const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
+const { aliasRouterIsInitialized, interval } = storeToRefs(settingsStore);
 
 const { accessLog, sortBy, total, loading, count, error } =
 	storeToRefs(statsStore);
@@ -32,8 +32,6 @@ const form = ref({
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const tableMaxHeight = computed(() => (breakpoints.md.value ? 560 : 280));
-const interval = ref(300);
-const pause = ref(false);
 const page = ref();
 const highlightCount = ref(0);
 const pageCount = computed(() => Math.ceil(count.value / 10));
@@ -94,16 +92,10 @@ watchDebounced(
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
 
-const { value, status } = useWsAccess();
+const { value, status, paused } = useWsAccess();
 
 function handlePause() {
-	pause.value = !pause.value;
-
-	if (pause.value) {
-		close();
-	} else {
-		open();
-	}
+	paused.value = !paused.value;
 }
 
 async function handleReset() {
@@ -158,7 +150,7 @@ onMounted(async () => {
 <template>
   <div class="access-data flex flex-col gap-2">
     <BAccessDataTags
-        v-bind="{ total, count, pause, status }"
+        v-bind="{ total, count, pause: paused, status }"
         @handlePause="handlePause"
     />
 

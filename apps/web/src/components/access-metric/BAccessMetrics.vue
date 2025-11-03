@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { watchDebounced } from "@vueuse/core";
 import { NTabPane, NTabs, useNotification } from "naive-ui";
+import { storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
@@ -19,6 +20,7 @@ const router = useRouter();
 
 const statsStore = useStatsStore();
 const settingsStore = useSettingsStore();
+const { interval } = storeToRefs(settingsStore);
 
 const domainStore = useDomainStore();
 
@@ -57,24 +59,30 @@ watch(
 	},
 );
 
-const { value, status } = useWsAccess();
+const { value } = useWsAccess();
 
-watchDebounced(value, async (v) => {
-	if (typeof v?.changedLinesCount !== "number" || v.changedLinesCount <= 0) {
-		return;
-	}
-	console.log(`Received ${v.changedLinesCount} new log entries`);
+watchDebounced(
+	value,
+	async (v) => {
+		if (typeof v?.changedLinesCount !== "number" || v.changedLinesCount <= 0) {
+			return;
+		}
+		console.log(`Received ${v.changedLinesCount} new log entries`);
 
-	await statsStore.getAccessMetrics({
-		limit: form.value.limit,
-		startTime: form.value.time ? form.value.time[0] : undefined,
-		endTime: form.value.time ? form.value.time[1] : undefined,
-	});
+		await statsStore.getAccessMetrics({
+			limit: form.value.limit,
+			startTime: form.value.time ? form.value.time[0] : undefined,
+			endTime: form.value.time ? form.value.time[1] : undefined,
+		});
 
-	if (route.hash === "#domains") {
-		await domainStore.getMetricsDomain();
-	}
-});
+		if (route.hash === "#domains") {
+			await domainStore.getMetricsDomain();
+		}
+	},
+	{
+		debounce: interval,
+	},
+);
 
 onMounted(async () => {
 	await Promise.all([
