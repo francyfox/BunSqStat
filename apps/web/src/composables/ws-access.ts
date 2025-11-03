@@ -1,10 +1,12 @@
 import { useNotification } from "naive-ui";
 import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { WS_URL } from "@/consts.ts";
 import AccessWorker from "@/workers/access.worker.ts?sharedworker";
 import type { AccessWorkerPostData } from "@/workers/access.worker.types.ts";
 
 export const useWsAccess = () => {
+	const { t } = useI18n();
 	const worker = new AccessWorker();
 	const notification = useNotification();
 	const value = ref();
@@ -37,10 +39,20 @@ export const useWsAccess = () => {
 	};
 
 	watch(status, (v) => {
+		switch (v) {
+			case "CLOSED":
+				notification.error({
+					title: t("wsError"),
+					duration: 2500,
+				});
+				break;
+			case "OPEN":
+				notification.success({
+					title: t("wsSuccess"),
+					duration: 1500,
+				});
+		}
 		if (v === "CLOSED") {
-			notification.error({
-				title: "Websocket CLOSED",
-			});
 		}
 	});
 

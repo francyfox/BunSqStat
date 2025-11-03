@@ -5,11 +5,11 @@ interface SharedWorkerGlobalScope {
 }
 
 let onceOpen = false;
-let wsInstance: WebSocket;
+let wsInstance: WebSocket | undefined;
 const connections: MessagePort[] = [];
 
 const status = () => {
-	switch (wsInstance.readyState) {
+	switch (wsInstance?.readyState) {
 		case WebSocket.OPEN:
 			return "OPEN";
 		case WebSocket.CLOSED:
@@ -31,66 +31,74 @@ function sendMessage(v: any) {
 	}
 }
 
-function connect(port: MessagePort) {
-	port.onmessage = (event: MessageEvent) => {
-		const { url, paused } = event.data;
+function connect(event: MessageEvent) {
+	const { url, paused } = event.data;
+	if (!wsInstance) wsInstance = openWS(url);
+
+	if (onceOpen) {
+		if (paused) {
+			wsInstance.close();
+		} else {
+			wsInstance = openWS(url);
+		}
+	}
+
+	wsInstance.onopen = (_) => {
 		onceOpen = true;
+		sendMessage(
+			JSON.stringify({
+				data: null,
+				error: null,
+				status: status(),
+			}),
+		);
+	};
+	wsInstance.onmessage = (event: MessageEvent) => {
+		sendMessage(
+			JSON.stringify({
+				data: event.data,
+				error: null,
+				status: status(),
+			}),
+		);
+	};
 
-		if (!wsInstance) wsInstance = openWS(url);
-
-		if (onceOpen) {
-			if (paused) {
-				wsInstance.close();
-			} else {
-				wsInstance = openWS(url);
-			}
+	wsInstance.onclose = (_) => {
+		if (onceOpen && !paused) {
+			setTimeout(() => {
+				wsInstance = undefined;
+				connect(event);
+			}, 1000);
 		}
 
-		wsInstance.onopen = (_) => {
-			sendMessage(
-				JSON.stringify({
-					data: null,
-					error: null,
-					status: status(),
-				}),
-			);
-		};
-		wsInstance.onmessage = (event: MessageEvent) => {
-			sendMessage(
-				JSON.stringify({
-					data: event.data,
-					error: null,
-					status: status(),
-				}),
-			);
-		};
+		sendMessage(
+			JSON.stringify({
+				data: null,
+				error: null,
+				status: status(),
+			}),
+		);
+	};
 
-		wsInstance.onclose = (_) => {
-			sendMessage(
-				JSON.stringify({
-					data: null,
-					error: null,
-					status: status(),
-				}),
-			);
-		};
-
-		wsInstance.onerror = (event) => {
-			sendMessage(
-				JSON.stringify({
-					data: null,
-					error: event,
-					status: "CLOSED",
-				}),
-			);
-		};
+	wsInstance.onerror = (event) => {
+		sendMessage(
+			JSON.stringify({
+				data: null,
+				error: event,
+				status: "CLOSED",
+			}),
+		);
 	};
 }
 
 _self.onconnect = async (event) => {
 	const port = event.ports[0] as MessagePort;
+
 	connections.push(port);
 
-	connect(port);
+	port.onmessage = (event: MessageEvent) => {
+		connect(event);
+	};
+
 	port.start();
 };

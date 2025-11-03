@@ -98,6 +98,7 @@
   "userLocale": "Language",
   "userSearchPlaceholder": "Search for users",
   "usersTab": "USERS",
-  "wsError": "Failed to connect WebSocket after 3 retries",
-  "wsStatus": "WS"
+  "wsError": "Connection to WebSocket closed",
+  "wsStatus": "WS",
+  "wsSuccess": "Connection to Websocket successful"
 }

@@ -98,6 +98,7 @@
   "userLocale": "Язык",
   "userSearchPlaceholder": "Поиск пользователей",
   "usersTab": "ПОЛЬЗОВАТЕЛИ",
-  "wsError": "Не удалось подключиться к WebSocket после 3 попыток",
-  "wsStatus": "WS"
+  "wsError": "Соединение с Websocket закрыто",
+  "wsStatus": "WS",
+  "wsSuccess": "Соединение с Websocket восстановлено"
 }
