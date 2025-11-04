@@ -1,3 +1,8 @@
+## 0.25.1 - 04 Nov 2025
+
+Bugfix:
+- [Issue](https://github.com/francyfox/BunSqStat/issues/36) Double websockets, replace composable fn to store
+
 ## 0.25.0 - 03 Nov 2025
 
 Feature:

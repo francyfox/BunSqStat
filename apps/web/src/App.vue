@@ -1,15 +1,19 @@
 <script setup lang="ts">
+import { useEventBus } from "@vueuse/core";
 import {
 	darkTheme,
 	NConfigProvider,
 	NMessageProvider,
 	NModalProvider,
 	NNotificationProvider,
+	useNotification,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import BBusProvider from "@/components/BBusProvider.vue";
 import { useSettingsStore } from "@/stores/settings.ts";
+import { notificationKey } from "@/utils/accessKey.ts";
 import BHeader from "./components/BHeader.vue";
 import BMenu from "./components/BMenu.vue";
 import Rainbow from "./components/rainbow.vue";
@@ -36,6 +40,7 @@ onMounted(() => {
     <NModalProvider>
       <NMessageProvider>
         <NNotificationProvider :max="3">
+          <BBusProvider />
           <div class="fixed">
             <Rainbow />
           </div>

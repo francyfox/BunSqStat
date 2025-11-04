@@ -10,8 +10,8 @@ import { accessKeys } from "server/schema";
 import { computed, onMounted, ref, watch } from "vue";
 import BAccessDataFilter from "@/components/access-data/BAccessDataFilter.vue";
 import BAccessDataTags from "@/components/access-data/BAccessDataTags.vue";
-import { useWsAccess } from "@/composables/ws-access.ts";
 import { formatColumns } from "@/module/access-data/format.ts";
+import { useAccessStore } from "@/stores/access.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
@@ -92,10 +92,11 @@ watchDebounced(
 	{ debounce: 500, maxWait: 1000, deep: true },
 );
 
-const { value, status, paused } = useWsAccess();
+const accessStore = useAccessStore();
+const { value, status, paused } = storeToRefs(accessStore);
 
 function handlePause() {
-	paused.value = !paused.value;
+	accessStore.setPaused(!paused.value);
 }
 
 async function handleReset() {
