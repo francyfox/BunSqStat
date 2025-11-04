@@ -32,7 +32,7 @@ const { copy, copied, isSupported } = useClipboard({
       <span>{{ text }}</span>
     </template>
     <template v-else>
-      <span v-if="!copied">{{ $t('copy') }}</span>
+      <span v-if="!copied">{{ $t('copy') }}: {{ text }}</span>
       <span v-else>{{ $t('copied') }}</span>
     </template>
   </n-tooltip>
