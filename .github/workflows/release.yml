@@ -44,7 +44,8 @@ jobs:
           cd ../server && bun i
           cd ..
           bun i
-          bun run build
+          turbo run server#build
+          turbo run web#build
 
       - name: Prepare releases directory
         run: |
