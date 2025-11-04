@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { watchDebounced } from "@vueuse/core";
-import { NTabPane, NTabs, useNotification } from "naive-ui";
+import { NTabPane, NTabs } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -9,7 +9,7 @@ import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.
 import BTabDomains from "@/components/access-metric/BTabDomains.vue";
 import BTabGlobal from "@/components/access-metric/BTabGlobal.vue";
 import BTabUsers from "@/components/access-metric/BTabUsers.vue";
-import { useWsAccess } from "@/composables/ws-access.ts";
+import { useAccessStore } from "@/stores/access.ts";
 import { useDomainStore } from "@/stores/domains.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
@@ -59,7 +59,8 @@ watch(
 	},
 );
 
-const { value } = useWsAccess();
+const accessStore = useAccessStore();
+const { value } = storeToRefs(accessStore);
 
 watchDebounced(
 	value,
