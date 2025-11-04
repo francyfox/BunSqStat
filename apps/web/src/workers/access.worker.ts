@@ -6,6 +6,7 @@ interface SharedWorkerGlobalScope {
 
 let onceOpen = false;
 let wsInstance: WebSocket | undefined;
+let paused = false;
 const connections: MessagePort[] = [];
 
 const status = () => {
@@ -32,15 +33,20 @@ function sendMessage(v: any) {
 }
 
 function connect(event: MessageEvent) {
-	const { url, paused } = event.data;
-	if (!wsInstance) wsInstance = openWS(url);
+	const { url, paused: currentPaused } = event.data;
+	paused = currentPaused;
 
-	if (onceOpen) {
+	if (wsInstance && wsInstance.readyState === WebSocket.OPEN) {
 		if (paused) {
 			wsInstance.close();
-		} else {
-			wsInstance = openWS(url);
+			wsInstance = undefined;
 		}
+		return;
+	}
+
+	if (!wsInstance || wsInstance.readyState === WebSocket.CLOSED) {
+		if (paused) return;
+		wsInstance = openWS(url);
 	}
 
 	wsInstance.onopen = (_) => {
@@ -50,6 +56,7 @@ function connect(event: MessageEvent) {
 				data: null,
 				error: null,
 				status: status(),
+				paused,
 			}),
 		);
 	};
@@ -59,6 +66,7 @@ function connect(event: MessageEvent) {
 				data: event.data,
 				error: null,
 				status: status(),
+				paused,
 			}),
 		);
 	};
@@ -76,6 +84,7 @@ function connect(event: MessageEvent) {
 				data: null,
 				error: null,
 				status: status(),
+				paused: paused,
 			}),
 		);
 	};
@@ -86,6 +95,7 @@ function connect(event: MessageEvent) {
 				data: null,
 				error: event,
 				status: "CLOSED",
+				paused,
 			}),
 		);
 	};

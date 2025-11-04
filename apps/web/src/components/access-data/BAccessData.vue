@@ -96,7 +96,7 @@ const accessStore = useAccessStore();
 const { value, status, paused } = storeToRefs(accessStore);
 
 function handlePause() {
-	paused.value = !paused.value;
+	accessStore.setPaused(!paused.value);
 }
 
 async function handleReset() {
