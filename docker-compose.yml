@@ -42,6 +42,7 @@ services:
     volumes:
       - ./docker/redis/redis.conf:/redis-stack.conf
       - predis_data:/data
+      - ./dump/dump.rdb:/dump.rdb
     networks:
       local:
 ##
