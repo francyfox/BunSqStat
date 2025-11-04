@@ -2,10 +2,10 @@
 import { NTag } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import BUserTable from "@/components/access-metric/BUserTable.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useStatsStore } from "@/stores/stats.ts";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const dayjs = useDayjs();
@@ -27,7 +27,7 @@ const status = computed(() => {
 
 	return {
 		online,
-		offline: accessMetrics.value?.users?.length || 0 - online,
+		offline: (accessMetrics.value?.users?.length ?? 0) - online,
 	};
 });
 </script>

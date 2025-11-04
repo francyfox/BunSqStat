@@ -1,3 +1,9 @@
+## 0.25.2 - 04 Nov 2025
+
+Bugfix:
+- fixed [Issue](https://github.com/francyfox/BunSqStat/issues/38) Turn on legacy support. Add copy text to popup
+- fixed [Issue](https://github.com/francyfox/BunSqStat/issues/37) Add check on empty users
+
 ## 0.25.1 - 04 Nov 2025
 
 Bugfix:

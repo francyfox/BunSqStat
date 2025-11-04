@@ -8,7 +8,10 @@ const { text } = defineProps<{
 	text: string;
 }>();
 
-const { copy, copied, isSupported } = useClipboard({ source: text });
+const { copy, copied, isSupported } = useClipboard({
+	source: text,
+	legacy: true,
+});
 </script>
 
 <template>
@@ -25,9 +28,13 @@ const { copy, copied, isSupported } = useClipboard({ source: text });
         <span>{{ text }}</span>
       </a>
     </template>
-    <span v-if="!isSupported">{{ $t('clipboardNotSupported') }}</span>
-    <span v-if="!copied">{{ $t('copy') }}</span>
-    <span v-else>{{ $t('copied') }}</span>
+    <template v-if="!isSupported">
+      <span>{{ text }}</span>
+    </template>
+    <template v-else>
+      <span v-if="!copied">{{ $t('copy') }}: {{ text }}</span>
+      <span v-else>{{ $t('copied') }}</span>
+    </template>
   </n-tooltip>
 </template>
 

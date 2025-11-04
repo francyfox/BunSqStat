@@ -16,11 +16,11 @@ import {
 import { storeToRefs } from "pinia";
 import type { TAccessLogMetricsResponse } from "server/schema";
 import { computed, h, ref } from "vue";
+import { useI18n } from "vue-i18n";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const breakpoints = useBreakpoints(breakpointsTailwind);
@@ -93,7 +93,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "lastActivity",
 		title: t("activityColumn"),
-		width: 180,
+		width: 140,
 		sorter: (row1: any, row2: any) => row1.lastActivity - row2.lastActivity,
 		ellipsis: {
 			tooltip: true,
@@ -117,11 +117,12 @@ const columns = computed<DataTableColumns<any>>(() => [
 					{ placement: "bottom", trigger: "click" },
 					{
 						trigger: () => h(Time, { class: "flex flex-shrink-0 size-5" }),
-						default: () => dayjs(row.lastActivity).format("HH:mm:ss DD/MM"),
+						default: () => [
+							dayjs(row.lastActivity).format("HH:mm:ss DD/MM"),
+							h("br"),
+							relativeTime,
+						],
 					},
-				),
-				h(NMarquee, { speed: 20 }, () =>
-					h("div", { class: "mr-1" }, relativeTime),
 				),
 			]);
 		},
@@ -209,7 +210,7 @@ const columns = computed<DataTableColumns<any>>(() => [
         :columns="columns"
         :data="filteredUsers"
         :bordered="false"
-        :max-height="300"
+        :max-height="520"
         :scroll-x="scroll"
         size="large"
     />

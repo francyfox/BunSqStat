@@ -353,6 +353,7 @@ export const AccessLogsMetricsService = {
 		);
 
 		for (const i of items) {
+			if (i.clientIP === "-") continue; // TODO: check empty users
 			const freshItem = freshData.find(
 				(j: IMetricBytesAndDuration) => j?.clientIP === i?.clientIP,
 			);
