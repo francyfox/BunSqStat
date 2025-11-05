@@ -1,5 +1,10 @@
 import { useDayjs } from "@/composables/dayjs.ts";
 
+export function getDate(date: number | string) {
+	const dayjs = useDayjs();
+
+	return dayjs(Number(date)).format("HH:mm:ss DD/MM");
+}
 export function diffDate(dates?: [number, number]) {
 	if (!dates) return "1 h.";
 

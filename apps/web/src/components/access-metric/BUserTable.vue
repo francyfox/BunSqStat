@@ -20,6 +20,7 @@ import { useI18n } from "vue-i18n";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
+import { getDate } from "@/utils/date.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const { t } = useI18n();
@@ -117,11 +118,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 					{ placement: "bottom", trigger: "click" },
 					{
 						trigger: () => h(Time, { class: "flex flex-shrink-0 size-5" }),
-						default: () => [
-							dayjs(row.lastActivity).format("HH:mm:ss DD/MM"),
-							h("br"),
-							relativeTime,
-						],
+						default: () => [getDate(row.lastActivity), h("br"), relativeTime],
 					},
 				),
 			]);

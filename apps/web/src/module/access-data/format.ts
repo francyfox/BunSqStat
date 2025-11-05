@@ -1,13 +1,14 @@
 // @ts-nocheck
+
 import { breakpointsTailwind, useBreakpoints } from "@vueuse/core";
 import { type DataTableColumns, NTag, NTooltip } from "naive-ui";
 import { storeToRefs } from "pinia";
 import type { TAccessLog } from "server/schema";
 import { computed, h } from "vue";
 import BCopy from "@/components/BCopy.vue";
-import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
+import { getDate } from "@/utils/date.ts";
 import {
 	formatBytes,
 	formatDuration,
@@ -62,7 +63,6 @@ export function accessColumnAttributes(
 	const settingsStore = useSettingsStore();
 	const { aliasRouterIsInitialized } = storeToRefs(settingsStore);
 	const breakpoints = useBreakpoints(breakpointsTailwind);
-	const dayjs = useDayjs();
 
 	switch (column) {
 		case "timestamp":
@@ -79,8 +79,7 @@ export function accessColumnAttributes(
 						},
 						{
 							default: () => row[column],
-							trigger: () =>
-								dayjs(Number(row[column]) * 1000).format("HH:mm:ss DD/MM"),
+							trigger: () => getDate(row[column]),
 						},
 					);
 				},
