@@ -12,7 +12,7 @@ export const useSettingsStore = defineStore(
 		const aliasRouter = createRouter();
 		const aliasRouterIsInitialized = ref(false);
 		const language = ref<string>();
-		const interval = ref<number>(300);
+		const interval = ref<number>(1000);
 		const settings = reactive({
 			maxMemory: 0,
 			origins: [],

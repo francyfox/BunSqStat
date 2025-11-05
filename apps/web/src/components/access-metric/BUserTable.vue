@@ -127,6 +127,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "clientIP",
 		title: t("ipColumn"),
+		width: 140,
 		render(row) {
 			return h(NTag, { type: "info", size: "small", bordered: false }, () =>
 				row["clientIP"]?.replaceAll("_", "."),
@@ -136,6 +137,9 @@ const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "currentSpeed",
 		title: t("currentSpeedColumn"),
+		ellipsis: {
+			tooltip: true,
+		},
 		sorter: (row1: any, row2: any) => row1.currentSpeed - row2.currentSpeed,
 		defaultSortOrder: "descend",
 		render: (row: any) => {
@@ -146,6 +150,9 @@ const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "speed",
 		title: t("middleSpeedColumn"),
+		ellipsis: {
+			tooltip: true,
+		},
 		sorter: (row1: any, row2: any) => row1.speed - row2.speed,
 		render: (row: any) => {
 			const speed = formatBytes(row.speed);
@@ -153,13 +160,14 @@ const columns = computed<DataTableColumns<any>>(() => [
 		},
 	},
 	{
-		key: "lastRequestUrl",
+		key: "largeRequestUrl",
 		title: t("lastUrlColumn"),
+		width: 300,
 		ellipsis: {
 			tooltip: true,
 		},
 		render(row) {
-			return h(BCopy, { text: row["lastRequestUrl"] });
+			return h(BCopy, { text: row["largeRequestUrl"] });
 		},
 	},
 	{
@@ -178,6 +186,9 @@ const columns = computed<DataTableColumns<any>>(() => [
 	{
 		key: "totalDuration",
 		title: t("durationColumn"),
+		ellipsis: {
+			tooltip: true,
+		},
 		render: (row: any) => formatMilliseconds(row.totalDuration),
 	},
 ]);

@@ -359,10 +359,19 @@ export const AccessLogsMetricsService = {
 			);
 			const { results } = await redisClient.send(
 				"FT.SEARCH",
-				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 3 user url timestamp`.split(
+				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 2 user timestamp`.split(
 					" ",
 				),
 			);
+
+			const { results: largeRequestResult } = await redisClient.send(
+				"FT.SEARCH",
+				`log_idx @clientIP:{${i?.clientIP}} SORTBY bytes DESC LIMIT 0 1 RETURN 1 url`.split(
+					" ",
+				),
+			);
+
+			console.log(largeRequestResult);
 
 			output.push({
 				...i,
@@ -373,7 +382,7 @@ export const AccessLogsMetricsService = {
 					: 0,
 				user: results[0].extra_attributes.user || "-",
 				speed: evaluate(`${i.totalBytes} / ${i.totalDuration || 1} * 1000`),
-				lastRequestUrl: results[0].extra_attributes.url || "",
+				largeRequestUrl: largeRequestResult[0].extra_attributes.url || "",
 				lastActivity: Number(results[0].extra_attributes.timestamp) || 0,
 			});
 		}

@@ -44,7 +44,7 @@ export const AccessLogMetricsSchema = t.Object({
 			clientIP: t.String(),
 			totalBytes: t.Number(),
 			totalDuration: t.Number(),
-			lastRequestUrl: t.String(),
+			largeRequestUrl: t.String(),
 			lastActivity: t.Number(),
 		}),
 	),
@@ -56,7 +56,7 @@ export interface IMetricBytesAndDuration {
 	clientIP: string;
 	totalBytes: number;
 	totalDuration: number;
-	lastRequestUrl?: string;
+	largeRequestUrl?: string;
 	lastActivity?: number;
 }
 

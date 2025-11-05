@@ -70,7 +70,11 @@ onMounted(async () => {
               v-model:value="interval"
               :show-button="false"
               class="w-full"
-          />
+          >
+            <template #prefix>
+              ms
+            </template>
+          </NInputNumber>
         </NFormItem>
       </div>
 
