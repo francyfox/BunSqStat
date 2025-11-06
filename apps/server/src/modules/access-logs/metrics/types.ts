@@ -67,7 +67,6 @@ export const MetricDomainItemSchema = t.Object({
 	duration: t.Number(),
 	lastActivity: t.Number(),
 	errorsRate: t.Number(),
-	hasBlocked: t.Boolean(),
 });
 
 export const MetricDomainOptionsSchema = t.Object({
@@ -80,7 +79,6 @@ export const MetricDomainOptionsSchema = t.Object({
 		t.Literal("duration"),
 		t.Literal("lastActivity"),
 		t.Literal("errorsRate"),
-		t.Literal("hasBlocked"),
 	]),
 	sortOrder: t.Union([t.Literal("ASC"), t.Literal("DESC")]),
 	startTime: t.Partial(
