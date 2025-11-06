@@ -87,6 +87,7 @@
   "start": "Start",
   "statusTitle": "STATUS",
   "successRate": "Success Rate",
+  "timezone": "Time zone",
   "to": "→",
   "total": "TOTAL",
   "totalRecords": "Total Records",

@@ -20,7 +20,7 @@ import { useI18n } from "vue-i18n";
 import BCopy from "@/components/BCopy.vue";
 import { useDayjs } from "@/composables/dayjs.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
-import { getDate } from "@/utils/date.ts";
+import { getDate, getRelativeTime } from "@/utils/date.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const { t } = useI18n();
@@ -102,7 +102,7 @@ const columns = computed<DataTableColumns<any>>(() => [
 		render: (row: any) => {
 			const secondsAgo = dayjs().diff(row.lastActivity, "s");
 			const isOnline = secondsAgo < 300;
-			const relativeTime = dayjs(row.lastActivity).fromNow();
+			const relativeTime = getRelativeTime(row.lastActivity);
 			return h(NFlex, { gap: 1, wrap: false }, () => [
 				h(
 					NTag,

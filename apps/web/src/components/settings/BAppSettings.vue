@@ -14,11 +14,12 @@ import { storeToRefs } from "pinia";
 import { computed, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import BOrigins from "@/components/settings/BOrigins.vue";
+import BTimeZone from "@/components/settings/BTimeZone.vue";
 import { useSettingsStore } from "@/stores/settings.ts";
 
 const { t, availableLocales } = useI18n();
 const store = useSettingsStore();
-const { loading, error, language, interval } = storeToRefs(store);
+const { loading, error, language, interval, timezone } = storeToRefs(store);
 const message = useMessage();
 
 const locales = computed(() =>
@@ -61,6 +62,10 @@ onMounted(async () => {
             class="w-full"
         />
       </NFormItem>
+    </div>
+
+    <div class="w-full max-w-sm">
+      <BTimeZone v-model="timezone" :default="timezone" />
     </div>
 
     <div class="flex gap-1">

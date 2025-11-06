@@ -23,7 +23,7 @@ export const ParserService = {
 	},
 
 	async getPrefix() {
-		await redisClient.get("prefix");
+		return redisClient.get("prefix");
 	},
 
 	exist(id: string) {

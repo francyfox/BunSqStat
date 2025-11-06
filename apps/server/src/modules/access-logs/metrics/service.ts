@@ -5,6 +5,8 @@ import {
 	TMetricDomainItem,
 	TMetricDomainOptions,
 } from "@/modules/access-logs/metrics/types";
+import { AccessLogService } from "@/modules/access-logs/service";
+import { ParserService } from "@/modules/parser/service";
 
 export const AccessLogsMetricsService = {
 	/**
@@ -288,6 +290,36 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
+	async getRedisMemory() {
+		const response = await redisClient.send("INFO", ["memory"]);
+		const maxMemory = Number(response.match(/maxmemory:(\d+)/)?.[1]);
+		const usedMemory = Number(response.match(/used_memory:(\d+)/)?.[1]);
+
+		return {
+			maxMemory,
+			usedMemory,
+		};
+	},
+
+	async getLatestTime() {
+		const origins = await ParserService.getAll();
+
+		const latestMap = await Promise.all(
+			origins.items.map(async (i: any) => {
+				const timestamp = await AccessLogService.getLastTimestamp(
+					i.prefix || "",
+				);
+				return {
+					prefix: i.prefix,
+					host: i.host,
+					timestamp,
+				};
+			}),
+		);
+
+		return latestMap;
+	},
+
 	async getTotal(
 		items: IMetricBytesAndDuration[],
 		time: { startTime?: number; endTime?: number },
@@ -330,11 +362,14 @@ export const AccessLogsMetricsService = {
 		);
 
 		const contentTypes = await this.getContentTypeStats(time);
+		const redisMemory = await this.getRedisMemory();
 
 		const output = {
 			globalStates: {
 				...result,
+				...redisMemory,
 				statusCodes: await this.getTotalStatusesByTime(time),
+				latestTime: await this.getLatestTime(),
 				bandwidth,
 				hitRatePercent,
 				successRatePercent,

@@ -1,10 +1,21 @@
+import { storeToRefs } from "pinia";
 import { useDayjs } from "@/composables/dayjs.ts";
+import { useSettingsStore } from "@/stores/settings.ts";
 
 export function getDate(date: number | string) {
 	const dayjs = useDayjs();
+	const store = useSettingsStore();
+	const { timezone } = storeToRefs(store);
 
-	return dayjs(Number(date)).format("HH:mm:ss DD/MM");
+	return dayjs(Number(date)).tz(timezone.value).format("HH:mm:ss DD/MM");
 }
+
+export function getRelativeTime(date: number | string) {
+	const dayjs = useDayjs();
+
+	return dayjs(Number(date)).fromNow();
+}
+
 export function diffDate(dates?: [number, number]) {
 	if (!dates) return "1 h.";
 

@@ -30,6 +30,13 @@ export const AccessLogMetricsSchema = t.Object({
 	globalStates: t.Object({
 		bytes: t.Number(),
 		duration: t.Number(),
+		latestTime: t.Array(
+			t.Object({
+				prefix: t.String(),
+				host: t.String(),
+				timestamp: t.Number(),
+			}),
+		),
 		statusCodes,
 		bandwidth: t.Number(),
 		hitRatePercent: t.Number(),

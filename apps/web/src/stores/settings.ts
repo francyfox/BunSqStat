@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { createRouter } from "radix3";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { api } from "@/api.ts";
 
@@ -13,6 +13,7 @@ export const useSettingsStore = defineStore(
 		const aliasRouterIsInitialized = ref(false);
 		const language = ref<string>();
 		const interval = ref<number>(1000);
+		const timezone = ref<string>();
 		const settings = reactive({
 			maxMemory: 0,
 			origins: [],
@@ -167,6 +168,12 @@ export const useSettingsStore = defineStore(
 			return response;
 		}
 
+		onMounted(() => {
+			if (!timezone.value) {
+				timezone.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			}
+		});
+
 		return {
 			dropAliases,
 			dropLogAccess,
@@ -178,6 +185,7 @@ export const useSettingsStore = defineStore(
 			setLocale,
 			getOrigins,
 			setOrigin,
+			timezone,
 			interval,
 			currentTab,
 			language,
@@ -191,7 +199,7 @@ export const useSettingsStore = defineStore(
 		persist: [
 			{
 				storage: localStorage,
-				pick: ["language", "tabs", "interval"],
+				pick: ["language", "tabs", "interval", "timezone"],
 			},
 		],
 	},
