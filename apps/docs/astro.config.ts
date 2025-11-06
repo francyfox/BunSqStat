@@ -12,7 +12,7 @@ import UnoCSS from "unocss/astro";
 const googleAnalyticsId = "GTM-PWXSZLDZ";
 // https://astro.build/config
 export default defineConfig({
-	site: "https://bunsqstat.shalotts.site",
+	site: "https://bstat.shalotts.site",
 	integrations: [
 		UnoCSS(),
 		starlight({
@@ -21,6 +21,13 @@ export default defineConfig({
 			plugins: [starlightChangelogs()],
 			customCss: ["./src/assets/index.css"],
 			head: [
+				{
+					tag: "link",
+					attrs: {
+						rel: "sitemap",
+						href: "/sitemap-index.xml",
+					},
+				},
 				{
 					tag: "noscript",
 					content: `

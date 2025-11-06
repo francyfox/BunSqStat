@@ -43,7 +43,17 @@ export const AccessLogsMetricsService = {
 			"0",
 		]);
 
-		return totalCount > 0 ? (hitCount / totalCount) * 100 : 0;
+		const hitRatio = totalCount > 0 ? (hitCount / totalCount) * 100 : 0;
+		
+		console.log('HitRatio calculation:', {
+			hitQuery,
+			totalQuery,
+			hitCount,
+			totalCount,
+			hitRatio
+		});
+
+		return hitRatio;
 	},
 
 	/**
@@ -196,12 +206,13 @@ export const AccessLogsMetricsService = {
 	async getTotalSum(
 		limit?: number,
 		fresh: boolean = false,
+		freshTimeWindowMs: number = 60000,
 	): Promise<{
 		count: number;
 		items: IMetricBytesAndDuration[];
 	}> {
 		const TIMESTAMP = fresh
-			? `@timestamp:[${(Date.now() - 60000).toString()} inf]`
+			? `@timestamp:[${(Date.now() - freshTimeWindowMs).toString()} inf]`
 			: "*";
 		const LIMIT = limit ? ` LIMIT 0 ${limit}` : "";
 		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
@@ -315,11 +326,14 @@ export const AccessLogsMetricsService = {
 
 		const hitRatePercent = await this.getHitRatio(time);
 		const successRatePercent = await this.getSuccessRate(time);
+
+		const bandwidthTime = rpsTime();
 		const bandwidth = this.getBandwidth(
 			result.bytes,
-			time.startTime,
-			time.endTime,
+			bandwidthTime.startTime,
+			bandwidthTime.endTime,
 		);
+
 		const contentTypes = await this.getContentTypeStats(time);
 
 		const output = {
@@ -347,9 +361,11 @@ export const AccessLogsMetricsService = {
 	 */
 	async getUsersInfo(items: IMetricBytesAndDuration[]) {
 		const output = [];
+		const freshTimeWindow = 5 * 60 * 1000; // 5 minutes
 		const { items: freshData } = await AccessLogsMetricsService.getTotalSum(
 			1000,
 			true,
+			freshTimeWindow,
 		);
 
 		for (const i of items) {
@@ -371,19 +387,26 @@ export const AccessLogsMetricsService = {
 				),
 			);
 
-			console.log(largeRequestResult);
+			const totalBytes = Number(i.totalBytes) || 0;
+			const totalDuration = Number(i.totalDuration) || 1;
+
+			const freshBytes = freshItem ? Number(freshItem.totalBytes) || 0 : 0;
+			const freshDuration = freshItem
+				? Number(freshItem.totalDuration) || 1
+				: 1;
+
+			const calculatedCurrentSpeed =
+				freshItem && freshBytes > 0 ? (freshBytes / freshDuration) * 1000 : 0;
+			const calculatedSpeed =
+				totalBytes > 0 ? (totalBytes / totalDuration) * 1000 : 0;
 
 			output.push({
 				...i,
-				currentSpeed: freshItem
-					? evaluate(
-							`${freshItem?.totalBytes} / ${freshItem?.totalDuration || 1} * 1000`,
-						)
-					: 0,
-				user: results[0].extra_attributes.user || "-",
-				speed: evaluate(`${i.totalBytes} / ${i.totalDuration || 1} * 1000`),
-				largeRequestUrl: largeRequestResult[0].extra_attributes.url || "",
-				lastActivity: Number(results[0].extra_attributes.timestamp) || 0,
+				currentSpeed: calculatedCurrentSpeed,
+				user: results[0]?.extra_attributes?.user || "-",
+				speed: calculatedSpeed,
+				largeRequestUrl: largeRequestResult[0]?.extra_attributes?.url || "",
+				lastActivity: Number(results[0]?.extra_attributes?.timestamp) || 0,
 			});
 		}
 
