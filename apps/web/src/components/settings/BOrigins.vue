@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { NSwitch, NTable } from "naive-ui";
-import { computed } from "vue";
+import { NFormItem, NSelect, NSwitch, NTable } from "naive-ui";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
@@ -13,7 +13,28 @@ const emit = defineEmits<{
 	handleChange: [item: any];
 }>();
 
-const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
+const allOrigins = {
+	label: t("allOrigins"),
+	value: "",
+};
+
+const activeOrigin = ref();
+const defaultValue = computed(() => {
+	const active = origins.value?.find((i) => i.active);
+	return active ? { label: active.host, value: active.id } : allOrigins.value;
+});
+
+const options = computed(() => [
+	allOrigins,
+	...origins.value!.map((i) => {
+		return {
+			label: i.host,
+			value: i.id,
+		};
+	}),
+]);
+
+const headers = computed(() => [t("origin"), t("originListen")]);
 </script>
 
 <template>
@@ -21,6 +42,15 @@ const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
     <div class="text-white text-sm">
       {{ $t("originCaption") }}
     </div>
+
+    <NFormItem :label="t('display')" class="mb-[-10px]">
+      <NSelect
+          v-model:value="activeOrigin"
+          :default-value="defaultValue"
+          :options="options"
+      />
+    </NFormItem>
+
     <NTable
         :bordered="false"
         :single-line="false"
@@ -42,13 +72,6 @@ const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
       >
         <td>
           {{ i?.host }}
-        </td>
-        <td>
-          <NSwitch
-              v-model:value="i.active"
-              @update:value="emit('handleChange', i)"
-              :disabled="true"
-          />
         </td>
         <td>
           <NSwitch

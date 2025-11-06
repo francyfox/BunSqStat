@@ -40,7 +40,7 @@ export const AccessLogService = {
 	/**
 	 * @description Use after readAccessLogs, because we need check field types
 	 */
-	async createIndex() {
+	async createIndex(prefix: string = "") {
 		try {
 			await redisClient.send("FT.DROPINDEX", ["log_idx"]);
 		} catch (_) {
@@ -55,7 +55,9 @@ export const AccessLogService = {
 		}
 
 		const args =
-			`log_idx on HASH PREFIX 1 log: SCHEMA ${indexes.join(" ")}`.split(" ");
+			`log_idx on HASH PREFIX 1 log:access:${prefix} SCHEMA ${indexes.join(" ")}`.split(
+				" ",
+			);
 		await redisClient.send("FT.CREATE", args);
 	},
 
@@ -88,8 +90,8 @@ export const AccessLogService = {
 		return;
 	},
 
-	async getLogs({ search, sortBy, page, fields }: getLogParams = {}) {
-		const keys = await redisClient.keys("log:*");
+	async getLogs({ search, sortBy, page, fields, prefix }: getLogParams = {}) {
+		const keys = await redisClient.keys(`log:${prefix ?? "*"}`);
 		const total = keys.length;
 
 		const pageSize = 10;

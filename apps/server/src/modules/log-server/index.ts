@@ -24,6 +24,7 @@ export const LogServer = {
 
 	async start() {
 		await ParserService.createIndex();
+		await ParserService.addPrefix();
 
 		for (const listener of this.listeners) {
 			try {
