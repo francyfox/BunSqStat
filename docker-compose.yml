@@ -64,7 +64,7 @@ services:
       - 'host.docker.internal:host-gateway'
     networks:
       - squid-net
-#
+
 #  squidanalyzer:
 #    image: coun/squidanalyzer:latest
 #    container_name: squidanalyzer
@@ -75,8 +75,6 @@ services:
 #      - ./logs:/var/log/squid:ro  # Логи Squid только для чтения
 #      - squidanalyzer_data:/var/www/html  # Данные отчетов
 #      - ./docker/squidanalyzer.conf:/etc/squidanalyzer/squidanalyzer.conf:ro
-#    depends_on:
-#      - squid
 #    networks:
 #      - squid-net
 #    environment:
@@ -86,8 +84,6 @@ services:
 #      - PASS=123456
 #      - LOCALE=ru_RU
 #      - PATHLOGS=/var/log/squid/access.log
-#    command: >
-#      chmod -R 755 /var/www/html
 
 volumes:
   predis_data:
