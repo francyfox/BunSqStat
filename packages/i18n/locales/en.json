@@ -11,7 +11,7 @@
   "allOrigins": "All origins",
   "anonymous": "Anonymous",
   "autoEscaped": "(auto-escaped)",
-  "bandwidth": "bandwidth",
+  "bandwidth": "bandwidth (hour)",
   "blockedColumn": "Blocked?",
   "bytePrefix": "byte",
   "bytesColumn": "Bytes (total)",

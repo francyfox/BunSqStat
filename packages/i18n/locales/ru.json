@@ -11,7 +11,7 @@
   "allOrigins": "Все источники",
   "anonymous": "Аноним",
   "autoEscaped": "(автоматически экранировано)",
-  "bandwidth": "пропускная способность",
+  "bandwidth": "пропускная способность (час)",
   "blockedColumn": "Заблокировано?",
   "bytePrefix": "байт",
   "bytesColumn": "Байты (всего)",

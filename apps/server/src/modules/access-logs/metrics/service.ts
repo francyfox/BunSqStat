@@ -43,17 +43,7 @@ export const AccessLogsMetricsService = {
 			"0",
 		]);
 
-		const hitRatio = totalCount > 0 ? (hitCount / totalCount) * 100 : 0;
-		
-		console.log('HitRatio calculation:', {
-			hitQuery,
-			totalQuery,
-			hitCount,
-			totalCount,
-			hitRatio
-		});
-
-		return hitRatio;
+		return totalCount > 0 ? (hitCount / totalCount) * 100 : 0;
 	},
 
 	/**
@@ -207,13 +197,18 @@ export const AccessLogsMetricsService = {
 		limit?: number,
 		fresh: boolean = false,
 		freshTimeWindowMs: number = 60000,
+		startTime?: number,
+		endTime?: number,
 	): Promise<{
 		count: number;
 		items: IMetricBytesAndDuration[];
 	}> {
-		const TIMESTAMP = fresh
-			? `@timestamp:[${(Date.now() - freshTimeWindowMs).toString()} inf]`
-			: "*";
+		const TIMESTAMP =
+			startTime && endTime
+				? `@timestamp:[${startTime} ${endTime}]`
+				: fresh
+					? `@timestamp:[${(Date.now() - freshTimeWindowMs).toString()} inf]`
+					: "*";
 		const LIMIT = limit ? ` LIMIT 0 ${limit}` : "";
 		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
 			"log_idx",
@@ -327,7 +322,7 @@ export const AccessLogsMetricsService = {
 		const hitRatePercent = await this.getHitRatio(time);
 		const successRatePercent = await this.getSuccessRate(time);
 
-		const bandwidthTime = rpsTime();
+		const bandwidthTime = time.startTime && time.endTime ? time : rpsTime();
 		const bandwidth = this.getBandwidth(
 			result.bytes,
 			bandwidthTime.startTime,
