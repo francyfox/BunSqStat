@@ -19,7 +19,8 @@ import { useSettingsStore } from "@/stores/settings.ts";
 
 const { t, availableLocales } = useI18n();
 const store = useSettingsStore();
-const { loading, error, language, interval, timezone } = storeToRefs(store);
+const { loading, error, language, interval, timezone, prefix } =
+	storeToRefs(store);
 const message = useMessage();
 
 const locales = computed(() =>
@@ -44,7 +45,7 @@ async function handleUpdateAliases() {
 }
 
 onMounted(async () => {
-	await store.getOrigins();
+	await Promise.all([store.getPrefix(), store.getOrigins()]);
 });
 </script>
 
@@ -102,7 +103,9 @@ onMounted(async () => {
     </div>
 
     <BOrigins
-        v-model="store.settings.origins"
+        v-model:origins="store.settings.origins"
+        v-model:prefix="prefix"
+        @update:prefix="store.setPrefix"
         @handleChange="store.setOrigin"
     />
 
@@ -130,6 +133,7 @@ onMounted(async () => {
             type="primary"
             @click="handleUpdateAliases"
             :loading="loading"
+            :disabled="loading"
             class="min-w-[120px]"
         >
           {{ $t('set') }}

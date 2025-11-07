@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia";
 import { redisClient } from "@/libs/redis";
+import { AccessLogService } from "@/modules/access-logs/service";
 import { ParserService } from "@/modules/parser/service";
 import { SettingsService } from "@/modules/settings/service";
 import { chuck } from "@/utils/array";
@@ -8,16 +9,19 @@ export const Settings = new Elysia()
 	.get("settings/origin/prefix", async () => {
 		const response = await ParserService.getPrefix();
 
-		return response;
+		return {
+			item: response,
+		};
 	})
 	.post(
 		"settings/origin/prefix",
 		async ({ body }) => {
 			const { prefix } = body;
-			const response = await ParserService.add(prefix);
+			await ParserService.addPrefix(prefix);
+			await AccessLogService.createIndex(prefix);
 
 			return {
-				item: response,
+				success: true,
 			};
 		},
 		{
@@ -25,7 +29,7 @@ export const Settings = new Elysia()
 				prefix: t.String({ description: "prefix from origin: o1, o2, ..." }),
 			}),
 			response: t.Object({
-				item: t.String(),
+				success: t.Boolean(),
 			}),
 		},
 	)

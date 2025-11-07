@@ -6,11 +6,19 @@ import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 const origins =
 	defineModel<
-		{ id: string; host: string; listen: boolean; active: boolean }[]
-	>();
+		{
+			id: string;
+			prefix: string;
+			host: string;
+			listen: boolean;
+			active: boolean;
+		}[]
+	>("origins");
+
+const prefix = defineModel<string>("prefix");
 
 const emit = defineEmits<{
-	handleChange: [item: any];
+	handleListenChange: [item: any];
 }>();
 
 const allOrigins = {
@@ -18,18 +26,12 @@ const allOrigins = {
 	value: "",
 };
 
-const activeOrigin = ref();
-const defaultValue = computed(() => {
-	const active = origins.value?.find((i) => i.active);
-	return active ? { label: active.host, value: active.id } : allOrigins.value;
-});
-
 const options = computed(() => [
 	allOrigins,
 	...origins.value!.map((i) => {
 		return {
-			label: i.host,
-			value: i.id,
+			label: `${i.prefix}:${i.host}`,
+			value: i.prefix,
 		};
 	}),
 ]);
@@ -45,8 +47,8 @@ const headers = computed(() => [t("origin"), t("originListen")]);
 
     <NFormItem :label="t('display')" class="mb-[-10px]">
       <NSelect
-          v-model:value="activeOrigin"
-          :default-value="defaultValue"
+          v-model:value="prefix"
+          :default-value="prefix"
           :options="options"
       />
     </NFormItem>
@@ -71,12 +73,12 @@ const headers = computed(() => [t("origin"), t("originListen")]);
           :key="i.id"
       >
         <td>
-          {{ i?.host }}
+          {{ i?.prefix}}:{{ i?.host }}
         </td>
         <td>
           <NSwitch
               v-model:value="i.listen"
-              @update:value="emit('handleChange', i)"
+              @update:value="emit('handleListenChange', i)"
           />
         </td>
       </tr>
