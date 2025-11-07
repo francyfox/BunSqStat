@@ -18,6 +18,14 @@ export const ParserService = {
 		await redisClient.send("FT.CREATE", args);
 	},
 
+	async addPrefix(prefix: string = "") {
+		await redisClient.set("prefix", prefix);
+	},
+
+	async getPrefix() {
+		return redisClient.get("prefix");
+	},
+
 	exist(id: string) {
 		return redisClient.exists(`origin:${id}`);
 	},
@@ -48,7 +56,6 @@ export const ParserService = {
 				host: i?.extra_attributes.host,
 				prefix: i?.extra_attributes.prefix,
 				listen: i?.extra_attributes.listen === "true",
-				active: i?.extra_attributes.active === "true",
 			};
 		});
 
@@ -60,9 +67,8 @@ export const ParserService = {
 
 	async add(
 		id: string,
-		{ listen, active } = {
+		{ listen } = {
 			listen: true,
-			active: true,
 		},
 		host?: string,
 		prefix?: string,
@@ -72,7 +78,6 @@ export const ParserService = {
 			host: host || "",
 			prefix: prefix || "",
 			listen: listen ? "true" : "false",
-			active: active ? "true" : "false",
 		});
 	},
 };

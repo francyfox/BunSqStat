@@ -1,3 +1,15 @@
+## 0.26.0 - 07 Nov 2025
+
+Feature:
+- Add origin display (display all or only one)
+- Time zone
+
+Bugfix:
+- Time zone (wrong timestamp in access data)
+- Bandwidth
+- Remove column blocked from domains
+- Domain adaptive
+
 ## 0.25.2 - 04 Nov 2025
 
 Bugfix:

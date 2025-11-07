@@ -4,6 +4,7 @@ export interface getLogParams {
 	search?: string;
 	page?: number;
 	sortBy?: string;
+	prefix?: string;
 	fields?: string[];
 }
 

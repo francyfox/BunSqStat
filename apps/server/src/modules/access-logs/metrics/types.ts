@@ -30,6 +30,13 @@ export const AccessLogMetricsSchema = t.Object({
 	globalStates: t.Object({
 		bytes: t.Number(),
 		duration: t.Number(),
+		latestTime: t.Array(
+			t.Object({
+				prefix: t.String(),
+				host: t.String(),
+				timestamp: t.Number(),
+			}),
+		),
 		statusCodes,
 		bandwidth: t.Number(),
 		hitRatePercent: t.Number(),
@@ -44,7 +51,7 @@ export const AccessLogMetricsSchema = t.Object({
 			clientIP: t.String(),
 			totalBytes: t.Number(),
 			totalDuration: t.Number(),
-			lastRequestUrl: t.String(),
+			largeRequestUrl: t.String(),
 			lastActivity: t.Number(),
 		}),
 	),
@@ -56,7 +63,7 @@ export interface IMetricBytesAndDuration {
 	clientIP: string;
 	totalBytes: number;
 	totalDuration: number;
-	lastRequestUrl?: string;
+	largeRequestUrl?: string;
 	lastActivity?: number;
 }
 
@@ -67,7 +74,6 @@ export const MetricDomainItemSchema = t.Object({
 	duration: t.Number(),
 	lastActivity: t.Number(),
 	errorsRate: t.Number(),
-	hasBlocked: t.Boolean(),
 });
 
 export const MetricDomainOptionsSchema = t.Object({
@@ -80,7 +86,6 @@ export const MetricDomainOptionsSchema = t.Object({
 		t.Literal("duration"),
 		t.Literal("lastActivity"),
 		t.Literal("errorsRate"),
-		t.Literal("hasBlocked"),
 	]),
 	sortOrder: t.Union([t.Literal("ASC"), t.Literal("DESC")]),
 	startTime: t.Partial(

@@ -5,6 +5,8 @@ import {
 	TMetricDomainItem,
 	TMetricDomainOptions,
 } from "@/modules/access-logs/metrics/types";
+import { AccessLogService } from "@/modules/access-logs/service";
+import { ParserService } from "@/modules/parser/service";
 
 export const AccessLogsMetricsService = {
 	/**
@@ -196,13 +198,19 @@ export const AccessLogsMetricsService = {
 	async getTotalSum(
 		limit?: number,
 		fresh: boolean = false,
+		freshTimeWindowMs: number = 60000,
+		startTime?: number,
+		endTime?: number,
 	): Promise<{
 		count: number;
 		items: IMetricBytesAndDuration[];
 	}> {
-		const TIMESTAMP = fresh
-			? `@timestamp:[${(Date.now() - 60000).toString()} inf]`
-			: "*";
+		const TIMESTAMP =
+			startTime && endTime
+				? `@timestamp:[${startTime} ${endTime}]`
+				: fresh
+					? `@timestamp:[${(Date.now() - freshTimeWindowMs).toString()} inf]`
+					: "*";
 		const LIMIT = limit ? ` LIMIT 0 ${limit}` : "";
 		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
 			"log_idx",
@@ -282,6 +290,36 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
+	async getRedisMemory() {
+		const response = await redisClient.send("INFO", ["memory"]);
+		const maxMemory = Number(response.match(/maxmemory:(\d+)/)?.[1]);
+		const usedMemory = Number(response.match(/used_memory:(\d+)/)?.[1]);
+
+		return {
+			maxMemory,
+			usedMemory,
+		};
+	},
+
+	async getLatestTime() {
+		const origins = await ParserService.getAll();
+
+		const latestMap = await Promise.all(
+			origins.items.map(async (i: any) => {
+				const timestamp = await AccessLogService.getLastTimestamp(
+					i.prefix || "",
+				);
+				return {
+					prefix: i.prefix,
+					host: i.host,
+					timestamp,
+				};
+			}),
+		);
+
+		return latestMap;
+	},
+
 	async getTotal(
 		items: IMetricBytesAndDuration[],
 		time: { startTime?: number; endTime?: number },
@@ -315,17 +353,23 @@ export const AccessLogsMetricsService = {
 
 		const hitRatePercent = await this.getHitRatio(time);
 		const successRatePercent = await this.getSuccessRate(time);
+
+		const bandwidthTime = time.startTime && time.endTime ? time : rpsTime();
 		const bandwidth = this.getBandwidth(
 			result.bytes,
-			time.startTime,
-			time.endTime,
+			bandwidthTime.startTime,
+			bandwidthTime.endTime,
 		);
+
 		const contentTypes = await this.getContentTypeStats(time);
+		const redisMemory = await this.getRedisMemory();
 
 		const output = {
 			globalStates: {
 				...result,
+				...redisMemory,
 				statusCodes: await this.getTotalStatusesByTime(time),
+				latestTime: await this.getLatestTime(),
 				bandwidth,
 				hitRatePercent,
 				successRatePercent,
@@ -347,9 +391,11 @@ export const AccessLogsMetricsService = {
 	 */
 	async getUsersInfo(items: IMetricBytesAndDuration[]) {
 		const output = [];
+		const freshTimeWindow = 5 * 60 * 1000; // 5 minutes
 		const { items: freshData } = await AccessLogsMetricsService.getTotalSum(
 			1000,
 			true,
+			freshTimeWindow,
 		);
 
 		for (const i of items) {
@@ -359,22 +405,38 @@ export const AccessLogsMetricsService = {
 			);
 			const { results } = await redisClient.send(
 				"FT.SEARCH",
-				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 3 user url timestamp`.split(
+				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 2 user timestamp`.split(
 					" ",
 				),
 			);
 
+			const { results: largeRequestResult } = await redisClient.send(
+				"FT.SEARCH",
+				`log_idx @clientIP:{${i?.clientIP}} SORTBY bytes DESC LIMIT 0 1 RETURN 1 url`.split(
+					" ",
+				),
+			);
+
+			const totalBytes = Number(i.totalBytes) || 0;
+			const totalDuration = Number(i.totalDuration) || 1;
+
+			const freshBytes = freshItem ? Number(freshItem.totalBytes) || 0 : 0;
+			const freshDuration = freshItem
+				? Number(freshItem.totalDuration) || 1
+				: 1;
+
+			const calculatedCurrentSpeed =
+				freshItem && freshBytes > 0 ? (freshBytes / freshDuration) * 1000 : 0;
+			const calculatedSpeed =
+				totalBytes > 0 ? (totalBytes / totalDuration) * 1000 : 0;
+
 			output.push({
 				...i,
-				currentSpeed: freshItem
-					? evaluate(
-							`${freshItem?.totalBytes} / ${freshItem?.totalDuration || 1} * 1000`,
-						)
-					: 0,
-				user: results[0].extra_attributes.user || "-",
-				speed: evaluate(`${i.totalBytes} / ${i.totalDuration || 1} * 1000`),
-				lastRequestUrl: results[0].extra_attributes.url || "",
-				lastActivity: Number(results[0].extra_attributes.timestamp) || 0,
+				currentSpeed: calculatedCurrentSpeed,
+				user: results[0]?.extra_attributes?.user || "-",
+				speed: calculatedSpeed,
+				largeRequestUrl: largeRequestResult[0]?.extra_attributes?.url || "",
+				lastActivity: Number(results[0]?.extra_attributes?.timestamp) || 0,
 			});
 		}
 
@@ -406,10 +468,10 @@ export const AccessLogsMetricsService = {
 						? `(${TIMESTAMP}${SEARCH_FILTER})`
 						: TIMESTAMP;
 
-		const redisSortBy = ["hasBlocked", "errorsRate"].includes(sortBy)
+		const redisSortBy = ["errorsRate"].includes(sortBy)
 			? "errorsCount"
 			: sortBy; // fallback for client-side sorting
-		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error APPLY contains(@resultType,"DENIED") AS is_blocked GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount REDUCE MAX 1 @is_blocked AS hasBlocked SORTBY 2 @${redisSortBy} ${sortOrder} LIMIT ${(page - 1) * limit} ${limit}`;
+		const aggregateQuery = `LOAD 3 @domain @resultStatus @resultType APPLY (@resultStatus>=400) AS is_error GROUPBY 1 @domain REDUCE COUNT 0 AS requestCount REDUCE SUM 1 @bytes AS bytes REDUCE SUM 1 @duration AS duration REDUCE MAX 1 @timestamp AS lastActivity REDUCE SUM 1 @is_error AS errorsCount SORTBY 2 @${redisSortBy} ${sortOrder} LIMIT ${(page - 1) * limit} ${limit}`;
 
 		const { results, total_results } = await redisClient.send("FT.AGGREGATE", [
 			"log_idx",
@@ -429,7 +491,6 @@ export const AccessLogsMetricsService = {
 					data.errorsCount && data.requestCount
 						? (Number(data.errorsCount) / Number(data.requestCount)) * 100
 						: 0,
-				hasBlocked: Boolean(Number(data.hasBlocked)),
 			};
 		});
 

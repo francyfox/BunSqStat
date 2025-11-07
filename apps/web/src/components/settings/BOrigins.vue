@@ -1,19 +1,42 @@
 <script setup lang="ts">
-import { NSwitch, NTable } from "naive-ui";
-import { computed } from "vue";
+import { NFormItem, NSelect, NSwitch, NTable } from "naive-ui";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const origins =
 	defineModel<
-		{ id: string; host: string; listen: boolean; active: boolean }[]
-	>();
+		{
+			id: string;
+			prefix: string;
+			host: string;
+			listen: boolean;
+			active: boolean;
+		}[]
+	>("origins");
+
+const prefix = defineModel<string>("prefix");
 
 const emit = defineEmits<{
-	handleChange: [item: any];
+	handleListenChange: [item: any];
 }>();
 
-const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
+const allOrigins = {
+	label: t("allOrigins"),
+	value: "",
+};
+
+const options = computed(() => [
+	allOrigins,
+	...origins.value!.map((i) => {
+		return {
+			label: `${i.prefix}:${i.host}`,
+			value: i.prefix,
+		};
+	}),
+]);
+
+const headers = computed(() => [t("origin"), t("originListen")]);
 </script>
 
 <template>
@@ -21,6 +44,15 @@ const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
     <div class="text-white text-sm">
       {{ $t("originCaption") }}
     </div>
+
+    <NFormItem :label="t('display')" class="mb-[-10px]">
+      <NSelect
+          v-model:value="prefix"
+          :default-value="prefix"
+          :options="options"
+      />
+    </NFormItem>
+
     <NTable
         :bordered="false"
         :single-line="false"
@@ -41,19 +73,12 @@ const headers = computed(() => [t("origin"), t("display"), t("originListen")]);
           :key="i.id"
       >
         <td>
-          {{ i?.host }}
-        </td>
-        <td>
-          <NSwitch
-              v-model:value="i.active"
-              @update:value="emit('handleChange', i)"
-              :disabled="true"
-          />
+          {{ i?.prefix}}:{{ i?.host }}
         </td>
         <td>
           <NSwitch
               v-model:value="i.listen"
-              @update:value="emit('handleChange', i)"
+              @update:value="emit('handleListenChange', i)"
           />
         </td>
       </tr>

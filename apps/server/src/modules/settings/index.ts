@@ -1,10 +1,38 @@
 import { Elysia, t } from "elysia";
 import { redisClient } from "@/libs/redis";
+import { AccessLogService } from "@/modules/access-logs/service";
 import { ParserService } from "@/modules/parser/service";
 import { SettingsService } from "@/modules/settings/service";
 import { chuck } from "@/utils/array";
 
 export const Settings = new Elysia()
+	.get("settings/origin/prefix", async () => {
+		const response = await ParserService.getPrefix();
+
+		return {
+			item: response,
+		};
+	})
+	.post(
+		"settings/origin/prefix",
+		async ({ body }) => {
+			const { prefix } = body;
+			await ParserService.addPrefix(prefix);
+			await AccessLogService.createIndex(prefix);
+
+			return {
+				success: true,
+			};
+		},
+		{
+			body: t.Object({
+				prefix: t.String({ description: "prefix from origin: o1, o2, ..." }),
+			}),
+			response: t.Object({
+				success: t.Boolean(),
+			}),
+		},
+	)
 	.get(
 		"settings/origin",
 		async () => {
@@ -21,7 +49,6 @@ export const Settings = new Elysia()
 						prefix: t.String(),
 						host: t.String(),
 						listen: t.Boolean(),
-						active: t.Boolean(),
 					}),
 				),
 				total: t.Number(),
@@ -30,16 +57,16 @@ export const Settings = new Elysia()
 	)
 	.post(
 		"/settings/origin/:id",
-		async ({ params: { id }, body: { host, listen, active, prefix } }) => {
+		async ({ params: { id }, body: { host, listen, prefix } }) => {
 			await ParserService.add(
 				id,
 				{
 					listen,
-					active,
 				},
 				host,
 				prefix,
 			);
+
 			return { success: true };
 		},
 		{
@@ -48,7 +75,6 @@ export const Settings = new Elysia()
 				prefix: t.String(),
 				host: t.String(),
 				listen: t.Boolean(),
-				active: t.Boolean(),
 			}),
 			response: t.Object({
 				success: t.Boolean(),

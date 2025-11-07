@@ -10,9 +10,9 @@ import {
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { formatBytes } from "@/utils/string.ts";
-import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 const store = useSettingsStore();
@@ -67,6 +67,7 @@ onMounted(async () => {
             type="primary"
             @click="handleUpdateMaxMemory"
             :loading="loading"
+            :disabled="loading"
             class="min-w-[120px]"
         >
           {{ $t('set') }}

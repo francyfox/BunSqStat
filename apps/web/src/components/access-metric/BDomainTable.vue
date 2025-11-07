@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Close, LockClosed, LockOpen } from "@vicons/ionicons5";
+import { Close } from "@vicons/ionicons5";
 import { Icon } from "@vicons/utils";
 import {
 	breakpointsTailwind,
@@ -14,14 +14,13 @@ import {
 	NPagination,
 	NTag,
 	NTooltip,
-	useNotification,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import type { TMetricDomainItem } from "server/schema";
 import { computed, h } from "vue";
 import { useI18n } from "vue-i18n";
-import { useDayjs } from "@/composables/dayjs.ts";
 import { useDomainStore } from "@/stores/domains.ts";
+import { getDate } from "@/utils/date.ts";
 import { formatBytes, formatMilliseconds } from "@/utils/string.ts";
 
 const { t } = useI18n();
@@ -30,11 +29,9 @@ const { domains } = defineProps<{
 }>();
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
-const dayjs = useDayjs();
-const notification = useNotification();
 
 const domainsStore = useDomainStore();
-const { items, loading, error, count, pageCount } = storeToRefs(domainsStore);
+const { loading, pageCount } = storeToRefs(domainsStore);
 
 const scroll = computed(() => (breakpoints.md.value ? undefined : 920));
 
@@ -106,34 +103,9 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		render: (row: any) => formatMilliseconds(row.duration),
 	},
 	{
-		key: "lastActivity",
-		title: t("lastActivityColumn"),
-		sorter: true,
-		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
-			if (typeof order === "string") {
-				domainsStore.setSortBy("lastActivity", order);
-			}
-			return order === "ascend" ? "descend" : "ascend";
-		},
-		render(row: any) {
-			return h(
-				NTooltip,
-				{
-					trigger: "hover",
-				},
-				{
-					default: () => row?.lastActivity,
-					trigger: () =>
-						dayjs(Number(row?.lastActivity) * 1000).format("HH:mm:ss DD/MM"),
-				},
-			);
-		},
-	},
-	{
 		width: 120,
 		key: "errorsRate",
 		title: t("errorsRateColumn"),
-		align: "right",
 		sorter: true,
 		ellipsis: {
 			tooltip: true,
@@ -160,17 +132,30 @@ const columns = computed<DataTableColumns<any> | any>(() => [
 		},
 	},
 	{
-		width: 120,
-		key: "hasBlocked",
-		title: t("blockedColumn"),
-		align: "right",
+		key: "lastActivity",
+		title: t("lastActivityColumn"),
+		sorter: true,
 		ellipsis: {
 			tooltip: true,
 		},
-		render: (row: any) =>
-			h(NTag, { type: row?.hasBlocked ? "error" : "success" }, () =>
-				h(Icon, { size: 16 }, () => h(row?.hasBlocked ? LockClosed : LockOpen)),
-			),
+		customNextSortOrder: (order: "ascend" | "descend" | undefined) => {
+			if (typeof order === "string") {
+				domainsStore.setSortBy("lastActivity", order);
+			}
+			return order === "ascend" ? "descend" : "ascend";
+		},
+		render(row: any) {
+			return h(
+				NTooltip,
+				{
+					trigger: "hover",
+				},
+				{
+					default: () => row?.lastActivity,
+					trigger: () => getDate(row?.lastActivity),
+				},
+			);
+		},
 	},
 ]);
 
@@ -218,6 +203,7 @@ watchDebounced(
 
     <NDataTable
         :columns="columns"
+        :loading="loading"
         :data="domains"
         :scroll-x="scroll"
     />

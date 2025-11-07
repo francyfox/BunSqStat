@@ -56,6 +56,7 @@ async function handlePositive() {
     <div class="flex flex-wrap gap-2">
       <NButton
           :loading="loading"
+          :disabled="loading"
           tertiary
           @click="openModal('Drop access logs')"
       >
@@ -63,6 +64,7 @@ async function handlePositive() {
       </NButton>
       <NButton
           :loading="loading"
+          :disabled="loading"
           tertiary
           @click="openModal('Drop aliases')"
       >

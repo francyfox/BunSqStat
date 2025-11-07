@@ -12,6 +12,7 @@ export const AccessLogService = {
 	async dropLogs() {
 		const logKeys = await redisClient.keys("log:access:*");
 		const fileKeys = await redisClient.keys("file:access*");
+		const timestampKeys = await redisClient.keys("access:last_timestamp:*");
 
 		if (logKeys.length > 0) {
 			await redisClient.del(...logKeys);
@@ -19,6 +20,10 @@ export const AccessLogService = {
 
 		if (fileKeys.length > 0) {
 			await redisClient.del(...fileKeys);
+		}
+
+		if (timestampKeys.length > 0) {
+			await redisClient.del(...timestampKeys);
 		}
 	},
 
@@ -40,7 +45,7 @@ export const AccessLogService = {
 	/**
 	 * @description Use after readAccessLogs, because we need check field types
 	 */
-	async createIndex() {
+	async createIndex(prefix: string = "") {
 		try {
 			await redisClient.send("FT.DROPINDEX", ["log_idx"]);
 		} catch (_) {
@@ -55,7 +60,9 @@ export const AccessLogService = {
 		}
 
 		const args =
-			`log_idx on HASH PREFIX 1 log: SCHEMA ${indexes.join(" ")}`.split(" ");
+			`log_idx on HASH PREFIX 1 log:access:${prefix} SCHEMA ${indexes.join(" ")}`.split(
+				" ",
+			);
 		await redisClient.send("FT.CREATE", args);
 	},
 
@@ -85,11 +92,19 @@ export const AccessLogService = {
 
 		await Promise.all(stack);
 
+		// Update last timestamp after all logs are saved
+		if (logLines.length > 0) {
+			const lastLog = logLines[logLines.length - 1];
+			const lastTimestamp = parseFloat(lastLog?.split(" ")[0] || "");
+			const timestampKey = `access:last_timestamp:${prefix}`;
+			await redisClient.set(timestampKey, lastTimestamp.toString());
+			await redisClient.expire(timestampKey, 604800); // 7 days
+		}
 		return;
 	},
 
-	async getLogs({ search, sortBy, page, fields }: getLogParams = {}) {
-		const keys = await redisClient.keys("log:*");
+	async getLogs({ search, sortBy, page, fields, prefix }: getLogParams = {}) {
+		const keys = await redisClient.keys(`log:${prefix ?? "*"}`);
 		const total = keys.length;
 
 		const pageSize = 10;
@@ -116,5 +131,11 @@ export const AccessLogService = {
 			total,
 			count: response.total_results,
 		};
+	},
+
+	async getLastTimestamp(prefix = "o") {
+		const timestampKey = `access:last_timestamp:${prefix}`;
+		const timestamp = await redisClient.get(timestampKey);
+		return timestamp ? parseFloat(timestamp) : null;
 	},
 };

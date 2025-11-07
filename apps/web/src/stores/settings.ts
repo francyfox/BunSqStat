@@ -1,18 +1,22 @@
 import { defineStore } from "pinia";
 import { createRouter } from "radix3";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { api } from "@/api.ts";
+import { useStatsStore } from "@/stores/stats.ts";
 
 export const useSettingsStore = defineStore(
 	"settings",
 	() => {
+		const statsStore = useStatsStore();
 		const currentTab = ref<string>();
 		const { locale } = useI18n();
 		const aliasRouter = createRouter();
 		const aliasRouterIsInitialized = ref(false);
 		const language = ref<string>();
-		const interval = ref<number>(300);
+		const interval = ref<number>(1000);
+		const timezone = ref<string>();
+		const prefix = ref<string>("");
 		const settings = reactive({
 			maxMemory: 0,
 			origins: [],
@@ -52,6 +56,43 @@ export const useSettingsStore = defineStore(
 			}
 
 			loading.value = false;
+			return response;
+		}
+
+		async function getPrefix() {
+			loading.value = true;
+			const response = await api.settings.origin.prefix.get();
+
+			if (response.error) {
+				error.value = response.error.message;
+			} else {
+				prefix.value = response.data.item;
+				error.value = "";
+			}
+
+			loading.value = false;
+			return response;
+		}
+
+		async function setPrefix() {
+			loading.value = true;
+			const response = await api.settings.origin.prefix.post({
+				prefix: prefix.value,
+			});
+
+			try {
+				await statsStore.getAccessLogs();
+				await statsStore.getAccessMetrics();
+			} finally {
+				if (response.error) {
+					error.value = response.error.message;
+				} else {
+					error.value = "";
+				}
+
+				loading.value = false;
+			}
+
 			return response;
 		}
 
@@ -167,6 +208,12 @@ export const useSettingsStore = defineStore(
 			return response;
 		}
 
+		onMounted(() => {
+			if (!timezone.value) {
+				timezone.value = Intl.DateTimeFormat().resolvedOptions().timeZone;
+			}
+		});
+
 		return {
 			dropAliases,
 			dropLogAccess,
@@ -178,6 +225,10 @@ export const useSettingsStore = defineStore(
 			setLocale,
 			getOrigins,
 			setOrigin,
+			getPrefix,
+			setPrefix,
+			prefix,
+			timezone,
 			interval,
 			currentTab,
 			language,
@@ -191,7 +242,7 @@ export const useSettingsStore = defineStore(
 		persist: [
 			{
 				storage: localStorage,
-				pick: ["language", "tabs", "interval"],
+				pick: ["language", "tabs", "interval", "timezone"],
 			},
 		],
 	},

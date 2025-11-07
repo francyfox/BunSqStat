@@ -1,19 +1,18 @@
 <script setup lang="ts">
-import { useEventBus } from "@vueuse/core";
 import {
 	darkTheme,
 	NConfigProvider,
+	NLoadingBarProvider,
 	NMessageProvider,
 	NModalProvider,
 	NNotificationProvider,
-	useNotification,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+import BBarProvider from "@/components/BBarProvider.vue";
 import BBusProvider from "@/components/BBusProvider.vue";
 import { useSettingsStore } from "@/stores/settings.ts";
-import { notificationKey } from "@/utils/accessKey.ts";
 import BHeader from "./components/BHeader.vue";
 import BMenu from "./components/BMenu.vue";
 import Rainbow from "./components/rainbow.vue";
@@ -37,38 +36,43 @@ onMounted(() => {
       :theme="darkTheme"
       preflight-style-disabled
   >
-    <NModalProvider>
-      <NMessageProvider>
-        <NNotificationProvider :max="3">
-          <BBusProvider />
-          <div class="fixed">
-            <Rainbow />
-          </div>
-
-          <BMenu>
-            <div class="app pb-10 xl:pb-0">
-              <BHeader />
-
-              <RouterView v-slot="{ Component }">
-                <template v-if="Component">
-                  <Transition mode="out-in">
-                    <KeepAlive>
-                      <Suspense>
-                        <component :is="Component"></component>
-
-                        <template #fallback>
-                          Loading...
-                        </template>
-                      </Suspense>
-                    </KeepAlive>
-                  </Transition>
-                </template>
-              </RouterView>
+    <NLoadingBarProvider
+        :loading-bar-style="{ loading: { opacity: 0.5 }}"
+    >
+      <NModalProvider>
+        <NMessageProvider>
+          <NNotificationProvider :max="3">
+            <BBarProvider />
+            <BBusProvider />
+            <div class="fixed">
+              <Rainbow />
             </div>
-          </BMenu>
-        </NNotificationProvider>
-      </NMessageProvider>
-    </NModalProvider>
+
+            <BMenu>
+              <div class="app pb-10 xl:pb-0">
+                <BHeader />
+
+                <RouterView v-slot="{ Component }">
+                  <template v-if="Component">
+                    <Transition mode="out-in">
+                      <KeepAlive>
+                        <Suspense>
+                          <component :is="Component"></component>
+
+                          <template #fallback>
+                            Loading...
+                          </template>
+                        </Suspense>
+                      </KeepAlive>
+                    </Transition>
+                  </template>
+                </RouterView>
+              </div>
+            </BMenu>
+          </NNotificationProvider>
+        </NMessageProvider>
+      </NModalProvider>
+    </NLoadingBarProvider>
   </NConfigProvider>
 </template>
 

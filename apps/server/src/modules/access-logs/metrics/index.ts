@@ -10,13 +10,24 @@ export const AccessLogsMetrics = new Elysia()
 	.get(
 		"/stats/access-logs/metrics",
 		async ({ query }) => {
-			const { limit, startTime, endTime } = query;
-			const { items } = await AccessLogsMetricsService.getTotalSum(limit);
+			const { limit } = query;
+
+			const now = Date.now();
+			const startTime = query.startTime || now - 60 * 60 * 1000;
+			const endTime = query.endTime || now;
+
+			const { items } = await AccessLogsMetricsService.getTotalSum(
+				limit,
+				false,
+				60000,
+				startTime,
+				endTime,
+			);
 			const userInfo = await AccessLogsMetricsService.getUsersInfo(items);
 			const total = await AccessLogsMetricsService.getTotal(items, {
 				startTime,
 				endTime,
-			} as any);
+			});
 
 			return {
 				...total,
@@ -43,7 +54,7 @@ export const AccessLogsMetrics = new Elysia()
 	.get(
 		"/stats/access-logs/metrics/domains",
 		async ({ query }) => {
-			const response = await AccessLogsMetricsService.getDomainsInfo(query);
+			const response = await AccessLogsMetricsService.getDomainsInfo(query); // TODO: types
 			return response;
 		},
 		{
