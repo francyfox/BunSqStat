@@ -95,7 +95,7 @@ export const AccessLogService = {
 		// Update last timestamp after all logs are saved
 		if (logLines.length > 0) {
 			const lastLog = logLines[logLines.length - 1];
-			const lastTimestamp = parseFloat(lastLog.split(" ")[0] || "");
+			const lastTimestamp = parseFloat(lastLog?.split(" ")[0] || "");
 			const timestampKey = `access:last_timestamp:${prefix}`;
 			await redisClient.set(timestampKey, lastTimestamp.toString());
 			await redisClient.expire(timestampKey, 604800); // 7 days

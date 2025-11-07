@@ -12,7 +12,7 @@ export function useLoading(loading: Ref<boolean>, error?: Ref<string>) {
 		}
 	});
 
-	watch(error, () => {
+	watch(error as any, () => {
 		loadingBar.error();
 	});
 }
