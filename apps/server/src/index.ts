@@ -1,5 +1,6 @@
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
+import * as Sentry from "@sentry/bun";
 import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { config } from "@/config";
@@ -30,8 +31,27 @@ process.on("unhandledRejection", (error) => {
 
 const app = new Elysia()
 	.onStart(async () => {
+		Sentry.init({
+			dsn: "https://cb54b8ec05858d8419f21e285985c9a8@o450533.ingest.us.sentry.io/4510335843368960",
+			tracesSampleRate: 1.0,
+			tracePropagationTargets: ["localhost"],
+			integrations: [
+				Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
+			],
+			enableLogs: true,
+		});
 		await LogManager.readLogs();
 		await LogServer.start();
+	})
+	.onError(({ code, error }) => {
+		Sentry.captureException(error);
+		if (code === "VALIDATION") {
+			return error.message;
+		}
+	})
+	.onBeforeHandle(({ set }) => {
+		set.headers["Access-Control-Allow-Headers"] =
+			"sentry-trace, baggage, traceparent";
 	})
 	.use(loggerPlugin)
 	.use(routes)

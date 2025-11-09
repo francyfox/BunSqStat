@@ -1,4 +1,5 @@
 import { fileURLToPath, URL } from "node:url";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import postcssCalc from "postcss-calc";
 // @ts-ignore
@@ -11,7 +12,16 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [vue(), VueRouter(), UnoCSS()],
+	plugins: [
+		vue(),
+		VueRouter(),
+		UnoCSS(),
+		sentryVitePlugin({
+			org: "hellizart",
+			project: "javascript-vue",
+			authToken: process.env.SENTRY_AUTH_TOKEN,
+		}),
+	],
 	css: {
 		postcss: {
 			plugins: [postcssSimpleVars(), postcssFor(), postcssCalc({})],
@@ -19,6 +29,7 @@ export default defineConfig({
 	},
 	build: {
 		cssCodeSplit: true,
+
 		rolldownOptions: {
 			output: {
 				advancedChunks: {
@@ -51,6 +62,8 @@ export default defineConfig({
 				},
 			},
 		},
+
+		sourcemap: true,
 	},
 	resolve: {
 		alias: {

@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/vue";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
@@ -45,5 +46,35 @@ const router = createRouter({
 });
 
 const app = createApp(App);
+
+Sentry.init({
+	app,
+	dsn: "https://d156531d5cf75eb9a43f196ae2177dba@o450533.ingest.us.sentry.io/4510335880265728",
+	sendDefaultPii: true,
+	integrations: [
+		Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
+		Sentry.browserApiErrorsIntegration({
+			setTimeout: true,
+			setInterval: true,
+			requestAnimationFrame: true,
+			XMLHttpRequest: true,
+			eventTarget: true,
+			unregisterOriginalCallbacks: true,
+		}),
+		Sentry.replayIntegration(),
+		Sentry.browserTracingIntegration({
+			router,
+		}),
+		Sentry.feedbackIntegration({
+			colorScheme: "dark",
+			showBranding: false,
+		}),
+	],
+	tracesSampleRate: 0.1,
+	replaysSessionSampleRate: 0.1,
+	replaysOnErrorSampleRate: 1.0,
+	tracePropagationTargets: ["localhost", /^\/api\//],
+	enableLogs: true,
+});
 
 app.use(router).use(pinia).use(i18n).mount("#app");
