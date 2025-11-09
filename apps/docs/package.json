@@ -24,6 +24,7 @@
 	},
 	"devDependencies": {
 		"@unocss/reset": "^66.5.5",
+		"chokidar": "^4.0.3",
 		"unocss": "^66.5.5",
 		"vite": "^7.2.2"
 	}
