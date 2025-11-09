@@ -12,18 +12,19 @@
 	"dependencies": {
 		"@astrojs/check": "^0.9.5",
 		"@astrojs/sitemap": "^3.6.0",
-		"@astrojs/starlight": "^0.36.1",
+		"@astrojs/starlight": "^0.36.2",
 		"@astrojs/vercel": "^9.0.0",
 		"@fontsource-variable/victor-mono": "^5.2.8",
 		"@vercel/analytics": "^1.5.0",
+		"@vercel/speed-insights": "^1.2.0",
 		"astro": "5.15.3",
-		"sharp": "^0.34.2",
+		"sharp": "^0.34.5",
 		"starlight-changelogs": "^0.2.3",
 		"typescript": "^5.9.3"
 	},
 	"devDependencies": {
-		"@unocss/reset": "^66.5.4",
-		"unocss": "^66.5.4",
-		"vite": "^7.1.12"
+		"@unocss/reset": "^66.5.5",
+		"unocss": "^66.5.5",
+		"vite": "^7.2.2"
 	}
 }
