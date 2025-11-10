@@ -1,3 +1,10 @@
+## 0.27.1 - 10 Nov 2025
+
+Bugfix:
+- Proxy for sentry via elysiajs
+- Release with backend binary file
+- Added opentelemetry for sentry analytics
+
 ## 0.27.0 - 10 Nov 2025
 
 Feature:
