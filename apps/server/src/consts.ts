@@ -48,3 +48,6 @@ export const fieldTypes = new Map<string, string>([
 ]);
 
 export const STALE_TIMEOUT = 60_000;
+
+export const SENTRY_HOST = "o450533.ingest.us.sentry.io";
+export const SENTRY_PROJECT_ID = "4510335843368960";

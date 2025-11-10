@@ -22,6 +22,10 @@ WORKDIR /app
 
 FROM redis/redis-stack:7.2.0-v18
 
+ENV REDIS_TLS_CA=/app/docker/redis/tls/ca.crt
+ENV REDIS_TLS_CERT=/app/docker/redis/tls/client.crt
+ENV REDIS_TLS_KEY=/app/docker/redis/tls/client.key
+
 RUN apt-get update
 RUN apt-get install -y \
     curl \
@@ -31,7 +35,8 @@ RUN apt-get install -y \
     unzip \
     bash \
     libstdc++6 \
-    telnet
+    telnet \
+    openssl
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
@@ -44,10 +49,16 @@ COPY --from=builder /app/apps/server/bunsqstat-backend-binary ./backend/bunsqsta
 COPY --from=builder /app/apps/web/dist ./frontend/
 
 WORKDIR /app
-COPY docker/redis/redis.conf /app/docker/redis/redis.conf
+COPY docker/redis/redis.prod.conf /app/docker/redis/redis.conf
+COPY docker/redis/generate-certs.sh /app/docker/redis/generate-certs.sh
 COPY docker/caddy/Caddyfile /etc/caddy/Caddyfile.template
 COPY docker/supervisor/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY docker/start.sh /app/start.sh
+
+# Генерируем TLS сертификаты для Redis
+RUN chmod +x /app/docker/redis/generate-certs.sh && \
+    cd /app/docker/redis && \
+    ./generate-certs.sh
 
 RUN sed 's|/srv|/app/frontend|g' /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && \
     sed -i 's|bunsqstat_server:3000|localhost:3000|g' /etc/caddy/Caddyfile && \

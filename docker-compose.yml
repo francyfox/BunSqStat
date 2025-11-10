@@ -41,29 +41,30 @@ services:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     volumes:
       - ./docker/redis/redis.conf:/redis-stack.conf
+      - ./docker/redis/tls:/tls:ro
       - predis_data:/data
     networks:
       local:
 ##
-  squid:
-    user: "3128:3128"
-    image: ghcr.io/b4tman/squid-ssl-bump:latest
-    container_name: squid-proxy
-    restart: unless-stopped
-    ports:
-      - "3128:3128"
-      - "3129:3129"
-    volumes:
-      - ./docker/ssl:/etc/squid/ssl/
-      - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
-      - ./docker/passwd:/etc/squid/passwords:ro
-      - ./logs:/var/log/squid
-    environment:
-      - SQUID_CONFIG_FILE=/etc/squid/conf.d/squid.conf
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    networks:
-      - squid-net
+#  squid:
+#    user: "3128:3128"
+#    image: ghcr.io/b4tman/squid-ssl-bump:latest
+#    container_name: squid-proxy
+#    restart: unless-stopped
+#    ports:
+#      - "3128:3128"
+#      - "3129:3129"
+#    volumes:
+#      - ./docker/ssl:/etc/squid/ssl/
+#      - ./docker/squid.conf:/etc/squid/conf.d/squid.conf:ro
+#      - ./docker/passwd:/etc/squid/passwords:ro
+#      - ./logs:/var/log/squid
+#    environment:
+#      - SQUID_CONFIG_FILE=/etc/squid/conf.d/squid.conf
+#    extra_hosts:
+#      - 'host.docker.internal:host-gateway'
+#    networks:
+#      - squid-net
 
 #  squidanalyzer:
 #    image: coun/squidanalyzer:latest

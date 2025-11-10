@@ -47,6 +47,11 @@ jobs:
           bunx turbo run server#build
           bunx turbo run web#build
 
+      - name: Build server binary
+        run: |
+          cd apps/server
+          bun run build:binary
+
       - name: Prepare releases directory
         run: |
           mkdir -p releases/web
@@ -57,6 +62,7 @@ jobs:
           cp README.md releases/README.md
           if [ -d apps/web/dist ]; then cp -r apps/web/dist/* releases/web/; fi
           if [ -d apps/server/dist ]; then cp -r apps/server/dist/* releases/backend/; fi
+          if [ -f apps/server/bunsqstat-backend-binary ]; then cp apps/server/bunsqstat-backend-binary releases/backend/; fi
 
       - name: Archive
         run: |

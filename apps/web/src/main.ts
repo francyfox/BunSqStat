@@ -48,8 +48,13 @@ const router = createRouter({
 const app = createApp(App);
 
 Sentry.init({
+	environment: "frontend",
 	app,
 	dsn: "https://d156531d5cf75eb9a43f196ae2177dba@o450533.ingest.us.sentry.io/4510335880265728",
+	tunnel:
+		process.env.NODE_ENV === "production"
+			? "/api/sentry"
+			: "http://localhost:3000/sentry",
 	sendDefaultPii: true,
 	integrations: [
 		Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
@@ -74,7 +79,6 @@ Sentry.init({
 	replaysSessionSampleRate: 0.1,
 	replaysOnErrorSampleRate: 1.0,
 	tracePropagationTargets: ["localhost", /^\/api\//],
-	enableLogs: true,
 });
 
 app.use(router).use(pinia).use(i18n).mount("#app");
