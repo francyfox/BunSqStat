@@ -1,3 +1,5 @@
+import { tmpdir } from "node:os";
+import { writeHeapSnapshot } from "node:v8";
 import { Elysia, t } from "elysia";
 import { redisClient } from "@/libs/redis";
 import { AccessLogService } from "@/modules/access-logs/service";
@@ -168,5 +170,18 @@ export const Settings = new Elysia()
 			body: t.Object({ maxMemory: t.Number() }),
 			detail: { description: "Set Redis maxmemory" },
 			response: t.Object({ success: t.Boolean() }),
+		},
+	)
+	.get(
+		"settings/heap",
+		() => {
+			const temporaryName = `${tmpdir()}/heap_${Date.now()}.heapsnapshot`;
+			const snapshotPath = writeHeapSnapshot(temporaryName);
+
+			return Bun.file(snapshotPath);
+		},
+		{
+			detail: { description: "Get HeapSnapshot file" },
+			response: t.Any(),
 		},
 	);

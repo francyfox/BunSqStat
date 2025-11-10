@@ -1,3 +1,9 @@
+## 0.27.0 - 10 Nov 2025
+
+Feature:
+- Sentry for backend/frontend (firefox doesn't support)
+- /settings/heap - return heap snapshot
+
 ## 0.26.0 - 07 Nov 2025
 
 Feature:
