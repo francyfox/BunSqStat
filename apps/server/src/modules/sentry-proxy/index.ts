@@ -9,15 +9,15 @@ const SENTRY_PROJECT_ID = "4510335880265728";
 export const SentryProxy = new Elysia()
 	.onStart(async () => {
 		Sentry.init({
-			debug: true,
 			environment: "backend",
 			dsn: "https://cb54b8ec05858d8419f21e285985c9a8@o450533.ingest.us.sentry.io/4510335843368960",
 			tracesSampleRate: 1.0,
 			integrations: [
 				Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
+				Sentry.httpIntegration(),
+				Sentry.nativeNodeFetchIntegration(),
 			],
 		});
-		Sentry.captureException(new Error("test back"));
 		await LogManager.readLogs();
 		await LogServer.start();
 	})

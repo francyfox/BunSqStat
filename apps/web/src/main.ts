@@ -51,7 +51,6 @@ Sentry.init({
 	environment: "frontend",
 	app,
 	dsn: "https://d156531d5cf75eb9a43f196ae2177dba@o450533.ingest.us.sentry.io/4510335880265728",
-	debug: true,
 	tunnel:
 		process.env.NODE_ENV === "production"
 			? "/api/sentry"
@@ -59,6 +58,10 @@ Sentry.init({
 	sendDefaultPii: true,
 	integrations: [
 		Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
+		Sentry.globalHandlersIntegration(),
+		Sentry.httpClientIntegration({
+			failedRequestStatusCodes: [[400, 599]],
+		}),
 		Sentry.browserApiErrorsIntegration({
 			setTimeout: true,
 			setInterval: true,
@@ -79,8 +82,7 @@ Sentry.init({
 	tracesSampleRate: 0.1,
 	replaysSessionSampleRate: 0.1,
 	replaysOnErrorSampleRate: 1.0,
+	tracePropagationTargets: ["localhost", /^\/api\//],
 });
-
-Sentry.captureException(new Error("test"));
 
 app.use(router).use(pinia).use(i18n).mount("#app");

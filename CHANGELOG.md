@@ -1,3 +1,7 @@
+## 0.27.2 - 11 Nov 2025
+
+TEST sentry
+
 ## 0.27.1 - 10 Nov 2025
 
 Bugfix:
