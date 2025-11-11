@@ -79,7 +79,6 @@ Sentry.init({
 	tracesSampleRate: 0.1,
 	replaysSessionSampleRate: 0.1,
 	replaysOnErrorSampleRate: 1.0,
-	tracePropagationTargets: ["localhost", /^\/api\//],
 });
 
 Sentry.captureException(new Error("test"));

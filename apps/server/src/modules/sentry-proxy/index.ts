@@ -13,7 +13,6 @@ export const SentryProxy = new Elysia()
 			environment: "backend",
 			dsn: "https://cb54b8ec05858d8419f21e285985c9a8@o450533.ingest.us.sentry.io/4510335843368960",
 			tracesSampleRate: 1.0,
-			tracePropagationTargets: ["localhost"],
 			integrations: [
 				Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
 			],
