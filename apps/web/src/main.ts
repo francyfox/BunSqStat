@@ -51,6 +51,7 @@ Sentry.init({
 	environment: "frontend",
 	app,
 	dsn: "https://d156531d5cf75eb9a43f196ae2177dba@o450533.ingest.us.sentry.io/4510335880265728",
+	debug: true,
 	tunnel:
 		process.env.NODE_ENV === "production"
 			? "/api/sentry"
@@ -80,5 +81,7 @@ Sentry.init({
 	replaysOnErrorSampleRate: 1.0,
 	tracePropagationTargets: ["localhost", /^\/api\//],
 });
+
+Sentry.captureException(new Error("test"));
 
 app.use(router).use(pinia).use(i18n).mount("#app");
