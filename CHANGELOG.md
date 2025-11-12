@@ -1,3 +1,11 @@
+## 0.27.3 - 12 Nov 2025
+
+Bugfix:
+- Sentry works only in production
+- Add spans for frontend routes
+- Sentry frontend/backend errors (400-500)
+- Remove unimportant logic from parser
+
 ## 0.27.2 - 11 Nov 2025
 
 TEST sentry
