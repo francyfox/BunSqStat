@@ -5,8 +5,6 @@ import {
 	TMetricDomainItem,
 	TMetricDomainOptions,
 } from "@/modules/access-logs/metrics/types";
-import { AccessLogService } from "@/modules/access-logs/service";
-import { ParserService } from "@/modules/parser/service";
 
 export const AccessLogsMetricsService = {
 	/**
@@ -301,25 +299,6 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
-	async getLatestTime() {
-		const origins = await ParserService.getAll();
-
-		const latestMap = await Promise.all(
-			origins.items.map(async (i: any) => {
-				const timestamp = await AccessLogService.getLastTimestamp(
-					i.prefix || "",
-				);
-				return {
-					prefix: i.prefix,
-					host: i.host,
-					timestamp,
-				};
-			}),
-		);
-
-		return latestMap;
-	},
-
 	async getTotal(
 		items: IMetricBytesAndDuration[],
 		time: { startTime?: number; endTime?: number },
@@ -369,7 +348,6 @@ export const AccessLogsMetricsService = {
 				...result,
 				...redisMemory,
 				statusCodes: await this.getTotalStatusesByTime(time),
-				latestTime: await this.getLatestTime(),
 				bandwidth,
 				hitRatePercent,
 				successRatePercent,

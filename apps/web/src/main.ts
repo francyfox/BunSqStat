@@ -1,9 +1,9 @@
-import * as Sentry from "@sentry/vue";
 import { createPinia } from "pinia";
 import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { routes } from "vue-router/auto-routes";
+import { sentryInit } from "@/module/sentry";
 import "virtual:uno.css";
 import "@unocss/reset/tailwind-compat.css";
 import "./style.css";
@@ -47,42 +47,6 @@ const router = createRouter({
 
 const app = createApp(App);
 
-Sentry.init({
-	environment: "frontend",
-	app,
-	dsn: "https://d156531d5cf75eb9a43f196ae2177dba@o450533.ingest.us.sentry.io/4510335880265728",
-	tunnel:
-		process.env.NODE_ENV === "production"
-			? "/api/sentry"
-			: "http://localhost:3000/sentry",
-	sendDefaultPii: true,
-	integrations: [
-		Sentry.consoleLoggingIntegration({ levels: ["warn", "error"] }),
-		Sentry.globalHandlersIntegration(),
-		Sentry.httpClientIntegration({
-			failedRequestStatusCodes: [[400, 599]],
-		}),
-		Sentry.browserApiErrorsIntegration({
-			setTimeout: true,
-			setInterval: true,
-			requestAnimationFrame: true,
-			XMLHttpRequest: true,
-			eventTarget: true,
-			unregisterOriginalCallbacks: true,
-		}),
-		Sentry.replayIntegration(),
-		Sentry.browserTracingIntegration({
-			router,
-		}),
-		Sentry.feedbackIntegration({
-			colorScheme: "dark",
-			showBranding: false,
-		}),
-	],
-	tracesSampleRate: 0.1,
-	replaysSessionSampleRate: 0.1,
-	replaysOnErrorSampleRate: 1.0,
-	tracePropagationTargets: ["localhost", /^\/api\//],
-});
+sentryInit(app, router);
 
 app.use(router).use(pinia).use(i18n).mount("#app");

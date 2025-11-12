@@ -32,25 +32,17 @@ export const LogServer = {
 					hostname: listener.host,
 					port: Number(listener.port),
 					socket: {
-						async data(_, data, port, address) {
+						async data(_, data, _$1, address) {
+							console.log(address);
 							const startTime = Date.now();
-							const logEntries = data
-								.toString("utf8")
-								.trim()
-								.split("\n")
-								.filter((i) => i.length > 0);
-							const id = `${address.replaceAll(".", "")}${port}`;
+							const logEntries = data.toString("utf8").trim().split("\n");
+							const id = address.replaceAll(".", "");
 							const { items, total } = await ParserService.getAll();
 							const origin = items.find((i: any) => i.id === id);
 							const prefix = origin?.prefix ?? `o${total + 1}`;
 
 							if (!origin) {
-								await ParserService.add(
-									id,
-									undefined,
-									`${address}:${port}`,
-									prefix,
-								);
+								await ParserService.add(id, undefined, address, prefix);
 							} else {
 								if (!origin.listen) return;
 							}

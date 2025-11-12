@@ -1,3 +1,5 @@
+import { config } from "@/config";
+
 export interface WebSocketClient {
 	id: string;
 	ws: any;
@@ -32,9 +34,13 @@ export const WsService = {
 					clientId,
 					totalClients: this.connectedClients.size,
 				});
-				console.log(
-					`Broadcasting to client ${clientId} on channel ${client.channel}`,
-				);
+
+				if (config.NODE_ENV !== "production") {
+					console.log(
+						`Broadcasting to client ${clientId} on channel ${client.channel}`,
+					);
+				}
+
 				try {
 					client.ws.send(messageData);
 					client.lastPing = Date.now();
@@ -48,7 +54,7 @@ export const WsService = {
 				this.connectedClients.delete(clientId);
 			}
 
-			if (this.connectedClients.size > 0) {
+			if (this.connectedClients.size > 0 && config.NODE_ENV !== "production") {
 				console.log(
 					`WebSocket broadcast: ${data.changedLinesCount} new lines to ${this.connectedClients.size} active clients`,
 				);

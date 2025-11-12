@@ -1,5 +1,6 @@
 import { Elysia, t } from "elysia";
 import { nanoid } from "nanoid";
+import { config } from "@/config";
 import { STALE_TIMEOUT } from "@/consts";
 import { AccessLogSchema } from "@/modules/access-logs/types";
 import { type WebSocketClient, WsService } from "@/modules/ws/ws.service";
@@ -48,9 +49,11 @@ const wsConfig = {
 			}),
 		);
 
-		console.info(
-			`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${WsService.connectedClients.size}`,
-		);
+		if (config.NODE_ENV !== "production") {
+			console.info(
+				`WebSocket client [${clientId}] connected to ${log} channel. Total clients: ${WsService.connectedClients.size}`,
+			);
+		}
 	},
 	message(ws: any, message: any) {
 		const clientId = (ws.data as any).clientId;
