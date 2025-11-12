@@ -3,6 +3,8 @@ import Rainbow from "../components/Rainbow.astro";
 import "@fontsource-variable/victor-mono";
 import Analytics from "@vercel/analytics/astro";
 import SpeedInsights from "@vercel/speed-insights/astro";
+import Logo from "../assets/squid.webp?url";
+import MoviePresent from "../assets/vokoscreenNG-2025-10-29_17-19-49.webm?url";
 
 interface Props {
 	title: string;
@@ -11,14 +13,33 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 <html lang="en" class="h-full">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content={description}>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{title}</title>
-    <link rel="sitemap" href="/sitemap-index.xml">
-    <link rel="robots" href=/robots.txt">
-    <link rel="icon" href="/favicon.svg" />
+    <head>
+        <meta charset="UTF-8">
+        <title>{title}</title>
+        <meta name="description" content={description}>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content="https://bstat.shalotts.site">
+        <meta property="og:image" content={Logo}>
+        <meta property="og:site_name" content={title} />
+        <meta property="og:locale" content="en_EN">
+        <meta property="og:video" content={MoviePresent}>
+        <link rel="sitemap" href="/sitemap-index.xml">
+        <link rel="robots" href=/robots.txt">
+        <link rel="icon" href="/favicon.svg" />
+    </head>
+    <body class="h-full">
+        <Rainbow />
+        <section class="h-full relative z-10">
+            <div class="h-full p-sm">
+                <slot />
+            </div>
+        </section>
+    </body>
+    <SpeedInsights />
+    <Analytics />
     <noscript>
         <!-- Google Tag Manager (noscript) -->
         <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PWXSZLDZ"
@@ -26,24 +47,13 @@ const { title, description } = Astro.props;
         <!-- End Google Tag Manager (noscript) -->
 
     </noscript>
-</head>
-<body class="h-full">
-    <Rainbow />
-    <section class="h-full relative z-10">
-        <div class="h-full p-sm">
-            <slot />
-        </div>
-    </section>
-</body>
-<SpeedInsights />
-<Analytics />
-<script>
-    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PWXSZLDZ');
-</script>
+    <script>
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-PWXSZLDZ');
+    </script>
 </html>
 
 <style lang="postcss" is:global>
