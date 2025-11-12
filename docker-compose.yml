@@ -41,10 +41,11 @@ services:
       test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
     volumes:
       - ./docker/redis/redis.conf:/redis-stack.conf
+      - ./docker/redis/tls:/tls:ro
       - predis_data:/data
     networks:
       local:
-##
+
   squid:
     user: "3128:3128"
     image: ghcr.io/b4tman/squid-ssl-bump:latest

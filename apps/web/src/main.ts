@@ -3,6 +3,7 @@ import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
 import { createRouter, createWebHashHistory } from "vue-router";
 import { routes } from "vue-router/auto-routes";
+import { sentryInit } from "@/module/sentry";
 import "virtual:uno.css";
 import "@unocss/reset/tailwind-compat.css";
 import "./style.css";
@@ -45,5 +46,7 @@ const router = createRouter({
 });
 
 const app = createApp(App);
+
+sentryInit(app, router);
 
 app.use(router).use(pinia).use(i18n).mount("#app");

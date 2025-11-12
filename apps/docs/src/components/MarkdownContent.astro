@@ -1,6 +1,8 @@
 ---
 import "@astrojs/starlight/style/markdown.css";
 import Analytics from "@vercel/analytics/astro";
+import SpeedInsights from "@vercel/speed-insights/astro";
 ---
-<Analytics />
 <div class="sl-markdown-content"><slot /></div>
+<SpeedInsights />
+<Analytics />

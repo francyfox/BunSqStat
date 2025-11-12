@@ -1,44 +1,19 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
 import { AccessLogs } from "@/modules/access-logs";
 import { AccessLogsMetrics } from "@/modules/access-logs/metrics";
+import { Health } from "@/modules/health";
+import { SentryProxy } from "@/modules/sentry-proxy";
 import { Settings } from "@/modules/settings";
 import { Stats } from "@/modules/stats";
 import { WS } from "@/modules/ws";
-import { AccessLogService } from "@/modules/access-logs/service";
 
 export const routes = new Elysia()
-	.get(
-		"/ping",
-		// @ts-ignore
-		() => "pong",
-		{
-			detail: {
-				description: "Use for ping",
-			},
-			response: {
-				"200": t.Literal("pong"),
-			},
-		},
-	)
-	.get(
-		"/health",
-		() => {
-			return { status: "ok", timestamp: new Date().toISOString() };
-		},
-		{
-			detail: {
-				description: "Health check endpoint",
-			},
-			response: t.Object({
-				status: t.Literal("ok"),
-				timestamp: t.String(),
-			}),
-		},
-	)
+	.use(Health)
 	.use(Stats)
 	.use(AccessLogs)
 	.use(AccessLogsMetrics)
 	.use(Settings)
-	.use(WS);
+	.use(WS)
+	.use(SentryProxy);
 
 export type EdenApp = typeof routes;

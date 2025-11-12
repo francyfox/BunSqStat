@@ -28,25 +28,21 @@ export const LogServer = {
 
 		for (const listener of this.listeners) {
 			try {
-				await Bun.udpSocket({
+				const socket = await Bun.udpSocket({
 					hostname: listener.host,
 					port: Number(listener.port),
 					socket: {
-						async data(_, data, port, address) {
+						async data(_, data, _$1, address) {
+							console.log(address);
 							const startTime = Date.now();
-							const logEntries = data.toString().trim().split("\n");
-							const id = `${address.replaceAll(".", "")}${port}`;
+							const logEntries = data.toString("utf8").trim().split("\n");
+							const id = address.replaceAll(".", "");
 							const { items, total } = await ParserService.getAll();
 							const origin = items.find((i: any) => i.id === id);
 							const prefix = origin?.prefix ?? `o${total + 1}`;
 
 							if (!origin) {
-								await ParserService.add(
-									id,
-									undefined,
-									`${address}:${port}`,
-									prefix,
-								);
+								await ParserService.add(id, undefined, address, prefix);
 							} else {
 								if (!origin.listen) return;
 							}
@@ -83,6 +79,14 @@ export const LogServer = {
 					},
 					`${listener.host}:${listener.port} udp started`,
 				);
+
+				const shutdown = () => {
+					console.log("Graceful shutdown: closing UDP socket...");
+					socket.close();
+				};
+
+				process.on("SIGINT", shutdown);
+				process.on("SIGTERM", shutdown);
 			} catch (e) {
 				const error = e as Error;
 				logger.error(

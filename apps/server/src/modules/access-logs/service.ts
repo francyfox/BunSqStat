@@ -12,7 +12,6 @@ export const AccessLogService = {
 	async dropLogs() {
 		const logKeys = await redisClient.keys("log:access:*");
 		const fileKeys = await redisClient.keys("file:access*");
-		const timestampKeys = await redisClient.keys("access:last_timestamp:*");
 
 		if (logKeys.length > 0) {
 			await redisClient.del(...logKeys);
@@ -20,10 +19,6 @@ export const AccessLogService = {
 
 		if (fileKeys.length > 0) {
 			await redisClient.del(...fileKeys);
-		}
-
-		if (timestampKeys.length > 0) {
-			await redisClient.del(...timestampKeys);
 		}
 	},
 
@@ -69,14 +64,6 @@ export const AccessLogService = {
 	async readLogs(logLines: string[], prefix = "o") {
 		if (logLines.length === 0) return;
 
-		logLines.sort((a, b) => {
-			const timestampA = parseFloat(a.split(" ")[0] || "");
-			const timestampB = parseFloat(b.split(" ")[0] || "");
-			return timestampA - timestampB;
-		});
-
-		if (logLines.length === 0) return;
-
 		const stack = logLines.map(async (log) => {
 			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
 			const sanitized = {
@@ -92,14 +79,6 @@ export const AccessLogService = {
 
 		await Promise.all(stack);
 
-		// Update last timestamp after all logs are saved
-		if (logLines.length > 0) {
-			const lastLog = logLines[logLines.length - 1];
-			const lastTimestamp = parseFloat(lastLog?.split(" ")[0] || "");
-			const timestampKey = `access:last_timestamp:${prefix}`;
-			await redisClient.set(timestampKey, lastTimestamp.toString());
-			await redisClient.expire(timestampKey, 604800); // 7 days
-		}
 		return;
 	},
 
@@ -131,11 +110,5 @@ export const AccessLogService = {
 			total,
 			count: response.total_results,
 		};
-	},
-
-	async getLastTimestamp(prefix = "o") {
-		const timestampKey = `access:last_timestamp:${prefix}`;
-		const timestamp = await redisClient.get(timestampKey);
-		return timestamp ? parseFloat(timestamp) : null;
 	},
 };

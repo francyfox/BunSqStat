@@ -1,3 +1,28 @@
+## 0.27.3 - 12 Nov 2025
+
+Bugfix:
+- Sentry works only in production
+- Add spans for frontend routes
+- Sentry frontend/backend errors (400-500)
+- Remove unimportant logic from parser
+
+## 0.27.2 - 11 Nov 2025
+
+TEST sentry
+
+## 0.27.1 - 10 Nov 2025
+
+Bugfix:
+- Proxy for sentry via elysiajs
+- Release with backend binary file
+- Added opentelemetry for sentry analytics
+
+## 0.27.0 - 10 Nov 2025
+
+Feature:
+- Sentry for backend/frontend (firefox doesn't support)
+- /settings/heap - return heap snapshot
+
 ## 0.26.0 - 07 Nov 2025
 
 Feature:

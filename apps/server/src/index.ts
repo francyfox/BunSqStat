@@ -1,12 +1,11 @@
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
+import * as Sentry from "@sentry/bun";
 import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { config } from "@/config";
 import { loggerPlugin } from "@/libs/logger";
 import { redisClient } from "@/libs/redis";
-import { LogManager } from "@/modules/log-manager";
-import { LogServer } from "@/modules/log-server";
 import { routes } from "@/routes";
 
 const signals = ["SIGINT", "SIGTERM"];
@@ -22,18 +21,43 @@ for (const signal of signals) {
 
 process.on("uncaughtException", (error) => {
 	console.error(error);
+	Sentry.captureException(error);
 });
 
 process.on("unhandledRejection", (error) => {
 	console.error(error);
+	Sentry.captureException(error);
 });
 
 const app = new Elysia()
-	.onStart(async () => {
-		await LogManager.readLogs();
-		await LogServer.start();
-	})
+	// @ts-ignore
 	.use(loggerPlugin)
+	// @ts-ignore
+	.onError(({ error, code, set }) => {
+		console.log("[ERROR HANDLER] code:", code, "error:", error.message);
+		Sentry.captureException(error);
+		if (code === "VALIDATION") {
+			set.status = 400;
+			return { error: "Validation error", message: error.message };
+		}
+		if (code === "NOT_FOUND") {
+			set.status = 404;
+			return { error: "Not found" };
+		}
+		set.status = 500;
+		return { error: "Internal server error", message: error.message };
+	})
+	.onRequest(({ request, path }) => {
+		Sentry.startSpan(
+			{
+				op: "http.server",
+				name: `${request.method} ${path}`,
+			},
+			() => {
+				// span will be automatically ended
+			},
+		);
+	})
 	.use(routes)
 	.use(cors())
 	.use(swagger())
@@ -41,7 +65,7 @@ const app = new Elysia()
 
 app.listen(
 	{
-		port: config.BACKEND_PORT,
+		port: config.BACKEND_PORT!,
 	},
 	() => {
 		console.log(`🕮  Swagger is active at: ${app.server?.url.origin}/swagger`);
