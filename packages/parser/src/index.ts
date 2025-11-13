@@ -1,35 +1,51 @@
-import { SQUID_FORMAT_MAP, SQUID_LOG_FORMAT_VARIANT } from "./consts";
+import {
+	PARSER_ERRORS,
+	SQUID_FORMAT_MAP,
+	SQUID_LOG_FORMAT_VARIANT,
+} from "./consts";
 import { MOCK_DEFAULT_LOGS } from "./mock";
 import { TRANSFORMS } from "./transform";
-import { normalizeFormat, parseFormatString } from "./utils";
+import type { IFormatItem } from "./types";
+import { normalizeFormat } from "./utils";
 
-export const CACHE_MAP = new Map([]);
+interface ICacheMapItem {
+	formatMap: IFormatItem[];
+	combinedIndexes: number[];
+}
+
+export const CACHE_MAP: Map<string, ICacheMapItem> = new Map([]);
 
 export function buildFormat(format: string) {
-	if (CACHE_MAP.has(format)) return CACHE_MAP.get(format);
+	if (CACHE_MAP.has(format)) return CACHE_MAP.get(format) as ICacheMapItem;
 	const normalize = normalizeFormat(format);
-	const { splited, combinedIndexes } = () => {
-		const splited = normalize.split(/ /);
-		return {
-			splited,
-			combinedIndexes: splited.reduce((acc, i, index) => {
-				if (i.includes("/")) acc.push(index);
-				return acc;
-			}, []),
-		};
-	};
-	const formatMap = normalize.split(/ /).map((i) => {
-		const formatItem = findToken(i);
+	const normalizeParts = normalize.split(/ /);
+	const combinedIndexes: number[] = [];
 
-		// if (!formatItem)
-		// 	throw new Error(`Invalid log format: token ${i} not found`);
+	const formatMap = normalizeParts.flatMap((i, index) => {
+		const formatItem = findToken(i);
+		const isCombined = i.includes("/");
+
+		if (!formatItem && !isCombined) {
+			throw new Error(`${PARSER_ERRORS.unexpectedFormat} ${i}`);
+		}
+
+		if (isCombined) {
+			combinedIndexes.push(index);
+
+			return [...i.split("/").map((j) => findToken(j))];
+		}
 
 		return formatItem;
-	});
+	}) as IFormatItem[];
 
-	CACHE_MAP.set(format, formatMap);
+	const result = {
+		formatMap,
+		combinedIndexes,
+	};
 
-	return formatMap;
+	CACHE_MAP.set(format, result);
+
+	return result;
 }
 
 export function findToken(token: string) {
@@ -40,47 +56,52 @@ export function logLineParser(
 	line: string,
 	format: string = SQUID_LOG_FORMAT_VARIANT.squid,
 ) {
-	const formatMap = buildFormat(format);
-	const splitLine = line.split(/\s+/);
-	console.log(splitLine);
-	console.log(splitLine.length);
-
-	return formatMap.reduce((acc, { field, transform }, index) => {
-		if (transform) {
-			if (!TRANSFORMS[transform])
-				throw new Error(`Unknown transform fn "${transform}"`);
-
-			acc[field] = TRANSFORMS[transform](splitLine[index]);
+	const { formatMap, combinedIndexes } = buildFormat(format);
+	const splitLine = line
+		.split(/\s+/)
+		.reduce((acc: string[], currentValue, index) => {
+			if (combinedIndexes.includes(index)) {
+				acc.push(...currentValue.split("/"));
+			} else {
+				acc.push(currentValue);
+			}
 
 			return acc;
-		}
-		acc[field] = splitLine[index];
+		}, []);
 
-		return acc;
-	}, {});
+	if (formatMap.length !== splitLine.length) {
+		throw new Error(PARSER_ERRORS.combinedSlash);
+	}
+
+	return formatMap.reduce(
+		(acc: Record<string, any>, { transform, field }, index) => {
+			if (transform) acc[field] = TRANSFORMS[transform](splitLine[index]);
+			return acc;
+		},
+		{},
+	);
 }
 
-function test(count) {
+function test(count: number) {
+	const testStart = performance.now();
 	let middle = 0;
 
 	for (let i = 0; i < count; i++) {
 		const start = performance.now();
 		const output = MOCK_DEFAULT_LOGS.map((i) => logLineParser(i));
-		console.log(output);
 		const end = performance.now();
+		//
+		// console.log(output);
 
 		middle += end - start;
 
-		if (i === 1) {
-			console.log("Cold:", middle);
-		}
-
-		if (i === 2) {
-			console.log("Hot:", middle);
-		}
+		console.log(`Iteration ${i}: ${end - start}`);
 	}
 
+	const testEnd = performance.now();
+
 	console.log("Middle:", middle / count);
+	console.log("Total:", testEnd - testStart);
 }
 
-test(1);
+test(100);

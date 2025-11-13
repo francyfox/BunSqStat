@@ -1,5 +1,11 @@
 import type { IFormatItem } from "./types";
 
+export const PARSER_ERRORS = {
+	unexpectedFormat: "Unexpected token format:",
+	combinedSlash:
+		"Mismatching combined token. Dont compose fields with chars '/'. Like: '%http::ru/%<a'",
+};
+
 export const SQUID_LOG_FORMAT_VARIANT = {
 	squid: "%ts.%03tu %6tr %>a %Ss/%03>Hs %<st %rm %ru %[un %Sh/%<a %mt",
 	common: '%>a - %[un [%tl] "%rm %ru HTTP/%rv" %>Hs %<st %Ss:%Sh',
@@ -8,6 +14,7 @@ export const SQUID_LOG_FORMAT_VARIANT = {
 	referrer: "%ts.%03tu %>a %{Referer}>h %ru",
 	useragent: '%>a [%tl] "%{User-Agent}>h"',
 };
+
 export const SQUID_FORMAT_MAP: IFormatItem[] = [
 	// ===== TIME =====
 	{
