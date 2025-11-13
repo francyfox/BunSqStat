@@ -75,7 +75,11 @@ export function logLineParser(
 
 	return formatMap.reduce(
 		(acc: Record<string, any>, { transform, field }, index) => {
-			if (transform) acc[field] = TRANSFORMS[transform](splitLine[index]);
+			if (transform) {
+				acc[field] = TRANSFORMS[transform](splitLine[index]);
+			} else {
+				acc[field] = splitLine[index];
+			}
 			return acc;
 		},
 		{},
@@ -89,9 +93,8 @@ function test(count: number) {
 	for (let i = 0; i < count; i++) {
 		const start = performance.now();
 		const output = MOCK_DEFAULT_LOGS.map((i) => logLineParser(i));
+		console.log(output);
 		const end = performance.now();
-		//
-		// console.log(output);
 
 		middle += end - start;
 
@@ -104,4 +107,4 @@ function test(count: number) {
 	console.log("Total:", testEnd - testStart);
 }
 
-test(100);
+test(1);
