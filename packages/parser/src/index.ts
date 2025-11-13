@@ -15,6 +15,12 @@ interface ICacheMapItem {
 
 export const CACHE_MAP: Map<string, ICacheMapItem> = new Map([]);
 
+const SQUID_FORMAT_TOKEN_MAP: Map<string, IFormatItem> = new Map(
+	SQUID_FORMAT_MAP.map((item) => [item.token, item]),
+);
+
+const WHITESPACE_REGEX = /\s+/;
+
 export function buildFormat(format: string) {
 	if (CACHE_MAP.has(format)) return CACHE_MAP.get(format) as ICacheMapItem;
 	const normalize = normalizeFormat(format);
@@ -49,7 +55,7 @@ export function buildFormat(format: string) {
 }
 
 export function findToken(token: string) {
-	return SQUID_FORMAT_MAP.find((j) => j.token === token);
+	return SQUID_FORMAT_TOKEN_MAP.get(token) as IFormatItem;
 }
 
 export function logLineParser(
@@ -58,7 +64,7 @@ export function logLineParser(
 ) {
 	const { formatMap, combinedIndexes } = buildFormat(format);
 	const splitLine = line
-		.split(/\s+/)
+		.split(WHITESPACE_REGEX)
 		.reduce((acc: string[], currentValue, index) => {
 			if (combinedIndexes.includes(index)) {
 				acc.push(...currentValue.split("/"));
@@ -93,7 +99,7 @@ function test(count: number) {
 	for (let i = 0; i < count; i++) {
 		const start = performance.now();
 		const output = MOCK_DEFAULT_LOGS.map((i) => logLineParser(i));
-		console.log(output);
+		// console.log(output);
 		const end = performance.now();
 
 		middle += end - start;
@@ -107,4 +113,4 @@ function test(count: number) {
 	console.log("Total:", testEnd - testStart);
 }
 
-test(1);
+test(1000);
