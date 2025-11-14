@@ -46,19 +46,20 @@ export const LogServer = {
 								if (!origin.listen) return;
 							}
 
-							await AccessLogService.readLogs(logEntries, prefix);
+							await AccessLogService.readLogs(logEntries, prefix)
+								.finally(() => {
+									WsService.send({ changedLinesCount: logEntries.length });
 
-							WsService.send({ changedLinesCount: logEntries.length });
-
-							logger.info(
-								{
-									operation: "process_data",
-									startTime,
-									count: logEntries.length,
-									url: `${listener.host}:${listener.port}`,
-								},
-								"store",
-							);
+									logger.info(
+										{
+											operation: "process_data",
+											startTime,
+											count: logEntries.length,
+											url: `${listener.host}:${listener.port}`,
+										},
+										"store",
+									);
+							});
 						},
 						error(_, error) {
 							logger.error(

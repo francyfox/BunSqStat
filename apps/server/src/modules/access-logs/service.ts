@@ -66,8 +66,7 @@ export const AccessLogService = {
 			await redisClient.expire(logKey, 604800); // 7 days
 		}
 
-		await redisClient.send("EXEC", []);
-		return;
+		return redisClient.send("EXEC", []);
 	},
 
 	async getLogs({ search, sortBy, page, fields, prefix }: getLogParams = {}) {
