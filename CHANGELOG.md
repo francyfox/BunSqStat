@@ -1,3 +1,11 @@
+## 0.28.0 - 14 Nov 2025
+
+Feature:
+- Created special package for log line parser (custom logs support in next patches)
+- Added cluster mode for production
+- Optimized stage `parse logs`. Added multi for redis queries and cache for format type
+- `hierarchyHost` renamed to `serverIP`
+
 ## 0.27.3 - 12 Nov 2025
 
 Bugfix:
