@@ -3,6 +3,7 @@ import {
 	SQUID_FORMAT_MAP,
 	SQUID_LOG_FORMAT_VARIANT,
 } from "./consts";
+import { MOCK_DEFAULT_LOGS } from "./mock";
 import { TRANSFORMS } from "./transform";
 import type { IFormatItem } from "./types";
 import { normalizeFormat } from "./utils";
@@ -89,4 +90,22 @@ export function logLineParser(
 		},
 		{},
 	);
+}
+
+export function parse(lines: string[]) {
+	return lines.map((line) => logLineParser(line));
+}
+
+export function benchmark(count: number = 1) {
+	const start = performance.now();
+
+	for (let i = 1; i < count; i++) {
+		const iterStart = performance.now();
+		parse(MOCK_DEFAULT_LOGS);
+
+		console.log(`Iteration ${i}: `, performance.now() - iterStart);
+	}
+
+	const end = performance.now() - start;
+	console.log("End:", end);
 }
