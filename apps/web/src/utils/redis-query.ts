@@ -40,7 +40,7 @@ export function buildSearchQuery(
 
 		case "url":
 			return createURLQuery(fieldName, value.replace(/^https?:\/\//g, ""));
-		case "hierarchyHost":
+		case "serverIP":
 			return createIPProceededQuery(fieldName, value);
 
 		case "timestamp":

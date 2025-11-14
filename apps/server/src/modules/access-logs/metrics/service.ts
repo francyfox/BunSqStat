@@ -342,12 +342,13 @@ export const AccessLogsMetricsService = {
 
 		const contentTypes = await this.getContentTypeStats(time);
 		const redisMemory = await this.getRedisMemory();
+		const statusCodes = await this.getTotalStatusesByTime(time);
 
 		const output = {
 			globalStates: {
 				...result,
 				...redisMemory,
-				statusCodes: await this.getTotalStatusesByTime(time),
+				statusCodes,
 				bandwidth,
 				hitRatePercent,
 				successRatePercent,
@@ -355,7 +356,7 @@ export const AccessLogsMetricsService = {
 			},
 			currentStates: {
 				rps: evaluate(`${recentRequestCount} / ${timeRangeSeconds}`),
-				statusCodes: await this.getTotalStatusesByTime(time),
+				statusCodes,
 			},
 		};
 
@@ -381,19 +382,24 @@ export const AccessLogsMetricsService = {
 			const freshItem = freshData.find(
 				(j: IMetricBytesAndDuration) => j?.clientIP === i?.clientIP,
 			);
-			const { results } = await redisClient.send(
+
+			await redisClient.send("MULTI", []);
+			await redisClient.send(
 				"FT.SEARCH",
 				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 2 user timestamp`.split(
 					" ",
 				),
 			);
-
-			const { results: largeRequestResult } = await redisClient.send(
+			await redisClient.send(
 				"FT.SEARCH",
 				`log_idx @clientIP:{${i?.clientIP}} SORTBY bytes DESC LIMIT 0 1 RETURN 1 url`.split(
 					" ",
 				),
 			);
+
+			const [users, largeRequest] = await redisClient.send("EXEC", [])
+			const { results } = users;
+			const { results: largeRequestResult } = largeRequest;
 
 			const totalBytes = Number(i.totalBytes) || 0;
 			const totalDuration = Number(i.totalDuration) || 1;
@@ -411,10 +417,10 @@ export const AccessLogsMetricsService = {
 			output.push({
 				...i,
 				currentSpeed: calculatedCurrentSpeed,
-				user: results[0]?.extra_attributes?.user || "-",
+				user: results[0]!.extra_attributes?.user || "-",
 				speed: calculatedSpeed,
 				largeRequestUrl: largeRequestResult[0]?.extra_attributes?.url || "",
-				lastActivity: Number(results[0]?.extra_attributes?.timestamp) || 0,
+				lastActivity: Number(results[0]!.extra_attributes?.timestamp) || 0,
 			});
 		}
 
@@ -457,7 +463,7 @@ export const AccessLogsMetricsService = {
 			...aggregateQuery.split(" "),
 		]);
 
-		let items = results.map((result: any) => {
+		const items = results.map((result: any) => {
 			const { extra_attributes: data } = result;
 			return {
 				domain: data.domain,

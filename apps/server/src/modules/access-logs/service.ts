@@ -1,8 +1,9 @@
 import { nanoid } from "nanoid";
+import { parse } from "@repo/parser";
 import { fieldTypes, regexMap } from "@/consts";
 import { redisClient } from "@/libs/redis";
-import type { getLogParams, TAccessLog } from "@/modules/access-logs/types";
-import { parseLogLine } from "@/utils/log";
+import type { getLogParams } from "@/modules/access-logs/types";
+import { extractDomain } from "@/utils/string";
 
 export const AccessLogService = {
 	name: "access",
@@ -20,21 +21,6 @@ export const AccessLogService = {
 		if (fileKeys.length > 0) {
 			await redisClient.del(...fileKeys);
 		}
-	},
-
-	sanitizeLogData(logData: Record<string, string>): Record<string, string> {
-		const sanitized = { ...logData };
-
-		for (const [key, value] of Object.entries(sanitized)) {
-			const fieldType = this.fieldTypes.get(key);
-			if (fieldType?.includes("NUMERIC")) {
-				if (!value || value === "-" || Number.isNaN(Number(value))) {
-					sanitized[key] = "0";
-				}
-			}
-		}
-
-		return sanitized;
 	},
 
 	/**
@@ -64,22 +50,23 @@ export const AccessLogService = {
 	async readLogs(logLines: string[], prefix = "o") {
 		if (logLines.length === 0) return;
 
-		const stack = logLines.map(async (log) => {
-			const parsed = parseLogLine(log, this.regexMap) as TAccessLog;
-			const sanitized = {
-				...this.sanitizeLogData(parsed),
-				id: `access:${prefix}:${parsed.timestamp}_${nanoid(5)}`,
+		const parsed = parse(logLines, (i) => {
+			return {
+				id: `access:${prefix}:${i.timestamp}_${nanoid(5)}`,
 				from: prefix,
+				domain: extractDomain(i.url),
 			};
-			const logKey = `log:${sanitized.id}`;
-
-			await redisClient.hset(logKey, sanitized);
-			await redisClient.expire(logKey, 604800); // 7 days
 		});
 
-		await Promise.all(stack);
+		await redisClient.send("MULTI", []);
 
-		return;
+		for (const i of parsed) {
+			const logKey = `log:${i.id}`;
+			await redisClient.hset(logKey, i);
+			await redisClient.expire(logKey, 604800); // 7 days
+		}
+
+		return redisClient.send("EXEC", []);
 	},
 
 	async getLogs({ search, sortBy, page, fields, prefix }: getLogParams = {}) {

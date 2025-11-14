@@ -222,7 +222,7 @@ export function accessColumnAttributes(
 				},
 			};
 
-		case "hierarchyHost":
+		case "serverIP":
 			return {
 				width: 140,
 				ellipsis: {
