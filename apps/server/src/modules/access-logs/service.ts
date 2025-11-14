@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { parse } from "parser";
+import { parse } from "@repo/parser";
 import { fieldTypes, regexMap } from "@/consts";
 import { redisClient } from "@/libs/redis";
 import type { getLogParams } from "@/modules/access-logs/types";
