@@ -33,8 +33,7 @@ export const LogServer = {
 					port: Number(listener.port),
 					socket: {
 						async data(_, data, _$1, address) {
-							console.log(address);
-							const startTime = Date.now();
+							const startTime = performance.now();
 							const logEntries = data.toString("utf8").trim().split("\n");
 							const id = address.replaceAll(".", "");
 							const { items, total } = await ParserService.getAll();
@@ -48,6 +47,7 @@ export const LogServer = {
 							}
 
 							await AccessLogService.readLogs(logEntries, prefix);
+
 							WsService.send({ changedLinesCount: logEntries.length });
 
 							logger.info(

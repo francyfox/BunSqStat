@@ -56,7 +56,7 @@ export const logger = {
 		dataLogger.info(new Request(`udp://${url}`), message, {
 			from: url,
 			operation: operation || "process_data",
-			duration: Date.now() - startTime,
+			duration: performance.now() - startTime,
 			itemsProcessed: count || 0,
 			memory: memoryUsage().current,
 			cpu: process.cpuUsage().user + process.cpuUsage().system,

@@ -1,5 +1,5 @@
 import { parseArgs } from "node:util";
-import { benchmark, parse } from "./parser";
+import { benchmark, dev, parse } from "./parser";
 
 const { values } = parseArgs({
 	args: Bun.argv,
@@ -19,5 +19,9 @@ const { values } = parseArgs({
 if (values.benchmark) {
 	benchmark(Number(values.benchmark));
 }
+
+// if (values.dev) {
+// 	dev();
+// }
 
 export { parse };

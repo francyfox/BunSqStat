@@ -20,7 +20,7 @@ export const AccessLogSchema = t.Object({
 	url: t.String(),
 	user: t.String(),
 	hierarchyType: t.String(),
-	hierarchyHost: t.String(),
+	serverIP: t.String(),
 	contentType: t.String(),
 	domain: t.String(),
 });

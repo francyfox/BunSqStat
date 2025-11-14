@@ -11,7 +11,7 @@
 	},
 	"description": "",
 	"scripts": {
-		"dev": "bun --watch src/index.ts",
+		"dev": "bun --watch src/index.ts --dev",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	}
 }

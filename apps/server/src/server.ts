@@ -35,18 +35,18 @@ const app = new Elysia()
 	.use(loggerPlugin)
 	// @ts-ignore
 	.onError(({ error, code, set }) => {
-		console.log("[ERROR HANDLER] code:", code, "error:", error.message);
+		console.log(error);
 		Sentry.captureException(error);
 		if (code === "VALIDATION") {
 			set.status = 400;
-			return { error: "Validation error", message: error.message };
+			return { error: "Validation error", message: error.message, stack: error.stack.split("\n") };
 		}
 		if (code === "NOT_FOUND") {
 			set.status = 404;
 			return { error: "Not found" };
 		}
 		set.status = 500;
-		return { error: "Internal server error", message: error.message };
+		return { error: "Internal server error", message: error.message, stack: error.stack.split("\n") };
 	})
 	.onRequest(({ request, path }) => {
 		Sentry.startSpan(

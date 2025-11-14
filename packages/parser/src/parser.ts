@@ -5,7 +5,7 @@ import {
 } from "./consts";
 import { MOCK_DEFAULT_LOGS } from "./mock";
 import { TRANSFORMS } from "./transform";
-import type { IFormatItem } from "./types";
+import { IFormatItem, RestFn } from "./types";
 import { normalizeFormat } from "./utils";
 
 interface ICacheMapItem {
@@ -60,6 +60,7 @@ export function findToken(token: string) {
 
 export function logLineParser(
 	line: string,
+	rest: RestFn = () => {},
 	format: string = SQUID_LOG_FORMAT_VARIANT.squid,
 ) {
 	const { formatMap, combinedIndexes } = buildFormat(format);
@@ -79,7 +80,7 @@ export function logLineParser(
 		throw new Error(PARSER_ERRORS.combinedSlash);
 	}
 
-	return formatMap.reduce(
+	const result = formatMap.reduce(
 		(acc: Record<string, any>, { transform, field }, index) => {
 			if (transform) {
 				acc[field] = TRANSFORMS[transform](splitLine[index]);
@@ -90,10 +91,15 @@ export function logLineParser(
 		},
 		{},
 	);
+
+	return {
+		...result,
+		...rest(result),
+	};
 }
 
-export function parse(lines: string[]) {
-	return lines.map((line) => logLineParser(line));
+export function parse(lines: string[], rest: RestFn) {
+	return lines.map((line) => logLineParser(line, rest));
 }
 
 export function benchmark(count: number = 1) {
@@ -108,4 +114,9 @@ export function benchmark(count: number = 1) {
 
 	const end = performance.now() - start;
 	console.log("End:", end);
+}
+
+export function dev() {
+	const result = parse(MOCK_DEFAULT_LOGS);
+	console.log(result);
 }

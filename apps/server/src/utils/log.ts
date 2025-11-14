@@ -17,7 +17,7 @@ export function parseLogLine(line: string, regexMap: Map<string, RegExp>) {
 			result[key] = result[key].replace(/\./g, "_");
 		}
 
-		if (key === "hierarchyHost" && result[key] !== "-") {
+		if (key === "serverIP" && result[key] !== "-") {
 			result[key] = result[key].replace(/\./g, "_");
 		}
 

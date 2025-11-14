@@ -15,7 +15,7 @@ export const SQUID_LOG_FORMAT_VARIANT = {
 	useragent: '%>a [%tl] "%{User-Agent}>h"',
 };
 
-export const SQUID_FORMAT_MAP: IFormatItem[] = [
+export const SQUID_FORMAT_MAP = [
 	// ===== TIME =====
 	{
 		token: "%ts.%tu",
@@ -580,4 +580,8 @@ export const SQUID_FORMAT_MAP: IFormatItem[] = [
 		redisType: "NUMERIC",
 		postgresType: "BIGINT",
 	},
-];
+] as const;
+
+export type SquidFieldType = (typeof SQUID_FORMAT_MAP)[number]["field"];
+
+export const SQUID_FORMAT_KEYS = SQUID_FORMAT_MAP.map((i) => i.field);

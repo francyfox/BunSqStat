@@ -1,3 +1,5 @@
+import type { SquidFieldType } from "./consts";
+
 export type RedisFieldType = "NUMERIC" | "TAG" | "TEXT";
 export type PostgresFieldType =
 	| "BIGINT"
@@ -35,3 +37,7 @@ export interface CompiledParser {
 	}>;
 	parse: (line: string) => ParsedLogLine;
 }
+
+export type RestFn = (
+	args: Record<SquidFieldType, string>,
+) => Record<SquidFieldType, string>;
