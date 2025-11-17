@@ -1,8 +1,6 @@
 import * as Sentry from "@sentry/bun";
 import { Elysia } from "elysia";
 import { config } from "@/config";
-import { LogManager } from "@/modules/log-manager";
-import { LogServer } from "@/modules/log-server";
 
 const SENTRY_HOST = "o450533.ingest.us.sentry.io";
 const SENTRY_PROJECT_ID = "4510335880265728";
@@ -21,9 +19,6 @@ export const SentryProxy = new Elysia()
 				],
 			});
 		}
-
-		await LogManager.readLogs();
-		await LogServer.start();
 	})
 	// @ts-ignore
 	.onError(({ code, error }) => {

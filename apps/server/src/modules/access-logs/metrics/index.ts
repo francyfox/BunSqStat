@@ -54,7 +54,9 @@ export const AccessLogsMetrics = new Elysia()
 	.get(
 		"/stats/access-logs/metrics/domains",
 		async ({ query }) => {
-			const response = await AccessLogsMetricsService.getDomainsInfo(query); // TODO: types
+			const response = await AccessLogsMetricsService.getDomainsInfo(
+				query as any,
+			); // TODO: types
 			return response;
 		},
 		{

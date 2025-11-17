@@ -1,3 +1,4 @@
+import { default as mime } from "mime/lite";
 import {
 	PARSER_ERRORS,
 	SQUID_FORMAT_MAP,
@@ -5,8 +6,8 @@ import {
 } from "./consts";
 import { MOCK_DEFAULT_LOGS } from "./mock";
 import { TRANSFORMS } from "./transform";
-import { IFormatItem, RestFn } from "./types";
-import { normalizeFormat } from "./utils";
+import type { IFormatItem, RestFn } from "./types";
+import { getFileExtensionFromUrl, normalizeFormat } from "./utils";
 
 interface ICacheMapItem {
 	formatMap: IFormatItem[];
@@ -60,7 +61,7 @@ export function findToken(token: string) {
 
 export function logLineParser(
 	line: string,
-	rest: RestFn = () => {},
+	rest: RestFn | any = () => {},
 	format: string = SQUID_LOG_FORMAT_VARIANT.squid,
 ) {
 	const { formatMap, combinedIndexes } = buildFormat(format);
@@ -86,6 +87,13 @@ export function logLineParser(
 				acc[field] = TRANSFORMS[transform](splitLine[index]);
 			} else {
 				acc[field] = splitLine[index];
+
+				const NO_CONTENT_TYPE =
+					field === "contentType" && acc.contentType === "-";
+				if (NO_CONTENT_TYPE) {
+					const extension = getFileExtensionFromUrl(acc.url || "") || null;
+					if (extension) acc[field] = mime.getType(extension) || "-";
+				}
 			}
 			return acc;
 		},
@@ -98,7 +106,7 @@ export function logLineParser(
 	};
 }
 
-export function parse(lines: string[], rest: RestFn) {
+export function parse(lines: string[], rest?: RestFn) {
 	return lines.map((line) => logLineParser(line, rest));
 }
 

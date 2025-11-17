@@ -46,8 +46,8 @@ export const LogServer = {
 								if (!origin.listen) return;
 							}
 
-							await AccessLogService.readLogs(logEntries, prefix)
-								.finally(() => {
+							await AccessLogService.readLogs(logEntries, prefix).finally(
+								() => {
 									WsService.send({ changedLinesCount: logEntries.length });
 
 									logger.info(
@@ -59,7 +59,8 @@ export const LogServer = {
 										},
 										"store",
 									);
-							});
+								},
+							);
 						},
 						error(_, error) {
 							logger.error(
@@ -72,6 +73,9 @@ export const LogServer = {
 						},
 					},
 				});
+				console.log(
+					`📦 Created UDP socket ${socket.address.address}:${socket.address.port}`,
+				);
 				logger.info(
 					{
 						operation: "udp_add",

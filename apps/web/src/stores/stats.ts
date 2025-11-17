@@ -21,6 +21,7 @@ export const useStatsStore = defineStore("stats", () => {
 
 	async function getAccessLogs(query?: getLogParams) {
 		loading.value = true;
+
 		const response = await api.stats["access-logs"].get({
 			query,
 		});

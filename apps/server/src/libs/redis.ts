@@ -2,9 +2,11 @@ import { readFileSync } from "node:fs";
 import { RedisClient } from "bun";
 import { config } from "@/config";
 
-export const redisClient = new RedisClient(
+const initRedis = new RedisClient(
 	`rediss://:${config.REDIS_PASSWORD}@${config.REDIS_HOST}:${config.REDIS_PORT}`,
 	{
+		autoReconnect: true,
+		maxRetries: 3,
 		tls: {
 			ca: readFileSync(config.REDIS_TLS_CA!),
 			cert: readFileSync(config.REDIS_TLS_CERT!),
@@ -13,6 +15,8 @@ export const redisClient = new RedisClient(
 		},
 	},
 );
+
+export const redisClient = initRedis;
 
 redisClient.onconnect = async () => {
 	console.log("🪣  Redis was connected!");

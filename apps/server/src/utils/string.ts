@@ -26,22 +26,11 @@ export function isValidUrl(url: string) {
 	}
 }
 
-export function getFileExtensionFromUrl(url: string) {
-	const regex = /(?<=\.)[a-zA-Z0-9]+/gm;
-	const match = url.match(regex);
-
-	if (match) {
-		return match.pop();
-	} else {
-		return null;
-	}
-}
-
 export function extractDomain(url: string): string {
 	if (!url || url === "-") return "-";
 
 	// Handle CONNECT method where url is domain:port
-	if (url.match(/^\d+\.\d+\.\d+\.\d+:\d+$/)) return url.split(":")[0]; // IP
+	if (url.match(/^\d+\.\d+\.\d+\.\d+:\d+$/)) return url?.split(":")[0] || "-"; // IP
 
 	const sanitized = sanitizeUrl(url);
 	try {

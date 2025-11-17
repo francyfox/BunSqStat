@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
 import { parse } from "@repo/parser";
+import { nanoid } from "nanoid";
 import { fieldTypes, regexMap } from "@/consts";
 import { redisClient } from "@/libs/redis";
 import type { getLogParams } from "@/modules/access-logs/types";
@@ -44,7 +44,12 @@ export const AccessLogService = {
 			`log_idx on HASH PREFIX 1 log:access:${prefix} SCHEMA ${indexes.join(" ")}`.split(
 				" ",
 			);
-		await redisClient.send("FT.CREATE", args);
+
+		try {
+			await redisClient.send("FT.CREATE", args);
+		} catch (_) {
+			// No existing index, continue with creation
+		}
 	},
 
 	async readLogs(logLines: string[], prefix = "o") {

@@ -122,6 +122,9 @@
     "packages/parser": {
       "name": "@repo/parser",
       "version": "1.0.0",
+      "dependencies": {
+        "mime": "^4.1.0",
+      },
     },
   },
   "packages": {

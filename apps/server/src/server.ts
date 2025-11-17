@@ -32,21 +32,28 @@ process.on("unhandledRejection", (error) => {
 
 const app = new Elysia()
 	// @ts-ignore
-	.use(loggerPlugin)
-	// @ts-ignore
+	.use([loggerPlugin, routes, cors(), swagger(), rateLimit()])
 	.onError(({ error, code, set }) => {
 		console.log(error);
 		Sentry.captureException(error);
 		if (code === "VALIDATION") {
 			set.status = 400;
-			return { error: "Validation error", message: error.message, stack: error.stack.split("\n") };
+			return {
+				error: "Validation error",
+				message: error.message,
+				stack: error.stack.split("\n"),
+			};
 		}
 		if (code === "NOT_FOUND") {
 			set.status = 404;
 			return { error: "Not found" };
 		}
 		set.status = 500;
-		return { error: "Internal server error", message: error.message, stack: error.stack.split("\n") };
+		return {
+			error: "Internal server error",
+			message: error.message,
+			stack: error.stack.split("\n"),
+		};
 	})
 	.onRequest(({ request, path }) => {
 		Sentry.startSpan(
@@ -58,11 +65,7 @@ const app = new Elysia()
 				// span will be automatically ended
 			},
 		);
-	})
-	.use(routes)
-	.use(cors())
-	.use(swagger())
-	.use(rateLimit());
+	});
 
 app.listen(
 	{
