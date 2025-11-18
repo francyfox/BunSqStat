@@ -1,3 +1,4 @@
+import cluster from "node:cluster";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import * as Sentry from "@sentry/bun";
@@ -5,8 +6,9 @@ import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { config } from "@/config";
 import { loggerPlugin } from "@/libs/logger";
-import { redisClient } from "@/libs/redis";
+import { redisClient, redisSubscriber } from "@/libs/redis";
 import { routes } from "@/routes";
+import { startupMessage } from "@/utils/startup";
 
 const signals = ["SIGINT", "SIGTERM"];
 
@@ -14,6 +16,7 @@ for (const signal of signals) {
 	process.on(signal, async () => {
 		console.log(`Received ${signal}. Initiating graceful shutdown...`);
 		redisClient.close();
+		redisSubscriber.close();
 		await app.stop();
 
 		process.exit(0);
@@ -72,9 +75,8 @@ app.listen(
 		port: config.BACKEND_PORT!,
 	},
 	() => {
-		console.log(`🕮  Swagger is active at: ${app.server?.url.origin}/swagger`);
-		console.log(
-			`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`,
-		);
+		if (cluster.isPrimary) {
+			startupMessage(app);
+		}
 	},
 );

@@ -383,21 +383,20 @@ export const AccessLogsMetricsService = {
 				(j: IMetricBytesAndDuration) => j?.clientIP === i?.clientIP,
 			);
 
-			await redisClient.send("MULTI", []);
-			await redisClient.send(
-				"FT.SEARCH",
-				`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 2 user timestamp`.split(
-					" ",
+			const [users, largeRequest] = await Promise.all([
+				redisClient.send(
+					"FT.SEARCH",
+					`log_idx @clientIP:{${i?.clientIP}} SORTBY timestamp DESC LIMIT 0 1 RETURN 2 user timestamp`.split(
+						" ",
+					),
 				),
-			);
-			await redisClient.send(
-				"FT.SEARCH",
-				`log_idx @clientIP:{${i?.clientIP}} SORTBY bytes DESC LIMIT 0 1 RETURN 1 url`.split(
-					" ",
+				redisClient.send(
+					"FT.SEARCH",
+					`log_idx @clientIP:{${i?.clientIP}} SORTBY bytes DESC LIMIT 0 1 RETURN 1 url`.split(
+						" ",
+					),
 				),
-			);
-
-			const [users, largeRequest] = await redisClient.send("EXEC", [])
+			])
 			const { results } = users;
 			const { results: largeRequestResult } = largeRequest;
 

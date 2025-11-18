@@ -1,4 +1,5 @@
 import { config } from "@/config";
+import { REDIS_WS_CHANNEL, redisSubscriber } from "@/libs/redis";
 
 export interface WebSocketClient {
 	id: string;
@@ -6,6 +7,14 @@ export interface WebSocketClient {
 	lastPing: number;
 	channel: string;
 }
+
+await redisSubscriber.subscribe(REDIS_WS_CHANNEL, (message) => {
+	try {
+		WsService.send(JSON.parse(message));
+	} catch (_) {
+		throw new Error("Could not parse message from redis for websocket");
+	}
+});
 
 export const WsService = {
 	connectedClients: new Map<string, WebSocketClient>(),

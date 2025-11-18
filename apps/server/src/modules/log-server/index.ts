@@ -1,8 +1,8 @@
 import { config } from "@/config";
 import { logger } from "@/libs/logger";
+import { REDIS_WS_CHANNEL, redisClient } from "@/libs/redis";
 import { AccessLogService } from "@/modules/access-logs/service";
 import { ParserService } from "@/modules/parser/service";
-import { WsService } from "@/modules/ws/ws.service";
 
 export const LogServer = {
 	get listeners() {
@@ -48,7 +48,10 @@ export const LogServer = {
 
 							await AccessLogService.readLogs(logEntries, prefix).finally(
 								() => {
-									WsService.send({ changedLinesCount: logEntries.length });
+									redisClient.publish(
+										REDIS_WS_CHANNEL,
+										JSON.stringify({ changedLinesCount: logEntries.length }),
+									);
 
 									logger.info(
 										{
