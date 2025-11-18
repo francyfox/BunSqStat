@@ -15,7 +15,9 @@ export const ParserService = {
 			`origin_idx on HASH PREFIX 1 origin: SCHEMA ${mergeStrip(this.fields, this.types).join(" ")}`.split(
 				" ",
 			);
-		await redisClient.send("FT.CREATE", args);
+		try {
+			await redisClient.send("FT.CREATE", args);
+		} catch (_) {}
 	},
 
 	async addPrefix(prefix: string = "") {

@@ -1,3 +1,4 @@
+import cluster from "node:cluster";
 import { cors } from "@elysiajs/cors";
 import { swagger } from "@elysiajs/swagger";
 import * as Sentry from "@sentry/bun";
@@ -5,8 +6,9 @@ import { Elysia } from "elysia";
 import { rateLimit } from "elysia-rate-limit";
 import { config } from "@/config";
 import { loggerPlugin } from "@/libs/logger";
-import { redisClient } from "@/libs/redis";
+import { redisClient, redisSubscriber } from "@/libs/redis";
 import { routes } from "@/routes";
+import { startupMessage } from "@/utils/startup";
 
 const signals = ["SIGINT", "SIGTERM"];
 
@@ -14,6 +16,7 @@ for (const signal of signals) {
 	process.on(signal, async () => {
 		console.log(`Received ${signal}. Initiating graceful shutdown...`);
 		redisClient.close();
+		redisSubscriber.close();
 		await app.stop();
 
 		process.exit(0);
@@ -32,21 +35,28 @@ process.on("unhandledRejection", (error) => {
 
 const app = new Elysia()
 	// @ts-ignore
-	.use(loggerPlugin)
-	// @ts-ignore
+	.use([loggerPlugin, routes, cors(), swagger(), rateLimit()])
 	.onError(({ error, code, set }) => {
 		console.log(error);
 		Sentry.captureException(error);
 		if (code === "VALIDATION") {
 			set.status = 400;
-			return { error: "Validation error", message: error.message, stack: error.stack.split("\n") };
+			return {
+				error: "Validation error",
+				message: error.message,
+				stack: error.stack.split("\n"),
+			};
 		}
 		if (code === "NOT_FOUND") {
 			set.status = 404;
 			return { error: "Not found" };
 		}
 		set.status = 500;
-		return { error: "Internal server error", message: error.message, stack: error.stack.split("\n") };
+		return {
+			error: "Internal server error",
+			message: error.message,
+			stack: error.stack.split("\n"),
+		};
 	})
 	.onRequest(({ request, path }) => {
 		Sentry.startSpan(
@@ -58,20 +68,15 @@ const app = new Elysia()
 				// span will be automatically ended
 			},
 		);
-	})
-	.use(routes)
-	.use(cors())
-	.use(swagger())
-	.use(rateLimit());
+	});
 
 app.listen(
 	{
 		port: config.BACKEND_PORT!,
 	},
 	() => {
-		console.log(`🕮  Swagger is active at: ${app.server?.url.origin}/swagger`);
-		console.log(
-			`🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`,
-		);
+		if (cluster.isPrimary) {
+			startupMessage(app);
+		}
 	},
 );

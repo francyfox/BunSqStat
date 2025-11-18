@@ -1,0 +1,11 @@
+logLevel="debug"
+
+[build]
+target = "bun"
+transpile = ["tsconfig.json"]
+[test]
+root="./src"
+coverage=true
+coverageThreshold = 0.6
+coveragePathIgnorePatterns = "**/*.spec.ts"
+coverageReporter  = ["text", "lcov"]

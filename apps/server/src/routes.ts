@@ -8,6 +8,7 @@ import { Stats } from "@/modules/stats";
 import { WS } from "@/modules/ws";
 
 export const routes = new Elysia()
+	.get("/favicon.ico", () => new Response(null, { status: 204 }))
 	.use(Health)
 	.use(Stats)
 	.use(AccessLogs)

@@ -1,3 +1,16 @@
+## 0.28.2 - 18 Nov 2025
+
+Bugfix:
+- Fix [Issue](https://github.com/francyfox/BunSqStat/issues/45) multi error
+- Try/Catch for create index
+- Subscribe on redis channel for ws update (cluster mode)
+- Remove multi. Flat map and promise all best way for optimized redis pipeline
+
+
+## 0.28.1 - 14 Nov 2025
+
+TEST
+
 ## 0.28.0 - 14 Nov 2025
 
 Feature:

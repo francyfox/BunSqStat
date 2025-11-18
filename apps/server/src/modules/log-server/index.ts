@@ -1,8 +1,8 @@
 import { config } from "@/config";
 import { logger } from "@/libs/logger";
+import { REDIS_WS_CHANNEL, redisClient } from "@/libs/redis";
 import { AccessLogService } from "@/modules/access-logs/service";
 import { ParserService } from "@/modules/parser/service";
-import { WsService } from "@/modules/ws/ws.service";
 
 export const LogServer = {
 	get listeners() {
@@ -46,9 +46,12 @@ export const LogServer = {
 								if (!origin.listen) return;
 							}
 
-							await AccessLogService.readLogs(logEntries, prefix)
-								.finally(() => {
-									WsService.send({ changedLinesCount: logEntries.length });
+							await AccessLogService.readLogs(logEntries, prefix).finally(
+								() => {
+									redisClient.publish(
+										REDIS_WS_CHANNEL,
+										JSON.stringify({ changedLinesCount: logEntries.length }),
+									);
 
 									logger.info(
 										{
@@ -59,7 +62,8 @@ export const LogServer = {
 										},
 										"store",
 									);
-							});
+								},
+							);
 						},
 						error(_, error) {
 							logger.error(
@@ -72,6 +76,9 @@ export const LogServer = {
 						},
 					},
 				});
+				console.log(
+					`📦 Created UDP socket ${socket.address.address}:${socket.address.port}`,
+				);
 				logger.info(
 					{
 						operation: "udp_add",

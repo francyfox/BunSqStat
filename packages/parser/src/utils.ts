@@ -1,3 +1,13 @@
+export function getFileExtensionFromUrl(url: string) {
+	const regex = /(?<=\.)[a-zA-Z0-9]+/gm;
+	const match = url.match(regex);
+
+	if (match) {
+		return match.pop();
+	} else {
+		return null;
+	}
+}
 /**
  * Утилиты для работы с динамическими паттернами Squid logformat
  */

@@ -1,5 +1,5 @@
 import { parseArgs } from "node:util";
-import { benchmark, dev, parse } from "./parser";
+import { benchmark, parse } from "./parser";
 
 const { values } = parseArgs({
 	args: Bun.argv,

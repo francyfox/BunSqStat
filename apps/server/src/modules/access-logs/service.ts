@@ -1,5 +1,5 @@
-import { nanoid } from "nanoid";
 import { parse } from "@repo/parser";
+import { nanoid } from "nanoid";
 import { fieldTypes, regexMap } from "@/consts";
 import { redisClient } from "@/libs/redis";
 import type { getLogParams } from "@/modules/access-logs/types";
@@ -44,7 +44,12 @@ export const AccessLogService = {
 			`log_idx on HASH PREFIX 1 log:access:${prefix} SCHEMA ${indexes.join(" ")}`.split(
 				" ",
 			);
-		await redisClient.send("FT.CREATE", args);
+
+		try {
+			await redisClient.send("FT.CREATE", args);
+		} catch (_) {
+			// No existing index, continue with creation
+		}
 	},
 
 	async readLogs(logLines: string[], prefix = "o") {
@@ -58,15 +63,17 @@ export const AccessLogService = {
 			};
 		});
 
-		await redisClient.send("MULTI", []);
-
-		for (const i of parsed) {
-			const logKey = `log:${i.id}`;
-			await redisClient.hset(logKey, i);
-			await redisClient.expire(logKey, 604800); // 7 days
-		}
-
-		return redisClient.send("EXEC", []);
+		// Auto-pipelining is enabled by default in Bun RedisClient
+		// Commands are automatically batched for optimal performance
+		await Promise.all(
+			parsed.flatMap((item) => {
+				const logKey = `log:${item.id}`;
+				return [
+					redisClient.hset(logKey, item),
+					redisClient.expire(logKey, 604800), // 7 days
+				];
+			}),
+		);
 	},
 
 	async getLogs({ search, sortBy, page, fields, prefix }: getLogParams = {}) {
