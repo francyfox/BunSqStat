@@ -17,6 +17,9 @@ export const configSchema = t.Intersect([
 			description:
 				"Used for listen udp logs. Example: 0.0.0.0:5140,0.0.0.0:5141,...",
 		}),
+		CLUSTER_MODE: t.Boolean({ default: false }),
+		SENTRY_ENABLED: t.Boolean({ default: true }),
+		LOG_FORMAT: t.String({ default: "simple" }),
 	}),
 	t.Partial(
 		t.Object({
