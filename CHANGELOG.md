@@ -1,8 +1,12 @@
+## 0.28.5 - 19 Nov 2025
+
+Bugfix:
+- Replace wrong clientIP :: on -
+
 ## 0.28.4 - 19 Nov 2025
 
 Bugfix:
 - Default env for SENTRY_ENABLED
-- Replace wrong clientIP :: on -
 - Invert rps history metric
 
 ## 0.28.3 - 19 Nov 2025
