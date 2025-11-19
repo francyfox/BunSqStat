@@ -1,6 +1,6 @@
 import { evaluate } from "mathjs";
 import { redisClient } from "@/libs/redis";
-import {
+import type {
 	IMetricBytesAndDuration,
 	TMetricDomainItem,
 	TMetricDomainOptions,
@@ -299,6 +299,65 @@ export const AccessLogsMetricsService = {
 		};
 	},
 
+	/**
+	 * Get RPS history for Chart.js (last 1 hour, 5-min buckets)
+	 * Returns 12 RPS values for line chart
+	 */
+	async getRPSHistory({
+		startTime,
+		endTime,
+	}: {
+		startTime?: number;
+		endTime?: number;
+	} = {}): Promise<number[]> {
+		const now = Date.now();
+		const actualStart = startTime || now - 3600000; // 1 hour
+		const actualEnd = endTime || now;
+		if (actualStart >= actualEnd) {
+			return new Array(12).fill(0);
+		}
+
+		const intervalMs = 300000; // 5 min
+		const secondsPerBucket = intervalMs / 1000; // 300
+		const query = `@timestamp:[${actualStart} ${actualEnd}]`;
+		const { results } = await redisClient.send("FT.AGGREGATE", [
+			"log_idx",
+			query,
+			"APPLY",
+			`floor(@timestamp / ${intervalMs})`,
+			"AS",
+			"bucket",
+			"GROUPBY",
+			"1",
+			"@bucket",
+			"REDUCE",
+			"COUNT",
+			"0",
+			"AS",
+			"count",
+			"SORTBY",
+			"2",
+			"@bucket",
+			"ASC",
+		]);
+
+		const rpsHistory: number[] = [];
+
+		const startBucket = Math.floor(actualStart / intervalMs);
+		for (let i = 0; i < 12; i++) {
+			const bucket = startBucket + i;
+			const bucketResult = results.find(
+				(r: any) => Number(r.extra_attributes?.bucket) === bucket,
+			);
+			const count = bucketResult
+				? Number(bucketResult.extra_attributes?.count) || 0
+				: 0;
+			rpsHistory.push(((count / secondsPerBucket) * 10) / 10);
+		}
+
+		return rpsHistory;
+	},
+
 	async getTotal(
 		items: IMetricBytesAndDuration[],
 		time: { startTime?: number; endTime?: number },
@@ -343,10 +402,12 @@ export const AccessLogsMetricsService = {
 		const contentTypes = await this.getContentTypeStats(time);
 		const redisMemory = await this.getRedisMemory();
 		const statusCodes = await this.getTotalStatusesByTime(time);
+		const rpsHistory = await this.getRPSHistory(time);
 
 		const output = {
 			globalStates: {
 				...result,
+				rpsHistory,
 				statusCodes,
 				bandwidth,
 				hitRatePercent,

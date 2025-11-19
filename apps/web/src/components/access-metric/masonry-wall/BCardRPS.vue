@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BRpsHistory from "@/components/access-metric/BRpsHistory.vue";
 import BCardMetric from "@/components/BCardMetric.vue";
 import { diffDate } from "@/utils/date.ts";
 
@@ -10,6 +11,7 @@ const {
 	rps: number;
 	diffTime: number;
 	time?: [number, number];
+	rpsHistory: number[];
 }>();
 </script>
 
@@ -20,6 +22,8 @@ const {
     <span class="text-lg">
         {{ (rps * diffTime).toFixed(0) }} in {{ diffDate(time) }}
     </span>
+
+    <BRpsHistory :rps-history="rpsHistory" />
 
     <template #name>
       {{ $t('rpsTitle') }}

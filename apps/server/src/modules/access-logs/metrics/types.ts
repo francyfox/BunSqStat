@@ -27,7 +27,7 @@ export const AccessLogMetricsSchema = t.Object({
 		rps: t.Union([t.Number(), t.Any()]),
 		statusCodes,
 		maxMemory: t.Number(),
-		usedMemory: t.Number()
+		usedMemory: t.Number(),
 	}),
 	globalStates: t.Object({
 		bytes: t.Number(),
@@ -37,6 +37,7 @@ export const AccessLogMetricsSchema = t.Object({
 		hitRatePercent: t.Number(),
 		successRatePercent: t.Number(),
 		contentTypes: contentTypeStats,
+		rpsHistory: t.Array(t.Number()),
 	}),
 	users: t.Array(
 		t.Object({

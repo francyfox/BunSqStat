@@ -35,6 +35,7 @@ const items = computed(() => [
 			rps: accessMetrics.value?.currentStates?.rps,
 			diffTime: diffTime.value,
 			time: form.value.time,
+			rpsHistory: accessMetrics.value?.globalStates?.rpsHistory || [],
 		}),
 	},
 	{
