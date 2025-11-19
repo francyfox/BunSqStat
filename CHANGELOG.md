@@ -5,6 +5,8 @@ Feature:
 - - CLUSTER_MODE=false
 - - SENTRY_ENABLED=true
 - - LOG_FORMAT
+- RPS History
+- Redis metrics
 
 Bugfix:
 - Removed args dev
