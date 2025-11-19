@@ -106,7 +106,7 @@ onMounted(async () => {
         v-model:origins="store.settings.origins"
         v-model:prefix="prefix"
         @update:prefix="store.setPrefix"
-        @handleChange="store.setOrigin"
+        @handleListenChange="store.setOrigin"
     />
 
     <div class="flex flex-col md:flex-row gap-1">

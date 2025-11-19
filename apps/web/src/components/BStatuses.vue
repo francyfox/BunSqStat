@@ -39,34 +39,22 @@ const data = computed<ChartData<"bar">>(() => {
 						return;
 					}
 
-					return getGradient(
-						ctx,
-						chartArea,
-						COLORS.get(statusItem?.status || "5XX"),
-					);
+					return getGradient(ctx, chartArea, COLORS.get(statusItem?.status));
 				},
 			},
 		],
 	};
 });
+
 const options = computed<ChartOptions<"bar">>(() => {
 	return {
 		responsive: true,
 		indexAxis: "y",
 		aspectRatio: false,
-		animation: {
-			duration: 0,
-		},
-		transitions: {
-			active: {
-				animation: {
-					duration: 800,
-				},
-			},
-			resize: {
-				animation: {
-					duration: 400,
-				},
+		animation: false, // Fully disable animations
+		plugins: {
+			legend: {
+				display: false,
 			},
 		},
 		scales: {
