@@ -88,6 +88,10 @@ export function logLineParser(
 			} else {
 				acc[field] = splitLine[index];
 
+				if (field === "clientIP" && acc[field] === "::") {
+					acc[field] = "-";
+				}
+
 				const NO_CONTENT_TYPE =
 					field === "contentType" && acc.contentType === "-";
 				if (NO_CONTENT_TYPE) {

@@ -439,7 +439,8 @@ export const AccessLogsMetricsService = {
 		);
 
 		for (const i of items) {
-			if (i.clientIP === "-") continue; // TODO: check empty users
+			if (i.clientIP === "-") continue; // skip invalid IPs
+
 			const freshItem = freshData.find(
 				(j: IMetricBytesAndDuration) => j?.clientIP === i?.clientIP,
 			);
@@ -477,10 +478,10 @@ export const AccessLogsMetricsService = {
 			output.push({
 				...i,
 				currentSpeed: calculatedCurrentSpeed,
-				user: results[0]!.extra_attributes?.user || "-",
+				user: results[0]?.extra_attributes?.user || "-", // use ? for optional access
 				speed: calculatedSpeed,
 				largeRequestUrl: largeRequestResult[0]?.extra_attributes?.url || "",
-				lastActivity: Number(results[0]!.extra_attributes?.timestamp) || 0,
+				lastActivity: Number(results[0]?.extra_attributes?.timestamp) || 0,
 			});
 		}
 

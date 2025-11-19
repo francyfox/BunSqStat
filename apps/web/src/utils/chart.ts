@@ -3,6 +3,7 @@ export const COLORS = new Map([
 	["4XX", ["#70c0e8", "#676faf"]],
 	["3XX", ["#f2c97d", "#817257"]],
 	["2XX", ["#63e2b7", "#7a9d44"]],
+	["0XX", ["#fafafa", "#fafafa"]],
 ]);
 
 export function getGradient(

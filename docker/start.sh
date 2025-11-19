@@ -11,6 +11,7 @@ export REDIS_PORT=${REDIS_PORT:-6379}
 export REDIS_PASSWORD=${REDIS_PASSWORD:-bunsqstat123}
 export BACKEND_PORT=${BACKEND_PORT:-3000}
 export REDIS_TLS_DIR=${REDIS_TLS_DIR:-/app/docker/redis/tls}
+export SENTRY_ENABLED=${SENTRY_ENABLED:-true}
 
 echo "Starting BunSqStat All-in-One..."
 echo "Environment: $NODE_ENV"
