@@ -15,7 +15,7 @@ export const timestampToMs: TransformFunction = (value: string): string => {
  * @example "192.168.1.1" => "192_168_1_1"
  */
 export const dotToUnderscore: TransformFunction = (value: string): string => {
-	if (value === "-" || !value) return "-";
+	if (value === "-" || value === "::" || !value) return "-";
 	return value.replace(/\./g, "_");
 };
 
@@ -24,7 +24,7 @@ export const dotToUnderscore: TransformFunction = (value: string): string => {
  * @example "192_168_1_1" => "192.168.1.1"
  */
 export const underscoreToDot: TransformFunction = (value: string): string => {
-	if (value === "-" || !value) return "0.0.0.0";
+	if (value === "-" || value === "::" || !value) return "0.0.0.0";
 	return value.replace(/_/g, ".");
 };
 
@@ -81,7 +81,7 @@ export const normalizeUserAgent: TransformFunction = (
  * Нормализует URL (обрезает слишком длинные)
  */
 export const normalizeURL: TransformFunction = (value: string): string => {
-	if (value === "-" || !value) return "-";
+	if (value === "-" || value === "::" || !value) return "-";
 	let output = value;
 	if (value.endsWith(":443")) {
 		output = `https://${value.replace(":443", "")}`;
