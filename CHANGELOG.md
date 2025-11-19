@@ -1,3 +1,16 @@
+## 0.28.3 - 19 Nov 2025
+
+Feature:
+- Added env
+- - CLUSTER_MODE=false
+- - SENTRY_ENABLED=true
+- - LOG_FORMAT
+- RPS History
+- Redis metrics
+
+Bugfix:
+- Removed args dev
+
 ## 0.28.2 - 18 Nov 2025
 
 Bugfix:

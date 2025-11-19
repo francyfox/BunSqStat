@@ -1,5 +1,6 @@
 import { parse } from "@repo/parser";
 import { nanoid } from "nanoid";
+import { config } from "@/config";
 import { fieldTypes, regexMap } from "@/consts";
 import { redisClient } from "@/libs/redis";
 import type { getLogParams } from "@/modules/access-logs/types";
@@ -55,16 +56,18 @@ export const AccessLogService = {
 	async readLogs(logLines: string[], prefix = "o") {
 		if (logLines.length === 0) return;
 
-		const parsed = parse(logLines, (i) => {
-			return {
-				id: `access:${prefix}:${i.timestamp}_${nanoid(5)}`,
-				from: prefix,
-				domain: extractDomain(i.url),
-			};
-		});
+		const parsed = parse(
+			logLines,
+			(i) => {
+				return {
+					id: `access:${prefix}:${i.timestamp}_${nanoid(5)}`,
+					from: prefix,
+					domain: extractDomain(i.url),
+				};
+			},
+			config.LOG_FORMAT,
+		);
 
-		// Auto-pipelining is enabled by default in Bun RedisClient
-		// Commands are automatically batched for optimal performance
 		await Promise.all(
 			parsed.flatMap((item) => {
 				const logKey = `log:${item.id}`;

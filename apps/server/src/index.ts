@@ -1,22 +1,10 @@
 import cluster from "node:cluster";
 import os from "node:os";
 import process from "node:process";
-import { parseArgs } from "node:util";
+import { config } from "@/config";
 import { redisClient, redisSubscriber } from "@/libs/redis";
 import { LogManager } from "@/modules/log-manager";
 import { LogServer } from "@/modules/log-server";
-
-const { values } = parseArgs({
-	args: Bun.argv,
-	options: {
-		dev: {
-			type: "boolean",
-			default: false,
-		},
-	},
-	strict: true,
-	allowPositionals: true,
-});
 
 /**
  * Flag to indicate if the primary process is intentionally shutting down.
@@ -66,7 +54,7 @@ async function startPrimary() {
 	await LogManager.readLogs();
 	await LogServer.start();
 
-	if (!values.dev) createWorkers();
+	if (config.CLUSTER_MODE) createWorkers();
 
 	cluster.on("exit", (worker, code, signal) => {
 		console.warn(
@@ -91,7 +79,7 @@ async function startPrimary() {
 	process.on("SIGTERM", shutdownWorkers);
 }
 
-if (values.dev) {
+if (!config.CLUSTER_MODE) {
 	await startPrimary();
 	await import("./server");
 } else {

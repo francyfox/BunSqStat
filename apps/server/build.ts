@@ -2,7 +2,7 @@ import { rm } from "node:fs/promises";
 
 (async () => {
 	await rm("./dist", { recursive: true, force: true });
-	// @ts-ignore
+		// @ts-ignore
 	await Bun.build({
 		target: "bun",
 		root: "./src",
@@ -11,7 +11,6 @@ import { rm } from "node:fs/promises";
 		outdir: "./dist",
 		splitting: true,
 		sourcemap: "linked",
-		env: "inline",
 		minify: {
 			whitespace: true,
 			syntax: true,

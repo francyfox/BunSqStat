@@ -8,7 +8,7 @@ export const COLORS = new Map([
 export function getGradient(
 	ctx: CanvasRenderingContext2D,
 	chartArea: any,
-	colors: string[] = ["#fafafa", "#fafafa"],
+	colors: [string, string] = ["#fafafa", "#fafafa"],
 ) {
 	const gradient = ctx.createLinearGradient(
 		0,
