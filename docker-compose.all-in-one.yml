@@ -5,6 +5,9 @@ services:
       dockerfile: Dockerfile
     container_name: bunsqstat-all-in-one
     restart: unless-stopped
+    environment:
+      CLUSTER_MODE: "false"
+      SENTRY_ENABLED: "false"
     ports:
       - "81:80"      # Web interface
     volumes:

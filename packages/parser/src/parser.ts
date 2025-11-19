@@ -106,8 +106,8 @@ export function logLineParser(
 	};
 }
 
-export function parse(lines: string[], rest?: RestFn) {
-	return lines.map((line) => logLineParser(line, rest));
+export function parse(lines: string[], rest?: RestFn, format?: string) {
+	return lines.map((line) => logLineParser(line, rest, format));
 }
 
 export function benchmark(count: number = 1) {

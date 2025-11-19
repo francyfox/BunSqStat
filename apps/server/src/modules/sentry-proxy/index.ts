@@ -7,7 +7,7 @@ const SENTRY_PROJECT_ID = "4510335880265728";
 
 export const SentryProxy = new Elysia()
 	.onStart(async () => {
-		if (config.NODE_ENV === "production") {
+		if (config.SENTRY_ENABLED) {
 			Sentry.init({
 				environment: "backend",
 				dsn: "https://cb54b8ec05858d8419f21e285985c9a8@o450533.ingest.us.sentry.io/4510335843368960",

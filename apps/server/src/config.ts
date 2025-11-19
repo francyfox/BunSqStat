@@ -17,12 +17,12 @@ export const configSchema = t.Intersect([
 			description:
 				"Used for listen udp logs. Example: 0.0.0.0:5140,0.0.0.0:5141,...",
 		}),
-		CLUSTER_MODE: t.Boolean({ default: false }),
-		SENTRY_ENABLED: t.Boolean({ default: true }),
-		LOG_FORMAT: t.String({ default: "simple" }),
 	}),
 	t.Partial(
 		t.Object({
+			CLUSTER_MODE: t.Boolean({ default: true }),
+			SENTRY_ENABLED: t.Boolean({ default: true }),
+			LOG_FORMAT: t.String(),
 			REDIS_HOST: t.String({ default: "localhost" }),
 			REDIS_PORT: t.String({ default: "6379" }),
 			BACKEND_PORT: t.String({ default: "3000" }),
@@ -38,7 +38,7 @@ export type TConfig = Static<typeof configSchema>;
 const validate = ajv.compile(configSchema);
 
 export const checkConfig = () => {
-	const data = Bun.env;
+	const data = Value.Convert(configSchema, Bun.env);
 
 	if (!validate(data)) {
 		console.error("Validation errors:", validate.errors);
