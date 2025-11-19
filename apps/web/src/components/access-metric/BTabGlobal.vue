@@ -6,6 +6,7 @@ import BCardBytes from "@/components/access-metric/masonry-wall/BCardBytes.vue";
 import BCardContentStats from "@/components/access-metric/masonry-wall/BCardContentStats.vue";
 import BCardDuration from "@/components/access-metric/masonry-wall/BCardDuration.vue";
 import BCardOptimization from "@/components/access-metric/masonry-wall/BCardOptimization.vue";
+import BCardRedis from "@/components/access-metric/masonry-wall/BCardRedis.vue";
 import BCardRPS from "@/components/access-metric/masonry-wall/BCardRPS.vue";
 import BCardStatus from "@/components/access-metric/masonry-wall/BCardStatus.vue";
 import { useStatsStore } from "@/stores/stats.ts";
@@ -61,6 +62,12 @@ const items = computed(() => [
 			bandwidth: accessMetrics.value?.globalStates.bandwidth,
 			hitRatePercent: accessMetrics.value?.globalStates.hitRatePercent,
 			successRatePercent: accessMetrics.value?.globalStates.successRatePercent,
+		}),
+	},
+	{
+		component: h(BCardRedis, {
+			maxMemory: accessMetrics.value?.currentStates.maxMemory,
+			usedMemory: accessMetrics.value?.currentStates.usedMemory,
 		}),
 	},
 ]);

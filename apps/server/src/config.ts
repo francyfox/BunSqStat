@@ -20,7 +20,7 @@ export const configSchema = t.Intersect([
 	}),
 	t.Partial(
 		t.Object({
-			CLUSTER_MODE: t.Boolean({ default: true }),
+			CLUSTER_MODE: t.Boolean({ default: false }),
 			SENTRY_ENABLED: t.Boolean({ default: true }),
 			LOG_FORMAT: t.String(),
 			REDIS_HOST: t.String({ default: "localhost" }),

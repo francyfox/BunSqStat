@@ -312,7 +312,7 @@ export const AccessLogsMetricsService = {
 			if (!time.startTime && !time.endTime) {
 				const now = Date.now();
 				return {
-					startTime: now - 60 * 60 * 1000,
+					startTime: now - 60 * 1000,
 					endTime: now,
 				};
 			}
@@ -347,7 +347,6 @@ export const AccessLogsMetricsService = {
 		const output = {
 			globalStates: {
 				...result,
-				...redisMemory,
 				statusCodes,
 				bandwidth,
 				hitRatePercent,
@@ -357,6 +356,7 @@ export const AccessLogsMetricsService = {
 			currentStates: {
 				rps: evaluate(`${recentRequestCount} / ${timeRangeSeconds}`),
 				statusCodes,
+				...redisMemory,
 			},
 		};
 
@@ -396,7 +396,7 @@ export const AccessLogsMetricsService = {
 						" ",
 					),
 				),
-			])
+			]);
 			const { results } = users;
 			const { results: largeRequestResult } = largeRequest;
 

@@ -26,6 +26,8 @@ export const AccessLogMetricsSchema = t.Object({
 	currentStates: t.Object({
 		rps: t.Union([t.Number(), t.Any()]),
 		statusCodes,
+		maxMemory: t.Number(),
+		usedMemory: t.Number()
 	}),
 	globalStates: t.Object({
 		bytes: t.Number(),

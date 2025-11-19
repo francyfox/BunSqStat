@@ -2,7 +2,11 @@
 import BCardMetric from "@/components/BCardMetric.vue";
 import { diffDate } from "@/utils/date.ts";
 
-const { rps, diffTime, time } = defineProps<{
+const {
+	rps,
+	diffTime,
+	time = [0, 60000],
+} = defineProps<{
 	rps: number;
 	diffTime: number;
 	time?: [number, number];
