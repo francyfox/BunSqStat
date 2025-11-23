@@ -1,3 +1,24 @@
+import { appendFile } from "node:fs/promises";
+import { join } from "node:path";
+
+const REGEX_NORM = /%["[\/#']?(?:-?\d+)?/g;
+const REGEX_DYNAMIC_HEADER = /^%\{[^}]+\}[><]h$/;
+const REGEX_EXTRACT_HEADER = /^%\{([^}]+)\}/;
+const BENCHMARK_PATH = join(__dirname, "./__tests__/benchmark.log");
+
+export async function writeBenchmarkInfo(time: number, iterations: number) {
+	const date = new Date().toISOString();
+	const file = Bun.file(BENCHMARK_PATH);
+	await appendFile(BENCHMARK_PATH, `${date} ${iterations} ${time}\n`);
+}
+
+export async function getBenchmarkInfo() {
+	const file = Bun.file(BENCHMARK_PATH);
+	if (await file.exists()) return file.text();
+
+	return "";
+}
+
 export function getFileExtensionFromUrl(url: string) {
 	const regex = /(?<=\.)[a-zA-Z0-9]+/gm;
 	const match = url.match(regex);
@@ -13,7 +34,7 @@ export function getFileExtensionFromUrl(url: string) {
  */
 
 export function normalizeFormat(format: string): string {
-	return format.replace(/%["[\/#']?(?:-?\d+)?/g, "%");
+	return format.replace(REGEX_NORM, "%");
 }
 
 /**
@@ -21,7 +42,7 @@ export function normalizeFormat(format: string): string {
  * @example "%{User-Agent}>h" => true
  */
 export function isDynamicHeaderToken(token: string): boolean {
-	return /^%\{[^}]+\}[><]h$/.test(token);
+	return REGEX_DYNAMIC_HEADER.test(token);
 }
 
 /**
@@ -29,7 +50,7 @@ export function isDynamicHeaderToken(token: string): boolean {
  * @example "%{User-Agent}>h" => "User-Agent"
  */
 export function extractHeaderName(token: string): string {
-	const match = token.match(/^%\{([^}]+)\}/);
+	const match = token.match(REGEX_EXTRACT_HEADER);
 	return match ? match[1] : "";
 }
 
