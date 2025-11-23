@@ -7,7 +7,12 @@ import {
 import { MOCK_DEFAULT_LOGS } from "./mock";
 import { TRANSFORMS } from "./transform";
 import type { IFormatItem, RestFn } from "./types";
-import { getFileExtensionFromUrl, normalizeFormat } from "./utils";
+import {
+	getBenchmarkInfo,
+	getFileExtensionFromUrl,
+	normalizeFormat,
+	writeBenchmarkInfo,
+} from "./utils";
 
 interface ICacheMapItem {
 	formatMap: IFormatItem[];
@@ -81,24 +86,23 @@ export function logLineParser(
 		throw new Error(PARSER_ERRORS.combinedSlash);
 	}
 
-	const result = formatMap.reduce(
-		(acc: Record<string, any>, { transform, field }, index) => {
-			if (transform) {
-				acc[field] = TRANSFORMS[transform](splitLine[index]);
-			} else {
-				acc[field] = splitLine[index];
+	const result: Record<string, any> = {};
 
-				const NO_CONTENT_TYPE =
-					field === "contentType" && acc.contentType === "-";
-				if (NO_CONTENT_TYPE) {
-					const extension = getFileExtensionFromUrl(acc.url || "") || null;
-					if (extension) acc[field] = mime.getType(extension) || "-";
-				}
+	for (let i = 0; i < formatMap.length; i += 1) {
+		const { transform, field } = formatMap[i];
+		const value = splitLine[i];
+
+		if (transform) {
+			result[field] = TRANSFORMS[transform](value);
+		} else {
+			result[field] = value;
+
+			if (field === "contentType" && result.contentType === "-") {
+				const extension = getFileExtensionFromUrl(result.url || "") || null;
+				if (extension) result[field] = mime.getType(extension) || "-";
 			}
-			return acc;
-		},
-		{},
-	);
+		}
+	}
 
 	return {
 		...result,
@@ -110,7 +114,7 @@ export function parse(lines: string[], rest?: RestFn, format?: string) {
 	return lines.map((line) => logLineParser(line, rest, format));
 }
 
-export function benchmark(count: number = 1) {
+export async function benchmark(count: number = 1) {
 	const start = performance.now();
 
 	for (let i = 1; i < count; i++) {
@@ -121,6 +125,10 @@ export function benchmark(count: number = 1) {
 	}
 
 	const end = performance.now() - start;
+	const lastResult = await getBenchmarkInfo();
+	const lines = lastResult.split("\n");
+	if (lastResult) console.log("Last result: ", lines[lines.length - 2]);
+	await writeBenchmarkInfo(end, count);
 	console.log("End:", end);
 }
 

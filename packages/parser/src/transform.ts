@@ -1,5 +1,7 @@
 import type { TransformFunction } from "./types";
 
+const REGEX_HTTP = /(?:https?:\/\/)?([^/]+)/;
+
 /**
  * Преобразует timestamp из секунд в миллисекунды
  * @example "1699876543.123" => "1699876543123"
@@ -61,7 +63,7 @@ export const extractDomain: TransformFunction = (value: string): string => {
 		return url.hostname || "-";
 	} catch {
 		// Fallback для невалидных URL
-		const match = value.match(/(?:https?:\/\/)?([^/]+)/);
+		const match = value.match(REGEX_HTTP);
 		return match?.[1] || "-";
 	}
 };

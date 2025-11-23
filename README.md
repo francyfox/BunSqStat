@@ -20,6 +20,8 @@
 
 > **From version 0.21.0 we started to use bun-baseline version for virtual machines compatibility**
 
+https://github.com/francyfox/BunSqStat/raw/refs/heads/master/apps/docs/src/assets/vokoscreen.webm
+
 ### [Read documentation](https://bstat.shalotts.site)
 
 ## ✨ Features
