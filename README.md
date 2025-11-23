@@ -1,4 +1,4 @@
-<h1 align="center">BunSqStat [WIP]</h1>
+<h1 align="center">BunSqStat</h1>
 <p align="center">
     <img width="120" src="./apps/docs/src/assets/squid.webp" alt="drawing" width="200"/>
 </p>
@@ -11,16 +11,13 @@
 ![GitHub Tag](https://img.shields.io/github/v/tag/francyfox/BunSqStat?include_prereleases&sort=semver&style=for-the-badge&color=blue)
 [![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](./LICENSE)
 
-
-> **STATUS: In development**
+![](./apps/docs/public/ezgif-774d6e227e756bdd.webp)
 
 > **Real-time Squid proxy log analyzer with powerful search capabilities** ⚡
 
 > **BunSqStat is a modern, high-performance web application for analyzing Squid proxy server logs in real-time. Built with the latest technologies including Bun, Vue 3, Redis Stack, and RediSearch for lightning-fast full-text search.**
 
 > **From version 0.21.0 we started to use bun-baseline version for virtual machines compatibility**
-
-https://github.com/francyfox/BunSqStat/raw/refs/heads/master/apps/docs/src/assets/vokoscreen.webm
 
 ### [Read documentation](https://bstat.shalotts.site)
 
