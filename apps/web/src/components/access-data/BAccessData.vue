@@ -4,7 +4,7 @@ import {
 	useBreakpoints,
 	watchDebounced,
 } from "@vueuse/core";
-import { NDataTable, NPagination, useNotification } from "naive-ui";
+import { NDataTable, NPagination, useMessage, useNotification } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { accessKeys } from "server/schema";
 import { computed, onMounted, ref, watch } from "vue";
@@ -15,6 +15,8 @@ import { useAccessStore } from "@/stores/access.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 import { buildSearchQuery } from "@/utils/redis-query.ts";
+
+const message = useMessage();
 
 const notification = useNotification();
 const statsStore = useStatsStore();
@@ -39,8 +41,6 @@ const search = computed(() =>
 	buildSearchQuery(form.value.field, form.value.search),
 );
 
-await statsStore.getAccessLogs();
-
 const columns = computed(() => formatColumns(accessKeys as any));
 function rowClassName(row: any, index) {
 	if (index < highlightCount.value) {
@@ -55,14 +55,19 @@ watch(error, (v) => {
 		duration: 5000,
 	});
 });
+
 watchDebounced(
 	page,
 	async (v: number) => {
-		await statsStore.getAccessLogs({
-			page: v,
-			search: search.value,
-			sortBy: sortBy.value,
-		});
+		try {
+			await statsStore.getAccessLogs({
+				page: v,
+				search: search.value,
+				sortBy: sortBy.value,
+			});
+		} catch (e) {
+			message.error((e as Error).message);
+		}
 	},
 	{ debounce: 500, maxWait: 1000 },
 );
@@ -70,18 +75,22 @@ watchDebounced(
 watchDebounced(
 	sortBy,
 	async (v) => {
-		await statsStore.getAccessLogs({
-			page: page.value,
-			search: search.value,
-			sortBy: v,
-		});
+		try {
+			await statsStore.getAccessLogs({
+				page: page.value,
+				search: search.value,
+				sortBy: v,
+			});
+		} catch (e) {
+			message.error((e as Error).message);
+		}
 	},
 	{ debounce: 500, maxWait: 1000 },
 );
 
 watchDebounced(
 	form,
-	async (v) => {
+	async () => {
 		page.value = 1;
 		await statsStore.getAccessLogs({
 			page: page.value,
@@ -142,6 +151,12 @@ watchDebounced(
 );
 
 onMounted(async () => {
+	try {
+		await statsStore.getAccessLogs();
+	} catch (e) {
+		message.error((e as Error).message);
+	}
+
 	if (!aliasRouterIsInitialized.value) {
 		await settingsStore.getAliases();
 	}

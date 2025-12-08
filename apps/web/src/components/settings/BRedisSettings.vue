@@ -21,22 +21,23 @@ const message = useMessage();
 
 async function handleUpdateMaxMemory() {
 	try {
-		console.log("ff");
 		await store.setMaxMemory(store.settings.maxMemory);
-	} finally {
+
 		if (error.value) {
 			message.error(error.value);
 		} else {
 			message.success(t("maxMemoryUpdated"));
 		}
+	} catch (e) {
+		message.error((e as Error).message);
 	}
 }
 
 onMounted(async () => {
 	try {
 		await store.getMaxMemory();
-	} catch (_) {
-		message.error(error.value);
+	} catch (e) {
+		message.error((e as Error).message);
 	}
 });
 </script>

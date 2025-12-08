@@ -6,9 +6,10 @@ import {
 	NMessageProvider,
 	NModalProvider,
 	NNotificationProvider,
+	useMessage,
 } from "naive-ui";
 import { storeToRefs } from "pinia";
-import { onMounted } from "vue";
+import { onErrorCaptured, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import BBarProvider from "@/components/BBarProvider.vue";
 import BBusProvider from "@/components/BBusProvider.vue";
@@ -60,7 +61,9 @@ onMounted(() => {
                           <component :is="Component"></component>
 
                           <template #fallback>
-                            Loading...
+                            <div class="container mx-a">
+                              Loading...
+                            </div>
                           </template>
                         </Suspense>
                       </KeepAlive>

@@ -196,19 +196,24 @@ export const useSettingsStore = defineStore(
 
 		async function setMaxMemory(value: number) {
 			loading.value = true;
-			const response = await api.settings.redis.maxmemory.post({
-				maxMemory: value,
-			});
 
-			if (response.error) {
-				error.value = response.error.message;
-			} else {
-				error.value = "";
+			try {
+				const response = await api.settings.redis.maxmemory.post({
+					maxMemory: value,
+				});
+
+				if (response.error) {
+					error.value = response.error.message;
+				} else {
+					error.value = "";
+				}
+
+				loading.value = false;
+
+				return response;
+			} catch (e) {
+				error.value = (e as Error).message;
 			}
-
-			loading.value = false;
-
-			return fetch;
 		}
 
 		onMounted(() => {
