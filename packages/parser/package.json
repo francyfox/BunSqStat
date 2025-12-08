@@ -12,6 +12,7 @@
 	"description": "",
 	"scripts": {
 		"dev": "bun --watch src/index.ts --dev",
+		"benchmark": "bun src/index.ts --benchmark=1000",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"dependencies": {
