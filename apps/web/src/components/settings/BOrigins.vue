@@ -26,15 +26,19 @@ const allOrigins = {
 	value: "",
 };
 
-const options = computed(() => [
-	allOrigins,
-	...origins.value!.map((i) => {
-		return {
-			label: `${i.prefix}:${i.host}`,
-			value: i.prefix,
-		};
-	}),
-]);
+const options = computed(() =>
+	origins.value
+		? [
+				allOrigins,
+				...origins.value.map((i) => {
+					return {
+						label: `${i.prefix}:${i.host}`,
+						value: i.prefix,
+					};
+				}),
+			]
+		: allOrigins,
+);
 
 const headers = computed(() => [t("origin"), t("originListen")]);
 </script>

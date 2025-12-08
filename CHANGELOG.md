@@ -1,3 +1,11 @@
+## 0.28.6 - 08 Dec 2025
+
+Bugfix:
+- Injection SENTRY_ENABLED to index.html (on/off telemetry in frontend from docker)
+- Updated dependencies
+- Nullable params for metrics
+- Try catch for browser errors (offline mode)
+
 ## 0.28.5 - 19 Nov 2025
 
 Bugfix:

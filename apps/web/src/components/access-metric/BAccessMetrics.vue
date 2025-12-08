@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { watchDebounced } from "@vueuse/core";
-import { NTabPane, NTabs } from "naive-ui";
+import { NTabPane, NTabs, useMessage } from "naive-ui";
 import { storeToRefs } from "pinia";
 import { onMounted, onUnmounted, ref, watch } from "vue";
-import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 import BAccessMetricFilter from "@/components/access-metric/BAccessMetricFilter.vue";
 import BTabDomains from "@/components/access-metric/BTabDomains.vue";
@@ -14,9 +13,10 @@ import { useDomainStore } from "@/stores/domains.ts";
 import { useSettingsStore } from "@/stores/settings.ts";
 import { useStatsStore } from "@/stores/stats.ts";
 
-const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
+
+const message = useMessage();
 
 const statsStore = useStatsStore();
 const settingsStore = useSettingsStore();
@@ -40,11 +40,15 @@ watchDebounced(
 	async (v) => {
 		const { limit, time: [startTime, endTime] = [] } = v;
 
-		await statsStore.getAccessMetrics({
-			limit,
-			startTime,
-			endTime,
-		});
+		try {
+			await statsStore.getAccessMetrics({
+				limit,
+				startTime,
+				endTime,
+			});
+		} catch (e) {
+			message.error((e as Error).message);
+		}
 	},
 	{
 		deep: true,
@@ -70,11 +74,15 @@ watchDebounced(
 		}
 		console.log(`Received ${v.changedLinesCount} new log entries`);
 
-		await statsStore.getAccessMetrics({
-			limit: form.value.limit,
-			startTime: form.value.time ? form.value.time[0] : undefined,
-			endTime: form.value.time ? form.value.time[1] : undefined,
-		});
+		try {
+			await statsStore.getAccessMetrics({
+				limit: form.value.limit,
+				startTime: form.value.time ? form.value.time[0] : undefined,
+				endTime: form.value.time ? form.value.time[1] : undefined,
+			});
+		} catch (e) {
+			message.error((e as Error).message);
+		}
 
 		if (route.hash === "#domains") {
 			await domainStore.getMetricsDomain();

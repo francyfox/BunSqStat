@@ -139,8 +139,11 @@ export const useSettingsStore = defineStore(
 				const {
 					data: { items },
 				} = response;
-				for (const [ip, alias] of items) {
-					aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
+
+				if (items) {
+					for (const [ip, alias] of items) {
+						aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
+					}
 				}
 
 				aliasRouterIsInitialized.value = true;
@@ -193,19 +196,24 @@ export const useSettingsStore = defineStore(
 
 		async function setMaxMemory(value: number) {
 			loading.value = true;
-			const response = await api.settings.redis.maxmemory.post({
-				maxMemory: value,
-			});
 
-			if (response.error) {
-				error.value = response.error.message;
-			} else {
-				error.value = "";
+			try {
+				const response = await api.settings.redis.maxmemory.post({
+					maxMemory: value,
+				});
+
+				if (response.error) {
+					error.value = response.error.message;
+				} else {
+					error.value = "";
+				}
+
+				loading.value = false;
+
+				return response;
+			} catch (e) {
+				error.value = (e as Error).message;
 			}
-
-			loading.value = false;
-
-			return response;
 		}
 
 		onMounted(() => {

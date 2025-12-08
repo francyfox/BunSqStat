@@ -7,7 +7,7 @@ services:
     restart: unless-stopped
     environment:
       CLUSTER_MODE: "false"
-      SENTRY_ENABLED: "false"
+      SENTRY_ENABLED: "true"
     ports:
       - "81:80"      # Web interface
     volumes:
