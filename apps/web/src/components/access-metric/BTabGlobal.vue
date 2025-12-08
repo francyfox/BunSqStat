@@ -40,35 +40,35 @@ const items = computed(() => [
 	},
 	{
 		component: h(BCardContentStats, {
-			items: accessMetrics.value?.globalStates.contentTypes.items,
+			items: accessMetrics.value?.globalStates?.contentTypes?.items,
 		}),
 	},
 	{
 		component: h(BCardBytes, {
-			bytes: accessMetrics.value?.globalStates.bytes,
+			bytes: accessMetrics.value?.globalStates?.bytes,
 		}),
 	},
 	{
 		component: h(BCardStatus, {
-			items: accessMetrics.value?.globalStates.statusCodes.items,
+			items: accessMetrics.value?.globalStates?.statusCodes?.items,
 		}),
 	},
 	{
 		component: h(BCardDuration, {
-			duration: accessMetrics.value?.globalStates.duration,
+			duration: accessMetrics.value?.globalStates?.duration,
 		}),
 	},
 	{
 		component: h(BCardOptimization, {
-			bandwidth: accessMetrics.value?.globalStates.bandwidth,
-			hitRatePercent: accessMetrics.value?.globalStates.hitRatePercent,
-			successRatePercent: accessMetrics.value?.globalStates.successRatePercent,
+			bandwidth: accessMetrics.value?.globalStates?.bandwidth,
+			hitRatePercent: accessMetrics.value?.globalStates?.hitRatePercent,
+			successRatePercent: accessMetrics.value?.globalStates?.successRatePercent,
 		}),
 	},
 	{
 		component: h(BCardRedis, {
-			maxMemory: accessMetrics.value?.currentStates.maxMemory,
-			usedMemory: accessMetrics.value?.currentStates.usedMemory,
+			maxMemory: accessMetrics.value?.currentStates?.maxMemory,
+			usedMemory: accessMetrics.value?.currentStates?.usedMemory,
 		}),
 	},
 ]);

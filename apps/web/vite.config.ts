@@ -12,18 +12,15 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-	define: {
-		"process.env.SENTRY_ENABLED": process.env.SENTRY_ENABLED,
-	},
 	plugins: [
 		vue(),
 		VueRouter(),
 		UnoCSS(),
-		sentryVitePlugin({
+		...(process.env.SENTRY_AUTH_TOKEN ? [sentryVitePlugin({
 			org: "hellizart",
 			project: "javascript-vue",
 			authToken: process.env.SENTRY_AUTH_TOKEN,
-		}),
+		})] : []),
 	],
 	css: {
 		postcss: {

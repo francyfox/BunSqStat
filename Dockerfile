@@ -1,4 +1,4 @@
-FROM oven/bun:1.3.0 AS builder
+FROM oven/bun:1.3.4 AS builder
 
 ENV NODE_ENV=production
 ENV SQUID_HOST=127.0.0.1
@@ -37,7 +37,8 @@ RUN apt-get install -y \
     bash \
     libstdc++6 \
     telnet \
-    openssl
+    openssl \
+    gettext-base
 
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list

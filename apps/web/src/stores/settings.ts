@@ -139,8 +139,11 @@ export const useSettingsStore = defineStore(
 				const {
 					data: { items },
 				} = response;
-				for (const [ip, alias] of items) {
-					aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
+
+				if (items) {
+					for (const [ip, alias] of items) {
+						aliasRouter.insert(ip.replaceAll(".", "/"), { payload: alias });
+					}
 				}
 
 				aliasRouterIsInitialized.value = true;
@@ -205,7 +208,7 @@ export const useSettingsStore = defineStore(
 
 			loading.value = false;
 
-			return response;
+			return fetch;
 		}
 
 		onMounted(() => {

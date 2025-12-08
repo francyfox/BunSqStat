@@ -54,6 +54,10 @@ sed -i "s|command=redis-stack-server .*|command=/usr/bin/redis-server $REDIS_CON
 # Update supervisor config with current environment variables for backend
 sed -i "s|environment=.*|environment=NODE_ENV=\"$NODE_ENV\",SQUID_HOST=\"$SQUID_HOST\",SQUID_PORT=\"$SQUID_PORT\",LOG_DIR=\"$LOG_DIR\",REDIS_HOST=\"$REDIS_HOST\",REDIS_PORT=\"$REDIS_PORT\",REDIS_PASSWORD=\"$REDIS_PASSWORD\",REDIS_TLS_CA=\"$REDIS_TLS_CA\",REDIS_TLS_CERT=\"$REDIS_TLS_CERT\",REDIS_TLS_KEY=\"$REDIS_TLS_KEY\"|g" /etc/supervisor/conf.d/supervisord.conf
 
+# Inject environment variables into frontend HTML
+envsubst '${SENTRY_ENABLED}' < /app/frontend/index.html > /app/frontend/index.html.tmp
+mv /app/frontend/index.html.tmp /app/frontend/index.html
+
 echo "Starting Redis Stack, Backend and Frontend services..."
 
 # Start supervisor to manage redis, backend and caddy

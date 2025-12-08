@@ -21,6 +21,7 @@ const message = useMessage();
 
 async function handleUpdateMaxMemory() {
 	try {
+		console.log("ff");
 		await store.setMaxMemory(store.settings.maxMemory);
 	} finally {
 		if (error.value) {

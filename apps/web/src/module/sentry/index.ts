@@ -3,7 +3,7 @@ import type { App } from "vue";
 import type { Router } from "vue-router";
 
 export const sentryInit = (app: App<any>, router: Router) => {
-	if (process.env.SENTRY_ENABLED === "true") {
+	if (window.ENV?.SENTRY_ENABLED === "true") {
 		Sentry.init({
 			environment: "frontend",
 			app,
