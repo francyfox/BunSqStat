@@ -9,12 +9,14 @@ import { WS } from "@/modules/ws";
 
 export const routes = new Elysia()
 	.get("/favicon.ico", () => new Response(null, { status: 204 }))
-	.use(Health)
-	.use(Stats)
-	.use(AccessLogs)
-	.use(AccessLogsMetrics)
-	.use(Settings)
-	.use(WS)
-	.use(SentryProxy);
+	.use([
+		Health,
+		Stats,
+		AccessLogs,
+		AccessLogsMetrics,
+		Settings,
+		WS,
+		SentryProxy,
+	]);
 
 export type EdenApp = typeof routes;

@@ -8,3 +8,5 @@ logs
 CRUSH.md
 dump
 coverage
+*.crt
+*.key

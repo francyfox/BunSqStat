@@ -52,7 +52,6 @@ services:
     container_name: squid-proxy
     restart: unless-stopped
     ports:
-      - "3128:3128"
       - "3129:3129"
     volumes:
       - ./docker/ssl:/etc/squid/ssl/

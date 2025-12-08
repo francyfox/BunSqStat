@@ -1,4 +1,3 @@
-import { createIPProceededQuery } from "@/utils/string.ts";
 import { defineStore } from "pinia";
 import type { TMetricDomainOptions } from "server/schema";
 import { reactive, ref, shallowRef } from "vue";
